@@ -1,4 +1,6 @@
 # DailyZHIHU
+## Project Scheduling
+- 2016.03.24 upload the project initially
 
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
@@ -21,5 +23,10 @@
 
 ## Demo
 ![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/1.png)
-![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/1.png)
-![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/1.png)![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/1.png)![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/1.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/2.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/3.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/4.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/5.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/6.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/7.png)
+![](https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/8.png)
