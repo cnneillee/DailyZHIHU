@@ -14,11 +14,12 @@
 ...bla bla
 
 ### Declaration
-1、此app内容基于[izzyleung/ZhihuDailyPurify][https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90]提供的api。
+1、此app内容基于 [izzyleung/ZhihuDailyPurify](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90) 提供的api。
 如有侵害某一方的合法权益，请告知，本人将在第一时间删除
 2、此app为本菜鸟练习之用，如有相关意见和建议，非常欢迎与本菜鸟交流
 3、如您须使用使用本项目源码，请注明出处，谢谢
 
 ## Demo
-
-
+![]()
+![]()
+![]()![]()
