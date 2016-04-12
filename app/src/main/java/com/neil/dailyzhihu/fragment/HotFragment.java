@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.HotStoriesAdapter;
 import com.neil.dailyzhihu.bean.HotStories;
@@ -54,7 +55,7 @@ public class HotFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         context = getContext();
-        ContentLoader.loadString("http://news-at.zhihu.com/api/3/news/hot", new ImageLoader.OnFinishListener() {
+        ContentLoader.loadString(Constant.HOT_NEWS, new ImageLoader.OnFinishListener() {
             @Override
             public void onFinish(Object s) {
                 Gson gson = new Gson();

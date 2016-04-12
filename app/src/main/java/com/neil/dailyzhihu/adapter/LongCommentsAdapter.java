@@ -55,7 +55,7 @@ public class LongCommentsAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.loadImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
+        ImageLoader.loadImage(context,vh.ivAvatar, mDatas.get(position).getAvatar(), null);
         vh.tvAuthor.setText(mDatas.get(position).getAuthor());
         vh.tvContent.setText(mDatas.get(position).getContent());
         vh.tvId.setText(mDatas.get(position).getId() + "");

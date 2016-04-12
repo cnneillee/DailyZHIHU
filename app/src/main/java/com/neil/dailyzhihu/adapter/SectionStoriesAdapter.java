@@ -10,10 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.SectionStoriesList;
 import com.neil.dailyzhihu.ui.SectionActivity;
 import com.neil.dailyzhihu.utils.ImageLoader;
+import com.neil.dailyzhihu.utils.UniversalLoader;
 
 import java.util.List;
 
@@ -60,7 +62,10 @@ public class SectionStoriesAdapter extends BaseAdapter {
         }
         vh.tvTitle.setText(mDatas.get(position).getTitle());
 
-        ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
+        //TODO 图片加载
+        MyApplication myApplication = (MyApplication) mContext.getApplicationContext();
+        UniversalLoader loader = myApplication.getUniversalLoader();
+        loader.loadImage(mContext, vh.ivImg, mDatas.get(position).getImages().get(0), null);
 
         return convertView;
     }

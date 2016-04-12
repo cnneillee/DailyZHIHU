@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestNewsAdapter;
 import com.neil.dailyzhihu.bean.BeforeNews;
@@ -51,7 +52,7 @@ public class BeforeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         //加载数据
-        ContentLoader.loadString("http://news.at.zhihu.com/api/4/news/before/20131119", new ImageLoader.OnFinishListener() {
+        ContentLoader.loadString(Constant.BEFORE_NEWS_HEADER + "20131119", new ImageLoader.OnFinishListener() {
             @Override
             public void onFinish(Object s) {
                 Gson gson = new Gson();

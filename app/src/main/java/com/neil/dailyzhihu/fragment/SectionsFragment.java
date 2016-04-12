@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.google.gson.Gson;
+import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.SectionsAdapter;
 import com.neil.dailyzhihu.adapter.ThemesListAdapter;
@@ -52,7 +53,7 @@ public class SectionsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         context = getContext();
-        ContentLoader.loadString("http://news-at.zhihu.com/api/3/sections", new ImageLoader.OnFinishListener() {
+        ContentLoader.loadString(Constant.SECTIONS, new ImageLoader.OnFinishListener() {
             @Override
             public void onFinish(Object s) {
                 Gson gson = new Gson();

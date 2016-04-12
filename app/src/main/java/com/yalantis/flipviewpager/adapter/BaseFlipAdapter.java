@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.yalantis.flipviewpager.R;
+import com.neil.dailyzhihu.R;
 import com.yalantis.flipviewpager.utils.FlipSettings;
 import com.yalantis.flipviewpager.view.FlipViewPager;
 

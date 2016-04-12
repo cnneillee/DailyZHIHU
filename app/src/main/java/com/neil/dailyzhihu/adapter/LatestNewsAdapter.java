@@ -13,6 +13,7 @@ import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.LatestNews;
 import com.neil.dailyzhihu.bean.NewsBean;
 import com.neil.dailyzhihu.utils.ImageLoader;
+import com.neil.dailyzhihu.utils.UniversalLoader;
 
 import java.util.List;
 
@@ -60,7 +61,9 @@ public class LatestNewsAdapter<T extends NewsBean> extends BaseAdapter {
 
         //fill data
         vh.tvTitle.setText(mDatas.get(position).getTitle());
-        ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
+        //TODO 这里更改了
+        //ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
+        ImageLoader.loadImage(mContext, vh.ivImg, mDatas.get(position).getImages().get(0), null);
         return convertView;
     }
 

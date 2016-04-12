@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.neil.dailyzhihu.fragment.BeforeFragment;
 import com.neil.dailyzhihu.fragment.HotFragment;
@@ -29,14 +30,12 @@ public class MainActivity extends AppCompatActivity
 
     private ArrayList<Fragment> fragments;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         addFragments();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void addFragments() {
-        fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<>();
         fragments.add(new LatestFragment());
         fragments.add(new BeforeFragment());
         fragments.add(new ThemesFragment());
@@ -108,12 +107,10 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_latest) {
             showFragment(0);
-//            ContentLoader.loadString("http://news-at.zhihu.com/api/4/news/latest");
         } else if (id == R.id.nav_before) {
             showFragment(1);
         } else if (id == R.id.nav_addonnews) {
@@ -122,6 +119,8 @@ public class MainActivity extends AppCompatActivity
             showFragment(3);
         } else if (id == R.id.nav_hot) {
             showFragment(4);
+        } else if (id == R.id.nav_setting) {
+            Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

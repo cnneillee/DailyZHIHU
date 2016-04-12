@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.EditorsListAdapter;
 import com.neil.dailyzhihu.adapter.LatestNewsAdapter;
@@ -20,6 +21,7 @@ import com.neil.dailyzhihu.adapter.ThemeStoriesAdapter;
 import com.neil.dailyzhihu.bean.ThemeStoriesList;
 import com.neil.dailyzhihu.utils.ContentLoader;
 import com.neil.dailyzhihu.utils.ImageLoader;
+import com.neil.dailyzhihu.utils.UniversalLoader;
 
 import java.util.List;
 
@@ -84,7 +86,11 @@ public class ThemeActivity extends AppCompatActivity {
                 List<ThemeStoriesList.EditorsBean> editorsBeanList = themeStoriesList.getEditors();
                 lvEditor.setAdapter(new EditorsListAdapter(ThemeActivity.this, editorsBeanList));
                 Log.e("THEME_ACTIVITY", "新闻数目------" + storiesBeanList.size() + "，编辑数目------" + editorsBeanList.size());
-                ImageLoader.loadImage(imgBg, themeStoriesList.getBackground(), null);
+                //TODO 图片加载
+                MyApplication myApplication = (MyApplication) ThemeActivity.this.getApplicationContext();
+                UniversalLoader loader = myApplication.getUniversalLoader();
+                loader.loadImage(ThemeActivity.this,imgBg, themeStoriesList.getBackground(), null);
+               // ImageLoader.loadImage(imgBg, themeStoriesList.getBackground(), null);
             }
         });
 

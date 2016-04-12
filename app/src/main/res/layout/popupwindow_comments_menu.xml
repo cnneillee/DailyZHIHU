@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_menu"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lv_pwmenu"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

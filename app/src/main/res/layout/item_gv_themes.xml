@@ -13,7 +13,7 @@
             android:id="@+id/iv_img"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/img_title" />
+            android:src="@drawable/img_progressing_hourglass" />
 
         <TextView
             android:id="@+id/iv_title"
