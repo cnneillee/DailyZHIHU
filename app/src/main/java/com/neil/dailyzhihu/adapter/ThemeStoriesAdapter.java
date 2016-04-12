@@ -9,10 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.NewsBean;
 import com.neil.dailyzhihu.bean.ThemeStoriesList;
 import com.neil.dailyzhihu.utils.ImageLoader;
+import com.neil.dailyzhihu.utils.UniversalLoader;
 
 import java.util.List;
 
@@ -63,7 +65,11 @@ public class ThemeStoriesAdapter extends BaseAdapter {
         List<String> strList = mDatas.get(position).getImages();
         if (strList != null) {
             String strImg = strList.get(0);
-            ImageLoader.loadImage(vh.ivImg, strImg, null);
+            //TODO 图片加载
+            MyApplication myApplication = (MyApplication) mContext.getApplicationContext();
+            UniversalLoader loader = myApplication.getUniversalLoader();
+            loader.loadImage(mContext, vh.ivImg, strImg, null);
+//            ImageLoader.loadImage(vh.ivImg, strImg, null);
         }
 
         return convertView;

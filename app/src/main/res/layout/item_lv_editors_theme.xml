@@ -14,7 +14,7 @@
             android:id="@+id/iv_avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/img_title" />
+            android:src="@drawable/img_progressing_hourglass" />
 
         <LinearLayout
             android:layout_width="wrap_content"

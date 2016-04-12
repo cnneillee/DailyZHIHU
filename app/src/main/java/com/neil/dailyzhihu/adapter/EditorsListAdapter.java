@@ -60,7 +60,7 @@ public class EditorsListAdapter extends BaseAdapter {
         vh.tvBio.setText(mDatas.get(position).getBio());
         vh.tvName.setText(mDatas.get(position).getName());
         vh.tvUrl.setText(mDatas.get(position).getUrl());
-        ImageLoader.loadImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
+        ImageLoader.loadImage(mContext,vh.ivAvatar, mDatas.get(position).getAvatar(), null);
 
 //        vh.ivImg.setOnClickListener(new View.OnClickListener() {
 //            @Override

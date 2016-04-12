@@ -59,7 +59,7 @@ public class HotStoriesAdapter extends BaseAdapter {
 
         vh.tvTitle.setText(mDatas.get(position).getTitle());
 
-        ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getThumbnail(), null);
+        ImageLoader.loadImage(mContext,vh.ivImg, mDatas.get(position).getThumbnail(), null);
 
         return convertView;
     }

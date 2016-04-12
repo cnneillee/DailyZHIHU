@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.SectionsList;
-import com.neil.dailyzhihu.bean.Themes;
 import com.neil.dailyzhihu.ui.SectionActivity;
-import com.neil.dailyzhihu.ui.ThemeActivity;
 import com.neil.dailyzhihu.utils.ImageLoader;
 
 import java.util.List;
@@ -61,7 +59,7 @@ public class SectionsAdapter extends BaseAdapter {
         }
         vh.ivTitle.setText(mDatas.get(position).getName());
         vh.ivDescribsion.setText(mDatas.get(position).getDescription());
-        ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getThumbnail(), null);
+        ImageLoader.loadImage(mContext,vh.ivImg, mDatas.get(position).getThumbnail(), null);
 
         vh.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override

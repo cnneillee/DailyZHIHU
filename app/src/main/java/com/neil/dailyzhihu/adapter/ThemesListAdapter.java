@@ -10,10 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.Themes;
 import com.neil.dailyzhihu.ui.ThemeActivity;
 import com.neil.dailyzhihu.utils.ImageLoader;
+import com.neil.dailyzhihu.utils.UniversalLoader;
 
 import java.util.List;
 
@@ -60,7 +62,12 @@ public class ThemesListAdapter extends BaseAdapter {
         }
         vh.ivTitle.setText(mDatas.get(position).getName());
         vh.ivDescribsion.setText(mDatas.get(position).getDescription());
-        ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getThumbnail(), null);
+
+        //TODO 图片加载
+        MyApplication myApplication = (MyApplication) mContext.getApplicationContext();
+        UniversalLoader loader = myApplication.getUniversalLoader();
+        loader.loadImage(mContext, vh.ivImg, mDatas.get(position).getThumbnail(), null);
+//        ImageLoader.loadImage(vh.ivImg, mDatas.get(position).getThumbnail(), null);
 
         vh.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override

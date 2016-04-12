@@ -16,12 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestNewsAdapter;
 import com.neil.dailyzhihu.bean.LatestNews;
 import com.neil.dailyzhihu.ui.StoryActivity;
 import com.neil.dailyzhihu.utils.ContentLoader;
 import com.neil.dailyzhihu.utils.ImageLoader;
+import com.neil.dailyzhihu.utils.UniversalLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +92,11 @@ public class LatestFragment extends Fragment {
             ImageView iv = (ImageView) v.findViewById(R.id.iv_img);
             TextView tv = (TextView) v.findViewById(R.id.tv_title);
             tv.setText(topStories.get(i).getTitle());
-            ImageLoader.loadImage(iv, topStories.get(i).getImage(), null);
+
+            //TODO 图片加载
+            MyApplication myApplication = (MyApplication) mContext.getApplicationContext();
+            UniversalLoader loader = myApplication.getUniversalLoader();
+            loader.loadImage(mContext, iv, topStories.get(i).getImage(), null);
             listViews.add(v);
         }
         return listViews;
