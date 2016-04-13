@@ -10,6 +10,7 @@
     - 状态栏未实现成沉浸式
     - 评论的展示建议使用activity来替换目前AleartDialog
     - 代码整理
+
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
 ### Basic functions
