@@ -7,74 +7,68 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/osv"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <LinearLayout
+        <!--header图片-->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="160dp">
 
-            <!--header图片-->
-            <FrameLayout
+            <ImageView
+                android:id="@+id/iv_img"
                 android:layout_width="match_parent"
-                android:layout_height="160dp">
-
-                <ImageView
-                    android:id="@+id/iv_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/img_progressing_hourglass" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:gravity="left"
-                        android:text="深夜惊奇 · 朋友圈错觉"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/tv_imgSource"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:gravity="right"
-                        android:text="图片：Yestone.com 版权图片库"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/tv_storyExtra"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/zhihuBlue"
-                android:gravity="center_horizontal"
-                android:padding="3dp"
-                android:text="长评论: 0  点赞: 161  短评论: 19  评论总数: 19"
-                android:textColor="@color/white" />
+                android:layout_height="160dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_progressing_hourglass" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <!--<Button-->
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="left"
+                    android:text="深夜惊奇 · 朋友圈错觉"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_imgSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="right"
+                    android:text="图片：Yestone.com 版权图片库"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_storyExtra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/zhihuBlue"
+            android:gravity="center_horizontal"
+            android:padding="3dp"
+            android:text="长评论: 0  点赞: 161  短评论: 19  评论总数: 19"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <!--<Button-->
                 <!--android:id="@+id/btn_getLongComments"-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
@@ -84,7 +78,7 @@
                 <!--android:text="获取长评论"-->
                 <!--android:textColor="@color/white" />-->
 
-                <!--<Button-->
+            <!--<Button-->
                 <!--android:id="@+id/btn_getShortComments"-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
@@ -93,19 +87,19 @@
                 <!--android:background="@color/zhihuBlue"-->
                 <!--android:text="获取短评论"-->
                 <!--android:textColor="@color/white" />-->
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvContent"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <WebView
-                android:id="@+id/tv_content"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" />
         </LinearLayout>
-    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <WebView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
+
     <!--评论fab-->
     <com.neil.dailyzhihu.ui.FloatingActionsMenuHidable
         android:id="@+id/detailed_multiple_actions"

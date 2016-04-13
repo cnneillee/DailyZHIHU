@@ -9,15 +9,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
@@ -37,7 +35,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Neil on 2016/3/23.
  */
-public class StoryActivity extends AppCompatActivity implements View.OnClickListener,ObservableScrollViewCallbacks {
+public class StoryActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.tv_content)
     WebView tvContent;
     @Bind(R.id.iv_img)
@@ -54,18 +52,11 @@ public class StoryActivity extends AppCompatActivity implements View.OnClickList
     FloatingActionButton btnGetShortComments;
     @Bind(R.id.tvContent)
     TextView tvcontent;
-    @Bind(R.id.osv)
-    ObservableScrollView osv;
-    @Bind(R.id.detailed_action_settings)
-    FloatingActionButton detailedActionSettings;
-    @Bind(R.id.detailed_multiple_actions)
-    FloatingActionsMenuHidable detailedMultipleActions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_content);
-        osv.setScrollViewCallbacks(this);
         ButterKnife.bind(this);
         int storyId = getExtras();
         if (storyId > 0)
@@ -192,20 +183,5 @@ public class StoryActivity extends AppCompatActivity implements View.OnClickList
                 });
                 break;
         }
-    }
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-
     }
 }

@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.MyApplication;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestNewsAdapter;
@@ -56,7 +55,7 @@ public class LatestFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         //加载数据
-        ContentLoader.loadString(Constant.URL_LATEST_NEWS, new ImageLoader.OnFinishListener() {
+        ContentLoader.loadString("http://news-at.zhihu.com/api/4/news/latest", new ImageLoader.OnFinishListener() {
             @Override
             public void onFinish(Object s) {
                 Gson gson = new Gson();
