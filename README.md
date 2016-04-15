@@ -1,6 +1,15 @@
 # DailyZHIHU
 ## Project Scheduling
 - 2016.03.24 upload the project initially
+- 2016.04.13 beautify the StoryActivity UI(ObservableScrollView、FloatingActionButton)
+  - 改变
+    - 将查看评论功能移至FloatingActionButton中
+    - 文章图片、标题用ObservableScrollView上部展示
+  - 遗留：
+    - 版权信息的textView不能随标题图片隐藏
+    - 状态栏未实现成沉浸式
+    - 评论的展示建议使用activity来替换目前AleartDialog
+    - 代码整理
 
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
