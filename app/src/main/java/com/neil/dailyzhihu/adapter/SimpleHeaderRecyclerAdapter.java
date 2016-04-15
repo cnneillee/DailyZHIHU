@@ -75,9 +75,8 @@ public class SimpleHeaderRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
-
         public ItemViewHolder(View view) {
             super(view);
             textView = (TextView) view.findViewById(android.R.id.text1);
