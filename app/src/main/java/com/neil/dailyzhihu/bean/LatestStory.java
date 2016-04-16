@@ -111,6 +111,11 @@ public class LatestStory {
         private String ga_prefix;
         private String title;
 
+        @Override
+        public String toString() {
+            return image + "\t" + type + "\t" + id + "\t" + ga_prefix + "\t" + title;
+        }
+
         public String getImage() {
             return image;
         }
