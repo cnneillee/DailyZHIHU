@@ -10,11 +10,13 @@
     - 状态栏未实现成沉浸式
     - 评论的展示建议使用activity来替换目前AleartDialog
     - 代码整理
-- 2016.04.13 truely finished the ui and funtion, from then on,every changes of this project will be based on this version.
+- 2016.04.16 truely finished the ui and funtion, from then on,every changes of this project will be based on this version.
   - 说明：
     功能和界面已经基本能够达到正常使用的标准了，今后的改动将会基于这一版。并且，今后的改动一定会按更改项来提交
+- 2016.04.16 day/nightMode(by restarting Activity)
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
+
 ### Basic functions
 - 启动界面
 - 获取最新消息列表
