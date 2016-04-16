@@ -15,6 +15,7 @@
     功能和界面已经基本能够达到正常使用的标准了，今后的改动将会基于这一版。并且，今后的改动一定会按更改项来提交
 - 2016.04.16 day/nightMode(by restarting Activity)
 - 2016.04.16 topstory实现了ViewPager，夜间模式未完全实现
+- 2016.04.16 用item_lv_UniversalStory整合了三种story的item界面文件，添加了下方的extra信息
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
 
