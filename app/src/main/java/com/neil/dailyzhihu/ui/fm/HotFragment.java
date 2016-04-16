@@ -60,6 +60,8 @@ public class HotFragment extends Fragment {
                 Gson gson = new Gson();
                 HotStory hotStories = gson.fromJson((String) s, HotStory.class);
                 List<HotStory.RecentBean> recentBean = hotStories.getRecent();
+                if (lvHot == null)
+                    return;
                 lvHot.setAdapter(new HotStoryListAdapter(context, recentBean));
             }
         });

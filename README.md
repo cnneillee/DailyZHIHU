@@ -14,6 +14,7 @@
   - 说明：
     功能和界面已经基本能够达到正常使用的标准了，今后的改动将会基于这一版。并且，今后的改动一定会按更改项来提交
 - 2016.04.16 day/nightMode(by restarting Activity)
+- 2016.04.16 topstory实现了ViewPager，夜间模式未完全实现
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
 

@@ -25,7 +25,6 @@ public class ContentLoader {
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
                         result = response.body().string();
-                        Log.e("ContentLoader", result);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

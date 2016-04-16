@@ -9,6 +9,7 @@
         <item name="rootViewBgColor">@color/white</item>
         <item name="cardViewBgColor">@color/lightWhite</item>
         <item name="cardViewTextTitleColor">@color/black</item>
+        <item name="cardViewTextExtraColor">@color/mediumGray</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

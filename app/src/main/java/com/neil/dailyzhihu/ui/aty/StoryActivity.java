@@ -97,8 +97,10 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         ScrollUtils.addOnGlobalLayoutListener(mScrollView, new Runnable() {
             @Override
             public void run() {
-                mScrollView.scrollTo(0, mFlexibleSpaceImageHeight - mActionBarSize);
-
+                //挡住照片
+                // mScrollView.scrollTo(0, mFlexibleSpaceImageHeight - mActionBarSize);
+                //正好显现出照片
+                onScrollChanged(0, false, false);
                 // If you'd like to start from scrollY == 0, don't write like this:
                 //mScrollView.scrollTo(0, 0);
                 // The initial scrollY is 0, so it won't invoke onScrollChanged().
@@ -228,67 +230,12 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                 loader.displayImage(mImageView, story.getImage(), null);
                 mTitleView.setText(story.getTitle());
 //                tvImgCopyRight.setText(story.getImage_source());
+                if (body == null)
+                    return;
                 tvContent.setText(Html.fromHtml(body));
                 tvContent.setVisibility(View.VISIBLE);
             }
         });
-        /*ContentLoader.loadString(Constant.STORY_HEAD + storyId, new ImageLoader.OnFinishListener() {
-            @Override
-            public void onFinish(Object s) {
-                Gson gson = new Gson();
-                StoryContent story = gson.fromJson((String) s, StoryContent.class);
-                String body = story.getBody();
-
-                //TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。
-                //type=0正常，type特殊情况
-                //TODO 图片加载
-                ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-                loader.displayImage(mImageView, story.getImage(), null);
-                mTitleView.setText(story.getTitle());
-//                tvImgCopyRight.setText(story.getImage_source());
-                tvContent.setText(Html.fromHtml(body));
-                tvContent.setVisibility(View.VISIBLE);
-            }
-        });*/
-       /* LoaderFactory.getContentLoader().loadContent(Constant.EXTRA_HEAD + storyId, new OnContentLoadingFinishedListener(){
-            @Override
-            public void onFinish(String content) {
-                Gson gson = new Gson();
-                StoryExtra storyExtra = gson.fromJson((String) s, StoryExtra.class);
-                int longcomments = storyExtra.getLong_comments();
-                int shortcomments = storyExtra.getShort_comments();
-                int postReasons = storyExtra.getPost_reasons();
-                int popularity = storyExtra.getPopularity();
-                int normalComments = storyExtra.getNormal_comments();
-                int comments = storyExtra.getComments();
-
-                String str = "postReasons:" + postReasons +
-                        " 正常评论数" + normalComments +
-                        " 点赞: " + popularity +
-                        " 长评论:" + longcomments +
-                        "  短评论: " + shortcomments +
-                        "  评论总数: " + comments;
-            }*/
-           /* @Override
-            public void onFinish(Object s) {
-                Gson gson = new Gson();
-                StoryExtra storyExtra = gson.fromJson((String) s, StoryExtra.class);
-                int longcomments = storyExtra.getLong_comments();
-                int shortcomments = storyExtra.getShort_comments();
-                int postReasons = storyExtra.getPost_reasons();
-                int popularity = storyExtra.getPopularity();
-                int normalComments = storyExtra.getNormal_comments();
-                int comments = storyExtra.getComments();
-
-                String str = "postReasons:" + postReasons +
-                        " 正常评论数" + normalComments +
-                        " 点赞: " + popularity +
-                        " 长评论:" + longcomments +
-                        "  短评论: " + shortcomments +
-                        "  评论总数: " + comments;
-//                tvStoryExtra.setText(str);
-            }*/
-//        });
     }
 
     private void initActivity() {

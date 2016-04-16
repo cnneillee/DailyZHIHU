@@ -14,6 +14,10 @@ public class StoryBean {
     public void setTitle(String title) {
     }
 
+    public int getId() {
+        return -1;
+    }
+
     public List<String> getImages() {
         return null;
     }

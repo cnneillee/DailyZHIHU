@@ -48,7 +48,7 @@ public class SectionStoryLisAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_sectionstory, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_story_universal, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {
