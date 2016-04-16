@@ -13,23 +13,25 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/rootViewBgColor">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/flexible_space_image_height"
         android:scaleType="centerCrop"
-        android:src="@drawable/example" />
+        android:src="@drawable/example"/>
 
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/flexible_space_image_height"
-        android:background="?attr/colorPrimary" />
+        android:background="?attr/colorPrimary"/>
 
     <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
         android:id="@+id/scroll"
@@ -46,7 +48,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/flexible_space_image_height"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"/>
 
             <TextView
                 android:id="@+id/tvContent"
@@ -57,7 +59,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:text="@string/lipsum" />
+                android:text="@string/lipsum"/>
         </LinearLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
@@ -76,12 +78,12 @@
             android:maxLines="1"
             android:minHeight="?attr/actionBarSize"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/flexible_space_image_height"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"/>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -91,5 +93,5 @@
         android:layout_gravity="left|top"
         android:scaleType="center"
         app:fab_colorNormal="@color/accentLight"
-        app:fab_colorPressed="@color/accent" />
+        app:fab_colorPressed="@color/accent"/>
 </FrameLayout>

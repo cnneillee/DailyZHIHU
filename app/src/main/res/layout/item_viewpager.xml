@@ -17,6 +17,5 @@
         android:layout_gravity="center_vertical"
         android:gravity="center"
         android:text="电子科技大学信息与软件工程学院很棒"
-        android:textColor="@color/white"
         android:textSize="16sp" />
 </FrameLayout>

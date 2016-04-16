@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/rootViewBgColor">
 
     <ImageView
         android:id="@+id/img_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img_progressing_hourglass" />
+        android:background="@drawable/img_progressing_hourglass"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +25,13 @@
             android:text="为你发现最有趣的新鲜事，建议在 WiFi 下查看"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <ListView
             android:id="@+id/lv_stories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,12 +45,12 @@
                 android:background="@color/zhihuBlue"
                 android:text="编辑"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ListView
                 android:id="@+id/lv_editor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -8,15 +8,28 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--黑白色系-->
     <color name="white">#fff</color>
+    <color name="ivoryWhite">#FFFFF0</color><!--象牙色 -->
+    <color name="seashellWhite">#FFF5EE</color><!--海贝色 -->
+    <color name="smokeWhite">#F5F5F5</color>
+    <color name="lightWhite">#F5F5F5</color>
     <color name="black">#000</color>
+    <color name="asGray">#333</color>
+    <color name="deepGray">#404040</color>
+    <color name="mediumGray">#808080</color>
+    <color name="lightGray">#BFBFBF</color>
 
     <color name="indicator_1">#55B3C2</color>
     <color name="indicator_2">#64A4A4</color>
     <color name="indicator_3">#66D7B9</color>
     <color name="indicator_4">#FDBC7D</color>
-    <color name="zhihuBlue">#0079D9</color>
 
+    <color name="zhihuBlue">#0079D9</color>
+    <color name="zhihuGreen">#19C07C</color>
+    <color name="zhihuBlueDark">#0168B7</color>
+    <color name="Darken">#18255D</color>
 
     <color name="black_semi_transparent">#B2000000</color>
     <color name="background">#e5e5e5</color>

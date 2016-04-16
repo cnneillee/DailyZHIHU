@@ -34,7 +34,5 @@
                 android:layout_marginLeft="6dp"
                 android:src="@drawable/img_progressing_hourglass"/>
         </LinearLayout>
-
     </android.support.v7.widget.CardView>
-
 </LinearLayout>

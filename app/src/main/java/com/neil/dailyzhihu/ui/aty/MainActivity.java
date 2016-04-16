@@ -1,8 +1,6 @@
 package com.neil.dailyzhihu.ui.aty;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,12 +39,13 @@ public class MainActivity extends AppCompatActivity
     private final int PAST_FRAGMENT_IDX = 2;
     private final int THEME_FRAGMENT_IDX = 3;
     private final int SECTION_FRAGMENT_IDX = 4;
-    private final String theme = Constant.DEFAULT_TIME_THEME;
+    private String theme = Constant.DEFAULT_TIME_THEME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int themeRes = SharedPreferrenceHelper.getAppTheme(this);
+        theme = SharedPreferrenceHelper.gettheme(this);
         setTheme(themeRes);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,12 +82,6 @@ public class MainActivity extends AppCompatActivity
         dayMode.setOnClickListener(this);
     }
 
-    private enum DayMode {
-        DAY, NIGHT
-    }
-
-    DayMode mode = DayMode.DAY;
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -100,20 +92,22 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.iv_dayMode:
                 changeDayMode((ImageView) v);
-                Toast.makeText(this, "现在是晚上", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
     private void changeDayMode(ImageView v) {
-        if (mode == DayMode.DAY) {
-            Toast.makeText(this, "切换成夜间模式", Toast.LENGTH_SHORT).show();
-            v.setImageResource(R.drawable.ic_night);
-            mode = DayMode.NIGHT;
-        } else {
-            Toast.makeText(this, "切换成白天模式", Toast.LENGTH_SHORT).show();
-            v.setImageResource(R.drawable.ic_day);
-            mode = DayMode.DAY;
+        switch (theme) {
+            case Constant.DAY_TIME_THEME:
+                Toast.makeText(this, "切换成白天模式", Toast.LENGTH_SHORT).show();
+                v.setImageResource(R.drawable.ic_night);
+                Toast.makeText(this, "现在是白天", Toast.LENGTH_SHORT).show();
+                break;
+            case Constant.NIGHT_TIME_THEME:
+                Toast.makeText(this, "切换成夜间模式", Toast.LENGTH_SHORT).show();
+                v.setImageResource(R.drawable.ic_day);
+                Toast.makeText(this, "现在是夜间", Toast.LENGTH_SHORT).show();
+                break;
         }
         SharedPreferrenceHelper.switchAppTheme(this);
         reload();

@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="cardBackground" format="reference|color"/>
+    <!--Activity-->
+    <attr name="rootViewBgColor" format="reference|color"/>
+    <attr name="buttonBgColor" format="reference|color"/>
+    <attr name="defaultTextColor" format="reference|color"/>
+    <!--CardView-->
+    <attr name="cardViewBgColor" format="reference|color"/>
+    <attr name="cardViewTextTitleColor" format="reference|color"/>
+    <attr name="cardViewTextBodyColor" format="reference|color"/>
+    <attr name="cardViewTextHightLightColor" format="reference|color"/>
+    <attr name="cardViewTextExtraColor" format="reference|color"/>
+    <!--GridViewItem-->
+    <attr name="gridViewItemBgColor" format="reference|color"/>
+    <attr name="gridViewItemTextTitleColor" format="reference|color"/>
+    <attr name="gridViewItemTextBodyColor" format="reference|color"/>
+    <attr name="gridViewItemTextHightLightColor" format="reference|color"/>
+    <attr name="gridViewItemTextExtraColor" format="reference|color"/>
 </resources>
