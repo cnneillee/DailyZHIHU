@@ -43,4 +43,5 @@ public class Constant {
     public static final String DAY_TIME_THEME = "daytime";
     public static final String NIGHT_TIME_THEME = "nighttime";
     public static final String DEFAULT_TIME_THEME = DAY_TIME_THEME;
+    public static final String THEME_HEAD = "http://news-at.zhihu.com/api/4/theme/";
 }

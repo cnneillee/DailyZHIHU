@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.SectionStoryLisAdapter;
-import com.neil.dailyzhihu.bean.SectionStoryList;
+import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
+import com.neil.dailyzhihu.bean.story.SectionStoryList;
 import com.neil.dailyzhihu.utils.cnt.ContentLoader;
 import com.neil.dailyzhihu.utils.img.ImageLoader;
 
@@ -47,12 +47,12 @@ public class SectionActivity extends AppCompatActivity {
                 SectionStoryList sectionStoryList = gson.fromJson((String) s, SectionStoryList.class);
                 tvSectionName.setText(sectionStoryList.getName());
                 tvTimestamp.setText(sectionStoryList.getTimestamp() + "");
-                lvStories.setAdapter(new SectionStoryLisAdapter(SectionActivity.this, sectionStoryList.getStories()));
+                lvStories.setAdapter(new UniversalStoryListAdapter(sectionStoryList.getStories(), SectionActivity.this));
                 lvStories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         SectionStoryList.StoriesBean bean = (SectionStoryList.StoriesBean) parent.getAdapter().getItem(position);
-                        int storyId = bean.getId();
+                        int storyId = bean.getStoryId();
                         Intent intent = new Intent(SectionActivity.this, StoryActivity.class);
                         intent.putExtra("STORY_ID", storyId);
                         SectionActivity.this.startActivity(intent);

@@ -14,8 +14,8 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.HotStoryListAdapter;
-import com.neil.dailyzhihu.bean.HotStory;
+import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
+import com.neil.dailyzhihu.bean.story.HotStory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.cnt.ContentLoader;
 import com.neil.dailyzhihu.utils.img.ImageLoader;
@@ -62,7 +62,7 @@ public class HotFragment extends Fragment {
                 List<HotStory.RecentBean> recentBean = hotStories.getRecent();
                 if (lvHot == null)
                     return;
-                lvHot.setAdapter(new HotStoryListAdapter(context, recentBean));
+                lvHot.setAdapter(new UniversalStoryListAdapter(recentBean, context));
             }
         });
         lvHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,7 +70,7 @@ public class HotFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HotStory.RecentBean bean = (HotStory.RecentBean) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(context, StoryActivity.class);
-                intent.putExtra("STORY_ID", bean.getNews_id());
+                intent.putExtra("STORY_ID", bean.getStoryId());
                 startActivity(intent);
             }
         });

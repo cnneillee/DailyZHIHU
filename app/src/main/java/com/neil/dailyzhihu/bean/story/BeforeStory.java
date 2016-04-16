@@ -1,4 +1,6 @@
-package com.neil.dailyzhihu.bean;
+package com.neil.dailyzhihu.bean.story;
+
+import com.neil.dailyzhihu.bean.UniversalStoryBean;
 
 import java.util.List;
 
@@ -26,63 +28,40 @@ public class BeforeStory {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public List<StoriesBean> getStories() {
         return stories;
     }
 
-    public void setStories(List<StoriesBean> stories) {
-        this.stories = stories;
-    }
 
-    public class StoriesBean extends StoryBean {
+    public class StoriesBean implements UniversalStoryBean {
         private int type;
         private int id;
         private String ga_prefix;
         private String title;
         private List<String> images;
 
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getId() {
+        @Override
+        public int getStoryId() {
             return id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        @Override
+        public String getTitle() {
+            return title;
+        }
+
+        @Override
+        public List<String> getImages() {
+            return images;
         }
 
         public String getGa_prefix() {
             return ga_prefix;
         }
 
-        public void setGa_prefix(String ga_prefix) {
-            this.ga_prefix = ga_prefix;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public List<String> getImages() {
-            return images;
-        }
-
-        public void setImages(List<String> images) {
-            this.images = images;
+        public int getType() {
+            return type;
         }
     }
 }

@@ -16,6 +16,14 @@
 - 2016.04.16 day/nightMode(by restarting Activity)
 - 2016.04.16 topstory实现了ViewPager，夜间模式未完全实现
 - 2016.04.16 用item_lv_UniversalStory整合了三种story的item界面文件，添加了下方的extra信息
+- 2016.04.17 整合了story和block两类实体的adapter及实体自身
+  - 用UniversalStoryListAdapter整合了hotStoryListAdapter、latestStoryListAdapter、pastStoryListAdapter
+  - 用UniversalBlockGridAdapter整合了ThemeListAdapter、SectionListAdapter
+  - 用UniversalStoryBean整合了Story实体（三个）中关键部分（title、id、imgs）
+  - 用UniversalBlockBean整合了block实体（两个）中关键部分（title、id、imgs、description）
+  - 用item_gv_universal_block整合了theme、section列表的布局文件
+  - 部分section、theme无法进入（部分的url失效），仅作了粗糙处理
+  
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
 

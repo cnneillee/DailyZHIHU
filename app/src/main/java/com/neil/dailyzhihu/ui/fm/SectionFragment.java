@@ -12,8 +12,8 @@ import android.widget.GridView;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.SectionListAdapter;
-import com.neil.dailyzhihu.bean.SectionList;
+import com.neil.dailyzhihu.adapter.UniversalBlockGridView;
+import com.neil.dailyzhihu.bean.block.SectionList;
 import com.neil.dailyzhihu.utils.cnt.ContentLoader;
 import com.neil.dailyzhihu.utils.img.ImageLoader;
 
@@ -53,7 +53,7 @@ public class SectionFragment extends Fragment {
                 Gson gson = new Gson();
                 SectionList sectionList = gson.fromJson((String) s, SectionList.class);
                 List<SectionList.DataBean> mDatas = sectionList.getData();
-                gvSections.setAdapter(new SectionListAdapter(context, mDatas));
+                gvSections.setAdapter(new UniversalBlockGridView(context, mDatas));
             }
         });
     }

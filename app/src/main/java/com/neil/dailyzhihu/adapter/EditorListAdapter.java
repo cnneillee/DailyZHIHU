@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.ThemeStoryList;
+import com.neil.dailyzhihu.bean.story.ThemeStoryList;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 
 import java.util.List;
@@ -31,6 +31,7 @@ public class EditorListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (mDatas == null) return -1;
         return mDatas.size();
     }
 

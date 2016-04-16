@@ -1,5 +1,8 @@
-package com.neil.dailyzhihu.bean;
+package com.neil.dailyzhihu.bean.story;
 
+import com.neil.dailyzhihu.bean.UniversalStoryBean;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,75 +39,46 @@ public class LatestStory {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public List<StoriesBean> getStories() {
         return stories;
-    }
-
-    public void setStories(List<StoriesBean> stories) {
-        this.stories = stories;
     }
 
     public List<TopStoriesBean> getTop_stories() {
         return top_stories;
     }
 
-    public void setTop_stories(List<TopStoriesBean> top_stories) {
-        this.top_stories = top_stories;
-    }
-
-    public class StoriesBean extends StoryBean {
+    public class StoriesBean implements UniversalStoryBean {
         private int type;
         private int id;
         private String ga_prefix;
         private String title;
         private List<String> images;
 
-        public int getType() {
-            return type;
+        @Override
+        public String getTitle() {
+            return title;
         }
 
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getId() {
+        @Override
+        public int getStoryId() {
             return id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        @Override
+        public List<String> getImages() {
+            return images;
+        }
+
+        public int getType() {
+            return type;
         }
 
         public String getGa_prefix() {
             return ga_prefix;
         }
-
-        public void setGa_prefix(String ga_prefix) {
-            this.ga_prefix = ga_prefix;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public List<String> getImages() {
-            return images;
-        }
-
-        public void setImages(List<String> images) {
-            this.images = images;
-        }
     }
 
-    public class TopStoriesBean {
+    public class TopStoriesBean implements UniversalStoryBean {
         private String image;
         private int type;
         private int id;
@@ -112,48 +86,34 @@ public class LatestStory {
         private String title;
 
         @Override
+        public int getStoryId() {
+            return id;
+        }
+
+        @Override
+        public List<String> getImages() {
+            List<String> images = new ArrayList<>();
+            images.add(image);
+            return images;
+        }
+
+        @Override
+        public String getTitle() {
+            return title;
+        }
+
+
+        @Override
         public String toString() {
             return image + "\t" + type + "\t" + id + "\t" + ga_prefix + "\t" + title;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
         }
 
         public int getType() {
             return type;
         }
 
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
         public String getGa_prefix() {
             return ga_prefix;
-        }
-
-        public void setGa_prefix(String ga_prefix) {
-            this.ga_prefix = ga_prefix;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
         }
     }
 }

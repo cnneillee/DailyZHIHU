@@ -12,8 +12,8 @@ import android.widget.GridView;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.ThemeListAdapter;
-import com.neil.dailyzhihu.bean.ThemeList;
+import com.neil.dailyzhihu.adapter.UniversalBlockGridView;
+import com.neil.dailyzhihu.bean.block.ThemeList;
 import com.neil.dailyzhihu.utils.cnt.ContentLoader;
 import com.neil.dailyzhihu.utils.img.ImageLoader;
 
@@ -53,7 +53,7 @@ public class ThemeFragment extends Fragment {
                 Gson gson = new Gson();
                 ThemeList themes = gson.fromJson((String) s, ThemeList.class);
                 List<ThemeList.OthersBean> mDatas = themes.getOthers();
-                gvThemes.setAdapter(new ThemeListAdapter(context, mDatas));
+                gvThemes.setAdapter(new UniversalBlockGridView(context, mDatas));
             }
         });
     }

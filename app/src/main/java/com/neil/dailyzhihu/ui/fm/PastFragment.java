@@ -15,8 +15,8 @@ import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.LatestStoryListAdapter;
-import com.neil.dailyzhihu.bean.BeforeStory;
+import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
+import com.neil.dailyzhihu.bean.story.BeforeStory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 
@@ -51,13 +51,13 @@ public class PastFragment extends Fragment {
                         BeforeStory beforeStory = gson.fromJson(content, BeforeStory.class);
                         if (beforeStory != null) {
                             mDatas = beforeStory.getStories();
-                            lv.setAdapter(new LatestStoryListAdapter(mDatas, mContext));
+                            lv.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
                             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     BeforeStory.StoriesBean storiesBean = (BeforeStory.StoriesBean) parent.getAdapter().getItem(position);
                                     Intent intent = new Intent(mContext, StoryActivity.class);
-                                    intent.putExtra(Constant.STORY_ID, storiesBean.getId());
+                                    intent.putExtra(Constant.STORY_ID, storiesBean.getStoryId());
                                     mContext.startActivity(intent);
                                 }
                             });

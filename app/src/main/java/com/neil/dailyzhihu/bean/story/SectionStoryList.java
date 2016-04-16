@@ -1,4 +1,6 @@
-package com.neil.dailyzhihu.bean;
+package com.neil.dailyzhihu.bean.story;
+
+import com.neil.dailyzhihu.bean.UniversalStoryBean;
 
 import java.util.List;
 
@@ -49,51 +51,35 @@ public class SectionStoryList {
         this.stories = stories;
     }
 
-    public static class StoriesBean {
+    public class StoriesBean implements UniversalStoryBean {
         private String date;
         private String display_date;
         private int id;
         private String title;
         private List<String> images;
 
-        public String getDate() {
-            return date;
+        @Override
+        public String getTitle() {
+            return title;
         }
 
-        public void setDate(String date) {
-            this.date = date;
+        @Override
+        public int getStoryId() {
+            return id;
+        }
+
+        @Override
+        public List<String> getImages() {
+            return images;
+        }
+
+        public String getDate() {
+            return date;
         }
 
         public String getDisplay_date() {
             return display_date;
         }
 
-        public void setDisplay_date(String display_date) {
-            this.display_date = display_date;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public List<String> getImages() {
-            return images;
-        }
-
-        public void setImages(List<String> images) {
-            this.images = images;
-        }
     }
 }

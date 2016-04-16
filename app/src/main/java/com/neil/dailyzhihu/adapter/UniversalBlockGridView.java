@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.SectionList;
-import com.neil.dailyzhihu.ui.aty.SectionActivity;
+import com.neil.dailyzhihu.bean.UniversalBlockBean;
+import com.neil.dailyzhihu.ui.aty.ThemeActivity;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 
 import java.util.List;
@@ -21,15 +21,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Neil on 2016/3/23.
+ * Created by Neil on 2016/4/17.
  */
-public class SectionListAdapter extends BaseAdapter {
+public class UniversalBlockGridView<T extends UniversalBlockBean> extends BaseAdapter {
     private Context mContext;
-    private List<SectionList.DataBean> mDatas;
+    private List<T> mDatas;
 
-    public SectionListAdapter(Context mContext, List<SectionList.DataBean> mDatas) {
-        this.mContext = mContext;
-        this.mDatas = mDatas;
+    public UniversalBlockGridView(Context context, List<T> datas) {
+        this.mContext = context;
+        this.mDatas = datas;
     }
 
     @Override
@@ -51,22 +51,21 @@ public class SectionListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).
-                    inflate(R.layout.item_gv_theme, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gv_universal_block, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.ivTitle.setText(mDatas.get(position).getName());
+        vh.ivTitle.setText(mDatas.get(position).getTitle());
         vh.ivDescribsion.setText(mDatas.get(position).getDescription());
-        LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getThumbnail(), null);
+        LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
         vh.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sectionId = mDatas.get(position).getId();
-                Intent intent = new Intent(mContext, SectionActivity.class);
-                intent.putExtra(Constant.SECTIONS_ID, sectionId);
+                int themeId = mDatas.get(position).getStoryId();
+                Intent intent = new Intent(mContext, ThemeActivity.class);
+                intent.putExtra(Constant.THEME_ID, themeId);
                 mContext.startActivity(intent);
             }
         });

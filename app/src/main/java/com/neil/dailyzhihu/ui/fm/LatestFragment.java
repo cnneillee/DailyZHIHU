@@ -26,8 +26,8 @@ import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.LatestStoryListAdapter;
-import com.neil.dailyzhihu.bean.LatestStory;
+import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
+import com.neil.dailyzhihu.bean.story.LatestStory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 
@@ -85,13 +85,13 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
                 LatestStory latestStory = gson.fromJson(content, LatestStory.class);
                 if (latestStory != null) {
                     mDatas = latestStory.getStories();
-                    lv.setAdapter(new LatestStoryListAdapter(mDatas, mContext));
+                    lv.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             LatestStory.StoriesBean storiesBean = (LatestStory.StoriesBean) parent.getAdapter().getItem(position);
                             Intent intent = new Intent(mContext, StoryActivity.class);
-                            intent.putExtra(Constant.STORY_ID, storiesBean.getId());
+                            intent.putExtra(Constant.STORY_ID, storiesBean.getStoryId());
                             mContext.startActivity(intent);
                         }
                     });
@@ -107,7 +107,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         ImageView iv = (ImageView) v.findViewById(R.id.iv_img);
         TextView tv = (TextView) v.findViewById(R.id.tv_title);
         tv.setText(topStoryBean.getTitle());
-        LoaderFactory.getImageLoader().displayImage(iv, topStoryBean.getImage(), null);
+        LoaderFactory.getImageLoader().displayImage(iv, topStoryBean.getImages().get(0), null);
         return v;
     }
 
@@ -145,7 +145,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     public void onClick(View v) {
         if (mTopStoriesBeanList != null && pagercurrentidx >= 0) {
             LatestStory.TopStoriesBean bean = mTopStoriesBeanList.get(pagercurrentidx);
-            int storyId = bean.getId();
+            int storyId = bean.getStoryId();
             Intent intent = new Intent(mContext, StoryActivity.class);
             intent.putExtra(Constant.STORY_ID, storyId);
             startActivity(intent);

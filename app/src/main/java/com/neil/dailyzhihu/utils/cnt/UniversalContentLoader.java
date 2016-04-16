@@ -61,7 +61,6 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                 if (response.isSuccessful()) {
                     contentResult = response.body().string();
                 }
-                Log.e("ContentLoader", contentResult);
             } catch (IOException e) {
                 e.printStackTrace();
             }

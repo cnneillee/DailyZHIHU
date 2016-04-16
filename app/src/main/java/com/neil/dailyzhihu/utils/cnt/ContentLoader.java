@@ -1,7 +1,6 @@
 package com.neil.dailyzhihu.utils.cnt;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.neil.dailyzhihu.utils.img.ImageLoader;
 import com.squareup.okhttp.OkHttpClient;
