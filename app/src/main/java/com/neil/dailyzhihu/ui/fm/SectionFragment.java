@@ -98,9 +98,10 @@ public class SectionFragment extends Fragment implements ObservableScrollViewCal
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         SectionList.DataBean bean = mDatas.get(position);
         int sectionId = bean.getStoryId();
+        String sectionName = bean.getTitle();
         Intent intent = new Intent(mContext, SectionActivity.class);
         intent.putExtra(Constant.SECTION_ID, sectionId);
-        intent.putExtra(Constant.SECTION_NAME, sectionId);
+        intent.putExtra(Constant.SECTION_NAME, sectionName);
         startActivity(intent);
     }
 }

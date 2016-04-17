@@ -38,12 +38,17 @@ public class Constant {
     public static final String THEME_ID = "THEME_ID";
     public static final String STORY_ID = "STORY_ID";
     public static final String SECTION_NAME = "SECTION_NAME";
-
+    public static final String SECTION_BG_IMG_URL = "SECTION_BG_IMG_URL";
     public static final String DAY_MODE_THEME = "theme_mode";
     public static final String SHARED_PREFERANCE_NAME = "zhihu_daily_sp";
     public static final String DAY_TIME_THEME = "daytime";
     public static final String NIGHT_TIME_THEME = "nighttime";
     public static final String DEFAULT_TIME_THEME = DAY_TIME_THEME;
+
     public static final String THEME_HEAD = "http://news-at.zhihu.com/api/4/theme/";
     public static final String SECTIONS_HEAD = "http://news-at.zhihu.com/api/3/section/";
+    public static final String EDITOR_PROFULE_PAGE_HEAD = "http://news-at.zhihu.com/api/4/editor/";
+    public static final String EDITOR_PROFULE_PAGE_TAIL = "/profile-page/android";
+
+
 }

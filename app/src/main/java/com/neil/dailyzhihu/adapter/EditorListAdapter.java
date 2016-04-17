@@ -50,7 +50,7 @@ public class EditorListAdapter extends BaseAdapter {
         ViewHolder vh;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).
-                    inflate(R.layout.item_lv_editors_theme, parent, false);
+                    inflate(R.layout.item_lv_editor_theme, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {

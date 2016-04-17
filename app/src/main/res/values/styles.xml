@@ -12,7 +12,7 @@
         <item name="cardViewTextExtraColor">@color/mediumGray</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -51,5 +51,11 @@
         <item name="cardViewTextTitleColor">#61809E</item>
         <item name="defaultTextColor">#DBDBDB</item>
         <item name="rootViewBgColor">@color/Darken</item>
+    </style>
+
+    <style name="Toolbar" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
     </style>
 </resources>

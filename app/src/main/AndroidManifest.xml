@@ -26,7 +26,20 @@
         <activity
             android:name=".ui.aty.StoryActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.aty.SectionActivity"/>
-        <activity android:name=".ui.aty.ThemeActivity"/>
+        <activity
+            android:name=".ui.aty.ThemeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.neil.dailyzhihu.ui.aty.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.aty.SectionActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.neil.dailyzhihu.ui.aty.MainActivity"/>
+        </activity>
     </application>
 </manifest>
