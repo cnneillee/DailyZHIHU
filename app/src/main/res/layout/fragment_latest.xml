@@ -5,35 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="最新新闻"
-        android:textColor="?attr/defaultTextColor"/>
-
-    <!--<FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="160dp">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"/>
-
-
-        &lt;!&ndash;<github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/indicator"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:siIndicatorColor="@color/colorPrimary"
-            app:siIndicatorColors="@array/indicator_colors"
-            app:siSelectedTextColor="@android:color/white"
-            app:siTextColor="@color/colorPrimaryDark"
-            app:siTextSize="18sp" />&ndash;&gt;
-    </FrameLayout>
--->
     <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/lv_latest"
         android:layout_width="match_parent"

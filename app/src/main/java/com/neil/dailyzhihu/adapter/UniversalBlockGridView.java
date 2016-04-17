@@ -34,6 +34,8 @@ public class UniversalBlockGridView<T extends UniversalBlockBean> extends BaseAd
 
     @Override
     public int getCount() {
+        if (mDatas == null)
+            return -1;
         return mDatas.size();
     }
 
@@ -60,28 +62,19 @@ public class UniversalBlockGridView<T extends UniversalBlockBean> extends BaseAd
         vh.ivTitle.setText(mDatas.get(position).getTitle());
         vh.ivDescribsion.setText(mDatas.get(position).getDescription());
         LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
-        vh.ivImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int themeId = mDatas.get(position).getStoryId();
-                Intent intent = new Intent(mContext, ThemeActivity.class);
-                intent.putExtra(Constant.THEME_ID, themeId);
-                mContext.startActivity(intent);
-            }
-        });
         return convertView;
     }
+}
 
-    class ViewHolder {
-        @Bind(R.id.iv_img)
-        ImageView ivImg;
-        @Bind(R.id.iv_title)
-        TextView ivTitle;
-        @Bind(R.id.iv_describsion)
-        TextView ivDescribsion;
+class ViewHolder {
+    @Bind(R.id.iv_img)
+    ImageView ivImg;
+    @Bind(R.id.iv_title)
+    TextView ivTitle;
+    @Bind(R.id.iv_describsion)
+    TextView ivDescribsion;
 
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
+    ViewHolder(View view) {
+        ButterKnife.bind(this, view);
     }
 }

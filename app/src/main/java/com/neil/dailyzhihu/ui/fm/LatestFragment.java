@@ -42,7 +42,6 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     private Context mContext;
     private ObservableListView lv;
     private List<LatestStory.StoriesBean> mDatas;
-    //    private SpringIndicator springIndicator;
     private ViewPager viewPager;
     private SpringIndicator indicator;
     private int pagercurrentidx = -1;
@@ -63,13 +62,10 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         lv = (ObservableListView) view.findViewById(R.id.lv_latest);
         FrameLayout header = (FrameLayout) inflater.inflate(R.layout.viewpager_latest, null);
         viewPager = (ViewPager) header.findViewById(R.id.view_pager);
-//        indicator = (SpringIndicator) header.findViewById(R.id.indicator);
         lv.addHeaderView(header);
         lv.setScrollViewCallbacks(this);
         viewPager.setOnPageChangeListener(mSimpleOnPageChangeListener);
         viewPager.setOnClickListener(this);
-        //springIndicator = (SpringIndicator) view.findViewById(R.id.indicator);
-        //viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         return view;
     }
 
@@ -113,21 +109,17 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        Log.e("LOG", "onScrollChanged");
     }
 
     @Override
     public void onDownMotionEvent() {
-        Log.e("LOG", "onDownMotionEvent");
     }
 
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        Log.e("LOG", "onUpOrCancelMotionEvent");
         AppCompatActivity activity = (AppCompatActivity) mContext;
         ActionBar ab = activity.getSupportActionBar();
         if (ab == null) {
-            Log.e("LOG", "AB==null");
             return;
         }
         if (scrollState == ScrollState.UP) {
@@ -176,9 +168,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-//            super.destroyItem(container, position, object);
             container.removeView((View) object);
-//            container.removeView(listBean.get(position));
         }
 
         @Override

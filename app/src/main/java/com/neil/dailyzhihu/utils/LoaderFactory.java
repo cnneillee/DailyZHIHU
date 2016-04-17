@@ -48,6 +48,6 @@ public class LoaderFactory {
                 }
             }
         }
-        return (ContentLoaderWrapper) sInstanceCnt;
+        return sInstanceCnt;
     }
 }

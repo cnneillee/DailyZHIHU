@@ -7,8 +7,11 @@ import com.neil.dailyzhihu.bean.StoryExtra;
  */
 public class Formater {
     public static String formatStoryExtra(StoryExtra extra) {
-        return String.format("热度：%d，评论：%dL + %dS", extra.getPopularity(),
-                extra.getLong_comments(), extra.getShort_comments());
+        String result = "热度：-，评论：-L + -S";
+        if (extra != null)
+            result = String.format("热度：%d，评论：%dL + %dS", extra.getPopularity(),
+                    extra.getLong_comments(), extra.getShort_comments());
+        return result;
     }
 
     public static String formatUrl(String head, int id) {

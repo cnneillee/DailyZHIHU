@@ -34,9 +34,10 @@ public class Constant {
      */
     public static final String START_IMG_SIZE_MAX = START_IMG_HEAD + "1080*1776";
     public static final int START_ACTY_LAST_MILLIES = 2000;
-    public static final String SECTIONS_ID = "SECTION_ID";
+    public static final String SECTION_ID = "SECTION_ID";
     public static final String THEME_ID = "THEME_ID";
     public static final String STORY_ID = "STORY_ID";
+    public static final String SECTION_NAME = "SECTION_NAME";
 
     public static final String DAY_MODE_THEME = "theme_mode";
     public static final String SHARED_PREFERANCE_NAME = "zhihu_daily_sp";
@@ -44,4 +45,5 @@ public class Constant {
     public static final String NIGHT_TIME_THEME = "nighttime";
     public static final String DEFAULT_TIME_THEME = DAY_TIME_THEME;
     public static final String THEME_HEAD = "http://news-at.zhihu.com/api/4/theme/";
+    public static final String SECTIONS_HEAD = "http://news-at.zhihu.com/api/3/section/";
 }

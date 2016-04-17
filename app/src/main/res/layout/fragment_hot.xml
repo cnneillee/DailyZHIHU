@@ -4,13 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="最热新闻"
-        android:textColor="?attr/defaultTextColor"/>
-
-    <ListView
+    <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/lv_hot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

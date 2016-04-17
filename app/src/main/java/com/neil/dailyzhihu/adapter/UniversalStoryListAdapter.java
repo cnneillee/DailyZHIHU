@@ -64,8 +64,16 @@ public class UniversalStoryListAdapter<T extends UniversalStoryBean> extends Bas
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        cleanViewHolder(viewHolder);
         fillConvertViewContent(viewHolder, position);
         return convertView;
+    }
+
+    private void cleanViewHolder(ViewHolder viewHolder) {
+        String initExtra = Formater.formatStoryExtra(null);
+        viewHolder.tvExtra.setText(initExtra);
+        viewHolder.tvTitle.setText("");
+        viewHolder.ivImg.setImageResource(R.mipmap.img_default);
     }
 
     private void fillConvertViewContent(ViewHolder viewHolder, int position) {
@@ -87,7 +95,6 @@ public class UniversalStoryListAdapter<T extends UniversalStoryBean> extends Bas
             }
         });
     }
-
 
     class ViewHolder {
         @Bind(R.id.tv_title)

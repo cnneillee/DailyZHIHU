@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showFragment(int id) {
+        if (id < 0 || id >= fragments.size())
+            return;
         Fragment fragment = fragments.get(id);
         FragmentManager fm = this.getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.fragment, fragment).commit();
@@ -171,23 +174,47 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_latest) {
-            showFragment(LATEST_FRAGMENT_IDX);
-        } else if (id == R.id.nav_hot) {
-            showFragment(HOTTEST_FRAGMENT_IDX);
-        } else if (id == R.id.nav_past) {
-            showFragment(PAST_FRAGMENT_IDX);
-        } else if (id == R.id.nav_theme) {
-            showFragment(THEME_FRAGMENT_IDX);
-        } else if (id == R.id.nav_section) {
-            showFragment(SECTION_FRAGMENT_IDX);
-        } else if (id == R.id.nav_setting) {
-            Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
-        }
+        int fmIdx = getSelecteditemFragmentIdx(id);
+        String title = (String) item.getTitle();
+        showFragment(fmIdx);
+        setActionBarTitle(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setActionBarTitle(String title) {
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setTitle(title);
+        }
+    }
+
+    private int getSelecteditemFragmentIdx(int id) {
+        int fmIdx = -1;
+        switch (id) {
+            case R.id.nav_latest:
+                fmIdx = LATEST_FRAGMENT_IDX;
+                break;
+            case R.id.nav_hot:
+                fmIdx = HOTTEST_FRAGMENT_IDX;
+                break;
+            case R.id.nav_past:
+                fmIdx = PAST_FRAGMENT_IDX;
+                break;
+            case R.id.nav_theme:
+                fmIdx = THEME_FRAGMENT_IDX;
+                break;
+            case R.id.nav_section:
+                fmIdx = SECTION_FRAGMENT_IDX;
+                break;
+            case R.id.nav_setting:
+                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_send:
+                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return fmIdx;
     }
 }

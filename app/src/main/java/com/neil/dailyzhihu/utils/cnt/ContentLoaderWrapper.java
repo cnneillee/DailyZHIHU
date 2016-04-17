@@ -1,7 +1,5 @@
 package com.neil.dailyzhihu.utils.cnt;
 
-import android.widget.TextView;
-
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.utils.LoaderWrapper;
 

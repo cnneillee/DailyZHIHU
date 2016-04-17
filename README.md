@@ -23,7 +23,8 @@
   - 用UniversalBlockBean整合了block实体（两个）中关键部分（title、id、imgs、description）
   - 用item_gv_universal_block整合了theme、section列表的布局文件
   - 部分section、theme无法进入（部分的url失效），仅作了粗糙处理
-  
+  - 优化了MainActivity的toolBar（实现了MainActivity的toolBar的navItem文字切换及使用ObservableScrollListView/ObservableScrollGridView实现navItem内的隐藏）
+
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
 
