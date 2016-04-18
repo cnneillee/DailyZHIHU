@@ -1,20 +1,26 @@
 package com.neil.dailyzhihu.ui.aty;
 
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +36,20 @@ import com.neil.dailyzhihu.adapter.LongCommentListAdapter;
 import com.neil.dailyzhihu.bean.LongComment;
 import com.neil.dailyzhihu.bean.StoryContent;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
+import com.neil.dailyzhihu.ui.widget.ShareMenuPopupWindow;
+import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.LoaderFactory;
+import com.neil.dailyzhihu.utils.ShareHelper;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class StoryActivity extends BaseActivity implements ObservableScrollViewCallbacks {
+public class StoryActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener {
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
@@ -123,23 +135,9 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         View contentView = LayoutInflater.from(this).inflate(
                 R.layout.popupwindow_comments_menu, null);
         ListView lv = (ListView) contentView.findViewById(R.id.lv_pwmenu);
-        lv.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.item_lv_menu_small_text, new String[]{"长评论", "短评论"}));
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0://长评论
-                        Toast.makeText(StoryActivity.this, "查看长评论", Toast.LENGTH_SHORT).show();
-                        viewLongComments();
-                        break;
-                    case 1://短评论
-                        Toast.makeText(StoryActivity.this, "查看短评论", Toast.LENGTH_SHORT).show();
-                        viewShortComments();
-                        break;
-                }
-            }
-        });
+        lv.setAdapter(new ArrayAdapter<>(this,
+                R.layout.item_lv_menu_small_text, new String[]{"长评论", "短评论", "分享"}));
+        lv.setOnItemClickListener(this);
         pw = new PopupWindow(contentView,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, false);
@@ -207,12 +205,13 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     private int getExtras() {
         int storyId = -1;
         if (getIntent().getExtras() != null) {
-            storyId = getIntent().getIntExtra("STORY_ID", 0);
+            storyId = getIntent().getIntExtra(Constant.STORY_ID, 0);
         }
         return storyId;
     }
 
     private int storyId = -1;
+    private String storyTtitle;
 
     private void fillingContent(final int storyId) {
         this.storyId = storyId;
@@ -228,7 +227,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                 //TODO 图片加载
                 ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
                 loader.displayImage(mImageView, story.getImage(), null);
-                mTitleView.setText(story.getTitle());
+                storyTtitle = story.getTitle();
+                mTitleView.setText(storyTtitle);
 //                tvImgCopyRight.setText(story.getImage_source());
                 if (body == null)
                     return;
@@ -313,5 +313,77 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
             ViewPropertyAnimator.animate(mFab).scaleX(0).scaleY(0).setDuration(200).start();
             mFabIsShown = false;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0://长评论
+                Toast.makeText(StoryActivity.this, "查看长评论", Toast.LENGTH_SHORT).show();
+                viewLongComments();
+                break;
+            case 1://短评论
+                Toast.makeText(StoryActivity.this, "查看短评论", Toast.LENGTH_SHORT).show();
+                viewShortComments();
+                break;
+            case 2://分享
+                Toast.makeText(StoryActivity.this, "分享", Toast.LENGTH_SHORT).show();
+                showShareModule();
+                break;
+        }
+    }
+
+    private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position) {
+                case 0://生成图片
+                    Intent intent = new Intent(StoryActivity.this, ImageStoryActivity.class);
+                    startActivity(intent);
+                    break;
+                case 1://微信好友
+                    break;
+                case 2://票圈
+                    break;
+                case 3://空间
+                    break;
+                case 4://QQ
+                    break;
+                case 5://复制链接
+                    String storyUrl = getFullUrl(storyId);
+                    saveToClipboard(storyUrl);
+                    break;
+                case 6://更多
+                    String storyText = makeShareText();
+                    if (storyText == null)
+                        return;
+                    Toast.makeText(StoryActivity.this, "更多分享", Toast.LENGTH_SHORT).show();
+                    ShareHelper.shareMsg(StoryActivity.this, "StoryActivity", storyText, storyText, null);
+                    break;
+            }
+        }
+
+        private String makeShareText() {
+            if (storyId > 0)
+                return storyTtitle + Constant.STORY_HEAD + storyId + "\nvia DailyZHIHU";
+            return null;
+        }
+    };
+
+    private String getFullUrl(int storyId) {
+        if (storyId > 0)
+            return Formater.formatUrl(Constant.SECTIONS_HEAD, storyId);
+        return null;
+    }
+
+    private void saveToClipboard(String str) {
+        ClipboardManager cbm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        cbm.setText(str);
+    }
+
+    private void showShareModule() {
+        ShareMenuPopupWindow popupWindow = new ShareMenuPopupWindow(this, mOnItemClickListener);
+        //显示窗口
+        popupWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
     }
 }

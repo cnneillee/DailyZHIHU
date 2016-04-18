@@ -25,6 +25,7 @@
   - 部分section、theme无法进入（部分的url失效），仅作了粗糙处理
   - 优化了MainActivity的toolBar（实现了MainActivity的toolBar的navItem文字切换及使用ObservableScrollListView/ObservableScrollGridView实现navItem内的隐藏）
 - 2016.04.17 ThemeActivirt、SectionActivity的界面及功能优化
+- 2016.04.19 story多平台分享界面已经实现
 
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
