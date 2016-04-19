@@ -23,11 +23,16 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 
 /**
  * Created by Neil on 2016/4/19.
  */
-public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, PlatformActionListener {
     @Bind(R.id.rg_img_story_theme)
     RadioGroup mRgImgStoryTheme;
     @Bind(R.id.tv_content)
@@ -127,6 +132,8 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
                 case 1://票圈
                     break;
                 case 2://新浪微博
+                    Toast.makeText(ImageStoryActivity.this, "新浪微博分享", Toast.LENGTH_SHORT).show();
+                    sinaBlogShare(0);
                     break;
                 case 3://QQ好友
                     break;
@@ -137,6 +144,48 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
             }
         }
     };
+
+    private void sinaBlogShare(int i) {
+        ShareSDK.initSDK(this);
+        //2、设置分享内容
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setText("我是分享文本，啦啦啦~http://uestcbmi.com/"); //分享文本
+        sp.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片rul
+
+        //3、非常重要：获取平台对象
+        Platform sinaWeibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+        sinaWeibo.setPlatformActionListener(ImageStoryActivity.this); // 设置分享事件回调
+        // 执行分享
+        sinaWeibo.share(sp);
+    }
+
+    private void sinaBlogShare() {
+        ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题：微信、QQ（新浪微博不需要标题）
+        oks.setTitle("我是分享标题");  //最多30个字符
+
+        // text是分享文本：所有平台都需要这个字段
+        oks.setText("我是分享文本，啦啦啦~http://uestcbmi.com/");  //最多40个字符
+
+        // imagePath是图片的本地路径：除Linked-In以外的平台都支持此参数
+        //oks.setImagePath(Environment.getExternalStorageDirectory() + "/meinv.jpg");//确保SDcard下面存在此张图片
+
+        //网络图片的url：所有平台
+        oks.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片rul
+
+        // url：仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://sharesdk.cn");   //网友点进链接后，可以看到分享的详情
+
+        // Url：仅在QQ空间使用
+        oks.setTitleUrl("http://www.baidu.com");  //网友点进链接后，可以看到分享的详情
+
+        // 启动分享GUI
+        oks.show(this);
+    }
 
     private void showShareModule() {
         List<HashMap<String, Object>> mMenuData = getShareMenuModuleData();
@@ -184,5 +233,20 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
         Canvas c = new Canvas(screenshot);
         view.draw(c);
         return screenshot;
+    }
+
+    @Override
+    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+        Toast.makeText(getApplicationContext(), "微博分享成功", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onError(Platform platform, int i, Throwable throwable) {
+
+    }
+
+    @Override
+    public void onCancel(Platform platform, int i) {
+
     }
 }

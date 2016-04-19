@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -39,4 +40,5 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.5-sources.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile project(':onekeyshare')
 }

@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DailyZHIHU.iml" filepath="$PROJECT_DIR$/DailyZHIHU.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onekeyshare/onekeyshare.iml" filepath="$PROJECT_DIR$/onekeyshare/onekeyshare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharemainlibs/sharemainlibs.iml" filepath="$PROJECT_DIR$/sharemainlibs/sharemainlibs.iml" />
     </modules>
   </component>
 </project>
