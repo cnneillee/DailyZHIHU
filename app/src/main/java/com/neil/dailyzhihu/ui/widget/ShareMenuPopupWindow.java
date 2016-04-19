@@ -23,6 +23,30 @@ import java.util.List;
 public class ShareMenuPopupWindow extends PopupWindow {
     private Context mContext;
 
+    public ShareMenuPopupWindow(Context context, AdapterView.OnItemClickListener listener, List<HashMap<String, Object>> shareMenuData) {
+        super(context);
+        this.mContext = context;
+        View popupView = LayoutInflater.from(mContext).inflate(R.layout.popup_share_menu, null, false);
+        GridView gvShare = (GridView) popupView.findViewById(R.id.gv_sharePopup);
+        gvShare.setAdapter(new SimpleAdapter(context, shareMenuData, R.layout.item_popup_share_menu,
+                new String[]{"shareImg", "shareStr"}, new int[]{R.id.iv_img, R.id.tv_intro}));
+        gvShare.setOnItemClickListener(listener);
+        //设置SelectPicPopupWindow的View
+        this.setContentView(popupView);
+        //设置SelectPicPopupWindow弹出窗体的宽
+        this.setWidth(ViewGroup.LayoutParams.FILL_PARENT);
+        //设置SelectPicPopupWindow弹出窗体的高
+        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置SelectPicPopupWindow弹出窗体可点击
+        this.setFocusable(true);
+        //设置SelectPicPopupWindow弹出窗体动画效果
+        this.setAnimationStyle(android.support.design.R.anim.abc_grow_fade_in_from_bottom);
+        //实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0xbbbbbbbb);
+        //设置SelectPicPopupWindow弹出窗体的背景
+        this.setBackgroundDrawable(dw);
+    }
+
     public ShareMenuPopupWindow(Context context, AdapterView.OnItemClickListener listener) {
         super(context);
         this.mContext = context;

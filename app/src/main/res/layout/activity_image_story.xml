@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:id="@+id/main"
               android:orientation="vertical">
 
-    <RadioGroup
-        android:id="@+id/rg_img_story_theme"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="6dp">
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:title="生成图片"
+        android:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_left"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-        <RadioButton
-            android:id="@+id/rb_img_story_theme_white"
+        <RadioGroup
+            android:id="@+id/rg_img_story_theme"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/ivoryWhite"
-            android:checked="true"
-            android:text="优雅白"
-            android:textColor="@color/half_black"/>
+            android:layout_height="match_parent"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp">
 
-        <RadioButton
-            android:id="@+id/rb_img_story_theme_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/half_black"
-            android:text="深邃黑"
-            android:textColor="@color/ivoryWhite"/>
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb_img_story_theme_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/ivoryWhite"
+                android:checked="true"
+                android:padding="6dp"
+                android:text="优雅白"
+                android:textColor="@color/half_black"/>
+
+            <RadioButton
+                android:id="@+id/rb_img_story_theme_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/half_black"
+                android:padding="6dp"
+                android:text="深邃黑"
+                android:textColor="@color/ivoryWhite"/>
+        </RadioGroup>
+    </android.support.v7.widget.Toolbar>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,7 +60,9 @@
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lipsum"/>
+            android:padding="16dp"
+            android:text="@string/lipsum"
+            android:textSize="16sp"/>
     </ScrollView>
 
     <LinearLayout
