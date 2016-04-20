@@ -81,6 +81,7 @@ public class ShareMenuPopupWindow extends PopupWindow {
                 R.drawable.menu_share_friendcircle_item,
                 R.drawable.menu_share_qzone_item,
                 R.drawable.menu_share_qq_item,
+                R.drawable.menu_share_sina_item,
                 R.drawable.menu_share_copylink_item,
                 R.drawable.menu_share_more_item
         };

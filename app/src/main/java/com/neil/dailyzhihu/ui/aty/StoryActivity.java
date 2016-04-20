@@ -4,23 +4,21 @@ import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,15 +39,20 @@ import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 import com.neil.dailyzhihu.utils.ShareHelper;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
+import com.neil.dailyzhihu.utils.share.QQShare;
+import com.neil.dailyzhihu.utils.share.SinaShare;
+import com.neil.dailyzhihu.utils.share.Util;
+import com.neil.dailyzhihu.utils.share.WechatShare;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StoryActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener {
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+
+public class StoryActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener, PlatformActionListener {
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
@@ -67,6 +70,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     private TextView tvContent;
     private TextView tvImgCopyRight;
 //    private TextView tvTitle;
+
+    private static final String LOG_TAG = StoryActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +217,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
 
     private int storyId = -1;
     private String storyTtitle;
+    private StoryContent story;
 
     private void fillingContent(final int storyId) {
         this.storyId = storyId;
@@ -220,7 +226,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
             @Override
             public void onFinish(String content) {
                 Gson gson = new Gson();
-                StoryContent story = gson.fromJson(content, StoryContent.class);
+                story = gson.fromJson(content, StoryContent.class);
                 String body = story.getBody();
                 //TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。
                 //type=0正常，type特殊情况
@@ -329,6 +335,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
             case 2://分享
                 Toast.makeText(StoryActivity.this, "分享", Toast.LENGTH_SHORT).show();
                 showShareModule();
+//                share(story);
                 break;
         }
     }
@@ -336,29 +343,40 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            String title = story.getTitle();
+            String shareUrl = story.getShare_url();
+            String img = story.getImage();
+            String text = title + "\tmore? via zhihuDaily--->\t" + shareUrl;
             switch (position) {
                 case 0://生成图片
                     Intent intent = new Intent(StoryActivity.this, ImageStoryActivity.class);
                     startActivity(intent);
                     break;
                 case 1://微信好友
+                    WechatShare.wechatShareText(StoryActivity.this, StoryActivity.this, title, text, Util.WECHAT_FRIEND);
                     break;
                 case 2://票圈
+                    WechatShare.wechatShareText(StoryActivity.this, StoryActivity.this, title, text, Util.WECHAT_MOMENTS);
                     break;
                 case 3://空间
+                    QQShare.qqShareLink(StoryActivity.this, StoryActivity.this, title, shareUrl, text, "", img, Util.QZONE_NAME);
                     break;
                 case 4://QQ
+                    QQShare.qqShareLink(StoryActivity.this, StoryActivity.this, title, shareUrl, text, "", img, Util.QQ_NAME);
                     break;
-                case 5://复制链接
-                    String storyUrl = getFullUrl(storyId);
-                    saveToClipboard(storyUrl);
+                case 5://新浪微博
+                    SinaShare.sinaShareLink(StoryActivity.this, StoryActivity.this, text, "", img, shareUrl);
                     break;
-                case 6://更多
+                case 6://复制链接
+                    saveToClipboard(shareUrl);
+                    Toast.makeText(StoryActivity.this, "成功复制到剪贴板", Toast.LENGTH_SHORT).show();
+                    break;
+                case 7://更多
                     String storyText = makeShareText();
                     if (storyText == null)
                         return;
                     Toast.makeText(StoryActivity.this, "更多分享", Toast.LENGTH_SHORT).show();
-                    ShareHelper.shareMsg(StoryActivity.this, "StoryActivity", storyText, storyText, null);
+                    ShareHelper.orignalMsgShare(StoryActivity.this, "StoryActivity", storyText, storyText, null);
                     break;
             }
         }
@@ -372,7 +390,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
 
     private String getFullUrl(int storyId) {
         if (storyId > 0)
-            return Formater.formatUrl(Constant.SECTIONS_HEAD, storyId);
+            return Formater.formatUrl(Constant.URL_SHARE_STORY_HEAD, storyId);
         return null;
     }
 
@@ -385,5 +403,29 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         ShareMenuPopupWindow popupWindow = new ShareMenuPopupWindow(this, mOnItemClickListener);
         //显示窗口
         popupWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+    }
+
+    public void share(StoryContent story) {
+        if (story == null)
+            return;
+        String shareUrl = story.getShare_url();
+        Log.e(LOG_TAG, shareUrl);
+        ShareHelper.onKeyShareText(StoryActivity.this, story.getTitle(),
+                story.getTitle() + "via zhihuDaily" + story.getShare_url(), story.getImage());
+    }
+
+    @Override
+    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+    }
+
+    @Override
+    public void onError(Platform platform, int i, Throwable throwable) {
+
+    }
+
+    @Override
+    public void onCancel(Platform platform, int i) {
+
     }
 }

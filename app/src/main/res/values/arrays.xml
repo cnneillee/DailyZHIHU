@@ -13,6 +13,7 @@
         <item>空间</item>
         <item>QQ</item>
         <item>复制链接</item>
+        <item>新浪微博</item>
         <item>更多</item>
     </string-array>
     <integer-array name="share_menu_img">

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,14 +26,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 
 /**
  * Created by Neil on 2016/4/19.
  */
 public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, PlatformActionListener {
+    private static final String LOG_TAG = ImageStoryActivity.class.getName();
     @Bind(R.id.rg_img_story_theme)
     RadioGroup mRgImgStoryTheme;
     @Bind(R.id.tv_content)
@@ -42,7 +41,8 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
     @Bind(R.id.tv_save)
     TextView mTvSave;
 
-    private final String msgContent = "来自知乎-testMsgBody";
+    private final String msgContent = "我是分享文本，啦啦啦~http://uestcbmi.com/";
+    private final String imgUrl = "http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg";
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -105,17 +105,21 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
         switchSavingViewStyle();
     }
 
+    private String absoluteImagePath;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_share:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
-                showShareModule();
+                absoluteImagePath = saveView2SDCard(mTvContent, msgContent);
+                Log.e(LOG_TAG, "absoluteImagePath" + absoluteImagePath);
+                showSharePopupModule();
                 break;
             case R.id.tv_save:
-                String absolutePath = saveView2SDCard(mTvContent, msgContent);
-                if (absolutePath != null)
-                    Toast.makeText(this, "保存成功 " + absolutePath, Toast.LENGTH_SHORT).show();
+                absoluteImagePath = saveView2SDCard(mTvContent, msgContent);
+                if (absoluteImagePath != null)
+                    Toast.makeText(this, "保存成功 " + absoluteImagePath, Toast.LENGTH_SHORT).show();
                 else {
                     Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
                 }
@@ -128,74 +132,41 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0://微信好友
+                    //ShareHelper.onKeyShare(ImageStoryActivity.this, "Title", "text", absoluteImagePath, imgUrl);
+                    ShareHelper.weChatFriendShare(ImageStoryActivity.this, "TITLE", "TEXT", absoluteImagePath, ImageStoryActivity.this);
+                    Toast.makeText(ImageStoryActivity.this, "分享给 微信好友！此功能待开发", Toast.LENGTH_SHORT).show();
                     break;
                 case 1://票圈
+                    Toast.makeText(ImageStoryActivity.this, "分享到 朋友圈！此功能待开发", Toast.LENGTH_SHORT).show();
+                    ShareHelper.weChatCircle(ImageStoryActivity.this, "TITLE", "TEXT", absoluteImagePath, ImageStoryActivity.this);
                     break;
                 case 2://新浪微博
+                    ShareHelper.sinaWeiboShare(ImageStoryActivity.this, msgContent, absoluteImagePath, ImageStoryActivity.this);
                     Toast.makeText(ImageStoryActivity.this, "新浪微博分享", Toast.LENGTH_SHORT).show();
-                    sinaBlogShare(0);
                     break;
-                case 3://QQ好友
+                case 3://QQ好友\图片
+                    ShareHelper.qqShare(ImageStoryActivity.this, null, absoluteImagePath, ImageStoryActivity.this);
+                    Toast.makeText(ImageStoryActivity.this, "QQ分享", Toast.LENGTH_SHORT).show();
                     break;
                 case 4://更多
                     Toast.makeText(ImageStoryActivity.this, "更多分享", Toast.LENGTH_SHORT).show();
-                    shareViewImg(mTvContent, msgContent);
+                    String appName = ImageStoryActivity.this.getApplicationInfo().getClass().getSimpleName();
+                    ShareHelper.orignalMsgShare(ImageStoryActivity.this, appName, msgContent, "via DailyZHIHU", absoluteImagePath);
                     break;
             }
         }
     };
 
-    private void sinaBlogShare(int i) {
-        ShareSDK.initSDK(this);
-        //2、设置分享内容
-        Platform.ShareParams sp = new Platform.ShareParams();
-        sp.setText("我是分享文本，啦啦啦~http://uestcbmi.com/"); //分享文本
-        sp.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片rul
-
-        //3、非常重要：获取平台对象
-        Platform sinaWeibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-        sinaWeibo.setPlatformActionListener(ImageStoryActivity.this); // 设置分享事件回调
-        // 执行分享
-        sinaWeibo.share(sp);
-    }
-
-    private void sinaBlogShare() {
-        ShareSDK.initSDK(this);
-        OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
-
-        // title标题：微信、QQ（新浪微博不需要标题）
-        oks.setTitle("我是分享标题");  //最多30个字符
-
-        // text是分享文本：所有平台都需要这个字段
-        oks.setText("我是分享文本，啦啦啦~http://uestcbmi.com/");  //最多40个字符
-
-        // imagePath是图片的本地路径：除Linked-In以外的平台都支持此参数
-        //oks.setImagePath(Environment.getExternalStorageDirectory() + "/meinv.jpg");//确保SDcard下面存在此张图片
-
-        //网络图片的url：所有平台
-        oks.setImageUrl("http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg");//网络图片rul
-
-        // url：仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://sharesdk.cn");   //网友点进链接后，可以看到分享的详情
-
-        // Url：仅在QQ空间使用
-        oks.setTitleUrl("http://www.baidu.com");  //网友点进链接后，可以看到分享的详情
-
-        // 启动分享GUI
-        oks.show(this);
-    }
-
-    private void showShareModule() {
-        List<HashMap<String, Object>> mMenuData = getShareMenuModuleData();
+    private void showSharePopupModule() {
+        List<HashMap<String, Object>> mMenuData = getShareMenuPopupModuleData();
         ShareMenuPopupWindow popupWindow = new ShareMenuPopupWindow(this, mOnItemClickListener, mMenuData);
         //显示窗口//设置layout在PopupWindow中显示的位置
         popupWindow.showAtLocation(this.findViewById(R.id.main),
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
-    private List<HashMap<String, Object>> getShareMenuModuleData() {
+    //用于产生分享按钮中分享平台的GridViewItem
+    private List<HashMap<String, Object>> getShareMenuPopupModuleData() {
         String[] menuShareStr = new String[]{"微信好友", "微信朋友圈", "新浪微博", "QQ好友", "更多"};
         int[] menuShareImg = new int[]{
                 R.drawable.menu_share_wechat_item,
@@ -211,12 +182,6 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
             mMenuData.add(map);
         }
         return mMenuData;
-    }
-
-    private void shareViewImg(TextView tvContent, String imgName) {
-        String imgUri = saveView2SDCard(tvContent, imgName);
-        String appNmae = this.getApplicationInfo().getClass().getSimpleName();
-        ShareHelper.shareMsg(this, appNmae, imgName, "via DailyZHIHU", imgUri);
     }
 
     private String saveView2SDCard(TextView tvContent, String imgName) {
@@ -237,7 +202,7 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        Toast.makeText(getApplicationContext(), "微博分享成功", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "成功分享到 " + platform.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

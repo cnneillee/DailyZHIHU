@@ -26,7 +26,8 @@ public class StorageOperatingHelper {
         File fileDir = new File(dir, pkgName);
         if (!fileDir.exists())
             fileDir.mkdirs();
-        File file = new File(fileDir, imgName + ".png");
+//        File file = new File(fileDir, imgName + ".png");
+        File file = new File(fileDir, System.currentTimeMillis() + ".png");
         if (!file.exists()) {
             try {
                 file.createNewFile();

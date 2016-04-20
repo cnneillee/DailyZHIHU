@@ -11,6 +11,9 @@ public class Constant {
     public static final String HOT_NEWS = "http://news-at.zhihu.com/api/4/news/hot";
     public static final String STORY_HEAD = "http://news-at.zhihu.com/api/4/news/";
     public static final String EXTRA_HEAD = "http://news-at.zhihu.com/api/4/story-extra/";
+    public static final String URL_SHARE_STORY_HEAD = "http://daily.zhihu.com/story/";
+
+
     /**
      * 启动界面图像
      * START_IMG_HEAD+"320*432"(480*728/720*1184/1080*1776)
