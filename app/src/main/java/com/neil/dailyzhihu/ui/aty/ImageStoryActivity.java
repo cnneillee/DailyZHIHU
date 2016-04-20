@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.widget.ShareMenuPopupWindow;
 import com.neil.dailyzhihu.utils.ShareHelper;
@@ -66,6 +68,8 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
         mRgImgStoryTheme.setOnCheckedChangeListener(this);
         mTvShare.setOnClickListener(this);
         mTvSave.setOnClickListener(this);
+
+        getExtra();
     }
 
     @Override
@@ -213,5 +217,13 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
     @Override
     public void onCancel(Platform platform, int i) {
 
+    }
+
+    public void getExtra() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String body = bundle.getString(Constant.STORY_BODY);
+            mTvContent.setText(Html.fromHtml(body));
+        }
     }
 }

@@ -54,4 +54,5 @@ public class Constant {
     public static final String EDITOR_PROFULE_PAGE_TAIL = "/profile-page/android";
 
 
+    public static final String STORY_BODY = "STORY_BODY";
 }

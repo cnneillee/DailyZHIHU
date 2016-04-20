@@ -350,6 +350,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
             switch (position) {
                 case 0://生成图片
                     Intent intent = new Intent(StoryActivity.this, ImageStoryActivity.class);
+                    intent.putExtra(Constant.STORY_BODY, story.getBody());
                     startActivity(intent);
                     break;
                 case 1://微信好友
