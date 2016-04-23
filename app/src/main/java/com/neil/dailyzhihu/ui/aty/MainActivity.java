@@ -208,6 +208,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_section:
                 fmIdx = SECTION_FRAGMENT_IDX;
                 break;
+            case R.id.nav_custom:
+                Intent intent = new Intent(this,CustomizeActivity.class);
+                Toast.makeText(this, "个性化", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                break;
             case R.id.nav_setting:
                 Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
                 break;

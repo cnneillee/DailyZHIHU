@@ -1,5 +1,6 @@
 package com.neil.dailyzhihu.utils;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -142,6 +143,11 @@ public class ShareHelper {
             pm.share(sp);
             Log.e(LOG_TAG, "weChatFriendShare" + "pm excuted successful");
         }
+    }
+
+    public static void saveToClipboard(String str, Context context) {
+        ClipboardManager cbm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        cbm.setText(str);
     }
 
     /**

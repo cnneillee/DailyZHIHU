@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/iv_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_progressing_hourglass"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_title"
@@ -17,9 +11,14 @@
         android:layout_gravity="center_vertical|bottom"
         android:background="@drawable/frosted_glass_black"
         android:ellipsize="end"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:lines="2"
         android:padding="6dp"
-        android:text="电子科技大学信息与软件工程学院很棒"
-        android:textSize="16sp"/>
-</FrameLayout>
+        android:text="评论信息"
+        android:textSize="13sp"/>
+
+    <ListView
+        android:id="@+id/lv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

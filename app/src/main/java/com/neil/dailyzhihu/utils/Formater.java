@@ -2,6 +2,9 @@ package com.neil.dailyzhihu.utils;
 
 import com.neil.dailyzhihu.bean.StoryExtra;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Neil on 2016/4/16.
  */
@@ -20,5 +23,16 @@ public class Formater {
 
     public static String formatUrl(String head, int id, String tail) {
         return head + id + tail;
+    }
+
+    public static String formatData(String dataFormat, long timeStamp) {
+        if (timeStamp == 0) {
+            return "";
+        }
+        timeStamp = timeStamp * 1000;
+        String result = "";
+        SimpleDateFormat format = new SimpleDateFormat(dataFormat);
+        result = format.format(new Date(timeStamp));
+        return result;
     }
 }

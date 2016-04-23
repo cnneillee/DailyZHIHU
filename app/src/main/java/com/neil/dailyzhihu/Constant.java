@@ -55,4 +55,5 @@ public class Constant {
 
 
     public static final String STORY_BODY = "STORY_BODY";
+    public static final String COMMENT_HEAD = "http://news-at.zhihu.com/api/4/story/";
 }

@@ -1,6 +1,8 @@
 package com.neil.dailyzhihu.adapter;
 
 import android.content.Context;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.LongComment;
+import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 
 import java.util.List;
@@ -58,9 +61,12 @@ public class LongCommentListAdapter extends BaseAdapter {
         LoaderFactory.getImageLoader().displayImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
         vh.tvAuthor.setText(mDatas.get(position).getAuthor());
         vh.tvContent.setText(mDatas.get(position).getContent());
-        vh.tvId.setText(mDatas.get(position).getId() + "");
-        vh.tvLikes.setText(mDatas.get(position).getLikes() + "");
-        vh.tvTime.setText(mDatas.get(position).getTime() + "");
+        //vh.tvId.setText(mDatas.get(position).getId() + "");
+        vh.tvLikes.setText(mDatas.get(position).getLikes() + " 个赞");
+        long timestamp = mDatas.get(position).getTime();
+        String result = Formater.formatData("yyyy/MM/dd HH:mm", timestamp);
+//        String result = (String) DateUtils.getRelativeTimeSpanString(context, timestamp);
+        vh.tvTime.setText(result);
         return convertView;
     }
 
@@ -73,8 +79,6 @@ public class LongCommentListAdapter extends BaseAdapter {
         TextView tvContent;
         @Bind(R.id.tv_time)
         TextView tvTime;
-        @Bind(R.id.tv_id)
-        TextView tvId;
         @Bind(R.id.tv_likes)
         TextView tvLikes;
 

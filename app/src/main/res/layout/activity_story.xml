@@ -34,7 +34,7 @@
         android:layout_height="@dimen/flexible_space_image_height"
         android:background="?attr/colorPrimary"/>
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    <com.neil.dailyzhihu.ui.widget.ScrollViewHasViewPager
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,6 +42,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/ll_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -61,8 +62,28 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:text="@string/lipsum"/>
+
+            <TextView
+                android:id="@+id/tv_loading_comment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/ivoryWhite"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="2"
+                android:padding="6dp"
+                android:text="点击加载评论"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <include
+                layout="@layout/comment_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+
+    </com.neil.dailyzhihu.ui.widget.ScrollViewHasViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,6 +107,7 @@
             android:layout_height="@dimen/flexible_space_image_height"
             android:background="@android:color/transparent"/>
     </LinearLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
