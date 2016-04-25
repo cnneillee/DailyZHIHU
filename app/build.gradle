@@ -42,4 +42,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile project(':onekeyshare')
     compile files('libs/zxing.jar')
+    compile files('libs/jsoup-1.8.3.jar')
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
 }

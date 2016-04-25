@@ -2,6 +2,7 @@ package com.neil.dailyzhihu.utils.img;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.neil.dailyzhihu.R;
@@ -163,14 +164,14 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
         // or you can create default configuration by
         //  ImageLoaderConfiguration.createDefault(this);
         // method.
+        Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
         config.threadPriority(Thread.NORM_PRIORITY - 2);
         config.denyCacheImageMultipleSizesInMemory();
-        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheFileNameGenerator(md5FileNameGenerator);
         config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
         config.writeDebugLogs(); // Remove for release app
-
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
     }

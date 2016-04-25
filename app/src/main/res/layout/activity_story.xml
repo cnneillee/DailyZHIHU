@@ -100,7 +100,7 @@
             android:maxLines="1"
             android:minHeight="?attr/actionBarSize"
             android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"

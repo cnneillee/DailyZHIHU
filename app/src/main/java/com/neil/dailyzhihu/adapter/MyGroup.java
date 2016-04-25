@@ -1,5 +1,7 @@
 package com.neil.dailyzhihu.adapter;
 
+import com.neil.dailyzhihu.utils.db.FavoriteStory;
+
 import java.util.List;
 
 /**
@@ -12,14 +14,14 @@ public class MyGroup {
         return name;
     }
 
-    List<Child> mChildList;
+    List<FavoriteStory> mChildList;
 
-    public MyGroup(String name, List<Child> childList) {
+    public MyGroup(String name, List<FavoriteStory> childList) {
         this.name = name;
         mChildList = childList;
     }
 
-    public List<Child> getChildList() {
+    public List<FavoriteStory> getChildList() {
         return mChildList;
     }
 }

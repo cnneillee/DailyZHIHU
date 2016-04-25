@@ -104,6 +104,68 @@ public class StoryContent {
     private int type;
     private int id;
     private List<?> js;
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    private String imageUri;
+
+    public StoryContent() {
+    }
+
+    public StoryContent(String imageUri, int id, int type, String ga_prefix, String share_url, String image, String image_source, String title, String body) {
+        this.imageUri = imageUri;
+        this.id = id;
+        this.type = type;
+        this.ga_prefix = ga_prefix;
+        this.share_url = share_url;
+        this.image = image;
+        this.image_source = image_source;
+        this.title = title;
+        this.body = body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setImage_source(String image_source) {
+        this.image_source = image_source;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
+
+    public void setGa_prefix(String ga_prefix) {
+        this.ga_prefix = ga_prefix;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setJs(List<?> js) {
+        this.js = js;
+    }
+
+    public void setCss(List<String> css) {
+        this.css = css;
+    }
+
     private List<String> css;
 
     public String getBody() {

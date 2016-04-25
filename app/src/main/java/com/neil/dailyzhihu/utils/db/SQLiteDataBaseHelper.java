@@ -4,22 +4,32 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Neil on 2016/4/22.
- */
+import com.neil.dailyzhihu.utils.db.catalog.HottestCatalogDB;
+import com.neil.dailyzhihu.utils.db.catalog.LatestCatalogDB;
+import com.neil.dailyzhihu.utils.db.catalog.StoryCatalog;
+
 public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "com.neillee.dailyzhihu";
     private String favoriteTableName;
+    private String dailyTableName;
+    private String storyCatalogTableName;
+    private String hotteststoryCatalogTableName;
 
     public SQLiteDataBaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
         favoriteTableName = FavoriteStoryDB.getCreatedStatement();
+        dailyTableName = StoryDB.getCreateStatement();
+        storyCatalogTableName = LatestCatalogDB.getCreateStatement();
+        hotteststoryCatalogTableName = HottestCatalogDB.getCreateStatement();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(favoriteTableName);
+        db.execSQL(dailyTableName);
+        db.execSQL(storyCatalogTableName);
+        db.execSQL(hotteststoryCatalogTableName);
     }
 
     @Override

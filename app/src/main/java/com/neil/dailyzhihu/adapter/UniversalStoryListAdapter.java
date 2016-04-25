@@ -13,6 +13,7 @@ import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.StoryExtra;
 import com.neil.dailyzhihu.bean.UniversalStoryBean;
+import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Neil on 2016/4/16.
  */
-public class UniversalStoryListAdapter<T extends UniversalStoryBean> extends BaseAdapter {
+public class UniversalStoryListAdapter<T extends SimpleStory> extends BaseAdapter {
     private List<T> mDatas;
     private Context mContext;
 
@@ -78,9 +79,9 @@ public class UniversalStoryListAdapter<T extends UniversalStoryBean> extends Bas
 
     private void fillConvertViewContent(ViewHolder viewHolder, int position) {
         viewHolder.tvTitle.setText(mDatas.get(position).getTitle());
-        if (mDatas.get(position).getImages() == null)
+        if (mDatas.get(position).getImageUrl() == null)
             return;
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, mDatas.get(position).getImages().get(0), null);
+        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, mDatas.get(position).getImageUrl(), null);
         loadExtra(viewHolder, position);
     }
 
@@ -103,7 +104,6 @@ public class UniversalStoryListAdapter<T extends UniversalStoryBean> extends Bas
         TextView tvExtra;
         @Bind(R.id.iv_img)
         ImageView ivImg;
-
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

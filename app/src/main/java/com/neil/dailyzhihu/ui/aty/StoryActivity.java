@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -47,6 +46,8 @@ import com.neil.dailyzhihu.utils.StorageOperatingHelper;
 import com.neil.dailyzhihu.utils.db.FavoriteStory;
 import com.neil.dailyzhihu.utils.db.FavoriteStoryDBdao;
 import com.neil.dailyzhihu.utils.db.FavoriteStoryDBdaoFactory;
+import com.neil.dailyzhihu.utils.db.StoryDB;
+import com.neil.dailyzhihu.utils.db.StoryDBFactory;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.share.QQShare;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
@@ -55,6 +56,8 @@ import com.neil.dailyzhihu.utils.share.Util;
 import com.neil.dailyzhihu.utils.share.WechatShare;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,26 +69,21 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 
 public class StoryActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener, PlatformActionListener, View.OnClickListener {
-
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
     @Bind(R.id.image)
     ImageView mImageView;
     @Bind(R.id.overlay)
     View mOverlayView;
-    @Bind(R.id.tvContent)
-    TextView mTvContent;
     @Bind(R.id.tv_loading_comment)
     TextView mLoadingComment;
-    @Bind(R.id.vp_comment)
-    ViewPager mVPComment;
-    @Bind(R.id.ll_scroll)
-    LinearLayout llScroll;
     @Bind(R.id.scroll)
     ObservableScrollView mScrollView;
     @Bind(R.id.title)
     TextView mTitleView;
     @Bind(R.id.fab)
     FloatingActionButton mFab;
+    @Bind(R.id.tvContent)
+    TextView mTvContent;
 
     private int mActionBarSize;
     private int mFlexibleSpaceShowFabOffset;
@@ -93,11 +91,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     private int mFabMargin;
     private boolean mFabIsShown;
 
-    private TextView tvContent;
-    private TextView tvImgCopyRight;
-//    private TextView tvTitle;
-
-    private TextView tvCommentType;
+    private String storyPath;
 
     private static final String LOG_TAG = StoryActivity.class.getSimpleName();
 
@@ -107,24 +101,24 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         setContentView(R.layout.activity_story);
         ButterKnife.bind(this);
 
-        int storyId = getExtras();
-        storyId = 8150357;
+        initObserableListViewUIParams();
+        initEntranceIntentData();
+    }
+
+    private void initEntranceIntentData() {
+        int storyId = getExtrasStoryId();
         if (storyId > 0)
             fillingContent(storyId);
+    }
 
-        tvContent = (TextView) findViewById(R.id.tvContent);
-//        tvImgCopyRight = (TextView) findViewById(R.id.img_copyright);
-//        tvTitle= (TextView) findViewById(R.id.title);
-
+    private void initObserableListViewUIParams() {
         mFlexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
         mFlexibleSpaceShowFabOffset = getResources().getDimensionPixelSize(R.dimen.flexible_space_show_fab_offset);
         mActionBarSize = getActionBarSize();
-
-        mScrollView.setScrollViewCallbacks(this);
-        tvCommentType = (TextView) findViewById(R.id.commentType);
-        mLoadingComment.setOnClickListener(this);
         mTitleView.setText(getTitle());
         setTitle(null);
+        mScrollView.setScrollViewCallbacks(this);
+        mLoadingComment.setOnClickListener(this);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,42 +129,28 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         mFabMargin = getResources().getDimensionPixelSize(R.dimen.margin_standard);
         ViewHelper.setScaleX(mFab, 0);
         ViewHelper.setScaleY(mFab, 0);
-
         ScrollUtils.addOnGlobalLayoutListener(mScrollView, new Runnable() {
             @Override
             public void run() {
-                //挡住照片
-                // mScrollView.scrollTo(0, mFlexibleSpaceImageHeight - mActionBarSize);
                 //正好显现出照片
                 onScrollChanged(0, false, false);
-                // If you'd like to start from scrollY == 0, don't write like this:
-                //mScrollView.scrollTo(0, 0);
-                // The initial scrollY is 0, so it won't invoke onScrollChanged().
-                // To do this, use the following:
-                //onScrollChanged(0, false, false);
-
-                // You can also achieve it with the following codes.
-                // This causes scroll change from 1 to 0.
-                //mScrollView.scrollTo(0, 1);
-                //mScrollView.scrollTo(0, 0);
             }
         });
     }
 
-
-    private PopupWindow pw = null;
+    private PopupWindow mFabPW = null;
 
     //构造并显示mFab点击后弹出的popupwindow
     private void buildingCommentPopupWindow() {
-        if (pw != null)
-            pw.showAsDropDown(mFab);
+        if (mFabPW != null)
+            mFabPW.showAsDropDown(mFab);
         else {
-            pw = new CommentsPopupwindow(this, new String[]{"查看评论", "收藏", "分享", "二维码"}, this);
-            pw.showAsDropDown(mFab);
+            mFabPW = new CommentsPopupwindow(this, new String[]{"查看评论", "收藏", "分享", "二维码"}, this);
+            mFabPW.showAsDropDown(mFab);
         }
     }
 
-    private int getExtras() {
+    private int getExtrasStoryId() {
         int storyId = -1;
         if (getIntent().getExtras() != null) {
             storyId = getIntent().getIntExtra(Constant.STORY_ID, 0);
@@ -178,33 +158,83 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         return storyId;
     }
 
-    private int storyId = -1;
-    private String storyTtitle;
     private StoryContent story;
 
-    private void fillingContent(final int storyId) {
-        this.storyId = storyId;
+    private boolean has = false;
+    private ImageLoadingListener mImageLoadingListener = new ImageLoadingListener() {
+        @Override
+        public void onLoadingStarted(String imageUri, View view) {
 
+        }
+
+        @Override
+        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+        }
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            if (loadedImage == null || has)
+                return;
+            has = true;
+            String path = StorageOperatingHelper.savingFavoriteStoryBitmap2SD(StoryActivity.this, loadedImage, story.getId() + "");
+            storyPath = path;
+            Log.e(LOG_TAG, "path-" + path);
+        }
+
+        @Override
+        public void onLoadingCancelled(String imageUri, View view) {
+
+        }
+    };
+
+    private void fillingContent(final int storyId) {
+        //本地数据库查询
+        List<FavoriteStory> storyList = FavoriteStoryDBdaoFactory.getInstance(this).queryStoryById(storyId);
+        if (storyList != null && storyList.size() > 0) {
+            story = FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(storyList.get(0));
+            ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
+            Log.e(LOG_TAG, "file://" + story.getImageUri());
+            // /storage/emulated/0/com.neil.dailyzhihu/image/favorite/8207616.png
+            // /mnt/sdcard/
+            loader.displayImage(mImageView, "file://" + story.getImageUri(), null);
+            mTvContent.setText(Html.fromHtml(story.getBody()));
+            mTitleView.setText(story.getTitle());
+            mTvContent.setVisibility(View.VISIBLE);
+            return;
+        }
+        //api接口下载
+        fillingContentUsingAPI(storyId);
+    }
+
+    private boolean hasInsert = false;
+
+    private void fillingContentUsingAPI(int storyId) {
         LoaderFactory.getContentLoader().loadContent(Constant.STORY_HEAD + storyId, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
-                Gson gson = new Gson();
-                story = gson.fromJson(content, StoryContent.class);
-                String body = story.getBody();
-                //TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。
-                //type=0正常，type特殊情况
-                //TODO 图片加载
+                //TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。type=0正常，type特殊情况
                 ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-                loader.displayImage(mImageView, story.getImage(), null);
-                storyTtitle = story.getTitle();
+                story = (StoryContent) GsonDecoder.getDecoder().decoding(content, StoryContent.class);
+                loader.displayImage(mImageView, story.getImage(), null, mImageLoadingListener);
+                String body = story.getBody();
+                if (body != null)
+                    mTvContent.setText(Html.fromHtml(body));
+                String storyTtitle = story.getTitle();
                 mTitleView.setText(storyTtitle);
-//                tvImgCopyRight.setText(story.getImage_source());
-                if (body == null)
-                    return;
-                tvContent.setText(Html.fromHtml(body));
-                tvContent.setVisibility(View.VISIBLE);
+                if (!hasInsert) {
+                    //将下载后的数据写入数据库中
+                    writeStoryIntoDB(story);
+                    hasInsert = true;
+                }
             }
         });
+    }
+
+    private void writeStoryIntoDB(StoryContent story) {
+        int resultCode = (int) StoryDBFactory.getInstance(this).addStory(StoryDBFactory.convertStoryContent2DBStory(story));
+        if (resultCode > 0)
+            Toast.makeText(this, "缓存成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -306,6 +336,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         if (story != null) {
             FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(story);
             FavoriteStory favoriteStory = FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(story);
+            favoriteStory.setImgPath(storyPath);
             FavoriteStoryDBdao dao = FavoriteStoryDBdaoFactory.getInstance(this);
             if (dao.addStory(favoriteStory) != -1)
                 Toast.makeText(StoryActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
@@ -398,8 +429,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         }
 
         private String makeShareText() {
-            if (storyId > 0)
-                return storyTtitle + Constant.STORY_HEAD + storyId + "\nvia DailyZHIHU";
+            if (story != null)
+                return story.getTitle() + Constant.STORY_HEAD + story.getId() + "\nvia DailyZHIHU";
             return null;
         }
     };
@@ -452,7 +483,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     private void loadingComment(final List<View> views, final ViewPager vp) {
         final String tail = "/long-comments";
         final String tailShort = "/short-comments";
-
+        final String storyId = story.getId() + "";
         LoaderFactory.getContentLoader().loadContent(Constant.COMMENT_HEAD + storyId + tail, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
@@ -488,9 +519,9 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     //加载页卡
     public List<View> loadingViewPagerCard() {
         List<View> views = new ArrayList<>();
-        View view = getLayoutInflater().inflate(R.layout.item_viewpager, null);
+        View view = getLayoutInflater().inflate(R.layout.vp_item_comment, null);
         views.add(view);
-        view = getLayoutInflater().inflate(R.layout.item_viewpager, null);
+        view = getLayoutInflater().inflate(R.layout.vp_item_comment, null);
         views.add(view);
         return views;
     }

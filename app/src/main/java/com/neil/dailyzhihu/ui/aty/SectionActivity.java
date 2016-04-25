@@ -20,11 +20,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -34,7 +34,10 @@ import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
-import com.neil.dailyzhihu.bean.story.SectionStoryList;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
+import com.neil.dailyzhihu.bean.orignallayer.SectionStoryList;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -45,6 +48,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SectionActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener {
+    private static final String LOG_TAG = SectionActivity.class.getSimpleName();
     @Bind(R.id.image)
     ImageView mImageView;
     // mListBackgroundView makes ListView's background except header view.
@@ -106,10 +110,8 @@ public class SectionActivity extends BaseActivity implements ObservableScrollVie
             @Override
             public void onFinish(String content) {
                 SectionStoryList sectionStoryList = (SectionStoryList) GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
-//                tvTimestamp.setText(sectionStoryList.getTimestamp() + "");
-                //图片过小，就不显示了
-                //LoaderFactory.getImageLoader().displayImage(mImageView, sectionBGImgUrl, null);
-                mListView.setAdapter(new UniversalStoryListAdapter(sectionStoryList.getStories(), SectionActivity.this));
+                CleanSectionStoryListBean cleanSectionStoryListBean = CleanDataHelper.cleanSectionStoryList(sectionStoryList);
+                mListView.setAdapter(new UniversalStoryListAdapter(cleanSectionStoryListBean.getSectionStoryList(), SectionActivity.this));
             }
         });
         setActionBarText();
@@ -125,7 +127,7 @@ public class SectionActivity extends BaseActivity implements ObservableScrollVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SectionStoryList.StoriesBean bean = (SectionStoryList.StoriesBean) parent.getAdapter().getItem(position);
+        SimpleStory bean = (SimpleStory) parent.getAdapter().getItem(position);
         int storyId = bean.getStoryId();
         Intent intent = new Intent(SectionActivity.this, StoryActivity.class);
         intent.putExtra(Constant.STORY_ID, storyId);

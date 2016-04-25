@@ -5,7 +5,7 @@ package com.neil.dailyzhihu.utils.db;
  */
 public class FavoriteStory {
 
-    public FavoriteStory(String storyId, String editedTimestamp, String title, String shareUrl, String imgUrl, String imgsrc, String body, String downloadedTimestamp, String staredTimestamp, String imgPath, String type, String gaPrefix, BaseSection section) {
+    public FavoriteStory(String storyId, String editedTimestamp, String title, String desc, String author, String shareUrl, String imgUrl, String imgsrc, String body, String downloadedTimestamp, String staredTimestamp, String imgPath, String type, String gaPrefix, BaseSection section) {
         this.storyId = storyId;
         this.editedTimestamp = editedTimestamp;
         this.title = title;
@@ -13,6 +13,8 @@ public class FavoriteStory {
         this.imgUrl = imgUrl;
         this.imgsrc = imgsrc;
         this.body = body;
+        this.desc = desc;
+        this.author = author;
         this.downloadedTimestamp = downloadedTimestamp;
         this.staredTimestamp = staredTimestamp;
         this.imgPath = imgPath;
@@ -24,7 +26,7 @@ public class FavoriteStory {
     public FavoriteStory() {
     }
 
-    public FavoriteStory(String storyId, String editedTimestamp, String title, String shareUrl, String imgUrl, String imgsrc, String body) {
+    public FavoriteStory(String storyId, String editedTimestamp, String title, String desc, String author, String shareUrl, String imgUrl, String imgsrc, String body) {
         this.storyId = storyId;
         this.editedTimestamp = editedTimestamp;
         this.title = title;
@@ -32,6 +34,8 @@ public class FavoriteStory {
         this.imgUrl = imgUrl;
         this.imgsrc = imgsrc;
         this.body = body;
+        this.desc = desc;
+        this.author = author;
     }
 
     private String storyId;
@@ -41,6 +45,8 @@ public class FavoriteStory {
     private String imgUrl;
     private String imgsrc;
     private String body;
+    private String desc;
+    private String author;
 
     private String downloadedTimestamp;
     private String staredTimestamp;
@@ -61,6 +67,14 @@ public class FavoriteStory {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getShareUrl() {
@@ -103,8 +117,12 @@ public class FavoriteStory {
         return section;
     }
 
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
     @Override
     public String toString() {
-        return storyId + editedTimestamp + title + shareUrl;
+        return storyId + editedTimestamp + title + shareUrl + imgUrl + imgsrc + "body" + desc + author + downloadedTimestamp + staredTimestamp + imgPath + type + gaPrefix + section;
     }
 }

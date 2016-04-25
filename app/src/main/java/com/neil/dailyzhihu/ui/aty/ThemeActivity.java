@@ -21,7 +21,10 @@ import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.EditorListAdapter;
 import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
-import com.neil.dailyzhihu.bean.story.ThemeStoryList;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanThemeStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
+import com.neil.dailyzhihu.bean.orignallayer.ThemeStoryList;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -111,13 +114,14 @@ public class ThemeActivity extends BaseActivity implements ObservableScrollViewC
             @Override
             public void onFinish(String content) {
                 ThemeStoryList themeStoryList = (ThemeStoryList) GsonDecoder.getDecoder().decoding(content, ThemeStoryList.class);
-                String themeBGImgUrl = themeStoryList.getBackground();
-                String introDes = themeStoryList.getDescription();
-                String actionbarTitle = themeStoryList.getName();
+                CleanThemeStoryListBean cleanThemeStoryListBean = CleanDataHelper.cleanThemeStoryList(themeStoryList);
+                String themeBGImgUrl = cleanThemeStoryListBean.getBackground();
+                String introDes = cleanThemeStoryListBean.getDescription();
+                String actionbarTitle = cleanThemeStoryListBean.getName();
                 tvIntro.setText(introDes);
                 setActionBarText(actionbarTitle);
                 LoaderFactory.getImageLoader().displayImage(mImageView, themeBGImgUrl, null);
-                mListView.setAdapter(new UniversalStoryListAdapter(themeStoryList.getStories(), ThemeActivity.this));
+                mListView.setAdapter(new UniversalStoryListAdapter(cleanThemeStoryListBean.getSimpleStoryList(), ThemeActivity.this));
                 List<ThemeStoryList.EditorsBean> editorsBeanList = themeStoryList.getEditors();
                 lvEditor.setAdapter(new EditorListAdapter(ThemeActivity.this, editorsBeanList));
             }
@@ -133,7 +137,7 @@ public class ThemeActivity extends BaseActivity implements ObservableScrollViewC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ThemeStoryList.StoriesBean bean = (ThemeStoryList.StoriesBean) parent.getAdapter().getItem(position);
+        SimpleStory bean = (SimpleStory) parent.getAdapter().getItem(position);
         int storyId = bean.getStoryId();
         Intent intent = new Intent(this, StoryActivity.class);
         intent.putExtra(Constant.STORY_ID, storyId);

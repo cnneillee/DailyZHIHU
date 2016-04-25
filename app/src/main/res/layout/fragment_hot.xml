@@ -4,9 +4,21 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableListView
-        android:id="@+id/lv_hot"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"/>
+        android:text="上次更新于：2015.2.3"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.github.ksoichiro.android.observablescrollview.ObservableListView
+            android:id="@+id/lv_hot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

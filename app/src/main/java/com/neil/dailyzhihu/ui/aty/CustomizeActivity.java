@@ -2,7 +2,6 @@ package com.neil.dailyzhihu.ui.aty;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -11,14 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.Child;
 import com.neil.dailyzhihu.adapter.ExpandableLVAdapter;
 import com.neil.dailyzhihu.adapter.MyGroup;
 import com.neil.dailyzhihu.utils.db.FavoriteStory;
@@ -41,9 +38,21 @@ public class CustomizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customize);
         List<FavoriteStory> favoriteStoryList = FavoriteStoryDBdaoFactory.getInstance(this).queryAll();
         Log.e(LOG_TAG, favoriteStoryList.size() + "");
-        List<MyGroup> lists = formateFav(favoriteStoryList);
+        final List<MyGroup> lists = formateFav(favoriteStoryList);
         lvStar = (ExpandableListView) findViewById(R.id.lv_myStar);
         lvStar.setAdapter(new ExpandableLVAdapter(lists, this));
+        lvStar.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                FavoriteStory story = lists.get(groupPosition).getChildList().get(childPosition);
+                int storyId = Integer.valueOf(story.getStoryId());
+                Intent intent = new Intent(CustomizeActivity.this, StoryActivity.class);
+                intent.putExtra(Constant.STORY_ID, storyId);
+                startActivity(intent);
+                return true;
+            }
+        });
+        lvStar.setGroupIndicator(getResources().getDrawable(R.drawable.ic_expanable_lv_group_indictor));
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("我的收藏", getResources().getDrawable(R.drawable.ic_star)).setContent(R.id.tabStar));
@@ -60,56 +69,12 @@ public class CustomizeActivity extends AppCompatActivity {
             return null;
         for (int i = 0; i < favoriteStoryList.size(); i++) {
             FavoriteStory story = favoriteStoryList.get(i);
-            List<Child> children = new ArrayList<>();
-            Child child = new Child(story.getTitle(), story.getImgUrl(), Integer.valueOf(story.getStoryId()));
-            children.add(child);
+            List<FavoriteStory> children = new ArrayList<>();
+            Log.e(LOG_TAG, story.toString());
+//            Child child = new Child(story.getTitle(), story.getImgUrl(), Integer.valueOf(story.getStoryId()));
+            children.add(story);
             MyGroup myGroup = new MyGroup(story.getStaredTimestamp(), children);
             lists.add(myGroup);
-        }
-        return lists;
-    }
-
-    private List<MyGroup> makeList() {
-        List<MyGroup> lists = new ArrayList<>();
-        Child child = new Child("10.3title1", "baidu.com", 12);
-        Child child1 = new Child("10.3title2", "baidu.com", 102);
-        Child child2 = new Child("10.3title3", "baidu.com", 71272);
-        Child child3 = new Child("10.3title4", "baidu.com", 78128);
-        Child child4 = new Child("10.3title5", "baidu.com", 27187278);
-        List<Child> children1 = new ArrayList<>();
-        children1.add(child);
-        children1.add(child1);
-        children1.add(child2);
-        children1.add(child3);
-        children1.add(child4);
-
-        Child child01 = new Child("6.1title1", "baidu.com", 12);
-        Child child12 = new Child("6.1title2", "baidu.com", 102);
-        Child child23 = new Child("6.1title3", "baidu.com", 71272);
-        Child child34 = new Child("6.1title4", "baidu.com", 78128);
-        Child child45 = new Child("6.1title5", "baidu.com", 27187278);
-        List<Child> children2 = new ArrayList<>();
-        children2.add(child01);
-        children2.add(child12);
-        children2.add(child23);
-        children2.add(child34);
-        children2.add(child45);
-
-        Child child011 = new Child("3.15title1", "baidu.com", 12);
-        Child child122 = new Child("3.15title2", "baidu.com", 102);
-        Child child233 = new Child("3.15title3", "baidu.com", 71272);
-        Child child344 = new Child("3.15title4", "baidu.com", 78128);
-        Child child455 = new Child("3.15title5", "baidu.com", 27187278);
-        List<Child> children3 = new ArrayList<>();
-        children3.add(child);
-        children3.add(child1);
-        children3.add(child2);
-        children3.add(child3);
-        children3.add(child4);
-
-        MyGroup[] groups = new MyGroup[]{new MyGroup("10.3", children1), new MyGroup("6.1", children2), new MyGroup("3.15", children3)};
-        for (int i = 0; i < groups.length; i++) {
-            lists.add(groups[i]);
         }
         return lists;
     }

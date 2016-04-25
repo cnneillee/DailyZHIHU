@@ -19,6 +19,7 @@ import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.UniversalBlockGridView;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
 import com.neil.dailyzhihu.bean.block.SectionList;
 import com.neil.dailyzhihu.ui.aty.SectionActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;

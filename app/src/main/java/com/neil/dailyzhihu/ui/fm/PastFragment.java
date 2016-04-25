@@ -19,7 +19,11 @@ import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
-import com.neil.dailyzhihu.bean.story.BeforeStory;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanBeforeStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanLatestStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
+import com.neil.dailyzhihu.bean.orignallayer.BeforeStoryListBean;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -37,7 +41,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     @Bind(R.id.lv_before)
     ObservableListView mLvBefore;
     private Context mContext;
-    private List<BeforeStory.StoriesBean> mDatas;
+    private List<SimpleStory> mDatas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,9 +59,11 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                 new OnContentLoadingFinishedListener() {
                     @Override
                     public void onFinish(String content) {
-                        BeforeStory beforeStory = (BeforeStory) GsonDecoder.getDecoder().decoding(content, BeforeStory.class);
+                        BeforeStoryListBean beforeStory = (BeforeStoryListBean) GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
                         if (beforeStory != null) {
-                            mDatas = beforeStory.getStories();
+                            CleanBeforeStoryListBean cleanBeforeStoryListBean = CleanDataHelper.cleanBeforeStory(beforeStory);
+                            if (cleanBeforeStoryListBean == null) return;
+                            mDatas = cleanBeforeStoryListBean.getSimpleStoryList();
                             mLvBefore.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
                         }
                     }
@@ -69,7 +75,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        BeforeStory.StoriesBean storiesBean = (BeforeStory.StoriesBean) parent.getAdapter().getItem(position);
+        SimpleStory storiesBean = (SimpleStory) parent.getAdapter().getItem(position);
         Intent intent = new Intent(mContext, StoryActivity.class);
         intent.putExtra(Constant.STORY_ID, storiesBean.getStoryId());
         mContext.startActivity(intent);

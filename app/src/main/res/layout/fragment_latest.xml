@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <com.github.ksoichiro.android.observablescrollview.ObservableListView
         android:id="@+id/lv_latest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
         tools:listheader="@layout/test"/>
+
 </LinearLayout>

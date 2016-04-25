@@ -44,14 +44,14 @@ public class FavoriteStoryDBdao implements IDB {
         contentValues.put(FavoriteStoryDB.KEY_STORY_ID, storyId);
         contentValues.put(FavoriteStoryDB.KEY_STORY_BODY, body);
         contentValues.put(FavoriteStoryDB.KEY_STORY_TITLE, title);
-        if (TextUtils.isEmpty(editedTimestamp))
+        if (!TextUtils.isEmpty(editedTimestamp))
             contentValues.put(FavoriteStoryDB.KEY_STORY_EDITED_TIME_STAMP, editedTimestamp);
         contentValues.put(FavoriteStoryDB.KEY_STORY_SHARE_URL, shareUrl);
         contentValues.put(FavoriteStoryDB.KEY_STORY_IMAGE_SOURCE, imgsrc);
         contentValues.put(FavoriteStoryDB.KEY_STORY_IMAGE_URL, imgUrl);
-        if (TextUtils.isEmpty(imgPath))
+        if (!TextUtils.isEmpty(imgPath))
             contentValues.put(FavoriteStoryDB.KEY_STORY_IMAGE_PATH, imgPath);
-        if (TextUtils.isEmpty(downloadedTimestamp))
+        if (!TextUtils.isEmpty(downloadedTimestamp))
             contentValues.put(FavoriteStoryDB.KEY_STORY_DOWNLOADED_TIME_STAMP, downloadedTimestamp);
         contentValues.put(FavoriteStoryDB.KEY_STORY_STARED_TIME_STAMP, staredTimestamp);
         contentValues.put(FavoriteStoryDB.KEY_STORY_TYPE, type);
@@ -78,6 +78,18 @@ public class FavoriteStoryDBdao implements IDB {
     public void updateStory(int storyId, FavoriteStory newStory) {
         //readable.query(FavoriteStoryDB.FAVORITE_STORY_TABLE_NAME,new String[]{FavoriteStoryDB.STAR})
     }
+
+//    public FavoriteStory queryStoryById(int storyId) {
+//        Cursor cursor = readable.query(FavoriteStoryDB.FAVORITE_STORY_TABLE_NAME, null, FavoriteStoryDB.KEY_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
+//        FavoriteStory favoriteStory = null;
+//        if (cursor.moveToFirst()) {
+//            FavoriteStory story = cursor2FavoriteStory(cursor);
+//            if (story != null)
+//                favoriteStory = story;
+//        }
+//        cursor.close();
+//        return favoriteStory;
+//    }
 
     @Override
     public List<FavoriteStory> queryStoryById(int storyId) {
@@ -142,6 +154,8 @@ public class FavoriteStoryDBdao implements IDB {
         String storyId = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_ID));
         String body = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_BODY));
         String title = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_TITLE));
+        String desc = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_DESC));
+        String author = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_AUTHOR));
         String editedTimestamp = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_EDITED_TIME_STAMP));
         String shareUrl = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_SHARE_URL));
         String imgsrc = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_IMAGE_SOURCE));
@@ -153,13 +167,12 @@ public class FavoriteStoryDBdao implements IDB {
         String sectionId = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_BELONG_SECTION_ID));
         String sectionName = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_BELONG_SECTION_NAME));
         String sectionThumbnail = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_BELONG_SECTION_THUMBNAIL));
-//        String gaPrefix = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_GA_PREFIX));
-        String gaPrefix = "";
+        String gaPrefix = cursor.getString(cursor.getColumnIndex(FavoriteStoryDB.KEY_STORY_GA_PREFIX));
         BaseSection section = null;
         if (sectionId != null) {
             section = new BaseSection(sectionName, Integer.valueOf(sectionId), sectionThumbnail);
         }
-        FavoriteStory story = new FavoriteStory(storyId, editedTimestamp, title, shareUrl, imgUrl, imgsrc, body, downloadedTimestamp, staredTimestamp, imgPath, type, gaPrefix, section);
+        FavoriteStory story = new FavoriteStory(storyId, editedTimestamp, title, desc, author, shareUrl, imgUrl, imgsrc, body, downloadedTimestamp, staredTimestamp, imgPath, type, gaPrefix, section);
         return story;
     }
 }

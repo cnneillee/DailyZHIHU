@@ -12,6 +12,8 @@ public class FavoriteStoryDB {
     public static final String KEY_STORY_DOWNLOADED_TIME_STAMP = "story_downloaded_time_stamp";
     public static final String KEY_STORY_STARED_TIME_STAMP = "story_stared_time_stamp";
     public static final String KEY_STORY_BODY = "story_body";
+    public static final String KEY_STORY_DESC = "story_desc";
+    public static final String KEY_STORY_AUTHOR = "story_author";
     public static final String KEY_STORY_IMAGE_SOURCE = "story_image_source";
     public static final String KEY_STORY_IMAGE_URL = "story_image_url";
     public static final String KEY_STORY_IMAGE_PATH = "story_image_path";
@@ -38,7 +40,10 @@ public class FavoriteStoryDB {
                 FavoriteStoryDB.KEY_STORY_BELONG_SECTION_THUMBNAIL + " varchar," +
                 FavoriteStoryDB.KEY_STORY_BELONG_SECTION_ID + " integer," +
                 FavoriteStoryDB.KEY_STORY_BELONG_SECTION_NAME + " varchar," +
+                FavoriteStoryDB.KEY_STORY_GA_PREFIX + " varchar," +
                 FavoriteStoryDB.KEY_STORY_TITLE + " varchar," +
+                FavoriteStoryDB.KEY_STORY_DESC + " varchar," +
+                FavoriteStoryDB.KEY_STORY_AUTHOR + " varchar," +
                 FavoriteStoryDB.KEY_STORY_SHARE_URL + " varchar" + ");";
     }
 }

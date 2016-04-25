@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -27,27 +28,33 @@ import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
-import com.neil.dailyzhihu.bean.story.LatestStory;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanLatestStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
+import com.neil.dailyzhihu.bean.cleanlayer.TopStory;
+import com.neil.dailyzhihu.bean.orignallayer.LatestStory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.LoaderFactory;
+import com.neil.dailyzhihu.utils.db.catalog.LatestStoryCatalogDBFactory;
+import com.neil.dailyzhihu.utils.db.catalog.StoryCatalog;
 
 import java.util.List;
 
-import github.chenupt.springindicator.SpringIndicator;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-/**
- * Created by Neil on 2016/3/23.
- */
 public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener {
-    private Context mContext;
-    private ObservableListView lv;
-    private List<LatestStory.StoriesBean> mDatas;
-    private ViewPager viewPager;
-    private SpringIndicator indicator;
-    private int pagercurrentidx = -1;
-    private List<LatestStory.TopStoriesBean> mTopStoriesBeanList;
+    private static final String LOG_TAG = "LatestFragment";
+    @Bind(R.id.lv_latest)
+    ObservableListView mLvLatest;
 
-    private ViewPager.SimpleOnPageChangeListener mSimpleOnPageChangeListener = new SimpleOnPageChangeListener() {
+    private Context mContext;
+    private List<SimpleStory> mDatas;
+    private ViewPager mTopStoryViewPager;
+    private int pagercurrentidx = -1;
+    private List<TopStory> mTopStoriesBeanList;
+
+    private SimpleOnPageChangeListener mSimpleOnPageChangeListener = new SimpleOnPageChangeListener() {
         @Override
         public void onPageSelected(int position) {
             super.onPageSelected(position);
@@ -57,15 +64,15 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_latest, container, false);
-        lv = (ObservableListView) view.findViewById(R.id.lv_latest);
-        FrameLayout header = (FrameLayout) inflater.inflate(R.layout.viewpager_latest, null);
-        viewPager = (ViewPager) header.findViewById(R.id.view_pager);
-        lv.addHeaderView(header);
-        lv.setScrollViewCallbacks(this);
-        viewPager.setOnPageChangeListener(mSimpleOnPageChangeListener);
-        viewPager.setOnClickListener(this);
+        ButterKnife.bind(this, view);
+        FrameLayout header = (FrameLayout) inflater.inflate(R.layout.viewpager_top_story, null);
+        mTopStoryViewPager = (ViewPager) header.findViewById(R.id.view_pager);
+        mLvLatest.addHeaderView(header);
+        mLvLatest.setScrollViewCallbacks(this);
+        mTopStoryViewPager.setOnPageChangeListener(mSimpleOnPageChangeListener);
+        mTopStoryViewPager.setOnClickListener(this);
         return view;
     }
 
@@ -73,6 +80,9 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+//        if (readDataFromDB()) {
+//            return;
+//        }
         //加载数据
         LoaderFactory.getContentLoader().loadContent(Constant.URL_LATEST_NEWS, new OnContentLoadingFinishedListener() {
             @Override
@@ -80,30 +90,68 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
                 Gson gson = new Gson();
                 LatestStory latestStory = gson.fromJson(content, LatestStory.class);
                 if (latestStory != null) {
-                    mDatas = latestStory.getStories();
-                    lv.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    CleanLatestStoryListBean cleanLatestStoryListBean = CleanDataHelper.cleanLatestStory(latestStory);
+                    mDatas = cleanLatestStoryListBean.getSimpleStoryList();
+                    //TODO 在这里可以加入当前所有story的评论加载，写入数据库
+//                    writeIntoDB(mDatas);
+                    mLvLatest.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
+                    mLvLatest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            LatestStory.StoriesBean storiesBean = (LatestStory.StoriesBean) parent.getAdapter().getItem(position);
+                            SimpleStory simpleStory = (SimpleStory) parent.getAdapter().getItem(position);
                             Intent intent = new Intent(mContext, StoryActivity.class);
-                            intent.putExtra(Constant.STORY_ID, storiesBean.getStoryId());
+                            intent.putExtra(Constant.STORY_ID, simpleStory.getStoryId());
                             mContext.startActivity(intent);
                         }
                     });
-                    mTopStoriesBeanList = latestStory.getTop_stories();
-                    viewPager.setAdapter(new MyPagerAdapter(mTopStoriesBeanList));
+                    mTopStoriesBeanList = cleanLatestStoryListBean.getTopStoryList();
+                    Log.e(LOG_TAG, "mTopStoriesBeanList" + mTopStoriesBeanList.size());
+                    mTopStoryViewPager.setAdapter(new MyPagerAdapter(mTopStoriesBeanList));
                 }
             }
         });
     }
 
-    private View getPagerView(LatestStory.TopStoriesBean topStoryBean) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_viewpager, null, false);
+    private int writeIntoDB(List<LatestStory.StoriesBean> recentBean) {
+        int resultCode = 1;
+        if (recentBean != null && mContext != null) {
+            for (int i = 0; i < recentBean.size(); i++) {
+                int resultCodeFlag = -1;
+                String storyId = recentBean.get(i).getStoryId() + "";
+                String imageUrl = recentBean.get(i).getImages().get(0);
+                String title = recentBean.get(i).getTitle();
+                StoryCatalog storyCatalog = new StoryCatalog(storyId, title, imageUrl, null, null, null, System.currentTimeMillis() + "");
+                resultCodeFlag = (int) LatestStoryCatalogDBFactory.getInstance(mContext).addStoryCatalog(storyCatalog);
+                Log.e(LOG_TAG, "resultCodeFlag:" + resultCodeFlag);
+                if (resultCodeFlag < 0)
+                    resultCode = resultCodeFlag;
+            }
+        }
+        if (resultCode >= 0)
+            Toast.makeText(mContext, "数据成功", Toast.LENGTH_SHORT).show();
+        return resultCode;
+    }
+
+//    private boolean readDataFromDB() {
+//        long currentMillies = System.currentTimeMillis();
+//        String yyyyMMdd = new SimpleDateFormat("yyyyMMdd").format(new Date(currentMillies));
+////        List<StoryCatalog> catalogList = LatestStoryCatalogDBFactory.getInstance(mContext).queryStoryCatalogByDownloadedDate(yyyyMMdd);
+//        List<StoryCatalog> catalogList = LatestStoryCatalogDBFactory.getInstance(mContext).queryAllStoryCatalog();
+//        if (catalogList == null) return false;
+//        List<RecentBean> recentBean = HottestStoryCatalogDBFactory.convertStoryCatalog2Beans(catalogList);
+//        if (recentBean != null && recentBean.size() >= 0) {
+//            mLvLatest.setAdapter(new UniversalStoryListAdapter(recentBean, mContext));
+//            return true;
+//        }
+//        return false;
+//    }
+
+    private View getPagerView(TopStory topStory) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_viewpager_top_story, null, false);
         ImageView iv = (ImageView) v.findViewById(R.id.iv_img);
         TextView tv = (TextView) v.findViewById(R.id.tv_title);
-        tv.setText(topStoryBean.getTitle());
-        LoaderFactory.getImageLoader().displayImage(iv, topStoryBean.getImages().get(0), null);
+        tv.setText(topStory.getTitle());
+        LoaderFactory.getImageLoader().displayImage(iv, topStory.getImageUrl(), null);
         return v;
     }
 
@@ -136,7 +184,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     @Override
     public void onClick(View v) {
         if (mTopStoriesBeanList != null && pagercurrentidx >= 0) {
-            LatestStory.TopStoriesBean bean = mTopStoriesBeanList.get(pagercurrentidx);
+            TopStory bean = mTopStoriesBeanList.get(pagercurrentidx);
             int storyId = bean.getStoryId();
             Intent intent = new Intent(mContext, StoryActivity.class);
             intent.putExtra(Constant.STORY_ID, storyId);
@@ -144,10 +192,16 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         }
     }
 
-    class MyPagerAdapter extends PagerAdapter {
-        private List<LatestStory.TopStoriesBean> listBean;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 
-        public MyPagerAdapter(List<LatestStory.TopStoriesBean> listBean) {
+    class MyPagerAdapter extends PagerAdapter {
+        private List<TopStory> listBean;
+
+        public MyPagerAdapter(List<TopStory> listBean) {
             this.listBean = listBean;
         }
 
