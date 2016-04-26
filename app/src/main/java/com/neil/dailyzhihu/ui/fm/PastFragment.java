@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -28,6 +30,7 @@ import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
+import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.List;
 
@@ -38,10 +41,12 @@ import butterknife.ButterKnife;
  * Created by Neil on 2016/3/23.
  */
 public class PastFragment extends Fragment implements AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
+    private static final String LOG_TAG = PastFragment.class.getSimpleName();
     @Bind(R.id.lv_before)
     ObservableListView mLvBefore;
     private Context mContext;
     private List<SimpleStory> mDatas;
+    private int dbFlag = 2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,6 +59,11 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        mLvBefore.setOnItemClickListener(this);
+        mLvBefore.setScrollViewCallbacks(this);
+        if (readDataFromDB()) {
+            return;
+        }
         //加载数据
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(Constant.BEFORE_NEWS_HEADER, 20131119),
                 new OnContentLoadingFinishedListener() {
@@ -64,13 +74,40 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                             CleanBeforeStoryListBean cleanBeforeStoryListBean = CleanDataHelper.cleanBeforeStory(beforeStory);
                             if (cleanBeforeStoryListBean == null) return;
                             mDatas = cleanBeforeStoryListBean.getSimpleStoryList();
+                            //TODO 在这里可以加入当前所有story的评论加载，写入数据库
+                            writeIntoDB(mDatas);
                             mLvBefore.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
                         }
                     }
                 }
         );
-        mLvBefore.setOnItemClickListener(this);
-        mLvBefore.setScrollViewCallbacks(this);
+    }
+
+    private boolean readDataFromDB() {
+        List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
+        if (simpleStoryList == null) return false;
+        Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
+        if (simpleStoryList != null && simpleStoryList.size() >= 0) {
+            mLvBefore.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
+            return true;
+        }
+        return false;
+    }
+
+    private int writeIntoDB(List<SimpleStory> simpleStoryList) {
+        int resultCode = 1;
+        if (simpleStoryList != null && mContext != null) {
+            for (int i = 0; i < simpleStoryList.size(); i++) {
+                SimpleStory simpleStory = simpleStoryList.get(i);
+                int resultCodeFlag = (int) DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).addSimpleStory(simpleStory, dbFlag);
+                Log.e(LOG_TAG, "resultCodeFlag:" + resultCodeFlag);
+                if (resultCodeFlag < 0)
+                    resultCode = resultCodeFlag;
+            }
+        }
+        if (resultCode >= 0)
+            Toast.makeText(mContext, "数据成功", Toast.LENGTH_SHORT).show();
+        return resultCode;
     }
 
     @Override

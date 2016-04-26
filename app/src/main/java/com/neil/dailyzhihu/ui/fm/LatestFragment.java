@@ -35,15 +35,14 @@ import com.neil.dailyzhihu.bean.cleanlayer.TopStory;
 import com.neil.dailyzhihu.bean.orignallayer.LatestStory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.LoaderFactory;
-import com.neil.dailyzhihu.utils.db.catalog.LatestStoryCatalogDBFactory;
-import com.neil.dailyzhihu.utils.db.catalog.StoryCatalog;
+import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener {
+public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener, AdapterView.OnItemClickListener {
     private static final String LOG_TAG = "LatestFragment";
     @Bind(R.id.lv_latest)
     ObservableListView mLvLatest;
@@ -53,6 +52,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     private ViewPager mTopStoryViewPager;
     private int pagercurrentidx = -1;
     private List<TopStory> mTopStoriesBeanList;
+    private int dbFlag = 0;
 
     private SimpleOnPageChangeListener mSimpleOnPageChangeListener = new SimpleOnPageChangeListener() {
         @Override
@@ -80,9 +80,10 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
-//        if (readDataFromDB()) {
-//            return;
-//        }
+        mLvLatest.setOnItemClickListener(this);
+        if (readDataFromDB()) {
+            return;
+        }
         //加载数据
         LoaderFactory.getContentLoader().loadContent(Constant.URL_LATEST_NEWS, new OnContentLoadingFinishedListener() {
             @Override
@@ -93,17 +94,8 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
                     CleanLatestStoryListBean cleanLatestStoryListBean = CleanDataHelper.cleanLatestStory(latestStory);
                     mDatas = cleanLatestStoryListBean.getSimpleStoryList();
                     //TODO 在这里可以加入当前所有story的评论加载，写入数据库
-//                    writeIntoDB(mDatas);
+                    writeIntoDB(mDatas);
                     mLvLatest.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
-                    mLvLatest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            SimpleStory simpleStory = (SimpleStory) parent.getAdapter().getItem(position);
-                            Intent intent = new Intent(mContext, StoryActivity.class);
-                            intent.putExtra(Constant.STORY_ID, simpleStory.getStoryId());
-                            mContext.startActivity(intent);
-                        }
-                    });
                     mTopStoriesBeanList = cleanLatestStoryListBean.getTopStoryList();
                     Log.e(LOG_TAG, "mTopStoriesBeanList" + mTopStoriesBeanList.size());
                     mTopStoryViewPager.setAdapter(new MyPagerAdapter(mTopStoriesBeanList));
@@ -112,16 +104,12 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         });
     }
 
-    private int writeIntoDB(List<LatestStory.StoriesBean> recentBean) {
+    private int writeIntoDB(List<SimpleStory> simpleStoryList) {
         int resultCode = 1;
-        if (recentBean != null && mContext != null) {
-            for (int i = 0; i < recentBean.size(); i++) {
-                int resultCodeFlag = -1;
-                String storyId = recentBean.get(i).getStoryId() + "";
-                String imageUrl = recentBean.get(i).getImages().get(0);
-                String title = recentBean.get(i).getTitle();
-                StoryCatalog storyCatalog = new StoryCatalog(storyId, title, imageUrl, null, null, null, System.currentTimeMillis() + "");
-                resultCodeFlag = (int) LatestStoryCatalogDBFactory.getInstance(mContext).addStoryCatalog(storyCatalog);
+        if (simpleStoryList != null && mContext != null) {
+            for (int i = 0; i < simpleStoryList.size(); i++) {
+                SimpleStory simpleStory = simpleStoryList.get(i);
+                int resultCodeFlag = (int) DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).addSimpleStory(simpleStory, dbFlag);
                 Log.e(LOG_TAG, "resultCodeFlag:" + resultCodeFlag);
                 if (resultCodeFlag < 0)
                     resultCode = resultCodeFlag;
@@ -132,19 +120,16 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         return resultCode;
     }
 
-//    private boolean readDataFromDB() {
-//        long currentMillies = System.currentTimeMillis();
-//        String yyyyMMdd = new SimpleDateFormat("yyyyMMdd").format(new Date(currentMillies));
-////        List<StoryCatalog> catalogList = LatestStoryCatalogDBFactory.getInstance(mContext).queryStoryCatalogByDownloadedDate(yyyyMMdd);
-//        List<StoryCatalog> catalogList = LatestStoryCatalogDBFactory.getInstance(mContext).queryAllStoryCatalog();
-//        if (catalogList == null) return false;
-//        List<RecentBean> recentBean = HottestStoryCatalogDBFactory.convertStoryCatalog2Beans(catalogList);
-//        if (recentBean != null && recentBean.size() >= 0) {
-//            mLvLatest.setAdapter(new UniversalStoryListAdapter(recentBean, mContext));
-//            return true;
-//        }
-//        return false;
-//    }
+    private boolean readDataFromDB() {
+        List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
+        if (simpleStoryList == null) return false;
+        Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
+        if (simpleStoryList != null && simpleStoryList.size() >= 0) {
+            mLvLatest.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
+            return true;
+        }
+        return false;
+    }
 
     private View getPagerView(TopStory topStory) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.item_viewpager_top_story, null, false);
@@ -196,6 +181,14 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        SimpleStory simpleStory = (SimpleStory) parent.getAdapter().getItem(position);
+        Intent intent = new Intent(mContext, StoryActivity.class);
+        intent.putExtra(Constant.STORY_ID, simpleStory.getStoryId());
+        mContext.startActivity(intent);
     }
 
     class MyPagerAdapter extends PagerAdapter {

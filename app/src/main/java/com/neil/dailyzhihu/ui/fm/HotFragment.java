@@ -26,16 +26,11 @@ import com.neil.dailyzhihu.bean.CleanDataHelper;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanHotStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 import com.neil.dailyzhihu.bean.orignallayer.HotStory;
-import com.neil.dailyzhihu.bean.orignallayer.RecentBean;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
-import com.neil.dailyzhihu.utils.db.catalog.HottestStoryCatalogDBFactory;
-import com.neil.dailyzhihu.utils.db.catalog.StoryCatalog;
+import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -49,6 +44,8 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
     private Context mContext;
+
+    private int dbFlag = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,9 +67,9 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
         lvHot.setScrollViewCallbacks(this);
         lvHot.setOnItemClickListener(this);
         mSrlRefresh.setOnRefreshListener(this);
-//        if (readDataFromDB()) {
-//            return;
-//        }
+        if (readDataFromDB()) {
+            return;
+        }
         LoaderFactory.getContentLoader().loadContent(Constant.HOT_NEWS, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
@@ -84,37 +81,30 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
                 if (cleanHotStoryListBean == null) return;
                 List<SimpleStory> simpleStoryList = cleanHotStoryListBean.getSimpleStoryList();
                 //TODO 在这里可以加入当前所有story的评论加载，写入数据库
-                // writeIntoDB(recentBean);
+                writeIntoDB(simpleStoryList);
                 lvHot.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
             }
         });
     }
 
-//    private boolean readDataFromDB() {
-//        long currentMillies = System.currentTimeMillis();
-//        String yyyyMMdd = new SimpleDateFormat("yyyyMMdd").format(new Date(currentMillies));
-////        List<StoryCatalog> catalogList = HottestStoryCatalogDBFactory.getInstance(mContext).queryStoryCatalogByDownloadedDate(yyyyMMdd);
-//        List<StoryCatalog> catalogList = HottestStoryCatalogDBFactory.getInstance(mContext).queryAllStoryCatalog();
-//        if (catalogList == null) return false;
-//        List<RecentBean> recentBean = HottestStoryCatalogDBFactory.convertStoryCatalog2Beans(catalogList);
-//        Log.e(LOG_TAG, "recentBean:" + recentBean.size());
-//        if (recentBean != null && recentBean.size() >= 0) {
-//            lvHot.setAdapter(new UniversalStoryListAdapter(recentBean, mContext));
-//            return true;
-//        }
-//        return false;
-//    }
+    private boolean readDataFromDB() {
+        List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
+        if (simpleStoryList == null) return false;
+        Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
+        if (simpleStoryList != null && simpleStoryList.size() >= 0) {
+            lvHot.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
+            return true;
+        }
+        return false;
+    }
 
-    private int writeIntoDB(List<RecentBean> recentBean) {
+    private int writeIntoDB(List<SimpleStory> simpleStoryList) {
         int resultCode = 1;
-        if (recentBean != null && mContext != null) {
-            for (int i = 0; i < recentBean.size(); i++) {
-                int resultCodeFlag = -1;
-                String storyId = recentBean.get(i).getStoryId() + "";
-                String imageUrl = recentBean.get(i).getThumbnail();
-                String title = recentBean.get(i).getTitle();
-                StoryCatalog storyCatalog = new StoryCatalog(storyId, title, imageUrl, null, null, null, System.currentTimeMillis() + "");
-                resultCodeFlag = (int) HottestStoryCatalogDBFactory.getInstance(mContext).addStoryCatalog(storyCatalog);
+        if (simpleStoryList != null && mContext != null) {
+            for (int i = 0; i < simpleStoryList.size(); i++) {
+                SimpleStory simpleStory = simpleStoryList.get(i);
+                int resultCodeFlag = (int) DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).addSimpleStory(simpleStory, dbFlag);
+                Log.e(LOG_TAG, "resultCodeFlag:" + resultCodeFlag);
                 if (resultCodeFlag < 0)
                     resultCode = resultCodeFlag;
             }

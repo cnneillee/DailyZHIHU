@@ -80,7 +80,7 @@ public class FavoriteStoryDBdao implements IDB {
     }
 
 //    public FavoriteStory queryStoryById(int storyId) {
-//        Cursor cursor = readable.query(FavoriteStoryDB.FAVORITE_STORY_TABLE_NAME, null, FavoriteStoryDB.KEY_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
+//        Cursor cursor = readable.query(FavoriteStoryDB.FAVORITE_STORY_TABLE_NAME, null, FavoriteStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
 //        FavoriteStory favoriteStory = null;
 //        if (cursor.moveToFirst()) {
 //            FavoriteStory story = cursor2FavoriteStory(cursor);

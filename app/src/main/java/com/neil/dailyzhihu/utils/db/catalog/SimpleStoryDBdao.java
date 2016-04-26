@@ -16,16 +16,18 @@
 ///**
 // * Created by Neil on 2016/4/25.
 // */
-//public class HottestCatalogDBdao implements IDBSimpleStoryTable {
+//public class SimpleStoryDBdao implements IDBSimpleStoryTable {
 //
-//    private static final String LOG_TAG = HottestCatalogDBdao.class.getSimpleName();
+//    private static final String LOG_TAG = SimpleStoryDBdao.class.getSimpleName();
 //    private SQLiteDatabase writable;
 //    private SQLiteDatabase readable;
+//    private String tableName;
 //
-//    public HottestCatalogDBdao(Context context) {
+//    public SimpleStoryDBdao(Context context, String tableName) {
 //        SQLiteDataBaseHelper openHelper = new SQLiteDataBaseHelper(context);
 //        readable = openHelper.getReadableDatabase();
 //        writable = openHelper.getWritableDatabase();
+//        this.tableName = tableName;
 //    }
 //
 //    public long addSimpleStory(SimpleStory story) {
@@ -133,6 +135,7 @@
 //        cursor.close();
 //        return simpleStoryList;
 //    }
+//
 //    @Override
 //    public List<SimpleStory> queryAllSimpleStory() {
 //        List<SimpleStory> simpleStoryList = null;

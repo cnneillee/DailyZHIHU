@@ -7,17 +7,21 @@ public class SimpleStory {
     private int type;
     private String imageUrl;
     private String imagePath;
+    private String date;
+    private String downloadTimeStamp;
 
     public SimpleStory() {
     }
 
-    public SimpleStory(int storyId, String gaPrefix, String title, int type, String imageUrl, String imagePath) {
+    public SimpleStory(int storyId, String gaPrefix, String title, int type, String imageUrl, String imagePath, String date, String downloadTimeStamp) {
         this.storyId = storyId;
         this.gaPrefix = gaPrefix;
         this.title = title;
         this.type = type;
         this.imageUrl = imageUrl;
         this.imagePath = imagePath;
+        this.date = date;
+        this.downloadTimeStamp = downloadTimeStamp;
     }
 
     public int getStoryId() {
@@ -66,6 +70,22 @@ public class SimpleStory {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDownloadTimeStamp() {
+        return downloadTimeStamp;
+    }
+
+    public void setDownloadTimeStamp(String downloadTimeStamp) {
+        this.downloadTimeStamp = downloadTimeStamp;
     }
 }
 

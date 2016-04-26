@@ -11,8 +11,8 @@ public class HottestCatalogDB {
     public static final String KEY_STORY_TITLE = "story_title";
     public static final String KEY_STORY_IMAGE_URL = "story_image_url";
     public static final String KEY_STORY_IMAGE_PATH = "story_image_path";
-    public static final String KEY_STORY_TYPE = "story_type";//无
-    public static final String KEY_STORY_GA_PREFIX = "ga_prefix";//无Z
+    public static final String KEY_STORY_TYPE = "story_type";
+    public static final String KEY_STORY_GA_PREFIX = "ga_prefix";
     public static final String KEY_STORY_DOWNLOADED_TIME_STAMP = "story_downloaded_time_stamp";
     public static final String KEY_STORY_DOWNLOADED_DATE = "story_downloaded_date";
     public static final String KEY_STORY_POPULARITY = "story_popularity";
