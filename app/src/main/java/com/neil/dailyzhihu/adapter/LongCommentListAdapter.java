@@ -34,6 +34,8 @@ public class LongCommentListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (mDatas == null)
+            return -1;
         return mDatas.size();
     }
 
@@ -61,7 +63,7 @@ public class LongCommentListAdapter extends BaseAdapter {
         LoaderFactory.getImageLoader().displayImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
         vh.tvAuthor.setText(mDatas.get(position).getAuthor());
         vh.tvContent.setText(mDatas.get(position).getContent());
-        //vh.tvId.setText(mDatas.get(position).getId() + "");
+        //vh.tvId.setText(mDatas.get(position).getSectionId() + "");
         vh.tvLikes.setText(mDatas.get(position).getLikes() + " 个赞");
         long timestamp = mDatas.get(position).getTime();
         String result = Formater.formatData("yyyy/MM/dd HH:mm", timestamp);

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
@@ -43,6 +44,8 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     ObservableListView lvHot;
     @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
+    @Bind(R.id.tv_updateTime)
+    TextView mTvUpdateTime;
     private Context mContext;
 
     private int dbFlag = 1;
@@ -70,9 +73,15 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
         if (readDataFromDB()) {
             return;
         }
+        loadDataFromInternet();
+    }
+
+    private void loadDataFromInternet() {
         LoaderFactory.getContentLoader().loadContent(Constant.HOT_NEWS, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
+                mSrlRefresh.setRefreshing(false);
+                mTvUpdateTime.setText("上次更新于：" + System.currentTimeMillis() + "");
                 //原始数据
                 HotStory hotStories = (HotStory) GsonDecoder.getDecoder().decoding(content, HotStory.class);
                 if (hotStories == null) return;
@@ -157,6 +166,5 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     @Override
     public void onRefresh() {
         Toast.makeText(mContext, "正在更新数据", Toast.LENGTH_SHORT).show();
-//        mSrlRefresh.setRefreshing(false);
     }
 }

@@ -27,27 +27,24 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.CommentPagerAdapter;
 import com.neil.dailyzhihu.adapter.LongCommentListAdapter;
 import com.neil.dailyzhihu.bean.LongComment;
-import com.neil.dailyzhihu.bean.StoryContent;
+import com.neil.dailyzhihu.bean.ShareRecord;
+import com.neil.dailyzhihu.bean.StarRecord;
+import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.CommentAlertDialog;
-import com.neil.dailyzhihu.ui.widget.CommentsPopupwindow;
+import com.neil.dailyzhihu.ui.widget.StoryFabMenuPopupwindow;
 import com.neil.dailyzhihu.ui.widget.ShareMenuPopupWindow;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 import com.neil.dailyzhihu.utils.ShareHelper;
 import com.neil.dailyzhihu.utils.StorageOperatingHelper;
-import com.neil.dailyzhihu.utils.db.FavoriteStory;
-import com.neil.dailyzhihu.utils.db.FavoriteStoryDBdao;
-import com.neil.dailyzhihu.utils.db.FavoriteStoryDBdaoFactory;
-import com.neil.dailyzhihu.utils.db.StoryDB;
-import com.neil.dailyzhihu.utils.db.StoryDBFactory;
+import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.share.QQShare;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
@@ -145,7 +142,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         if (mFabPW != null)
             mFabPW.showAsDropDown(mFab);
         else {
-            mFabPW = new CommentsPopupwindow(this, new String[]{"查看评论", "收藏", "分享", "二维码"}, this);
+            mFabPW = new StoryFabMenuPopupwindow(this, new String[]{"查看评论", "收藏", "分享", "二维码"}, new int[]{R.drawable.ic_night, R.drawable.ic_night, R.drawable.ic_night, R.drawable.ic_night}, this);
             mFabPW.showAsDropDown(mFab);
         }
     }
@@ -189,20 +186,20 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     };
 
     private void fillingContent(final int storyId) {
-        //本地数据库查询
-        List<FavoriteStory> storyList = FavoriteStoryDBdaoFactory.getInstance(this).queryStoryById(storyId);
-        if (storyList != null && storyList.size() > 0) {
-            story = FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(storyList.get(0));
-            ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-            Log.e(LOG_TAG, "file://" + story.getImageUri());
-            // /storage/emulated/0/com.neil.dailyzhihu/image/favorite/8207616.png
-            // /mnt/sdcard/
-            loader.displayImage(mImageView, "file://" + story.getImageUri(), null);
-            mTvContent.setText(Html.fromHtml(story.getBody()));
-            mTitleView.setText(story.getTitle());
-            mTvContent.setVisibility(View.VISIBLE);
-            return;
-        }
+//        //本地数据库查询
+//        List<FavoriteStory> storyList = FavoriteStoryDBdaoFactory.getInstance(this).queryStoryById(storyId);
+//        if (storyList != null && storyList.size() > 0) {
+//            story = FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(storyList.get(0));
+//            ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
+//            Log.e(LOG_TAG, "file://" + story.getImageUri());
+//            // /storage/emulated/0/com.neil.dailyzhihu/image/favorite/8207616.png
+//            // /mnt/sdcard/
+//            loader.displayImage(mImageView, "file://" + story.getImageUri(), null);
+//            mTvContent.setText(Html.fromHtml(story.getBody()));
+//            mTitleView.setText(story.getTitle());
+//            mTvContent.setVisibility(View.VISIBLE);
+//            return;
+//        }
         //api接口下载
         fillingContentUsingAPI(storyId);
     }
@@ -224,18 +221,18 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                 mTitleView.setText(storyTtitle);
                 if (!hasInsert) {
                     //将下载后的数据写入数据库中
-                    writeStoryIntoDB(story);
+//                    writeStoryIntoDB(story);
                     hasInsert = true;
                 }
             }
         });
     }
 
-    private void writeStoryIntoDB(StoryContent story) {
-        int resultCode = (int) StoryDBFactory.getInstance(this).addStory(StoryDBFactory.convertStoryContent2DBStory(story));
-        if (resultCode > 0)
-            Toast.makeText(this, "缓存成功", Toast.LENGTH_SHORT).show();
-    }
+//    private void writeStoryIntoDB(StoryContent story) {
+//        int resultCode = (int) StoryDBFactory.getInstance(this).addStory(StoryDBFactory.convertStoryContent2DBStory(story));
+//        if (resultCode > 0)
+//            Toast.makeText(this, "缓存成功", Toast.LENGTH_SHORT).show();
+//    }
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
@@ -328,18 +325,22 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
             case 3://二维码
                 Toast.makeText(StoryActivity.this, "生成二维码", Toast.LENGTH_SHORT).show();
                 makingQRCode();
+                ShareRecord shareRecord = new ShareRecord(story.getId(), System.currentTimeMillis(), "NONE", "QRCode", "20160427");
+                int resultCode = (int) DBFactory.getsIDBShareRecordDetailStoryTabledao(this).addShareRecord(shareRecord);
+                if (resultCode > 0)
+                    Toast.makeText(StoryActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
     private void starStory() {
         if (story != null) {
-            FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(story);
-            FavoriteStory favoriteStory = FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(story);
-            favoriteStory.setImgPath(storyPath);
-            FavoriteStoryDBdao dao = FavoriteStoryDBdaoFactory.getInstance(this);
-            if (dao.addStory(favoriteStory) != -1)
+            StarRecord starRecord = new StarRecord(story.getId(), "20160427", System.currentTimeMillis(), "default");
+            int resultCode = (int) DBFactory.getIIDBStarRecordDetailStoryTabledao(this).addStarRecord(starRecord);
+            if (resultCode > 0)
                 Toast.makeText(StoryActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+            else if (resultCode == 0)
+                Toast.makeText(StoryActivity.this, "已存在", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -397,6 +398,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                 case 0://生成图片
                     Intent intent = new Intent(StoryActivity.this, ImageStoryActivity.class);
                     intent.putExtra(Constant.STORY_BODY, story.getBody());
+                    intent.putExtra(Constant.STORY_ID, story.getId());
                     startActivity(intent);
                     break;
                 case 1://微信好友
@@ -424,6 +426,10 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                         return;
                     Toast.makeText(StoryActivity.this, "更多分享", Toast.LENGTH_SHORT).show();
                     ShareHelper.orignalMsgShare(StoryActivity.this, "StoryActivity", storyText, storyText, null);
+                    ShareRecord shareRecord = new ShareRecord(story.getId(), System.currentTimeMillis(), "UNKNOWN", "More-Link", "20160427");
+                    int resultCode = (int) DBFactory.getsIDBShareRecordDetailStoryTabledao(StoryActivity.this).addShareRecord(shareRecord);
+                    if (resultCode > 0)
+                        Toast.makeText(StoryActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -448,7 +454,10 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        Toast.makeText(StoryActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
+        ShareRecord shareRecord = new ShareRecord(story.getId(), System.currentTimeMillis(), platform.getName(), "SDKShare-Link", "20160427");
+        int resultCode = (int) DBFactory.getsIDBShareRecordDetailStoryTabledao(this).addShareRecord(shareRecord);
+        if (resultCode > 0)
+            Toast.makeText(StoryActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -494,6 +503,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                 }
                 View view = views.get(0);
                 ListView lv = (ListView) view.findViewById(R.id.lv_comment);
+                TextView tv = (TextView) view.findViewById(R.id.commentType);
+                tv.setText("长评论");
                 lv.setAdapter(new LongCommentListAdapter(StoryActivity.this, mDatas));
                 LoaderFactory.getContentLoader().loadContent(Constant.COMMENT_HEAD + storyId + tailShort, new OnContentLoadingFinishedListener() {
                     @Override
@@ -504,6 +515,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
                             return;
                         }
                         View view = views.get(1);
+                        TextView tv = (TextView) view.findViewById(R.id.commentType);
+                        tv.setText("短评论");
                         ListView lv = (ListView) view.findViewById(R.id.lv_comment);
                         if (lv == null) {
                             return;

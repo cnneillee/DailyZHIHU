@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
-import com.neil.dailyzhihu.utils.db.catalog.HottestCatalogDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
         MyDBHelper openHelper = new MyDBHelper(context);
         readable = openHelper.getReadableDatabase();
         writable = openHelper.getWritableDatabase();
-        tableName = MyDBHelper.ConstantDB.SIMPLE_STORY_TABLE_NAME;
+        tableName = MyDBHelper.ConstantSimpleStoryDB.SIMPLE_STORY_TABLE_NAME;
     }
 
     @Override
@@ -42,14 +41,14 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
         String downloadedTimestamp = story.getDownloadTimeStamp();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_ID, storyId);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_TITLE, title);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_TYPE, type);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_GA_PREFIX, gaPrefix);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_IMAGE_URL, imageUrl);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_IMAGE_PATH, imagePath);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_DOWNLOADED_TIME_STAMP, downloadedTimestamp);
-        contentValues.put(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_DATE, date);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID, storyId);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_TITLE, title);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_TYPE, type);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_GA_PREFIX, gaPrefix);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_IMAGE_URL, imageUrl);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_IMAGE_PATH, imagePath);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DOWNLOADED_TIME_STAMP, downloadedTimestamp);
+        contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DATE, date);
         int res = (int) writable.insert(tableName, null, contentValues);
         if (res >= 0)
             Log.e(LOG_TAG, "----" + title + type + gaPrefix + imageUrl + imagePath + date + downloadedTimestamp);
@@ -58,7 +57,7 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
 
     @Override
     public int dropSimpleStory(int storyId) {
-        return writable.delete(tableName, MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""});
+        return writable.delete(tableName, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""});
     }
 
     @Override
@@ -67,12 +66,12 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
             Log.e(LOG_TAG, "update error:this story doesnot exists");
             return -1;
         }
-        return writable.update(tableName, contentValues, MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""});
+        return writable.update(tableName, contentValues, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""});
     }
 
     @Override
     public SimpleStory querySimpleStoryById(int storyId) {
-        Cursor cursor = readable.query(tableName, null, MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
+        Cursor cursor = readable.query(tableName, null, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
         SimpleStory story = null;
         if (cursor.moveToFirst()) {
             story = cursor2SimpleStory(cursor);
@@ -82,9 +81,9 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
     }
 
     @Override
-    public List<SimpleStory> queryStoryCatalogByDownloadedDate(String storyDownloadedDate) {
+    public List<SimpleStory> querySimpleStoryByDownloadedDate(String storyDownloadedDate) {
         List<SimpleStory> simpleStoryList = null;
-        Cursor cursor = readable.query(HottestCatalogDB.STORY_TABLE_NAME, null, HottestCatalogDB.KEY_STORY_DOWNLOADED_DATE + "=?", new String[]{storyDownloadedDate}, null, null, null);
+        Cursor cursor = readable.query(MyDBHelper.ConstantSimpleStoryDB.SIMPLE_STORY_TABLE_NAME, null, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DOWNLOADED_TIME_STAMP + "=?", new String[]{storyDownloadedDate}, null, null, null);
         if (cursor.moveToFirst()) {
             simpleStoryList = new ArrayList<>();
             Log.e(LOG_TAG, "cursor:" + cursor.getCount());
@@ -116,14 +115,14 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
     }
 
     private SimpleStory cursor2SimpleStory(Cursor cursor) {
-        String storyId = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_ID));
-        String title = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_TITLE));
-        String imageUrl = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_IMAGE_URL));
-        String imagePath = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_IMAGE_PATH));
-        String downloadedTimestamp = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_DOWNLOADED_TIME_STAMP));
-        String type = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_TYPE));
-        String gaPrefix = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_GA_PREFIX));
-        String date = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDB.KEY_SIMPLE_STORY_DATE));
+        String storyId = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID));
+        String title = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_TITLE));
+        String imageUrl = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_IMAGE_URL));
+        String imagePath = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_IMAGE_PATH));
+        String downloadedTimestamp = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DOWNLOADED_TIME_STAMP));
+        String type = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_TYPE));
+        String gaPrefix = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_GA_PREFIX));
+        String date = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DATE));
         SimpleStory simpleStory = new SimpleStory(Integer.valueOf(storyId), gaPrefix, title, Integer.valueOf(type), imageUrl, imagePath, date, downloadedTimestamp);
         return simpleStory;
     }

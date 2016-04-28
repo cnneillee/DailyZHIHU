@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">
-<meta content=\"width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no\" id=\"viewport\" name=\"viewport\">
+<meta content=\"width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no\" sectionId=\"viewport\" name=\"viewport\">
 <meta content=\"yes\" name=\"apple-mobile-web-app-capable\">
 <title>%s</title>
 <style type=\"text/css\">
@@ -59,8 +59,8 @@ function login(form){
 %s
 <div style=\"padding-left:15px;border-top:1px solid #E3E3E5;border-bottom:1px solid #E3E3E5;\">
  <input type=\"hidden\" name=\"ID_SIGN\" value=\"OWELJSFPWECSFEW\"/>
- <input class=\"inputstyle\" id=\"u\" name=\"u\" type=\"text\" value=\"%s\" placeholder=\"%s\" style=\"border-bottom:1px solid #E3E3E5;\"/>
- <input class=\"inputstyle\" id=\"p\" name=\"p\" type=\"password\" placeholder=\"%s\"/>
+ <input class=\"inputstyle\" sectionId=\"u\" name=\"u\" type=\"text\" value=\"%s\" placeholder=\"%s\" style=\"border-bottom:1px solid #E3E3E5;\"/>
+ <input class=\"inputstyle\" sectionId=\"p\" name=\"p\" type=\"password\" placeholder=\"%s\"/>
 </div>
 <p><input style=\"margin:0 auto;\" type=\"submit\" name=\"s\" value=\"  %s  \" class=\"btn\"/></p>
 </form>

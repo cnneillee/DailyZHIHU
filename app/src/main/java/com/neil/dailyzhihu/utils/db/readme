@@ -49,19 +49,19 @@ long row = db.insert(TABLE_NAME, null, cv);
 return row;
 }
 //删除操作
-public void delete(int id)
+public void delete(int sectionId)
 {
 SQLiteDatabase db = this.getWritableDatabase();
 String where = BOOK_ID + " = ?";
-String[] whereValue ={ Integer.toString(id) };
+String[] whereValue ={ Integer.toString(sectionId) };
 db.delete(TABLE_NAME, where, whereValue);
 }
 //修改操作
-public void update(int id, String bookname,String author)
+public void update(int sectionId, String bookname,String author)
 {
 SQLiteDatabase db = this.getWritableDatabase();
 String where = BOOK_ID + " = ?";
-String[] whereValue = { Integer.toString(id) };
+String[] whereValue = { Integer.toString(sectionId) };
 
 ContentValues cv = new ContentValues();
 cv.put(BOOK_NAME, bookname);

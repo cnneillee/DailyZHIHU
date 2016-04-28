@@ -2,13 +2,9 @@ package com.neil.dailyzhihu.ui.aty;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.utils.db.FavoriteStory;
-import com.neil.dailyzhihu.utils.db.FavoriteStoryDBdao;
 
-import java.util.List;
 
 /**
  * Created by Neil on 2016/4/22.

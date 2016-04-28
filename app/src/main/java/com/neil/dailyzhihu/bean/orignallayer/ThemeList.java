@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.bean.block;
+package com.neil.dailyzhihu.bean.orignallayer;
 
 import com.neil.dailyzhihu.bean.UniversalBlockBean;
 

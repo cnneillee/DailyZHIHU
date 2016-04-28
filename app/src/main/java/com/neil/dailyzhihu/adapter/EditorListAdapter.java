@@ -63,7 +63,7 @@ public class EditorListAdapter extends BaseAdapter {
 //        vh.ivImg.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                int themeId = mDatas.get(position).getId();
+//                int themeId = mDatas.get(position).getSectionId();
 //                Intent intent = new Intent(mContext, ThemeActivity.class);
 //                intent.getIntExtra("THEME_ID", themeId);
 //                mContext.startActivity(intent);

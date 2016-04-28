@@ -18,8 +18,10 @@ import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.ExpandableLVAdapter;
 import com.neil.dailyzhihu.adapter.MyGroup;
+import com.neil.dailyzhihu.bean.ShareRecord;
+import com.neil.dailyzhihu.bean.StarRecord;
 import com.neil.dailyzhihu.utils.db.FavoriteStory;
-import com.neil.dailyzhihu.utils.db.FavoriteStoryDBdaoFactory;
+import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
@@ -36,7 +38,14 @@ public class CustomizeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize);
-        List<FavoriteStory> favoriteStoryList = FavoriteStoryDBdaoFactory.getInstance(this).queryAll();
+//        List<FavoriteStory> favoriteStoryList = FavoriteStoryDBdaoFactory.getInstance(this).queryAll();
+        List<FavoriteStory> favoriteStoryList = new ArrayList<>();
+        List<StarRecord> starRecordList = DBFactory.getIIDBStarRecordDetailStoryTabledao(this).queryAllStarRecord();
+        if (starRecordList == null) return;
+
+        Log.e(LOG_TAG, "starRecordList.size()" + starRecordList.size());
+        List<ShareRecord> shareRecordList = DBFactory.getsIDBShareRecordDetailStoryTabledao(this).queryAllShareRecord();
+        Log.e(LOG_TAG, "shareRecordList.size()" + shareRecordList.size());
         Log.e(LOG_TAG, favoriteStoryList.size() + "");
         final List<MyGroup> lists = formateFav(favoriteStoryList);
         lvStar = (ExpandableListView) findViewById(R.id.lv_myStar);
@@ -71,7 +80,7 @@ public class CustomizeActivity extends AppCompatActivity {
             FavoriteStory story = favoriteStoryList.get(i);
             List<FavoriteStory> children = new ArrayList<>();
             Log.e(LOG_TAG, story.toString());
-//            Child child = new Child(story.getTitle(), story.getImgUrl(), Integer.valueOf(story.getStoryId()));
+//            Child child = new Child(story.getTitle(), story.getImgUrl(), Integer.valueOf(story.getSectionId()));
             children.add(story);
             MyGroup myGroup = new MyGroup(story.getStaredTimestamp(), children);
             lists.add(myGroup);
@@ -99,7 +108,6 @@ public class CustomizeActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
     private void scan() {
         int requestCode = 0x123;

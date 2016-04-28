@@ -10,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.bean.StarRecord;
 import com.neil.dailyzhihu.utils.db.FavoriteStory;
 
 import java.util.List;
@@ -102,7 +103,7 @@ public class ExpandableLVAdapter extends BaseExpandableListAdapter {
         //设置第二级时间和事件名称
         viewHolder.title.setText(entity.getTitle());
         viewHolder.author.setText(entity.getAuthor());
-        viewHolder.desc.setText(entity.getDesc());
+        viewHolder.desc.setText(entity.getDesc() + "");
         convertView.setTag(viewHolder);
         return convertView;
     }

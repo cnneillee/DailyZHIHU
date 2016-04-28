@@ -1,7 +1,6 @@
 package com.neil.dailyzhihu.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.UniversalBlockBean;
-import com.neil.dailyzhihu.ui.aty.ThemeActivity;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionAndThemeBean;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 
 import java.util.List;
@@ -20,14 +18,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Neil on 2016/4/17.
- */
-public class UniversalBlockGridView<T extends UniversalBlockBean> extends BaseAdapter {
+public class UniversalBlockGridAdapter<T extends CleanSectionAndThemeBean> extends BaseAdapter {
     private Context mContext;
     private List<T> mDatas;
 
-    public UniversalBlockGridView(Context context, List<T> datas) {
+    public UniversalBlockGridAdapter(Context context, List<T> datas) {
         this.mContext = context;
         this.mDatas = datas;
     }
@@ -59,22 +54,23 @@ public class UniversalBlockGridView<T extends UniversalBlockBean> extends BaseAd
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.ivTitle.setText(mDatas.get(position).getTitle());
+        vh.ivTitle.setText(mDatas.get(position).getName());
         vh.ivDescribsion.setText(mDatas.get(position).getDescription());
-        LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
+        LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getThumbnail(), null);
         return convertView;
     }
-}
 
-class ViewHolder {
-    @Bind(R.id.iv_img)
-    ImageView ivImg;
-    @Bind(R.id.iv_title)
-    TextView ivTitle;
-    @Bind(R.id.iv_describsion)
-    TextView ivDescribsion;
+    class ViewHolder {
+        @Bind(R.id.iv_img)
+        ImageView ivImg;
+        @Bind(R.id.iv_title)
+        TextView ivTitle;
+        @Bind(R.id.tv_describsion)
+        TextView ivDescribsion;
 
-    ViewHolder(View view) {
-        ButterKnife.bind(this, view);
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
+
 }

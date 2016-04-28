@@ -91,5 +91,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.aty.CustomizeActivity"/>
         </activity>
+        <activity
+            android:name=".ui.aty.SectionSettingActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 </manifest>

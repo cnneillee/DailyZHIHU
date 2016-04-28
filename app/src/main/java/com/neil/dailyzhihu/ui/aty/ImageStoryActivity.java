@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.bean.ShareRecord;
 import com.neil.dailyzhihu.ui.widget.ShareMenuPopupWindow;
 import com.neil.dailyzhihu.utils.ShareHelper;
 import com.neil.dailyzhihu.utils.StorageOperatingHelper;
+import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +49,7 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
     private final String imgUrl = "http://7sby7r.com1.z0.glb.clouddn.com/CYSJ_02.jpg";
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    private int storyId = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -156,6 +159,10 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
                     Toast.makeText(ImageStoryActivity.this, "更多分享", Toast.LENGTH_SHORT).show();
                     String appName = ImageStoryActivity.this.getApplicationInfo().getClass().getSimpleName();
                     ShareHelper.orignalMsgShare(ImageStoryActivity.this, appName, msgContent, "via DailyZHIHU", absoluteImagePath);
+                    ShareRecord shareRecord = new ShareRecord(storyId, System.currentTimeMillis(), "NONE", "More-Picture", "20160427");
+                    int resultCode = (int) DBFactory.getsIDBShareRecordDetailStoryTabledao(ImageStoryActivity.this).addShareRecord(shareRecord);
+                    if (resultCode > 0)
+                        Toast.makeText(ImageStoryActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -206,6 +213,10 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+        ShareRecord shareRecord = new ShareRecord(storyId, System.currentTimeMillis(), platform.getName(), "ShareSDK-Picture", "20160427");
+        int resultCode = (int) DBFactory.getsIDBShareRecordDetailStoryTabledao(this).addShareRecord(shareRecord);
+        if (resultCode > 0)
+            Toast.makeText(this, "分享成功", Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "成功分享到 " + platform.getName(), Toast.LENGTH_SHORT).show();
     }
 
@@ -223,6 +234,7 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String body = bundle.getString(Constant.STORY_BODY);
+            storyId = bundle.getInt(Constant.STORY_ID);
             mTvContent.setText(Html.fromHtml(body));
         }
     }

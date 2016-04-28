@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -42,10 +43,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener, AdapterView.OnItemClickListener {
+public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String LOG_TAG = "LatestFragment";
     @Bind(R.id.lv_latest)
     ObservableListView mLvLatest;
+    @Bind(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
     private Context mContext;
     private List<SimpleStory> mDatas;
@@ -73,6 +76,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         mLvLatest.setScrollViewCallbacks(this);
         mTopStoryViewPager.setOnPageChangeListener(mSimpleOnPageChangeListener);
         mTopStoryViewPager.setOnClickListener(this);
+        mSrlRefresh.setOnRefreshListener(this);
         return view;
     }
 
@@ -81,17 +85,23 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         mLvLatest.setOnItemClickListener(this);
-        if (readDataFromDB()) {
+        if (loadDataFromDB()) {
             return;
         }
         //加载数据
+        loadDataFromInternet();
+    }
+
+    private void loadDataFromInternet() {
         LoaderFactory.getContentLoader().loadContent(Constant.URL_LATEST_NEWS, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
                 Gson gson = new Gson();
                 LatestStory latestStory = gson.fromJson(content, LatestStory.class);
+                mSrlRefresh.setRefreshing(false);
                 if (latestStory != null) {
                     CleanLatestStoryListBean cleanLatestStoryListBean = CleanDataHelper.cleanLatestStory(latestStory);
+                    if (cleanLatestStoryListBean == null) return;
                     mDatas = cleanLatestStoryListBean.getSimpleStoryList();
                     //TODO 在这里可以加入当前所有story的评论加载，写入数据库
                     writeIntoDB(mDatas);
@@ -99,6 +109,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
                     mTopStoriesBeanList = cleanLatestStoryListBean.getTopStoryList();
                     Log.e(LOG_TAG, "mTopStoriesBeanList" + mTopStoriesBeanList.size());
                     mTopStoryViewPager.setAdapter(new MyPagerAdapter(mTopStoriesBeanList));
+                    mTopStoryViewPager.getAdapter().notifyDataSetChanged();
                 }
             }
         });
@@ -120,11 +131,11 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         return resultCode;
     }
 
-    private boolean readDataFromDB() {
+    private boolean loadDataFromDB() {
         List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
         if (simpleStoryList == null) return false;
         Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
-        if (simpleStoryList != null && simpleStoryList.size() >= 0) {
+        if (simpleStoryList.size() >= 0) {
             mLvLatest.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
             return true;
         }
@@ -189,6 +200,12 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         Intent intent = new Intent(mContext, StoryActivity.class);
         intent.putExtra(Constant.STORY_ID, simpleStory.getStoryId());
         mContext.startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(mContext, "正在加载", Toast.LENGTH_SHORT).show();
+        loadDataFromInternet();
     }
 
     class MyPagerAdapter extends PagerAdapter {

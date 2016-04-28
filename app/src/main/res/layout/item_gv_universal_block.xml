@@ -44,7 +44,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/iv_describsion"
+                    android:id="@+id/tv_describsion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_above="@id/iv_title"
@@ -55,6 +55,15 @@
                     android:textColor="@color/zhihuBlue"
                     android:textSize="12sp"/>
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top"
+                android:paddingTop="6dp"
+                android:text=""
+                android:visibility="invisible"/>
         </FrameLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

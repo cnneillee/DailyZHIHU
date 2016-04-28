@@ -1,10 +1,11 @@
 package com.neil.dailyzhihu.bean;
 
-import android.util.Log;
-
+import com.neil.dailyzhihu.bean.orignallayer.SectionList;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanBeforeStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanDetailStory;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanHotStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanLatestStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionAndThemeBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanThemeStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.EditorBean;
@@ -12,10 +13,12 @@ import com.neil.dailyzhihu.bean.cleanlayer.SectionStory;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 import com.neil.dailyzhihu.bean.cleanlayer.TopStory;
 import com.neil.dailyzhihu.bean.orignallayer.BeforeStoryListBean;
+import com.neil.dailyzhihu.bean.orignallayer.DetailStory;
 import com.neil.dailyzhihu.bean.orignallayer.HotStory;
 import com.neil.dailyzhihu.bean.orignallayer.LatestStory;
 import com.neil.dailyzhihu.bean.orignallayer.RecentBean;
 import com.neil.dailyzhihu.bean.orignallayer.SectionStoryList;
+import com.neil.dailyzhihu.bean.orignallayer.ThemeList;
 import com.neil.dailyzhihu.bean.orignallayer.ThemeStoryList;
 
 import java.util.ArrayList;
@@ -61,6 +64,7 @@ public class CleanDataHelper {
     public static CleanLatestStoryListBean cleanLatestStory(LatestStory latestStory) {
         CleanLatestStoryListBean cleanLatestStoryList = new CleanLatestStoryListBean();
         List<LatestStory.StoriesBean> storiesBeanList = latestStory.getStories();
+        if (storiesBeanList == null) return null;
         List<SimpleStory> simpleStoryList = new ArrayList<>();
         for (int i = 0; i < storiesBeanList.size(); i++) {
             SimpleStory simpleStory = convertStoriesBean2SimpleStory(storiesBeanList.get(i));
@@ -183,5 +187,48 @@ public class CleanDataHelper {
         sectionStory.setDisplayDate(storiesBean.getDisplay_date());
         sectionStory.setTitle(storiesBean.getTitle());
         return sectionStory;
+    }
+
+    public static CleanDetailStory convertDetailStory2CleanDetailStory(DetailStory detailStory) {
+        CleanDetailStory cleanDetailStory = new CleanDetailStory();
+        cleanDetailStory.setBody(detailStory.getBody());
+        cleanDetailStory.setType(detailStory.getType());
+        cleanDetailStory.setGaPrefix(detailStory.getGa_prefix());
+        cleanDetailStory.setImage(detailStory.getImage());
+        cleanDetailStory.setImageSource(detailStory.getImage_source());
+        cleanDetailStory.setShareUrl(detailStory.getShare_url());
+        cleanDetailStory.setTitle(detailStory.getTitle());
+        cleanDetailStory.setStoryId(detailStory.getId());
+        DetailStory.SectionBean sectionBean = detailStory.getSection();
+        CleanSectionAndThemeBean cleanSectionAndThemeBean = convertSectionBean2CleanSectionBean(sectionBean);
+        cleanDetailStory.setCleanSectionAndThemeBean(cleanSectionAndThemeBean);
+        cleanDetailStory.setCss(detailStory.getCss());
+        return cleanDetailStory;
+    }
+
+    public static CleanSectionAndThemeBean convertSectionBean2CleanSectionBean(DetailStory.SectionBean sectionBean) {
+        CleanSectionAndThemeBean cleanSectionAndThemeBean = new CleanSectionAndThemeBean();
+        cleanSectionAndThemeBean.setSectionId(sectionBean.getId());
+        cleanSectionAndThemeBean.setThumbnail(sectionBean.getThumbnail());
+        cleanSectionAndThemeBean.setName(sectionBean.getName());
+        return cleanSectionAndThemeBean;
+    }
+
+    public static CleanSectionAndThemeBean convertDataBean2CleanSectionBean(SectionList.DataBean sectionBean) {
+        CleanSectionAndThemeBean cleanSectionAndThemeBean = new CleanSectionAndThemeBean();
+        cleanSectionAndThemeBean.setSectionId(sectionBean.getStoryId());
+        cleanSectionAndThemeBean.setThumbnail(sectionBean.getImages().get(0));
+        cleanSectionAndThemeBean.setName(sectionBean.getTitle());
+        cleanSectionAndThemeBean.setDescription(sectionBean.getDescription());
+        return cleanSectionAndThemeBean;
+    }
+
+    public static CleanSectionAndThemeBean convertOthersBean2CleanSectionBean(ThemeList.OthersBean themeBean) {
+        CleanSectionAndThemeBean cleanSectionAndThemeBean = new CleanSectionAndThemeBean();
+        cleanSectionAndThemeBean.setSectionId(themeBean.getStoryId());
+        cleanSectionAndThemeBean.setThumbnail(themeBean.getImages().get(0));
+        cleanSectionAndThemeBean.setName(themeBean.getTitle());
+        cleanSectionAndThemeBean.setDescription(themeBean.getDescription());
+        return cleanSectionAndThemeBean;
     }
 }

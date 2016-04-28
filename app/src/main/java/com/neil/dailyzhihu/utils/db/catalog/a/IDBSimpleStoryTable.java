@@ -30,7 +30,7 @@ public interface IDBSimpleStoryTable {
      * 更新SimpleStory表中实体的信息
      *
      * @param storyId       待更新的SimpleStory实体的Id
-     * @param contentValues key包含在#MyDBHelper.ConstantDB#类中
+     * @param contentValues key包含在#MyDBHelper.ConstantSimpleStoryDB#类中
      * @return 返回参数（the number of rows affected）
      */
     int updateSimpleStory(int storyId, ContentValues contentValues);
@@ -49,7 +49,7 @@ public interface IDBSimpleStoryTable {
      * @param storyDownloadedDate SimpleStory的下载日期
      * @return 查询到的SimpleStory实体列表
      */
-    List<SimpleStory> queryStoryCatalogByDownloadedDate(String storyDownloadedDate);
+    List<SimpleStory> querySimpleStoryByDownloadedDate(String storyDownloadedDate);
 
     /**
      * 查询所有的SimpleStory实体
