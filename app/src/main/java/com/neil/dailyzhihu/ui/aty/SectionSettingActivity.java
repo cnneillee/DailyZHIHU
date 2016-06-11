@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.ui.aty;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -47,6 +48,7 @@ public class SectionSettingActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @Bind(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
+    //能否点击进入
     private boolean flag = false;
     private List<CleanSectionAndThemeBean> mCleanSectionAndThemeBeanList;
 
@@ -63,14 +65,24 @@ public class SectionSettingActivity extends AppCompatActivity {
                 if (!flag) {
                     flag = true;
                     mRecyclerView.getAdapter().notifyDataSetChanged();
-                    mFab.setImageDrawable(getResources().getDrawable(R.drawable.ic_night));
+                    mFab.setImageDrawable(getResources().getDrawable(R.drawable.ic_confirm));
                 } else {
                     MyAdapter adapter = (MyAdapter) mRecyclerView.getAdapter();
+                    List<Integer> idList = DBFactory.getsIDBSubscribSectionTabledao(SectionSettingActivity.this).queryAllSubscribSectionId();
+                    if (idList != null) {
+                        for (int i = 0; i < idList.size(); i++) {
+                            ((MyAdapter) mRecyclerView.getAdapter()).getViewHolder(idList.get(i)).mCheckBox.setChecked(true);
+                        }
+                    }
                     List<Integer> checkedPostionList = adapter.getIsCheckedPostionList();
-                    Log.e(LOG_TAG, "checkedPostionList-" + checkedPostionList);
                     long currentMillies = System.currentTimeMillis();
                     for (int i = 0; i < checkedPostionList.size(); i++) {
                         int sectionId = mCleanSectionAndThemeBeanList.get(checkedPostionList.get(i)).getSectionId();
+                        List<Integer> hasSubIdList = DBFactory.getsIDBSubscribSectionTabledao(SectionSettingActivity.this).queryAllSubscribSectionId();
+                        for (int j = 0; j < hasSubIdList.size(); j++) {
+                            if (!checkedPostionList.contains(hasSubIdList.get(j)))
+                                DBFactory.getsIDBSubscribSectionTabledao(SectionSettingActivity.this).dropSubscribSection(hasSubIdList.get(i));
+                        }
                         long result = DBFactory.getsIDBSubscribSectionTabledao(SectionSettingActivity.this).addSubscribSection(sectionId, currentMillies);
                         Log.e(LOG_TAG, "result-" + result);
                     }
@@ -80,11 +92,13 @@ public class SectionSettingActivity extends AppCompatActivity {
         LoaderFactory.getContentLoader().loadContent(Constant.SECTIONS, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
-                SectionList sectionList = (SectionList) GsonDecoder.getDecoder().decoding(content, SectionList.class);
+                SectionList sectionList = GsonDecoder.getDecoder().decoding(content, SectionList.class);
                 List<SectionList.DataBean> mDatas = sectionList.getData();
                 mCleanSectionAndThemeBeanList = new ArrayList<>();
                 for (int i = 0; i < mDatas.size(); i++) {
-                    mCleanSectionAndThemeBeanList.add(CleanDataHelper.convertDataBean2CleanSectionBean(mDatas.get(i)));
+                    CleanSectionAndThemeBean cleanSectionAndThemeBean = CleanDataHelper.convertDataBean2CleanSectionBean(mDatas.get(i));
+                    DBFactory.getsIDBSectionBeanTabledao(SectionSettingActivity.this).addSectionBean(cleanSectionAndThemeBean);
+                    mCleanSectionAndThemeBeanList.add(cleanSectionAndThemeBean);
                 }
                 Log.e(LOG_TAG, "mDatas=" + mDatas.size() + " mCleanSectionAndThemeBeanList:" + mCleanSectionAndThemeBeanList.size());
                 MyAdapter myAdapter = new MyAdapter(SectionSettingActivity.this, mCleanSectionAndThemeBeanList);
@@ -95,11 +109,26 @@ public class SectionSettingActivity extends AppCompatActivity {
         });
     }
 
-
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         List<CleanSectionAndThemeBean> data;
         Context mContext;
         List<Integer> isCheckedPostionList = new ArrayList<>();
+        int onClickPostion = -1;
+        List<MyViewHolder> viewHolderList = new ArrayList<>();
+
+//        View.OnClickListener onItemClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (onClickPostion < 0) return;
+//                CleanSectionAndThemeBean bean = data.get(onClickPostion);
+//                int sectionId = bean.getSectionId();
+//                String sectionName = bean.getName();
+//                Intent intent = new Intent(mContext, SectionActivity.class);
+//                intent.putExtra(Constant.SECTION_ID, sectionId);
+//                intent.putExtra(Constant.SECTION_NAME, sectionName);
+//                startActivity(intent);
+//            }
+//        };
 
         MyAdapter(Context context, List<CleanSectionAndThemeBean> cleanSectionAndThemeBean) {
             data = cleanSectionAndThemeBean;
@@ -117,8 +146,13 @@ public class SectionSettingActivity extends AppCompatActivity {
             return myViewHolder;
         }
 
+        public MyViewHolder getViewHolder(final int itemId) {
+            return viewHolderList.get(itemId);
+        }
+
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
+        public void onBindViewHolder(MyViewHolder holder, final int position) {
+            viewHolderList.add(position, holder);
             holder.mIvTitle.setText(data.get(position).getName());
             LoaderFactory.getImageLoader().displayImage(holder.mIvImg, data.get(position).getThumbnail(), null);
             holder.mTvDescribsion.setText(data.get(position).getDescription());
@@ -130,6 +164,7 @@ public class SectionSettingActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int position = (int) buttonView.getTag();
+                    buttonView.invalidate();
                     if (isChecked) {
                         if (!isCheckedPostionList.contains(new Integer(position)))
                             isCheckedPostionList.add(new Integer(position));
@@ -139,8 +174,24 @@ public class SectionSettingActivity extends AppCompatActivity {
                     }
                 }
             });
-            if (flag)
+            if (flag) {
                 holder.mCheckBox.setVisibility(View.VISIBLE);
+                holder.getItemView().setOnClickListener(null);
+            } else {
+                holder.getItemView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (flag) return;
+                        CleanSectionAndThemeBean bean = data.get(position);
+                        int sectionId = bean.getSectionId();
+                        String sectionName = bean.getName();
+                        Intent intent = new Intent(mContext, SectionActivity.class);
+                        intent.putExtra(Constant.SECTION_ID, sectionId);
+                        intent.putExtra(Constant.SECTION_NAME, sectionName);
+                        startActivity(intent);
+                    }
+                });
+            }
         }
 
         @Override
@@ -153,13 +204,19 @@ public class SectionSettingActivity extends AppCompatActivity {
             ImageView mIvImg;
             TextView mTvDescribsion;
             CheckBox mCheckBox;
+            View itemView;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
+                this.itemView = itemView;
                 mIvTitle = (TextView) itemView.findViewById(R.id.iv_title);
                 mIvImg = (ImageView) itemView.findViewById(R.id.iv_img);
                 mTvDescribsion = (TextView) itemView.findViewById(R.id.tv_describsion);
                 mCheckBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+            }
+
+            public View getItemView() {
+                return itemView;
             }
         }
     }

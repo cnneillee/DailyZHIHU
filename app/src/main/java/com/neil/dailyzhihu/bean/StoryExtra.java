@@ -1,9 +1,11 @@
 package com.neil.dailyzhihu.bean;
 
+import com.neil.dailyzhihu.bean.orignallayer.OrignalStory;
+
 /**
  * Created by Neil on 2016/3/23.
  */
-public class StoryExtra {
+public class StoryExtra extends OrignalStory{
     /**
      * post_reasons : 0
      * long_comments : 14

@@ -32,17 +32,22 @@ public class IDBDetailStoryTabledao implements IDBDetailStoryTable {
     public long addDetailStory(CleanDetailStory story) {
         String storyId = story.getStoryId() + "";
         if (queryDetailStoryById(Integer.valueOf(storyId)) != null) {
-            Log.e(LOG_TAG, "insert erro:has existed");
+            Log.e(LOG_TAG, "insert erro:has existed---" + storyId);
             return 0;
         }
         CleanSectionAndThemeBean sectionBean = story.getCleanSectionAndThemeBean();
-        String sectionId = sectionBean.getSectionId() + "";
+        String sectionId = null;
+        if (sectionBean != null) {
+            sectionId = sectionBean.getSectionId() + "";
+        }
         String body = story.getBody();
         List<String> css = story.getCss();
         String gaPrefix = story.getGaPrefix();
         String imageUrl = story.getImage();
         String imageSource = story.getImageSource();
-        String imageTiny = story.getImages().get(0);
+        String imageTiny = null;
+        if (story.getImages() != null)
+            imageTiny = story.getImages().get(0);
 //        String storyId = story.getJs();
         String shareUrl = story.getShareUrl();
         String title = story.getTitle();
@@ -120,6 +125,22 @@ public class IDBDetailStoryTabledao implements IDBDetailStoryTable {
         return simpleStoryList;
     }
 
+    public List<Integer> queryAllDetailStoryId() {
+        List<Integer> simpleStoryIdList = null;
+        Cursor cursor = readable.query(tableName, new String[]{MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID}, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            simpleStoryIdList = new ArrayList<>();
+            Log.e(LOG_TAG, "cursor:" + cursor.getCount());
+            do {
+                String idStr = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID));
+                if (idStr != null)
+                    simpleStoryIdList.add(Integer.valueOf(idStr));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return simpleStoryIdList;
+    }
+
     private CleanDetailStory cursor2CleanDetailStory(Cursor cursor) {
         String storyId = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID));
         String body = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_BODY));
@@ -133,7 +154,8 @@ public class IDBDetailStoryTabledao implements IDBDetailStoryTable {
         String sectionId = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDetailStoryDB.KEY_SECTION_ID));
         //TODO 填充CleanSectionBean
         CleanSectionAndThemeBean cleanSectionAndThemeBean = new CleanSectionAndThemeBean();
-        cleanSectionAndThemeBean.setSectionId(Integer.valueOf(sectionId));
+        if (sectionId != null && !sectionId.equals("null"))
+            cleanSectionAndThemeBean.setSectionId(Integer.valueOf(sectionId));
         List<String> images = new ArrayList<>();
         images.add(imageTiny);
         CleanDetailStory story = new CleanDetailStory(body, imageSource, title, imageUrl, shareUrl, gaPrefix, cleanSectionAndThemeBean, Integer.valueOf(type), Integer.valueOf(storyId), null, images, null);

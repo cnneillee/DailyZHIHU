@@ -19,6 +19,8 @@ public interface IDBSpecialSimpleStoryTable {
      */
     long addSimpleStory(SimpleStory story, int flag);
 
+    int addSimpleStoryList(List<SimpleStory> storyList, int flag);
+
     /**
      * 从表中删除SimpleStory
      *
@@ -27,6 +29,8 @@ public interface IDBSpecialSimpleStoryTable {
      * @return 返回参数（the number of rows affected if a whereClause is passed in, 0 otherwise. To remove all rows and get a count pass "1" as the whereClause.）
      */
     int dropSimpleStory(int storyId, int flag);
+
+    int dropAllSimpleStory(int flag);
 
     /**
      * 更新表中实体的信息

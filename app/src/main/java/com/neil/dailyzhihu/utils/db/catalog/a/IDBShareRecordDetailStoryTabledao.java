@@ -60,6 +60,22 @@ public class IDBShareRecordDetailStoryTabledao implements IDBShareRecordDetailSt
         return shareRecordList;
     }
 
+    public List<Integer> queryAllShareRecordStoryId() {
+        List<Integer> shareRecordStoryIdList = null;
+        Cursor cursor = readable.query(tableName, new String[]{MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID}, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            shareRecordStoryIdList = new ArrayList<>();
+            Log.e(LOG_TAG, "cursor:" + cursor.getCount());
+            do {
+                String idStr = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID));
+                if (idStr != null)
+                    shareRecordStoryIdList.add(Integer.valueOf(idStr));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return shareRecordStoryIdList;
+    }
+
     @Override
     public List<ShareRecord> queryShareRecordByStoryId(int storyId) {
         List<ShareRecord> shareRecordList = null;

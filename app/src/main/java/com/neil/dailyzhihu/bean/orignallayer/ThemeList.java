@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Neil on 2016/4/15.
  */
-public class ThemeList {
+public class ThemeList extends OrignalStory{
     /**
      * limit : 1000
      * subscribed : []

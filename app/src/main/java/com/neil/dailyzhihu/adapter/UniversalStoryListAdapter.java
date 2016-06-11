@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.adapter;
 
 import android.content.Context;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +12,29 @@ import android.widget.TextView;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
 import com.neil.dailyzhihu.bean.StoryExtra;
-import com.neil.dailyzhihu.bean.UniversalStoryBean;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
+import com.neil.dailyzhihu.bean.listener.OnStoryExtraLoadingListener;
+import com.neil.dailyzhihu.bean.listener.SimpleOnStoryExtraLoadingListener;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
+import com.neil.dailyzhihu.utils.cnt.UniversalContentLoaderTest;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Neil on 2016/4/16.
- */
-public class UniversalStoryListAdapter<T extends SimpleStory> extends BaseAdapter {
-    private List<T> mDatas;
+public class UniversalStoryListAdapter extends BaseAdapter {
+    private List<? extends SimpleStory> mDatas;
     private Context mContext;
 
-    public UniversalStoryListAdapter(List<T> datas, Context context) {
+    private LruCache<String, CleanStoryExtra> mStoryExtraLruCache = new LruCache<>(30);
+
+    public UniversalStoryListAdapter(List<? extends SimpleStory> datas, Context context) {
         this.mDatas = datas;
         this.mContext = context;
     }
@@ -71,7 +75,7 @@ public class UniversalStoryListAdapter<T extends SimpleStory> extends BaseAdapte
     }
 
     private void cleanViewHolder(ViewHolder viewHolder) {
-        String initExtra = Formater.formatStoryExtra(null);
+        String initExtra = "热度：-，评论：-L + -S";
         viewHolder.tvExtra.setText(initExtra);
         viewHolder.tvTitle.setText("");
         viewHolder.ivImg.setImageResource(R.mipmap.img_default);
@@ -86,15 +90,33 @@ public class UniversalStoryListAdapter<T extends SimpleStory> extends BaseAdapte
     }
 
     private void loadExtra(ViewHolder viewHolder, int position) {
-        String extraUrl = Formater.formatUrl(Constant.EXTRA_HEAD, mDatas.get(position).getStoryId());
+        final String extraUrl = Formater.formatUrl(Constant.EXTRA_HEAD, mDatas.get(position).getStoryId());
         final TextView tvExtra = viewHolder.tvExtra;
+        if (getCachedStoryExtra(extraUrl) != null) {
+            CleanStoryExtra extra = getCachedStoryExtra(extraUrl);
+            tvExtra.setText(Formater.formatStoryExtra(extra));
+            return;
+        }
+        UniversalContentLoaderTest.extraLoad(mDatas.get(position).getStoryId(), mContext, new SimpleOnStoryExtraLoadingListener() {
+            @Override
+            public void onFinish(CleanStoryExtra storyExtra) {
+                mStoryExtraLruCache.put(extraUrl, storyExtra);
+                tvExtra.setText(Formater.formatStoryExtra(storyExtra));
+            }
+        });
+
         LoaderFactory.getContentLoader().loadContent(extraUrl, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
-                StoryExtra extra = (StoryExtra) GsonDecoder.getDecoder().decoding(content, StoryExtra.class);
+                StoryExtra extra = GsonDecoder.getDecoder().decoding(content, StoryExtra.class);
+                mStoryExtraLruCache.put(extraUrl, CleanDataHelper.convertStoryExtra2CleanStoryExtra(extra));
                 tvExtra.setText(Formater.formatStoryExtra(extra));
             }
         });
+    }
+
+    CleanStoryExtra getCachedStoryExtra(String extraUrl) {
+        return mStoryExtraLruCache.get(extraUrl);
     }
 
     class ViewHolder {
@@ -104,6 +126,7 @@ public class UniversalStoryListAdapter<T extends SimpleStory> extends BaseAdapte
         TextView tvExtra;
         @Bind(R.id.iv_img)
         ImageView ivImg;
+
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

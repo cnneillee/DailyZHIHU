@@ -5,7 +5,7 @@ import com.neil.dailyzhihu.bean.UniversalStoryBean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentBean implements UniversalStoryBean {
+public class RecentBean extends OrignalStory implements UniversalStoryBean {
     private int news_id;
     /**
      * URL还失效了

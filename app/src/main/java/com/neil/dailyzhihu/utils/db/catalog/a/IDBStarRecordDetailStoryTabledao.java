@@ -56,6 +56,22 @@ public class IDBStarRecordDetailStoryTabledao implements IDBStarDetailStoryTable
         return starRecordList;
     }
 
+    public List<Integer> queryAllStarRecordStoryId() {
+        List<Integer> starRecordStoryIdList = null;
+        Cursor cursor = readable.query(tableName, new String[]{MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID}, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            starRecordStoryIdList = new ArrayList<>();
+            Log.e(LOG_TAG, "cursor:" + cursor.getCount());
+            do {
+                String idStr = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantDetailStoryDB.KEY_DETAIL_STORY_ID));
+                if (idStr != null)
+                    starRecordStoryIdList.add(Integer.valueOf(idStr));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return starRecordStoryIdList;
+    }
+
     @Override
     public List<StarRecord> queryStarRecordByStoryId(int storyId) {
         List<StarRecord> starRecordList = null;

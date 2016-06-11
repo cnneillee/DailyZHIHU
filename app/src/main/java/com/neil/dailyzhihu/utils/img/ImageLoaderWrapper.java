@@ -1,5 +1,6 @@
 package com.neil.dailyzhihu.utils.img;
 
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.neil.dailyzhihu.utils.LoaderWrapper;
@@ -35,22 +36,33 @@ public interface ImageLoaderWrapper extends LoaderWrapper {
 
     /**
      * 显示图片
+     *
      * @param imageView 显示图片的ImageView
-     * @param imageUrl 图片资源的URL
-     * @param option  显示参数设置
+     * @param imageUrl  图片资源的URL
+     * @param option    显示参数设置
      * @param listener  图片加载监听事件
      */
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener);
 
     /**
      * 显示图片
-     * @param imageView 显示图片的ImageView
-     * @param imageUrl 图片资源的URL
-     * @param option  显示参数设置
-     * @param listener  图片加载监听事件
-     * @param progressListener  图片加载进度监听事件
+     *
+     * @param imageView        显示图片的ImageView
+     * @param imageUrl         图片资源的URL
+     * @param option           显示参数设置
+     * @param listener         图片加载监听事件
+     * @param progressListener 图片加载进度监听事件
      */
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener, ImageLoadingProgressListener progressListener);
+
+    /**
+     * @param context   上下文
+     * @param imageUrl  图片资源的URL
+     * @param imagePath 图片下载的目录
+     * @param listener  图片下载的监听事件
+     * @param imageName 图片保存名称，最好为StoryId
+     */
+    public void downloadImage(Context context, String imageUrl, String imagePath, int imageName, ImageLoadingListener listener);
 
     /**
      * 图片加载参数

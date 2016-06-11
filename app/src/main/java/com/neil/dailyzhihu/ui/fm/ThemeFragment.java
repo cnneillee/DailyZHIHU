@@ -55,11 +55,14 @@ public class ThemeFragment extends Fragment implements ObservableScrollViewCallb
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getContext();
+//        gvThemes.setScrollViewCallbacks(this);
+        gvThemes.setOnItemClickListener(this);
         LoaderFactory.getContentLoader().loadContent(Constant.THEMES, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
                 ThemeList themes = (ThemeList) GsonDecoder.getDecoder().decoding(content, ThemeList.class);
                 List<ThemeList.OthersBean> othersBeanList = themes.getOthers();
+                if (othersBeanList == null) return;
                 mDatas = new ArrayList<>();
                 for (int i = 0; i < othersBeanList.size(); i++) {
                     mDatas.add(CleanDataHelper.convertOthersBean2CleanSectionBean(othersBeanList.get(i)));
@@ -67,8 +70,6 @@ public class ThemeFragment extends Fragment implements ObservableScrollViewCallb
                 gvThemes.setAdapter(new UniversalBlockGridAdapter(mContext, mDatas));
             }
         });
-        gvThemes.setScrollViewCallbacks(this);
-        gvThemes.setOnItemClickListener(this);
     }
 
     @Override

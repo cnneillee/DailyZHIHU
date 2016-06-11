@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Neil on 2016/3/24.
  */
-public class SectionList {
+public class SectionList extends OrignalStory{
     /**
      * description : 看别人的经历，理解自己的生活
      * id : 1

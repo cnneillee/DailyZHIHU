@@ -3,6 +3,7 @@ package com.neil.dailyzhihu.ui.aty;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -35,15 +36,18 @@ import com.neil.dailyzhihu.adapter.LongCommentListAdapter;
 import com.neil.dailyzhihu.bean.LongComment;
 import com.neil.dailyzhihu.bean.ShareRecord;
 import com.neil.dailyzhihu.bean.StarRecord;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanDetailStory;
 import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.CommentAlertDialog;
 import com.neil.dailyzhihu.ui.widget.StoryFabMenuPopupwindow;
 import com.neil.dailyzhihu.ui.widget.ShareMenuPopupWindow;
 import com.neil.dailyzhihu.utils.GsonDecoder;
+import com.neil.dailyzhihu.utils.ImageExternalDirectoryUtil;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 import com.neil.dailyzhihu.utils.ShareHelper;
 import com.neil.dailyzhihu.utils.StorageOperatingHelper;
+import com.neil.dailyzhihu.utils.db.Story;
 import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.share.QQShare;
@@ -71,8 +75,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     ImageView mImageView;
     @Bind(R.id.overlay)
     View mOverlayView;
-    @Bind(R.id.tv_loading_comment)
-    TextView mLoadingComment;
+    @Bind(R.id.tv_scroll_to_top)
+    TextView mBottomTv;
     @Bind(R.id.scroll)
     ObservableScrollView mScrollView;
     @Bind(R.id.title)
@@ -81,6 +85,8 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     FloatingActionButton mFab;
     @Bind(R.id.tvContent)
     TextView mTvContent;
+    @Bind(R.id.main)
+    FrameLayout mMainLayout;
 
     private int mActionBarSize;
     private int mFlexibleSpaceShowFabOffset;
@@ -115,12 +121,11 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         mTitleView.setText(getTitle());
         setTitle(null);
         mScrollView.setScrollViewCallbacks(this);
-        mLoadingComment.setOnClickListener(this);
+        mBottomTv.setOnClickListener(this);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buildingCommentPopupWindow();
-                Toast.makeText(StoryActivity.this, "FAB is clicked", Toast.LENGTH_SHORT).show();
             }
         });
         mFabMargin = getResources().getDimensionPixelSize(R.dimen.margin_standard);
@@ -136,15 +141,24 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     }
 
     private PopupWindow mFabPW = null;
+    private PopupWindow.OnDismissListener mOnDismissListener = new PopupWindow.OnDismissListener() {
+        @Override
+        public void onDismiss() {
+            mMainLayout.setForeground(null);
+        }
+    };
 
     //构造并显示mFab点击后弹出的popupwindow
     private void buildingCommentPopupWindow() {
-        if (mFabPW != null)
-            mFabPW.showAsDropDown(mFab);
-        else {
-            mFabPW = new StoryFabMenuPopupwindow(this, new String[]{"查看评论", "收藏", "分享", "二维码"}, new int[]{R.drawable.ic_night, R.drawable.ic_night, R.drawable.ic_night, R.drawable.ic_night}, this);
-            mFabPW.showAsDropDown(mFab);
+        if (mFabPW == null) {
+            mFabPW = new StoryFabMenuPopupwindow(this, new String[]{"查看评论", "收藏", "分享", "二维码"},
+                    new int[]{R.drawable.ic_comments, R.drawable.ic_star_menu, R.drawable.ic_share_menu, R.drawable.ic_qr_code}, this);
+            mFabPW.setOnDismissListener(mOnDismissListener);
         }
+        mFabPW.showAsDropDown(mFab);
+        //实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0x9A000000);
+        mMainLayout.setForeground(dw);
     }
 
     private int getExtrasStoryId() {
@@ -158,62 +172,47 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     private StoryContent story;
 
     private boolean has = false;
-    private ImageLoadingListener mImageLoadingListener = new ImageLoadingListener() {
-        @Override
-        public void onLoadingStarted(String imageUri, View view) {
-
-        }
-
-        @Override
-        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-        }
-
-        @Override
-        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            if (loadedImage == null || has)
-                return;
-            has = true;
-            String path = StorageOperatingHelper.savingFavoriteStoryBitmap2SD(StoryActivity.this, loadedImage, story.getId() + "");
-            storyPath = path;
-            Log.e(LOG_TAG, "path-" + path);
-        }
-
-        @Override
-        public void onLoadingCancelled(String imageUri, View view) {
-
-        }
-    };
 
     private void fillingContent(final int storyId) {
-//        //本地数据库查询
-//        List<FavoriteStory> storyList = FavoriteStoryDBdaoFactory.getInstance(this).queryStoryById(storyId);
-//        if (storyList != null && storyList.size() > 0) {
-//            story = FavoriteStoryDBdaoFactory.convertStoryContent2DBStory(storyList.get(0));
-//            ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-//            Log.e(LOG_TAG, "file://" + story.getImageUri());
-//            // /storage/emulated/0/com.neil.dailyzhihu/image/favorite/8207616.png
-//            // /mnt/sdcard/
-//            loader.displayImage(mImageView, "file://" + story.getImageUri(), null);
-//            mTvContent.setText(Html.fromHtml(story.getBody()));
-//            mTitleView.setText(story.getTitle());
-//            mTvContent.setVisibility(View.VISIBLE);
-//            return;
-//        }
+        if (loadDB(storyId)) return;
         //api接口下载
         fillingContentUsingAPI(storyId);
     }
 
+    private boolean loadDB(int storyId) {
+        //本地数据库查询
+        CleanDetailStory cleanDetailStory = DBFactory.getIDBDetailStoryTabledao(this).queryDetailStoryById(storyId);
+        if (cleanDetailStory == null) return false;
+        mTvContent.setText(Html.fromHtml(cleanDetailStory.getBody()));
+        mTitleView.setText(cleanDetailStory.getTitle());
+        mTvContent.setVisibility(View.VISIBLE);
+        Bitmap bm = ImageExternalDirectoryUtil.getBitmap(StoryActivity.this, storyId);
+        if (bm == null) {
+            ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
+            loader.displayImage(mImageView, cleanDetailStory.getImage(), null, null);
+        } else {
+            mImageView.setImageBitmap(bm);
+            Log.e(LOG_TAG, "BITMAP LOADED FROM SD CARD");
+        }
+        return true;
+    }
+
     private boolean hasInsert = false;
 
-    private void fillingContentUsingAPI(int storyId) {
+    private void fillingContentUsingAPI(final int storyId) {
         LoaderFactory.getContentLoader().loadContent(Constant.STORY_HEAD + storyId, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
                 //TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。type=0正常，type特殊情况
-                ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-                story = (StoryContent) GsonDecoder.getDecoder().decoding(content, StoryContent.class);
-                loader.displayImage(mImageView, story.getImage(), null, mImageLoadingListener);
+                story = GsonDecoder.getDecoder().decoding(content, StoryContent.class);
+                Bitmap bm = ImageExternalDirectoryUtil.getBitmap(StoryActivity.this, storyId);
+                if (bm == null) {
+                    ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
+                    loader.displayImage(mImageView, story.getImage(), null, null);
+                } else {
+                    mImageView.setImageBitmap(bm);
+                    Log.e(LOG_TAG, "BITMAP LOADED FROM SD CARD");
+                }
                 String body = story.getBody();
                 if (body != null)
                     mTvContent.setText(Html.fromHtml(body));
@@ -443,7 +442,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
 
     private void showShareModule() {
         ShareMenuPopupWindow popupWindow = new ShareMenuPopupWindow(this, mOnItemClickListener);
-        popupWindow.showAtLocation(this.findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+        popupWindow.showAtLocation(mMainLayout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
     }
 
     public void share(StoryContent story) {
@@ -470,23 +469,9 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
 
     }
 
-    private boolean hasCommentLoaded = false;
-
     @Override
     public void onClick(View v) {
-        if (!hasCommentLoaded) {
-            Toast.makeText(this, "正在加载评论", Toast.LENGTH_SHORT).show();
-            if (story == null)
-                return;
-            //加载页卡
-            List<View> views = loadingViewPagerCard();
-//            loadingComment(views);
-            hasCommentLoaded = true;
-            mLoadingComment.setText("点击回到顶部");
-        } else {
-            //// TODO: 2016/4/21 实现回到顶部
-            mScrollView.scrollVerticallyTo(0);
-        }
+        mScrollView.scrollVerticallyTo(0);
     }
 
     private void loadingComment(final List<View> views, final ViewPager vp) {
@@ -496,7 +481,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
         LoaderFactory.getContentLoader().loadContent(Constant.COMMENT_HEAD + storyId + tail, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
-                LongComment longComment = (LongComment) GsonDecoder.getDecoder().decoding(content, LongComment.class);
+                LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
                 List<LongComment.CommentsBean> mDatas = longComment.getComments();
                 if (views.get(0) == null) {
                     return;
@@ -530,7 +515,7 @@ public class StoryActivity extends BaseActivity implements ObservableScrollViewC
     }
 
     //加载页卡
-    public List<View> loadingViewPagerCard() {
+    private List<View> loadingViewPagerCard() {
         List<View> views = new ArrayList<>();
         View view = getLayoutInflater().inflate(R.layout.vp_item_comment, null);
         views.add(view);

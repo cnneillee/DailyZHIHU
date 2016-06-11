@@ -1,5 +1,7 @@
 package com.neil.dailyzhihu.utils.cnt;
 
+import android.content.Context;
+
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.utils.LoaderWrapper;
 
@@ -22,4 +24,6 @@ public interface ContentLoaderWrapper extends LoaderWrapper {
      * @param listener   监听事件
      */
     public void loadContent(String contentUrl, OnContentLoadingFinishedListener listener);
+
+    public void loadContent(Context context, String contentUrl, OnContentLoadingFinishedListener listener);
 }

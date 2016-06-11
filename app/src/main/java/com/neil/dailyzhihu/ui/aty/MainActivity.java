@@ -29,6 +29,7 @@ import com.neil.dailyzhihu.ui.fm.LatestFragment;
 import com.neil.dailyzhihu.ui.fm.SectionFragment;
 import com.neil.dailyzhihu.ui.fm.ThemeFragment;
 import com.neil.dailyzhihu.ui.theme.SharedPreferrenceHelper;
+import com.neil.dailyzhihu.utils.db.MergeDB;
 
 import java.util.ArrayList;
 
@@ -52,14 +53,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         addFragments();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        showFragment(LATEST_FRAGMENT_IDX);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -173,13 +167,13 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         int id = item.getItemId();
         int fmIdx = getSelecteditemFragmentIdx(id);
         String title = (String) item.getTitle();
         showFragment(fmIdx);
         setActionBarTitle(title);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -209,12 +203,14 @@ public class MainActivity extends AppCompatActivity
                 fmIdx = SECTION_FRAGMENT_IDX;
                 break;
             case R.id.nav_custom:
-                Intent intent = new Intent(this,CustomizeActivity.class);
+                Intent intent = new Intent(this, CustomizeActivity.class);
                 Toast.makeText(this, "个性化", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 break;
             case R.id.nav_setting:
                 Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
+                Intent intentSetting = new Intent(this, MergeDBActivity.class);
+                startActivity(intentSetting);
                 break;
             case R.id.nav_send:
                 Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();

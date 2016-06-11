@@ -2,6 +2,7 @@ package com.neil.dailyzhihu.utils.db.catalog.a;
 
 import android.content.ContentValues;
 
+import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 
 import java.util.List;
@@ -42,6 +43,8 @@ public interface IDBSimpleStoryTable {
      * @return 查询到的SimpleStory实体
      */
     SimpleStory querySimpleStoryById(int storyId);
+
+    CleanStoryExtra queryStoryExtraById(int storyId);
 
     /**
      * 按SimpleStory下载日期查询到SimpleStory实体

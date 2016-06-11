@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionAndThemeBean;
 
@@ -51,9 +52,13 @@ public class IDBSubscribSectionTabledao implements IDBSubscribSectionTable {
     public boolean isSubscribtionExists(int sectionId) {
         Cursor cursor = readable.query(tableName, null, MyDBHelper.ConstantSectionDB.KEY_SECTION_ID + "=?", new String[]{sectionId + ""}, null, null, null);
         if (cursor.moveToFirst()) {
-            if (cursor.getCount() > 0)
+            if (cursor.getCount() > 0) {
+                Log.e(LOG_TAG, "cursor.getCount():" + cursor.getCount());
+                cursor.close();
                 return true;
+            }
         }
+        cursor.close();
         return false;
     }
 
@@ -62,16 +67,37 @@ public class IDBSubscribSectionTabledao implements IDBSubscribSectionTable {
         Cursor cursor = readable.query(tableName, null, null, null, null, null, null);
         List<CleanSectionAndThemeBean> sectionList = null;
         if (cursor.moveToFirst()) {
+            //Log.e(LOG_TAG, "cursor.SIZE()" + cursor.getCount());
             sectionList = new ArrayList<>();
             do {
                 String sectionId = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSectionDB.KEY_SECTION_ID));
                 if (sectionId != null) {
                     CleanSectionAndThemeBean cleanSectionAndThemeBean = DBFactory.getsIDBSectionBeanTabledao(context).querySectionBeanBySectionId(Integer.valueOf(sectionId));
-                    if (cleanSectionAndThemeBean != null)
+                    if (cleanSectionAndThemeBean != null) {
                         sectionList.add(cleanSectionAndThemeBean);
+                    }
                 }
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return sectionList;
+    }
+
+    @Override
+    public List<Integer> queryAllSubscribSectionId() {
+        Cursor cursor = readable.query(tableName, null, null, null, null, null, null);
+        List<Integer> sectionIdList = null;
+        if (cursor.moveToFirst()) {
+            sectionIdList = new ArrayList<>();
+            do {
+                String sectionId = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSectionDB.KEY_SECTION_ID));
+                if (sectionId != null) {
+                    int id = Integer.valueOf(sectionId);
+                    sectionIdList.add(id);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return sectionIdList;
     }
 }

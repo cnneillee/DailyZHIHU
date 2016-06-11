@@ -95,5 +95,9 @@
             android:name=".ui.aty.SectionSettingActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.aty.MergeDBActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 </manifest>

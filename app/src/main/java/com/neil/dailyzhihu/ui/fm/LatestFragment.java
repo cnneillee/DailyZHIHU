@@ -24,27 +24,31 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
-import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
-import com.neil.dailyzhihu.bean.CleanDataHelper;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanLatestStoryListBean;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 import com.neil.dailyzhihu.bean.cleanlayer.TopStory;
-import com.neil.dailyzhihu.bean.orignallayer.LatestStory;
+import com.neil.dailyzhihu.bean.listener.SimpleOnContentLoadingListener;
+import com.neil.dailyzhihu.bean.orignalloader.OrignalLoaderFactory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
+import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.LoaderFactory;
+import com.neil.dailyzhihu.utils.cnt.UniversalContentLoaderTest;
 import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
-    private static final String LOG_TAG = "LatestFragment";
+    private static final String LOG_TAG = LatestFragment.class.getSimpleName();
+    private static final int MAX_LOADED_COUNT = 20;//从数据库中加载的数目
+
     @Bind(R.id.lv_latest)
     ObservableListView mLvLatest;
     @Bind(R.id.srl_refresh)
@@ -52,7 +56,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
 
     private Context mContext;
     private List<SimpleStory> mDatas;
-    private ViewPager mTopStoryViewPager;
+    private AutoScrollViewPager mTopStoryViewPager;
     private int pagercurrentidx = -1;
     private List<TopStory> mTopStoriesBeanList;
     private int dbFlag = 0;
@@ -71,9 +75,9 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         View view = inflater.inflate(R.layout.fragment_latest, container, false);
         ButterKnife.bind(this, view);
         FrameLayout header = (FrameLayout) inflater.inflate(R.layout.viewpager_top_story, null);
-        mTopStoryViewPager = (ViewPager) header.findViewById(R.id.view_pager);
+        mTopStoryViewPager = (AutoScrollViewPager) header.findViewById(R.id.view_pager);
         mLvLatest.addHeaderView(header);
-        mLvLatest.setScrollViewCallbacks(this);
+//        mLvLatest.setScrollViewCallbacks(this);
         mTopStoryViewPager.setOnPageChangeListener(mSimpleOnPageChangeListener);
         mTopStoryViewPager.setOnClickListener(this);
         mSrlRefresh.setOnRefreshListener(this);
@@ -85,61 +89,38 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         mLvLatest.setOnItemClickListener(this);
-        if (loadDataFromDB()) {
-            return;
-        }
-        //加载数据
-        loadDataFromInternet();
-    }
-
-    private void loadDataFromInternet() {
-        LoaderFactory.getContentLoader().loadContent(Constant.URL_LATEST_NEWS, new OnContentLoadingFinishedListener() {
+        mSrlRefresh.post(new Runnable() {
             @Override
-            public void onFinish(String content) {
-                Gson gson = new Gson();
-                LatestStory latestStory = gson.fromJson(content, LatestStory.class);
-                mSrlRefresh.setRefreshing(false);
-                if (latestStory != null) {
-                    CleanLatestStoryListBean cleanLatestStoryListBean = CleanDataHelper.cleanLatestStory(latestStory);
-                    if (cleanLatestStoryListBean == null) return;
-                    mDatas = cleanLatestStoryListBean.getSimpleStoryList();
-                    //TODO 在这里可以加入当前所有story的评论加载，写入数据库
-                    writeIntoDB(mDatas);
-                    mLvLatest.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
-                    mTopStoriesBeanList = cleanLatestStoryListBean.getTopStoryList();
-                    Log.e(LOG_TAG, "mTopStoriesBeanList" + mTopStoriesBeanList.size());
-                    mTopStoryViewPager.setAdapter(new MyPagerAdapter(mTopStoriesBeanList));
-                    mTopStoryViewPager.getAdapter().notifyDataSetChanged();
-                }
+            public void run() {
+                mSrlRefresh.setRefreshing(true);
             }
         });
+        loadData();
+        mTopStoryViewPager.startAutoScroll(10000);
+//        mSrlRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, 24));
+//        mSrlRefresh.setRefreshing(true);
     }
 
-    private int writeIntoDB(List<SimpleStory> simpleStoryList) {
-        int resultCode = 1;
-        if (simpleStoryList != null && mContext != null) {
-            for (int i = 0; i < simpleStoryList.size(); i++) {
-                SimpleStory simpleStory = simpleStoryList.get(i);
-                int resultCodeFlag = (int) DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).addSimpleStory(simpleStory, dbFlag);
-                Log.e(LOG_TAG, "resultCodeFlag:" + resultCodeFlag);
-                if (resultCodeFlag < 0)
-                    resultCode = resultCodeFlag;
+    private void loadData() {
+        OrignalLoaderFactory.getContentLoaderVolley().loadCleanStoryListBean(mContext, Constant.URL_LATEST_NEWS, new SimpleOnContentLoadingListener() {
+            @Override
+            public void onFinish(CleanStoryListBean cleanStoryListBean) {
+                CleanLatestStoryListBean cleanLatestStoryListBean = (CleanLatestStoryListBean) cleanStoryListBean;
+                if (cleanLatestStoryListBean == null) return;
+                mDatas = cleanLatestStoryListBean.getSimpleStoryList();
+                mLvLatest.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
+                mTopStoriesBeanList = cleanLatestStoryListBean.getTopStoryList();
+                mTopStoryViewPager.setAdapter(new MyPagerAdapter(mTopStoriesBeanList));
+                mTopStoryViewPager.getAdapter().notifyDataSetChanged();
+                mSrlRefresh.setRefreshing(false);
             }
-        }
-        if (resultCode >= 0)
-            Toast.makeText(mContext, "数据成功", Toast.LENGTH_SHORT).show();
-        return resultCode;
-    }
 
-    private boolean loadDataFromDB() {
-        List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
-        if (simpleStoryList == null) return false;
-        Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
-        if (simpleStoryList.size() >= 0) {
-            mLvLatest.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
-            return true;
-        }
-        return false;
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(mContext, "ERROR!!", Toast.LENGTH_SHORT).show();
+                mSrlRefresh.setRefreshing(false);
+            }
+        }, UniversalContentLoaderTest.Flag.LATEST);
     }
 
     private View getPagerView(TopStory topStory) {
@@ -205,7 +186,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     @Override
     public void onRefresh() {
         Toast.makeText(mContext, "正在加载", Toast.LENGTH_SHORT).show();
-        loadDataFromInternet();
+        loadData();
     }
 
     class MyPagerAdapter extends PagerAdapter {

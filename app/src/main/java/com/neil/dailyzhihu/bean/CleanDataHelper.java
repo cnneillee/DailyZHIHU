@@ -1,5 +1,6 @@
 package com.neil.dailyzhihu.bean;
 
+import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
 import com.neil.dailyzhihu.bean.orignallayer.SectionList;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanBeforeStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanDetailStory;
@@ -30,7 +31,7 @@ import java.util.List;
 public class CleanDataHelper {
     private static final String LOG_TAG = CleanDataHelper.class.getSimpleName();
 
-    public static CleanHotStoryListBean cleanHotStory(HotStory hotStory) {
+    public static CleanHotStoryListBean cleanOrignalStory(HotStory hotStory) {
         CleanHotStoryListBean CleanHotStoryListBean = new CleanHotStoryListBean();
         List<RecentBean> recentBeanList = hotStory.getRecent();
         if (recentBeanList == null)
@@ -44,14 +45,13 @@ public class CleanDataHelper {
         return CleanHotStoryListBean;
     }
 
-    public static CleanBeforeStoryListBean cleanBeforeStory(BeforeStoryListBean beforeStoryListBean) {
+    public static CleanBeforeStoryListBean cleanOrignalStory(BeforeStoryListBean beforeStoryListBean) {
         CleanBeforeStoryListBean cleanBeforeStoryListBean = new CleanBeforeStoryListBean();
         String date = beforeStoryListBean.getDate();
         List<BeforeStoryListBean.StoriesBean> storiesBeanList = beforeStoryListBean.getStories();
         List<SimpleStory> simpleStoryList = new ArrayList<>();
         if (storiesBeanList == null)
             return null;
-
         for (int i = 0; i < storiesBeanList.size(); i++) {
             SimpleStory simpleStory = convertRecentBean2SimpleStory(storiesBeanList.get(i));
             simpleStoryList.add(simpleStory);
@@ -61,7 +61,7 @@ public class CleanDataHelper {
         return cleanBeforeStoryListBean;
     }
 
-    public static CleanLatestStoryListBean cleanLatestStory(LatestStory latestStory) {
+    public static CleanLatestStoryListBean cleanOrignalStory(LatestStory latestStory) {
         CleanLatestStoryListBean cleanLatestStoryList = new CleanLatestStoryListBean();
         List<LatestStory.StoriesBean> storiesBeanList = latestStory.getStories();
         if (storiesBeanList == null) return null;
@@ -207,6 +207,7 @@ public class CleanDataHelper {
     }
 
     public static CleanSectionAndThemeBean convertSectionBean2CleanSectionBean(DetailStory.SectionBean sectionBean) {
+        if (sectionBean == null) return null;
         CleanSectionAndThemeBean cleanSectionAndThemeBean = new CleanSectionAndThemeBean();
         cleanSectionAndThemeBean.setSectionId(sectionBean.getId());
         cleanSectionAndThemeBean.setThumbnail(sectionBean.getThumbnail());
@@ -230,5 +231,22 @@ public class CleanDataHelper {
         cleanSectionAndThemeBean.setName(themeBean.getTitle());
         cleanSectionAndThemeBean.setDescription(themeBean.getDescription());
         return cleanSectionAndThemeBean;
+    }
+
+    public static TopStory convertTopStoriesBean2TopStory(LatestStory.TopStoriesBean topStoriesBean) {
+        TopStory topStory = new TopStory();
+        topStory.setTitle(topStoriesBean.getTitle());
+        topStory.setGaPrefix(topStoriesBean.getGa_prefix());
+        topStory.setImagePath(topStoriesBean.getImages().get(0));
+        topStory.setType(topStoriesBean.getType());
+        return topStory;
+    }
+
+    public static CleanStoryExtra convertStoryExtra2CleanStoryExtra(StoryExtra storyExtra) {
+        CleanStoryExtra cleanStoryExtra = new CleanStoryExtra();
+        cleanStoryExtra.setLongComment(storyExtra.getLong_comments() + "");
+        cleanStoryExtra.setShortComment(storyExtra.getShort_comments() + "");
+        cleanStoryExtra.setPopu(storyExtra.getPopularity() + "");
+        return cleanStoryExtra;
     }
 }

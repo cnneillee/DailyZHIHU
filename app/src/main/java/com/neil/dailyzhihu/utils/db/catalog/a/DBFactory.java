@@ -61,7 +61,7 @@ public class DBFactory {
     public static IDBSpecialSimpleStoryTabledao getsIDBSpecialSimpleStoryTabledao(Context context) {
         if (sIDBSpecialSimpleStoryTabledao == null) {
             synchronized (IDBSpecialSimpleStoryTabledao.class) {
-                if (sIDBSimpleStoryTabledao == null) {
+                if (sIDBSpecialSimpleStoryTabledao == null) {
                     sIDBSpecialSimpleStoryTabledao = new IDBSpecialSimpleStoryTabledao(context);
                 }
             }

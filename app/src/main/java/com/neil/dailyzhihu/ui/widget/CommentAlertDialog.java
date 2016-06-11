@@ -20,7 +20,7 @@ public class CommentAlertDialog extends android.app.AlertDialog {
 
     public CommentAlertDialog(Context context, boolean cancelable, OnCancelListener cancelListener, PagerAdapter pagerAdapter, DialogInterface.OnClickListener onClickListener) {
         super(context, cancelable, cancelListener);
-        View contentView = LayoutInflater.from(context).inflate(R.layout.view_long_comments, null, false);
+        View contentView = LayoutInflater.from(context).inflate(R.layout.view_comments, null, false);
         DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽、高
         float screenHeight = d.heightPixels;
         int dialogHeight = (int) (screenHeight * 0.75);

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Neil on 2016/4/27.
  */
-public class DetailStory {
+public class DetailStory extends OrignalStory {
 
     /**
      * body :

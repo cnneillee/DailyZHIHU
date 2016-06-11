@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Neil on 2016/3/24.
  */
-public class SectionStoryList {
+public class SectionStoryList extends OrignalStory{
 
     /**
      * timestamp : 1457013601

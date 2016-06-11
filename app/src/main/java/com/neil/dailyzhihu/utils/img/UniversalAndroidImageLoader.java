@@ -5,7 +5,13 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.android.volley.Response;
+import com.android.volley.toolbox.ImageRequest;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.utils.ImageExternalDirectoryUtil;
+import com.neil.dailyzhihu.utils.LoaderFactory;
+import com.neil.dailyzhihu.utils.StorageOperatingHelper;
+import com.neil.dailyzhihu.utils.cnt.UniversalContentLoaderTest;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -14,6 +20,7 @@ import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 
@@ -29,7 +36,6 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
     private final static String HTTPS = "https";
 
     public UniversalAndroidImageLoader() {
-
     }
 
     @Override
@@ -152,6 +158,18 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
             String uri = ImageDownloader.Scheme.HTTP.wrap(imageUrl);
             ImageLoader.getInstance().displayImage(uri, imageView, options, listener, progressListener);
         }
+    }
+
+    @Override
+    public void downloadImage(final Context context, String imageUrl, String imagePath, final int imageName, ImageLoadingListener listener) {
+        ImageRequest imageRequest = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap bitmap) {
+                //StorageOperatingHelper.savingStoryImgBitmap2SD(context, bitmap, imageName + "");
+                ImageExternalDirectoryUtil.saveImgIntoCertainImgDirectory(context, bitmap, imageName, 100, ImageExternalDirectoryUtil.UtilType.STORY_IMG);
+            }
+        }, 0, 0, Bitmap.Config.ARGB_8888, null);
+        UniversalContentLoaderTest.getRequestQueue(context).add(imageRequest);
     }
 
     /**

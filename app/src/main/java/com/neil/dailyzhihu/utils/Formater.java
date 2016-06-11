@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.utils;
 
 import com.neil.dailyzhihu.bean.StoryExtra;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +18,19 @@ public class Formater {
         return result;
     }
 
+    public static String formatStoryExtra(CleanStoryExtra extra) {
+        String result = "热度：-，评论：-L + -S";
+        if (extra != null)
+            result = String.format("热度：" + extra.getPopu() + "，评论：" +
+                    extra.getLongComment() + "L " + extra.getShortComment() + "S");
+        return result;
+    }
+
     public static String formatUrl(String head, int id) {
+        return head + id;
+    }
+
+    public static String formatUrl(String head, String id) {
         return head + id;
     }
 

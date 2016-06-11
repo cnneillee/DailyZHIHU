@@ -23,6 +23,7 @@ import com.neil.dailyzhihu.adapter.UniversalBlockGridAdapter;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionAndThemeBean;
 import com.neil.dailyzhihu.ui.aty.SectionActivity;
 import com.neil.dailyzhihu.ui.aty.SectionSettingActivity;
+import com.neil.dailyzhihu.utils.Utility;
 import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.List;
@@ -34,8 +35,8 @@ public class SectionFragment extends Fragment implements ObservableScrollViewCal
     private static final String LOG_TAG = SectionFragment.class.getSimpleName();
     @Bind(R.id.gv_sections)
     ObservableGridView gvSections;
-    @Bind(R.id.tv)
-    TextView tv;
+    @Bind(R.id.tv_header)
+    TextView tvHeader;
     private List<CleanSectionAndThemeBean> mDatas;
     private Context mContext;
 
@@ -44,7 +45,6 @@ public class SectionFragment extends Fragment implements ObservableScrollViewCal
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_section, container, false);
         ButterKnife.bind(this, view);
-
         return view;
     }
 
@@ -52,21 +52,20 @@ public class SectionFragment extends Fragment implements ObservableScrollViewCal
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getContext();
-        mDatas = DBFactory.getsIDBSubscribSectionTabledao(mContext).queryAllSubscribSection();
-        View header = LayoutInflater.from(mContext).inflate(R.layout.section_listview_header, null, false);
-        gvSections.addHeaderView(header);
-        gvSections.setAdapter(new UniversalBlockGridAdapter<>(mContext, mDatas));
-        Log.e(LOG_TAG, " mDatas.size()-》" + mDatas.size());
-        header.setOnClickListener(this);
-        gvSections.setScrollViewCallbacks(this);
+//        View header = LayoutInflater.from(mContext).inflate(R.layout.section_listview_header, null, false);
+//        header.setOnClickListener(this);
+//        gvSections.addHeaderView(header);
+//        gvSections.setScrollViewCallbacks(this);
         gvSections.setOnItemClickListener(this);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intnt = new Intent(mContext, SectionSettingActivity.class);
-                mContext.startActivity(intnt);
-            }
-        });
+        tvHeader.setOnClickListener(this);
+//        Utility.setGridViewHeightBasedOnChildren(gvSections);
+        mDatas = DBFactory.getsIDBSubscribSectionTabledao(mContext).queryAllSubscribSection();
+        gvSections.setAdapter(new UniversalBlockGridAdapter<>(mContext, mDatas));
+        if (mDatas == null) return;
+        Log.e(LOG_TAG, " mDatas.size()-》" + mDatas.size());
+        for (int i = 0; i < mDatas.size(); i++) {
+            Log.e(LOG_TAG, mDatas.get(i).getSectionId() + " ,mDatas.size()-》" + mDatas.size());
+        }
     }
 
     @Override
@@ -103,7 +102,7 @@ public class SectionFragment extends Fragment implements ObservableScrollViewCal
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CleanSectionAndThemeBean bean = mDatas.get(position);
+        CleanSectionAndThemeBean bean = mDatas.get((int) id);
         int sectionId = bean.getSectionId();
         String sectionName = bean.getName();
         Intent intent = new Intent(mContext, SectionActivity.class);

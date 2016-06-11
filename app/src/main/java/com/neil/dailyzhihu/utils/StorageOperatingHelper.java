@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
+import com.nostra13.universalimageloader.utils.StorageUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,11 +19,21 @@ public class StorageOperatingHelper {
     private static final String IMAGE_DIR = "/image";
     private static final String QR_IMAGE_DIR = "/qrimage";
     private static final String FAVORITE_STORY_DIR = "/image/favorite";
+    private static final String STORY_IMG_DIR = "/image/storyimg";
 
     public static String savingFavoriteStoryBitmap2SD(Context context, Bitmap bm, String storyId) {
         if (bm == null) return null;
         String fileName = storyId + ".png";
         File file = createFile(FAVORITE_STORY_DIR, fileName);
+        if (file == null)
+            return null;
+        return excuteBM2File(file, bm);
+    }
+
+    public static String savingStoryImgBitmap2SD(Context context, Bitmap bm, String storyId) {
+        if (bm == null) return null;
+        String fileName = storyId + ".png";
+        File file = createFile(STORY_IMG_DIR, fileName);
         if (file == null)
             return null;
         return excuteBM2File(file, bm);

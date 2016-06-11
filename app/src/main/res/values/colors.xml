@@ -42,4 +42,5 @@
 
     <color name="icons">#808080</color>
     <color name="divider">#ec407a</color>
+    <color name="half_transparent">#656565</color>
 </resources>

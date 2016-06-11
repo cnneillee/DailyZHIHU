@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Neil on 2016/3/23.
  */
-public class StoryContent {
+public class StoryContent extends OrignalStory{
     /**
      * body : <div class="main-wrap content-wrap">
      * <div class="headline">

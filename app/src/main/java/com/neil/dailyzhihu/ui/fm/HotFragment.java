@@ -60,6 +60,15 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hot, container, false);
         ButterKnife.bind(this, view);
+        if (mContext != null) {
+//            lvHot.setScrollViewCallbacks(this);
+            lvHot.setOnItemClickListener(this);
+            mSrlRefresh.setOnRefreshListener(this);
+            if (!readDataFromDB()) {
+                Log.e(LOG_TAG, "loadDataFromInternet");
+                loadDataFromInternet();
+            }
+        }
         return view;
     }
 
@@ -67,13 +76,6 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getContext();
-        lvHot.setScrollViewCallbacks(this);
-        lvHot.setOnItemClickListener(this);
-        mSrlRefresh.setOnRefreshListener(this);
-        if (readDataFromDB()) {
-            return;
-        }
-        loadDataFromInternet();
     }
 
     private void loadDataFromInternet() {
@@ -86,7 +88,7 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
                 HotStory hotStories = (HotStory) GsonDecoder.getDecoder().decoding(content, HotStory.class);
                 if (hotStories == null) return;
                 //格式化数据
-                CleanHotStoryListBean cleanHotStoryListBean = CleanDataHelper.cleanHotStory(hotStories);
+                CleanHotStoryListBean cleanHotStoryListBean = CleanDataHelper.cleanOrignalStory(hotStories);
                 if (cleanHotStoryListBean == null) return;
                 List<SimpleStory> simpleStoryList = cleanHotStoryListBean.getSimpleStoryList();
                 //TODO 在这里可以加入当前所有story的评论加载，写入数据库
@@ -100,7 +102,7 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
         List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
         if (simpleStoryList == null) return false;
         Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
-        if (simpleStoryList != null && simpleStoryList.size() >= 0) {
+        if (simpleStoryList.size() >= 0) {
             lvHot.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
             return true;
         }

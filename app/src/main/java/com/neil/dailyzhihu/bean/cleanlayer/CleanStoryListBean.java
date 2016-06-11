@@ -16,4 +16,12 @@ public class CleanStoryListBean {
     public List<SimpleStory> getSimpleStoryList() {
         return simpleStoryList;
     }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setSimpleStoryList(List<SimpleStory> simpleStoryList) {
+        this.simpleStoryList = simpleStoryList;
+    }
 }

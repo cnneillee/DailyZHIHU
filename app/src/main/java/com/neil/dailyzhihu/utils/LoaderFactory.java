@@ -2,6 +2,7 @@ package com.neil.dailyzhihu.utils;
 
 import com.neil.dailyzhihu.utils.cnt.ContentLoaderWrapper;
 import com.neil.dailyzhihu.utils.cnt.UniversalContentLoader;
+import com.neil.dailyzhihu.utils.cnt.UniversalContentLoaderTest;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.img.UniversalAndroidImageLoader;
 
@@ -14,6 +15,7 @@ public class LoaderFactory {
 
     private static ImageLoaderWrapper sInstanceImg;
     private static ContentLoaderWrapper sInstanceCnt;
+    private static ContentLoaderWrapper sInstanceCntVolley;
 
     private LoaderFactory() {
 
@@ -49,5 +51,21 @@ public class LoaderFactory {
             }
         }
         return sInstanceCnt;
+    }
+
+    /**
+     * 获取内容加载器
+     *
+     * @return ContentLoaderWrapper(接口)，隐藏了实现
+     */
+    public static ContentLoaderWrapper getContentLoaderVolley() {
+        if (sInstanceCntVolley == null) {
+            synchronized (LoaderFactory.class) {
+                if (sInstanceCntVolley == null) {
+                    sInstanceCntVolley = new UniversalContentLoaderTest();
+                }
+            }
+        }
+        return sInstanceCntVolley;
     }
 }

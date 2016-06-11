@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="360dp"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_pickDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击选择查看日期"/>
+
+        <Button
+            android:id="@+id/btn_loadsetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缓存设置"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_dateDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="2016-02-06"/>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/material_calendarview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

@@ -22,4 +22,5 @@ public interface IDBSubscribSectionTable {
 
     List<CleanSectionAndThemeBean> queryAllSubscribSection();
 
+    List<Integer> queryAllSubscribSectionId();
 }

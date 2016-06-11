@@ -24,13 +24,22 @@ public class IDBSpecialSimpleStoryTabledao implements IDBSpecialSimpleStoryTable
         this.context = context;
     }
 
+    public int addSimpleStoryList(List<SimpleStory> storyList, int flag) {
+        if (storyList == null) return -1;
+        int errorcount = 0;
+        for (SimpleStory story : storyList) {
+            if (addSimpleStory(story, flag) < 0) errorcount++;
+        }
+        return errorcount;
+    }
+
     @Override
     public long addSimpleStory(SimpleStory story, int flag) {
         String tableName = getTableName(flag);
         //首先添加实体
         if (DBFactory.getsIDBSimpleStoryTabledao(context).addSimpleStory(story) >= 0) {//当表内已存在时，返回值为0
             String date = story.getDate();
-            String includeTimestamp = System.currentTimeMillis() + "";
+            String includeTimestamp = story.getDownloadTimeStamp();
             String storyId = story.getStoryId() + "";
             ContentValues contentValues = new ContentValues();
             contentValues.put(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DATE, date);
@@ -48,9 +57,16 @@ public class IDBSpecialSimpleStoryTabledao implements IDBSpecialSimpleStoryTable
     }
 
     @Override
+    public int dropAllSimpleStory(int flag) {
+        String tableName = getTableName(flag);
+        return writable.delete(tableName, null, null);
+    }
+
+    @Override
     public int updateSimpleStory(int storyId, ContentValues contentValues, int flag) {
         String tableName = getTableName(flag);
-        return writable.update(tableName, contentValues, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""});
+        if (querySimpleStoryById(storyId, flag) == null) return -1;
+        return writable.update(getTableName(3), contentValues, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""});
     }
 
     @Override
@@ -58,10 +74,29 @@ public class IDBSpecialSimpleStoryTabledao implements IDBSpecialSimpleStoryTable
         String tableName = getTableName(flag);
         SimpleStory simpleStory = null;
         Cursor cursor = readable.query(tableName, null, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
-        if (cursor != null && cursor.getCount() > 0)
+        if (cursor != null && cursor.getCount() > 0) {
             simpleStory = DBFactory.getsIDBSimpleStoryTabledao(context).querySimpleStoryById(storyId);
-        cursor.close();
+            cursor.close();
+        }
         return simpleStory;
+    }
+
+    public List<String> queryDate(int flag) {
+        String tableName = getTableName(flag);
+        List<String> dateList = null;
+        Cursor cursor = readable.query(tableName, new String[]{MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DATE}, null, null, null, null, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            dateList = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+                do {
+                    String date = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DATE));
+                    if (date != null)
+                        dateList.add(date);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return dateList;
     }
 
     @Override
@@ -79,8 +114,8 @@ public class IDBSpecialSimpleStoryTabledao implements IDBSpecialSimpleStoryTable
                         simpleStoryList.add(simpleStory);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
         }
-        cursor.close();
         return simpleStoryList;
     }
 
@@ -88,7 +123,7 @@ public class IDBSpecialSimpleStoryTabledao implements IDBSpecialSimpleStoryTable
     public List<SimpleStory> queryAllSimpleStory(int flag) {
         String tableName = getTableName(flag);
         List<SimpleStory> simpleStoryList = null;
-        Cursor cursor = readable.query(tableName, null, null, null, null, null, null);
+        Cursor cursor = readable.query(tableName, null, null, null, null, null, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_INCLUDE_TIME_STAMP + " DESC");
         if (cursor != null && cursor.getCount() > 0) {
             simpleStoryList = new ArrayList<>();
             if (cursor.moveToFirst()) {
@@ -112,6 +147,8 @@ public class IDBSpecialSimpleStoryTabledao implements IDBSpecialSimpleStoryTable
                 return MyDBHelper.ConstantSimpleStoryDB.HOT_SIMPLE_STORY_TABLE_NAME;
             case 2:
                 return MyDBHelper.ConstantSimpleStoryDB.BEFORE_SIMPLE_STORY_TABLE_NAME;
+            case 3:
+                return MyDBHelper.ConstantSimpleStoryDB.SIMPLE_STORY_TABLE_NAME;
         }
         return null;
     }

@@ -109,7 +109,7 @@ public class SectionActivity extends BaseActivity implements ObservableScrollVie
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(Constant.SECTIONS_HEAD, sectionId), new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
-                SectionStoryList sectionStoryList = (SectionStoryList) GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
+                SectionStoryList sectionStoryList = GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
                 CleanSectionStoryListBean cleanSectionStoryListBean = CleanDataHelper.cleanSectionStoryList(sectionStoryList);
                 mListView.setAdapter(new UniversalStoryListAdapter(cleanSectionStoryListBean.getSectionStoryList(), SectionActivity.this));
             }

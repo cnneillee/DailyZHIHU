@@ -64,7 +64,7 @@
                 android:text="@string/lipsum"/>
 
             <TextView
-                android:id="@+id/tv_loading_comment"
+                android:id="@+id/tv_scroll_to_top"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/ivoryWhite"
@@ -73,14 +73,9 @@
                 android:gravity="center"
                 android:maxLines="2"
                 android:padding="6dp"
-                android:text="点击加载评论"
+                android:text="点击返回顶部"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
-            <include
-                layout="@layout/comment_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </com.neil.dailyzhihu.ui.widget.ScrollViewHasViewPager>
@@ -114,7 +109,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left|top"
-        android:scaleType="center"
-        app:fab_colorNormal="@color/accentLight"
-        app:fab_colorPressed="@color/accent"/>
+        android:src="@drawable/plus"
+        app:backgroundTint="#30469b"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/collapsingToolbarLayout"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#a6a6a6"/>
 </FrameLayout>

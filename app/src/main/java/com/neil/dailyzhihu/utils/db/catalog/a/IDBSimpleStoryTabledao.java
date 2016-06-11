@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.neil.dailyzhihu.bean.StoryExtra;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 
 import java.util.ArrayList;
@@ -81,6 +83,20 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
     }
 
     @Override
+    public CleanStoryExtra queryStoryExtraById(int storyId) {
+        Cursor cursor = readable.query(tableName, null, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID + "=?", new String[]{storyId + ""}, null, null, null);
+        CleanStoryExtra storyExtra = null;
+        if (cursor.moveToFirst()) {
+            String shortComment = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_SHORT_COMMENTS));
+            String longComment = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_LONG_COMMENTS));
+            String population = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_POPULARITY));
+            storyExtra = new CleanStoryExtra(longComment, shortComment, population);
+        }
+        cursor.close();
+        return storyExtra;
+    }
+
+    @Override
     public List<SimpleStory> querySimpleStoryByDownloadedDate(String storyDownloadedDate) {
         List<SimpleStory> simpleStoryList = null;
         Cursor cursor = readable.query(MyDBHelper.ConstantSimpleStoryDB.SIMPLE_STORY_TABLE_NAME, null, MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_DOWNLOADED_TIME_STAMP + "=?", new String[]{storyDownloadedDate}, null, null, null);
@@ -112,6 +128,23 @@ public class IDBSimpleStoryTabledao implements IDBSimpleStoryTable {
         }
         cursor.close();
         return simpleStoryList;
+    }
+
+    public List<Integer> queryAllSimpleStoryId() {
+        List<Integer> simpleStoryIdList = null;
+        Cursor cursor = readable.query(tableName, new String[]{MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID}, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            simpleStoryIdList = new ArrayList<>();
+            Log.e(LOG_TAG, "cursor:" + cursor.getCount());
+            do {
+                String idStr = cursor.getString(cursor.getColumnIndex(MyDBHelper.ConstantSimpleStoryDB.KEY_SIMPLE_STORY_ID));
+                if (idStr != null) {
+                    simpleStoryIdList.add(Integer.valueOf(idStr));
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return simpleStoryIdList;
     }
 
     private SimpleStory cursor2SimpleStory(Cursor cursor) {

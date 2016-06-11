@@ -1,11 +1,13 @@
 package com.neil.dailyzhihu.bean;
 
+import com.neil.dailyzhihu.bean.orignallayer.OrignalStory;
+
 import java.util.List;
 
 /**
  * Created by Neil on 2016/3/23.
  */
-public class LongComment {
+public class LongComment extends OrignalStory{
     /**
      * author : 思霖Candy
      * content : 估计是我喜欢清淡吧，舌头很敏感，一直觉得飞机餐挺好吃的。感觉到的问题，一个是味道不纯粹，可能饭菜一起加热的缘故，然后味觉下降应该是感觉的到的，以前不知道，还以为是环境影响的～

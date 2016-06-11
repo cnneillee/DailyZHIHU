@@ -1,8 +1,11 @@
 package com.neil.dailyzhihu.utils.cnt;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.utils.cnt.ContentLoaderWrapper;
 import com.squareup.okhttp.OkHttpClient;
@@ -28,6 +31,11 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
         }
         mContentUrl = contentUrl;
         loadContent(contentUrl);
+    }
+
+    @Override
+    public void loadContent(Context context, String contentUrl, OnContentLoadingFinishedListener listener) {
+        loadContent(contentUrl, listener);
     }
 
     @Override
