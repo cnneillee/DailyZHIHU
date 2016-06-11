@@ -32,6 +32,7 @@
 - 2016.04.23 数据库搭建实现特定功能-数据库测试OK，功能有待完善
 - 2016.06.11 修复了sectionSettingActivity中item选择错位的bug
 
+
 ## Description
 基于私有api而开发的一款获取知乎日报内容的app（Android版）
 
