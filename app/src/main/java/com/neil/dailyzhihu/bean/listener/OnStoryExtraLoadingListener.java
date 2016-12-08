@@ -1,8 +1,6 @@
 package com.neil.dailyzhihu.bean.listener;
 
-import com.neil.dailyzhihu.bean.StoryExtra;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
-import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryListBean;
 
 /**
  * Created by Neil on 2016/5/8.

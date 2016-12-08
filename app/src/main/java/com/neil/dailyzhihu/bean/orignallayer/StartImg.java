@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.bean;
+package com.neil.dailyzhihu.bean.orignallayer;
 
 /**
  * Created by Neil on 2016/3/23.

@@ -25,6 +25,4 @@ public class CleanHotStoryListBean extends CleanStoryListBean {
     public List<SimpleStory> getSimpleStoryList() {
         return simpleStoryList;
     }
-
-
 }

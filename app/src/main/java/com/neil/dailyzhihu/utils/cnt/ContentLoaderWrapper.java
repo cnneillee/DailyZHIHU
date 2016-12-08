@@ -6,7 +6,7 @@ import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.utils.LoaderWrapper;
 
 /**
- * Created by Neil on 2016/4/15.
+ * 内容加载器的包装
  */
 public interface ContentLoaderWrapper extends LoaderWrapper {
 
@@ -15,7 +15,7 @@ public interface ContentLoaderWrapper extends LoaderWrapper {
      *
      * @param contentUrl 文本内容的Url
      */
-    public void loadContent(String contentUrl);
+     void loadContent(String contentUrl);
 
     /**
      * 显示文本内容
@@ -23,7 +23,7 @@ public interface ContentLoaderWrapper extends LoaderWrapper {
      * @param contentUrl 文本内容的Url
      * @param listener   监听事件
      */
-    public void loadContent(String contentUrl, OnContentLoadingFinishedListener listener);
+    void loadContent(String contentUrl, OnContentLoadingFinishedListener listener);
 
-    public void loadContent(Context context, String contentUrl, OnContentLoadingFinishedListener listener);
+    void loadContent(Context context, String contentUrl, OnContentLoadingFinishedListener listener);
 }

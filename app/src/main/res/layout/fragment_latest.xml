@@ -18,7 +18,15 @@
             android:layout_marginTop="16dp"
             android:divider="@android:color/transparent"
             tools:listheader="@layout/test"/>
+
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hotest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:divider="@android:color/transparent"/>
 </LinearLayout>

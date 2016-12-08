@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.StartImg;
+import com.neil.dailyzhihu.bean.orignallayer.StartImg;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 

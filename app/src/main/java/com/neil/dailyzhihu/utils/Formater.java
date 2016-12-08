@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.utils;
 
-import com.neil.dailyzhihu.bean.StoryExtra;
+import com.neil.dailyzhihu.bean.orignallayer.StoryExtra;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryExtra;
 
 import java.text.SimpleDateFormat;

@@ -1,8 +1,6 @@
 package com.neil.dailyzhihu.adapter;
 
 import android.content.Context;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.LongComment;
+import com.neil.dailyzhihu.bean.orignallayer.LongComment;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 

@@ -2,9 +2,7 @@ package com.neil.dailyzhihu.ui.aty;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,39 +20,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.fm.PastFragment;
 import com.neil.dailyzhihu.ui.fm.HotFragment;
 import com.neil.dailyzhihu.ui.fm.LatestFragment;
 import com.neil.dailyzhihu.ui.fm.SectionFragment;
 import com.neil.dailyzhihu.ui.fm.ThemeFragment;
-import com.neil.dailyzhihu.ui.theme.SharedPreferrenceHelper;
-import com.neil.dailyzhihu.utils.db.MergeDB;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final int LATEST_FRAGMENT_IDX = 0;
+    private static final int HOTTEST_FRAGMENT_IDX = 1;
+    private static final int PAST_FRAGMENT_IDX = 2;
+    private static final int THEME_FRAGMENT_IDX = 3;
+    private static final int SECTION_FRAGMENT_IDX = 4;
     private ArrayList<Fragment> fragments;
-    private final int LATEST_FRAGMENT_IDX = 0;
-    private final int HOTTEST_FRAGMENT_IDX = 1;
-    private final int PAST_FRAGMENT_IDX = 2;
-    private final int THEME_FRAGMENT_IDX = 3;
-    private final int SECTION_FRAGMENT_IDX = 4;
-    private String theme = Constant.DEFAULT_TIME_THEME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int themeRes = SharedPreferrenceHelper.getAppTheme(this);
-        theme = SharedPreferrenceHelper.gettheme(this);
-        setTheme(themeRes);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        addFragments();
-        showFragment(LATEST_FRAGMENT_IDX);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,9 +52,15 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        initHeaderView(navigationView);
         navigationView.setNavigationItemSelectedListener(this);
-    }
+
+        //初始化抽屉的header界面
+        initHeaderView(navigationView);
+
+        addFragments();
+        showFragment(0);
+        navigationView.setCheckedItem(0);
+}
 
     private void initHeaderView(NavigationView navigationView) {
         LinearLayout header = (LinearLayout) navigationView.getHeaderView(0);
@@ -73,8 +70,6 @@ public class MainActivity extends AppCompatActivity
         name.setOnClickListener(this);
         TextView email = (TextView) header.findViewById(R.id.tv_email);
         email.setOnClickListener(this);
-        ImageView dayMode = (ImageView) header.findViewById(R.id.iv_dayMode);
-        dayMode.setOnClickListener(this);
     }
 
     @Override
@@ -85,36 +80,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.tv_email:
                 Toast.makeText(this, "我叫 刘看山", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.iv_dayMode:
-                changeDayMode((ImageView) v);
-                break;
         }
-    }
-
-    private void changeDayMode(ImageView v) {
-        switch (theme) {
-            case Constant.DAY_TIME_THEME:
-                Toast.makeText(this, "切换成白天模式", Toast.LENGTH_SHORT).show();
-                v.setImageResource(R.drawable.ic_night);
-                Toast.makeText(this, "现在是白天", Toast.LENGTH_SHORT).show();
-                break;
-            case Constant.NIGHT_TIME_THEME:
-                Toast.makeText(this, "切换成夜间模式", Toast.LENGTH_SHORT).show();
-                v.setImageResource(R.drawable.ic_day);
-                Toast.makeText(this, "现在是夜间", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        SharedPreferrenceHelper.switchAppTheme(this);
-        reload();
-    }
-
-    private void reload() {
-        Intent intent = getIntent();
-        overridePendingTransition(0, 0);//不设置进入退出动画
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
     }
 
     private void addFragments() {
@@ -172,8 +138,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         int fmIdx = getSelecteditemFragmentIdx(id);
         String title = (String) item.getTitle();
-        showFragment(fmIdx);
         setActionBarTitle(title);
+        Log.e(LOG_TAG, "fmidx: " + fmIdx + "   title" + title);
+        showFragment(fmIdx);
         return true;
     }
 
@@ -184,6 +151,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * 获得被选中的fragment常量
+     *
+     * @param id fragment的下标
+     * @return fragment常量
+     */
     private int getSelecteditemFragmentIdx(int id) {
         int fmIdx = -1;
         switch (id) {

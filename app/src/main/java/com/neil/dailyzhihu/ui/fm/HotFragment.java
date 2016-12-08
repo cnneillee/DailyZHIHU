@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import com.neil.dailyzhihu.bean.orignallayer.HotStory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
-import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.List;
 
@@ -48,8 +46,6 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     TextView mTvUpdateTime;
     private Context mContext;
 
-    private int dbFlag = 1;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +60,7 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
 //            lvHot.setScrollViewCallbacks(this);
             lvHot.setOnItemClickListener(this);
             mSrlRefresh.setOnRefreshListener(this);
-            if (!readDataFromDB()) {
-                Log.e(LOG_TAG, "loadDataFromInternet");
-                loadDataFromInternet();
-            }
+            mSrlRefresh.setRefreshing(true);
         }
         return view;
     }
@@ -79,50 +72,20 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     }
 
     private void loadDataFromInternet() {
-        LoaderFactory.getContentLoader().loadContent(Constant.HOT_NEWS, new OnContentLoadingFinishedListener() {
+        LoaderFactory.getContentLoader().loadContent(Constant.URL_HOT_NEWS, new OnContentLoadingFinishedListener() {
             @Override
             public void onFinish(String content) {
                 mSrlRefresh.setRefreshing(false);
                 mTvUpdateTime.setText("上次更新于：" + System.currentTimeMillis() + "");
                 //原始数据
-                HotStory hotStories = (HotStory) GsonDecoder.getDecoder().decoding(content, HotStory.class);
-                if (hotStories == null) return;
+                HotStory hotStories = GsonDecoder.getDecoder().decoding(content, HotStory.class);
                 //格式化数据
                 CleanHotStoryListBean cleanHotStoryListBean = CleanDataHelper.cleanOrignalStory(hotStories);
                 if (cleanHotStoryListBean == null) return;
                 List<SimpleStory> simpleStoryList = cleanHotStoryListBean.getSimpleStoryList();
-                //TODO 在这里可以加入当前所有story的评论加载，写入数据库
-                writeIntoDB(simpleStoryList);
                 lvHot.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
             }
         });
-    }
-
-    private boolean readDataFromDB() {
-        List<SimpleStory> simpleStoryList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryAllSimpleStory(dbFlag);
-        if (simpleStoryList == null) return false;
-        Log.e(LOG_TAG, "simpleStoryList.SIZE:" + simpleStoryList.size());
-        if (simpleStoryList.size() >= 0) {
-            lvHot.setAdapter(new UniversalStoryListAdapter(simpleStoryList, mContext));
-            return true;
-        }
-        return false;
-    }
-
-    private int writeIntoDB(List<SimpleStory> simpleStoryList) {
-        int resultCode = 1;
-        if (simpleStoryList != null && mContext != null) {
-            for (int i = 0; i < simpleStoryList.size(); i++) {
-                SimpleStory simpleStory = simpleStoryList.get(i);
-                int resultCodeFlag = (int) DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).addSimpleStory(simpleStory, dbFlag);
-                Log.e(LOG_TAG, "resultCodeFlag:" + resultCodeFlag);
-                if (resultCodeFlag < 0)
-                    resultCode = resultCodeFlag;
-            }
-        }
-        if (resultCode >= 0)
-            Toast.makeText(mContext, "数据成功", Toast.LENGTH_SHORT).show();
-        return resultCode;
     }
 
     @Override
@@ -168,5 +131,6 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     @Override
     public void onRefresh() {
         Toast.makeText(mContext, "正在更新数据", Toast.LENGTH_SHORT).show();
+        loadDataFromInternet();
     }
 }

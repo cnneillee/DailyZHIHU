@@ -115,14 +115,12 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                 new OnContentLoadingFinishedListener() {
                     @Override
                     public void onFinish(String content) {
-                        BeforeStoryListBean beforeStory = (BeforeStoryListBean) GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
-                        if (beforeStory != null) {
-                            CleanBeforeStoryListBean cleanBeforeStoryListBean = CleanDataHelper.cleanOrignalStory(beforeStory);
-                            if (cleanBeforeStoryListBean == null) return;
-                            mDatas = cleanBeforeStoryListBean.getSimpleStoryList();
-                            writeIntoDB(mDatas);
-                            mLvBefore.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
-                        }
+                        BeforeStoryListBean beforeStory =  GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
+                        CleanBeforeStoryListBean cleanBeforeStoryListBean = CleanDataHelper.cleanOrignalStory(beforeStory);
+                        if (cleanBeforeStoryListBean == null) return;
+                        mDatas = cleanBeforeStoryListBean.getSimpleStoryList();
+                        writeIntoDB(mDatas);
+                        mLvBefore.setAdapter(new UniversalStoryListAdapter(mDatas, mContext));
                     }
                 }
         );
@@ -276,6 +274,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         downloadedHighLightDecorator = new DownloadedHighLightDecorator();
         mcv.addDecorator(downloadedHighLightDecorator);
         List<String> dateList = DBFactory.getsIDBSpecialSimpleStoryTabledao(mContext).queryDate(2);
+        if (dateList == null) return;
         for (int i = 0; i < dateList.size(); i++) {
             downloadedHighLightDecorator.addDatesAndUpdate(dateList.get(i));
         }

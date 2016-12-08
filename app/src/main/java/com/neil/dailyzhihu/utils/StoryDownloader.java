@@ -8,7 +8,7 @@ import android.util.Log;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.bean.CleanDataHelper;
-import com.neil.dailyzhihu.bean.StoryExtra;
+import com.neil.dailyzhihu.bean.orignallayer.StoryExtra;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanBeforeStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanDetailStory;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanHotStoryListBean;

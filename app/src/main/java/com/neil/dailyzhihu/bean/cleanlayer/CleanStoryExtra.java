@@ -4,9 +4,9 @@ package com.neil.dailyzhihu.bean.cleanlayer;
  * Created by Neil on 2016/5/8.
  */
 public class CleanStoryExtra {
-    String longComment;
-    String shortComment;
-    String popu;
+    private String longComment;
+    private String shortComment;
+    private String popu;
 
     public CleanStoryExtra(String longComment, String shortComment, String popu) {
 

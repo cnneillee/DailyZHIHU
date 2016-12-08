@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,19 +25,24 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
+import com.neil.dailyzhihu.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.adapter.HotNewsRecyclerAdapter;
 import com.neil.dailyzhihu.adapter.UniversalStoryListAdapter;
+import com.neil.dailyzhihu.bean.CleanDataHelper;
+import com.neil.dailyzhihu.bean.cleanlayer.CleanHotStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanLatestStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.CleanStoryListBean;
 import com.neil.dailyzhihu.bean.cleanlayer.SimpleStory;
 import com.neil.dailyzhihu.bean.cleanlayer.TopStory;
 import com.neil.dailyzhihu.bean.listener.SimpleOnContentLoadingListener;
+import com.neil.dailyzhihu.bean.orignallayer.HotStory;
 import com.neil.dailyzhihu.bean.orignalloader.OrignalLoaderFactory;
 import com.neil.dailyzhihu.ui.aty.StoryActivity;
 import com.neil.dailyzhihu.utils.DisplayUtil;
+import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.LoaderFactory;
 import com.neil.dailyzhihu.utils.cnt.UniversalContentLoaderTest;
-import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;
 
 import java.util.List;
 
@@ -47,12 +52,15 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks, View.OnClickListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String LOG_TAG = LatestFragment.class.getSimpleName();
-    private static final int MAX_LOADED_COUNT = 20;//从数据库中加载的数目
 
+    // 最新新闻展示（头部为轮播新闻）
     @Bind(R.id.lv_latest)
     ObservableListView mLvLatest;
+    // 下滑刷新
     @Bind(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
+    @Bind(R.id.rv_hotest)
+    RecyclerView mRvHotest;
 
     private Context mContext;
     private List<SimpleStory> mDatas;
@@ -74,12 +82,16 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_latest, container, false);
         ButterKnife.bind(this, view);
+        // 添加顶部新闻轮播
         FrameLayout header = (FrameLayout) inflater.inflate(R.layout.viewpager_top_story, null);
         mTopStoryViewPager = (AutoScrollViewPager) header.findViewById(R.id.view_pager);
         mLvLatest.addHeaderView(header);
-//        mLvLatest.setScrollViewCallbacks(this);
+        // 添加顶部新闻轮播点击事件
         mTopStoryViewPager.setOnPageChangeListener(mSimpleOnPageChangeListener);
         mTopStoryViewPager.setOnClickListener(this);
+        // 设置listview滑动事件监听，以让actionBar隐藏或显示
+        mLvLatest.setScrollViewCallbacks(this);
+        // 设置刷新事件监听
         mSrlRefresh.setOnRefreshListener(this);
         return view;
     }
@@ -88,20 +100,29 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        // 设置新闻项点击事件
         mLvLatest.setOnItemClickListener(this);
+        // 首次进入刷新
         mSrlRefresh.post(new Runnable() {
             @Override
             public void run() {
                 mSrlRefresh.setRefreshing(true);
             }
         });
-        loadData();
+        // 加载
+        loadLatestNewsFromInternet();
+        loadHotNewsFromInternet();
+        // 自动轮播
         mTopStoryViewPager.startAutoScroll(10000);
-//        mSrlRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, 24));
-//        mSrlRefresh.setRefreshing(true);
+        // SwipeRefreshLayout加载时的效果显示
+        mSrlRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, 24));
+        mSrlRefresh.setRefreshing(true);
     }
 
-    private void loadData() {
+    /**
+     * 从网络加载最新新闻
+     */
+    private void loadLatestNewsFromInternet() {
         OrignalLoaderFactory.getContentLoaderVolley().loadCleanStoryListBean(mContext, Constant.URL_LATEST_NEWS, new SimpleOnContentLoadingListener() {
             @Override
             public void onFinish(CleanStoryListBean cleanStoryListBean) {
@@ -123,6 +144,32 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         }, UniversalContentLoaderTest.Flag.LATEST);
     }
 
+    /**
+     * 从网络加载最新新闻
+     */
+    private void loadHotNewsFromInternet() {
+        LoaderFactory.getContentLoader().loadContent(Constant.URL_HOT_NEWS, new OnContentLoadingFinishedListener() {
+            @Override
+            public void onFinish(String content) {
+                mSrlRefresh.setRefreshing(false);
+                //原始数据
+                HotStory hotStories = GsonDecoder.getDecoder().decoding(content, HotStory.class);
+                //格式化数据
+                CleanHotStoryListBean cleanHotStoryListBean = CleanDataHelper.cleanOrignalStory(hotStories);
+                if (cleanHotStoryListBean == null) return;
+                List<SimpleStory> simpleStoryList = cleanHotStoryListBean.getSimpleStoryList();
+                mRvHotest.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, true));
+                mRvHotest.setAdapter(new HotNewsRecyclerAdapter(simpleStoryList, mContext));
+            }
+        });
+    }
+
+    /**
+     * 获得顶部轮播单页页卡
+     *
+     * @param topStory 顶部单页内容
+     * @return 单页页卡
+     */
     private View getPagerView(TopStory topStory) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.item_viewpager_top_story, null, false);
         ImageView iv = (ImageView) v.findViewById(R.id.iv_img);
@@ -175,6 +222,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         ButterKnife.unbind(this);
     }
 
+    // 点击单条新闻进行跳转
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         SimpleStory simpleStory = (SimpleStory) parent.getAdapter().getItem(position);
@@ -185,14 +233,17 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
 
     @Override
     public void onRefresh() {
-        Toast.makeText(mContext, "正在加载", Toast.LENGTH_SHORT).show();
-        loadData();
+        loadLatestNewsFromInternet();
+        loadHotNewsFromInternet();
     }
 
-    class MyPagerAdapter extends PagerAdapter {
+    /**
+     * top viewpager（顶部轮播新闻）
+     */
+    private class MyPagerAdapter extends PagerAdapter {
         private List<TopStory> listBean;
 
-        public MyPagerAdapter(List<TopStory> listBean) {
+        MyPagerAdapter(List<TopStory> listBean) {
             this.listBean = listBean;
         }
 

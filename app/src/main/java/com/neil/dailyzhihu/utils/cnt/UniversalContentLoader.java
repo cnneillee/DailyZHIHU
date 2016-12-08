@@ -15,7 +15,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 /**
- * Created by Neil on 2016/4/15.
+ * 内容加载器包装的实现
  */
 public class UniversalContentLoader implements ContentLoaderWrapper {
     private OnContentLoadingFinishedListener mListener;
@@ -44,7 +44,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
         loadingTask.execute();
     }
 
-    class ContentLoadingTask extends AsyncTask<Void, Void, String> {
+    private class ContentLoadingTask extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... params) {
