@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@color/ivoryWhite"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="点击管理Section（添加/取消订阅）"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <com.github.ksoichiro.android.observablescrollview.ObservableGridView
+        android:id="@+id/gv_sections"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"/>
+</LinearLayout>

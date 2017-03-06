@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Preference Activity/Fragment background-->
+    <!--如SettingActivity、AboutActivity-->
+    <attr name="prefRootViewBgColor" format="color"/>
+
+    <!--section Activity/Fragment background-->
+    <!--如NavColumnsActivity、NavThemesActivity、
+    CertainColumnActivity、CertainThemeActivity-->
+    <attr name="sectionRootViewBgColor" format="color"/>
+
+    <!--mainPage Activity/Fragment background-->
+    <!--如MainActivity、LatestFragment、HotFragment、PastFragment-->
+    <attr name="mainPageRootViewBgColor" format="color"/>
+
+    <!--widget-->
+    <attr name="barBgColor" format="color"/>
+    <attr name="cardViewBgColor" format="color"/>
+    <!--mainPage Activity/Fragment background-->
+    <attr name="tabsBgColor" format="color"/>
+
+    <!--文字-->
+    <attr name="barTitleColor" format="color"/>
+    <attr name="barSubTitleColor" format="color"/>
+    <!--grid view text-->
+    <attr name="gridViewTitleColor" format="color"/>
+    <attr name="gridViewDescColor" format="color"/>
+    <!--card View-->
+    <attr name="cardViewTitleColor" format="color"/>
+    <attr name="cardViewDescColor" format="color"/>
+    <!--support-->
+    <attr name="supportTitleColor" format="color"/>
+    <attr name="supportDescColor" format="color"/>
+    <!--tabs-->
+    <attr name="tabTitleColor" format="color"/>
+    <attr name="tabSelectedTitleColor" format="color"/>
+</resources>

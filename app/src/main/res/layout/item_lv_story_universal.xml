@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="?attr/cardViewBgColor"
+        app:cardCornerRadius="3dp"
+        app:contentPadding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="2"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:textColor="?attr/cardViewTitleColor"
+                android:textSize="18sp"
+                tools:text="宝宝一哭，得知道他是饿了还是尿了"/>
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_album"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,69 @@
+<resources>
+
+    <style name="AppDayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <!--经典的主题-->
+        <item name="colorPrimary">@color/ZHIHUBlue</item>
+        <item name="colorPrimaryDark">@color/ZHIHUBlue</item>
+        <item name="colorAccent">@color/ZHIHUBlue</item>
+
+        <!--自定义的主题(背景)-->
+        <item name="prefRootViewBgColor">@color/white</item>
+        <item name="sectionRootViewBgColor">@color/white</item>
+        <item name="mainPageRootViewBgColor">@color/lightGray</item>
+
+        <!--widget-->
+        <item name="barBgColor">@color/ZHIHUBlue</item>
+        <item name="cardViewBgColor">@color/ivoryWhite</item>
+        <item name="tabsBgColor">@color/ZHIHUBlue</item>
+
+        <!--文字相关-->
+        <item name="barTitleColor">@color/white</item>
+        <item name="barSubTitleColor">@color/white</item>
+        <!--grid view text-->
+        <item name="gridViewTitleColor">@color/white</item>
+        <item name="gridViewDescColor">@color/ZHIHUGreen</item>
+        <!--card View-->
+        <item name="cardViewTitleColor">@color/black</item>
+        <item name="cardViewDescColor">@color/deepGray</item>
+        <!--support-->
+        <item name="supportTitleColor">@color/black</item>
+        <item name="supportDescColor">@color/deepGray</item>
+        <!--tabs-->
+        <item name="tabTitleColor">@color/white</item>
+        <item name="tabSelectedTitleColor">@color/lightGray</item>
+    </style>
+
+    <style name="AppNightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!--经典的主题-->
+        <item name="colorPrimary">@color/night_primary</item>
+        <item name="colorPrimaryDark">@color/night_primary_dark</item>
+        <item name="colorAccent">@color/night_accent</item>
+
+        <!--自定义的主题(背景)-->
+        <item name="prefRootViewBgColor">@color/white</item>
+        <item name="sectionRootViewBgColor">@color/white</item>
+        <item name="mainPageRootViewBgColor">@color/lightGray</item>
+
+        <!--widget-->
+        <item name="barBgColor">@color/night_primary</item>
+        <item name="cardViewBgColor">@color/night_primary</item>
+        <item name="tabsBgColor">@color/night_primary</item>
+        <!--文字相关-->
+        <item name="barTitleColor">@color/white</item>
+        <item name="barSubTitleColor">@color/white</item>
+        <!--grid view text-->
+        <item name="gridViewTitleColor">@color/white</item>
+        <item name="gridViewDescColor">@color/ZHIHUGreen</item>
+        <!--card View-->
+        <item name="cardViewTitleColor">@color/white</item>
+        <item name="cardViewDescColor">@color/text_light</item>
+        <!--support-->
+        <item name="supportTitleColor">@color/white</item>
+        <item name="supportDescColor">@color/text_light</item>
+    </style>
+
+</resources>

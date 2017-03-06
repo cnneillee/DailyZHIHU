@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mainpage"
+            android:icon="@drawable/ic_nav_mainpage"
+            android:title="@string/nav_mainpage"/>
+        <item
+            android:id="@+id/nav_topics"
+            android:icon="@drawable/ic_nav_topics"
+            android:title="@string/nav_topics"/>
+        <item
+            android:id="@+id/nav_columns"
+            android:icon="@drawable/ic_nav_columns"
+            android:title="@string/nav_columns"/>
+        <item
+            android:id="@+id/nav_collection"
+            android:icon="@drawable/ic_nav_collection"
+            android:title="@string/nav_collection"/>
+    </group>
+    <item android:title="@string/daily_zhihu">
+        <menu>
+            <item
+                android:id="@+id/nav_night"
+                android:icon="@drawable/ic_nav_night"
+                android:title="@string/nav_night"/>
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_nav_setting"
+                android:title="@string/nav_setting"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_nav_about"
+                android:title="@string/nav_about"/>
+        </menu>
+    </item>
+
+</menu>

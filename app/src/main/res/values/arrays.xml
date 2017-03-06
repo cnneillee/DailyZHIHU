@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="indicator_colors">
+        <item>@color/indicator_1</item>
+        <item>@color/indicator_2</item>
+        <item>@color/indicator_3</item>
+        <item>@color/indicator_4</item>
+    </array>
+    <string-array name="share_menu_name">
+        <item>生成图片分享</item>
+        <item>微信好友</item>
+        <item>朋友圈</item>
+        <item>空间</item>
+        <item>QQ</item>
+        <item>新浪微博</item>
+        <item>复制链接</item>
+        <item>更多</item>
+    </string-array>
+    <integer-array name="share_menu_img">
+        <item>@drawable/menu_share_pic_item</item>
+        <item>@drawable/menu_share_wechat_item</item>
+        <item>@drawable/menu_share_friendcircle_item</item>
+        <item>@drawable/menu_share_qzone_item</item>
+        <item>@drawable/menu_share_qq_item</item>
+        <item>@drawable/menu_share_copylink_item</item>
+        <item>@drawable/menu_share_more_item</item>
+    </integer-array>
+    <declare-styleable name="FlipViewPager">
+        <!-- TODO -->
+    </declare-styleable>
+
+</resources>

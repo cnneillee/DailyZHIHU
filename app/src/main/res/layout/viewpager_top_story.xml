@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/lightGray"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:layout_height="wrap_content">
+
+    <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center"/>
+</FrameLayout>

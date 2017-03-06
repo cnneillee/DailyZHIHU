@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/app_name">
+        <Preference
+            android:key="key_app_intro"
+            android:summary="@string/intro_summary"
+            android:title="@string/intro_title"/>
+        <Preference
+            android:key="key_checkupdate"
+            android:summary="@string/checkupdate_summary"
+            android:title="@string/checkupdate_title"/>
+        <Preference
+            android:key="key_versioninfo"
+            android:title="@string/versioninfo_title"/>
+        <Preference
+            android:key="key_shareapp"
+            android:summary="@string/shareapp_sumary"
+            android:title="@string/shareapp_title"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/author">
+        <Preference
+            android:key="key_blog"
+            android:summary="@string/blog_summary"
+            android:title="@string/blog_title"/>
+        <Preference
+            android:key="key_github"
+            android:summary="@string/github_address"
+            android:title="@string/github_address_title"/>
+        <Preference
+            android:key="key_email"
+            android:summary="@string/email_address"
+            android:title="@string/email"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Copyright">
+        <Preference
+            android:summary="@string/data_summary"
+            android:title="@string/data_title"/>
+        <Preference
+            android:summary="@string/attention_content"
+            android:title="@string/attention_title"/>
+        <Preference
+            android:key="key_opensource_license"
+            android:title="@string/opensource_title"/>
+        <Preference
+            android:summary="@string/MIT_license"
+            android:title="@string/license_title"/>
+        <PreferenceScreen
+            android:layout="@layout/copyright_bar">
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>
