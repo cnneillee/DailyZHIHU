@@ -1,7 +1,8 @@
 package com.neil.dailyzhihu;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 01:09.
+ * 邮箱：cn.neillee@gmail.com
  */
 public class Constant {
 
