@@ -6,3 +6,5 @@
 .DS_Store
 /build
 /captures
+/.idea/markdown-exported-files.xml
+/.idea/markdown-navigator.xml
