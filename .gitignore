@@ -1,4 +1,4 @@
-# 原有的忽略
+# ---------------- original .gitignore begin ----------------
 #*.iml
 #.gradle
 #/local.properties
@@ -9,6 +9,7 @@
 #/captures
 #/.idea/markdown-exported-files.xml
 #/.idea/markdown-navigator.xml
+# --------------- original .gitignore end ----------------
 
 # https://github.com/github/gitignore/blob/master/Android.gitignore
 # Built application files
