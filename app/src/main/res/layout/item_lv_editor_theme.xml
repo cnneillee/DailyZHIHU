@@ -13,7 +13,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="3dp"
-        android:src="@drawable/img_progressing_hourglass"
+        android:src="@drawable/img_loading_default"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"/>
 

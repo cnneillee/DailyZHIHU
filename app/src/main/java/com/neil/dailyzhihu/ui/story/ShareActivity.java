@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.share.PlatformInfoUtils;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.listener.BitmapLoadCallback;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class ShareActivity extends AppCompatActivity implements BitmapLoadCallback {
+public class ShareActivity extends NightModeBaseActivity implements BitmapLoadCallback {
     private static final String LOG_TAG = ShareActivity.class.getSimpleName();
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -53,18 +54,14 @@ public class ShareActivity extends AppCompatActivity implements BitmapLoadCallba
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_story_share);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_action_cancel);
         mToolbar.setNavigationOnClickListener(upBtnListener);
         getExtras();
-        initViews();
-    }
 
-    private void initViews() {
         mFragmentList = new ArrayList<>();
         ShareFragment shareFragment = ShareFragment.newInstance(mShareType);
         ShareImageFragment shareImageFragment = ShareImageFragment.newInstance();

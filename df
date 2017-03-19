@@ -1,0 +1,370 @@
+[33mcommit 190cdcdad906e2c2574614c7e0ee962754e24316[m
+Author: neilleecn <neilleecn@users.noreply.github.com>
+Date:   Wed Mar 8 10:09:58 2017 +0800
+
+    update .gitignore file
+
+[33mcommit 131aec43e737e73252cbc3da731221559c038b58[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 01:11:26 2017 +0800
+
+    新建develop分支，此后，不在master上进行开发，而是在develop上进行开发
+
+[33mcommit 03f897d52be490d8dd5dec9e7bddcfb165b973e8[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 01:06:52 2017 +0800
+
+    重新配置了环境
+
+[33mcommit 80f7ef8a8f10a063ae3105111e5676ea03a76be7[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 00:54:42 2017 +0800
+
+    删除所有，将备份拷入，强制更新到当前最新版本，但上次提交到现在的中间过程全部丢失
+
+[33mcommit 1aaea02fbd25c28eefb54832aea91dc753dd1c34[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 00:37:34 2017 +0800
+
+    删除所有
+
+[33mcommit b496d5d14ca852fa92569cc303c36c2a56eb5342[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 00:31:57 2017 +0800
+
+    version-1.0
+
+[33mcommit b1fd2feeb4daa5bcb294868aa5e9c126b70f472a[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 00:19:47 2017 +0800
+
+     git项目出现问题，备份当前，然后删除
+
+[33mcommit 042c0a4128e52ac7ac36644054a032af5955e378[m
+Author: lilinmao <lilinmao@tongfangcloud.com>
+Date:   Tue Mar 7 00:16:16 2017 +0800
+
+    git项目出现问题，备份当前，然后删除
+
+[33mcommit c0404afa7338ccaaaf4fe634cadd68ccbbe4b95b[m
+Merge: 85b12f9 749fbf2
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Thu Dec 8 12:53:35 2016 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 85b12f98b112da2497668d9a172142d1db688d72[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Thu Dec 8 11:38:55 2016 +0800
+
+    version-1.0
+
+[33mcommit 749fbf2d2c055aa233090ef89f9f5f177f610698[m
+Author: 李林茂 <neilleecn@users.noreply.github.com>
+Date:   Sat Nov 5 13:15:30 2016 +0800
+
+    Update README.md
+
+[33mcommit f2f7e574548408914b85065681ea04f7ac989653[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Nov 5 13:13:48 2016 +0800
+
+    update screenshots
+
+[33mcommit a183768e4cf60e5d6b3ab2e289c4b7cd9d43ddb8[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Nov 5 13:12:28 2016 +0800
+
+    update screenshots
+
+[33mcommit 72370d4e075e8ce3f6bd0046ffc247e6b172fbfe[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Nov 5 13:08:56 2016 +0800
+
+    update screenshots
+
+[33mcommit 5f024b5ed540d01d2c78f697921f9391ac96d56f[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Nov 5 13:04:03 2016 +0800
+
+    update screenshots
+
+[33mcommit 0940007e9f6a58c469a981663eadfa6039039895[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Nov 5 13:03:36 2016 +0800
+
+    update screenshots
+
+[33mcommit af3283b0290d9c007b00b5c3d1e6939f27a633b7[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Jun 11 19:37:59 2016 +0800
+
+    修复了sectionSettingActivity中item选择错位的bug
+
+[33mcommit e8b869410e7560769ea24e5e0e9a1232ca0d9ef3[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Jun 11 19:29:44 2016 +0800
+
+    修复了sectionSettingActivity中item选择错位的bug
+
+[33mcommit 3e48f079687e17ad57f1fe75d0723ba2a4989500[m
+Author: Neil Lee <cn.neillee@gmail.com>
+Date:   Sat Jun 11 11:05:05 2016 +0800
+
+    修复了sectionSettingActivity中item选择错位的bug
+
+[33mcommit 0e400af811fd9130d8214388f3407d2ad9619470[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Fri Apr 29 00:07:21 2016 +0800
+
+    备份
+
+[33mcommit 62fc24ba73d13768af35745b15b2ce4e8c7ab917[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Wed Apr 27 00:19:15 2016 +0800
+
+    重构了数据库相关操作类，简化了数据库操作
+
+[33mcommit d0a5b149e53adfeb016bf9a702e239b2b6d8cb77[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Tue Apr 26 00:52:11 2016 +0800
+
+    数据库搭建实现特定功能-数据库部分实现，同时重构了代码，以适应数据库的数据结构
+
+[33mcommit ed5431bfd350a2da8dee49af7eebae550a67e0fe[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sun Apr 24 00:22:26 2016 +0800
+
+    数据库搭建实现特定功能-数据库测试OK，功能有待完善
+
+[33mcommit b9f945e8c84d0560d5e04e2ddcf6ea78d2477c04[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Apr 21 00:22:18 2016 +0800
+
+    解决遗留下来的将文章内容传送给图片生成activity的问题
+
+[33mcommit 49f01fc903a02c60a1414be088f5da183903e6ca[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Apr 21 00:11:21 2016 +0800
+
+    多平台分享功能已经全部完成（多平台分享+图片生成分享）
+
+[33mcommit a786523876b13c5b3d3ce4dd72602ad8e7e07eb8[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Tue Apr 19 22:46:54 2016 +0800
+
+    测试通过！能够正常使用第三方ShareSDK
+
+[33mcommit 7f17257796ad0dca4e8b764fc3ee9eaba0da97f4[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Tue Apr 19 18:49:47 2016 +0800
+
+    ImageStoryActivity生成图片分享界面、图片生成、简单分享功能已经实现
+
+[33mcommit 27edcd2bf4103a8f8eb0e8fee972268c70383dbf[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Tue Apr 19 01:22:14 2016 +0800
+
+    story多平台分享界面已经实现
+
+[33mcommit 6da57ef5c774b2b06847a89402547a6cfba7f00a[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Mon Apr 18 01:34:18 2016 +0800
+
+    update readme noting this change
+
+[33mcommit abc15f140eea03b01cab760add4c4f2301b9b888[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Mon Apr 18 01:29:41 2016 +0800
+
+    ThemeActivirt、SectionActivity的界面及功能优化
+
+[33mcommit 35fbc8c20bfcd5f61e1b2735db690ded690a098e[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sun Apr 17 18:25:27 2016 +0800
+
+    优化了MainActivity的toolBar
+
+[33mcommit 6925e98b98c4940894973a3012780ddaba0ed3de[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sun Apr 17 02:48:45 2016 +0800
+
+    整合了story和block两类实体的adapter及实体自身
+
+[33mcommit f7fac97cffdf17959a1d72579b046871abbcf35f[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 23:17:26 2016 +0800
+
+    用item_lv_UniversalStory整合了三种story的item界面文件，添加了下方的extra信息
+
+[33mcommit d70d52cbf3b7858508f93feb7e320baa15c14fed[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 23:15:12 2016 +0800
+
+    用item_lv_UniversalStory整合了三种story的item界面文件，添加了下方的extra信息
+
+[33mcommit 47e5b17ef4ec1bc2055c3ff454547095e2979aab[m
+Merge: ffd6a5d baea1db
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 22:00:40 2016 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit ffd6a5d1571d86abc15fdf7297e8c52e9690c28e[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 22:00:15 2016 +0800
+
+    TopStory实现了ViewPager
+
+[33mcommit baea1db01b538a365385e0307bdbda62ad84cf3d[m
+Author: Neil Lee <neilleecn@users.noreply.github.com>
+Date:   Sat Apr 16 16:15:17 2016 +0800
+
+    Update README.md
+
+[33mcommit 1f52d8934f9cb53e8eb7cb8763cfbe7a6f1dd738[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 16:11:31 2016 +0800
+
+    实现了day/nightMode切换（重启activity）
+
+[33mcommit cf6f8cdfb1c346997e7981d76fa4b616bf763814[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 01:00:35 2016 +0800
+
+    update readme haha
+
+[33mcommit 6ff28675e96d477591a5a44955f25be90e98d5e6[m
+Merge: a9dce52 afe2b40
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 00:50:58 2016 +0800
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit a9dce5238ade4b5f22cae8f2bdde5e20ed8ecf3f[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Sat Apr 16 00:06:17 2016 +0800
+
+    今后所有变更将依据此版本进行有条理的更新！！！4.16-几分钟前的那次未提交成功，现补上
+
+[33mcommit afe2b4075bb59e686faafd6b78380d9207b4e233[m
+Author: Neil Lee <neilleecn@users.noreply.github.com>
+Date:   Wed Apr 13 23:08:38 2016 +0800
+
+    Update README.md
+
+[33mcommit 75f389d16a1ff2d8af792a3c4a7deef9f3d30d52[m
+Author: Neil Lee <neilleecn@users.noreply.github.com>
+Date:   Wed Apr 13 23:07:54 2016 +0800
+
+    Update README.md
+    
+    2016.4.23 beautify the StoryActivity UI
+
+[33mcommit 8325cdc1b5dfec999cb580bbc69aff2e776fa73e[m
+Merge: 90098f8 5cb2b52
+Author: lilinmao <1009974907@qq.com>
+Date:   Wed Apr 13 22:57:27 2016 +0800
+
+    提交 storyactivity界面优化-1 的后续文件（由于个人原因，storyactivity界面优化的部分文件未提交成功，现补上）
+
+[33mcommit 90098f82a7b1682e68b7b5faa9f07c903af8bfc0[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Wed Apr 13 00:10:16 2016 +0800
+
+    使用ObservableScrollView优化storyactivity(暂用testActivity做测试)界面，将评论查看合并至floatingactionbutton
+
+[33mcommit 5cb2b521aac3f0d6943a58518f2073bccea5d930[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Wed Apr 13 00:10:16 2016 +0800
+
+    优化storyactivity界面，解决部分bug
+
+[33mcommit 337649c16a311221d63229ee3369702432d3db64[m
+Merge: 4b7b9e0 c00349b
+Author: lilinmao <1009974907@qq.com>
+Date:   Wed Apr 13 00:07:49 2016 +0800
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       screenshot/1.png
+    #       screenshot/2.png
+    #       screenshot/3.png
+    #       screenshot/4.png
+    #       screenshot/5.png
+    #       screenshot/6.png
+    #       screenshot/7.png
+    #       screenshot/8.png
+
+[33mcommit c00349b14b4eea007bd956850062e7b392252a54[m
+Author: neilleecn <neilleecn@users.noreply.github.com>
+Date:   Thu Mar 24 21:35:56 2016 +0800
+
+    Update README.md
+
+[33mcommit cbf3291cafcb16ef10c77f0e480b3b3abefab328[m
+Author: neilleecn <neilleecn@users.noreply.github.com>
+Date:   Thu Mar 24 21:34:09 2016 +0800
+
+    upload readme
+    
+    initially uploading readme
+
+[33mcommit 6d97c6850ffd6f47955079702c215db501d59dc9[m
+Author: neilleecn <neilleecn@users.noreply.github.com>
+Date:   Thu Mar 24 21:30:23 2016 +0800
+
+    Update README.md
+
+[33mcommit a97211a37158248867994eea3990ff2dc5de5b71[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Mar 24 21:28:04 2016 +0800
+
+    resize the picture
+    
+    resize the picture
+
+[33mcommit 437aaf1cc8889a4ad0d9f9265e264f93ee05fe6a[m
+Author: neilleecn <neilleecn@users.noreply.github.com>
+Date:   Thu Mar 24 21:20:22 2016 +0800
+
+    Update README.md
+
+[33mcommit e518dc70161835b0f64df0ac18e1432b2cbd1307[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Mar 24 21:17:32 2016 +0800
+
+    uploaded screenshot
+    
+    uploaded screenshot
+
+[33mcommit 310932bb0ffac8cf567d25e3b806e3e046b88289[m
+Author: neilleecn <neilleecn@users.noreply.github.com>
+Date:   Thu Mar 24 21:13:52 2016 +0800
+
+    Create README.md
+
+[33mcommit 4b7b9e0f53bbe4e87ccadf2439b2aa2f86b5550c[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Mar 24 21:11:15 2016 +0800
+
+    uploaded screenshot
+
+[33mcommit 21506385d1468eb6e3de35531d0482d12f743c52[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Mar 24 21:05:51 2016 +0800
+
+    uploaded screenshot
+
+[33mcommit 96398b197f9a7a10cbb1fc93f58d9edcf05752ff[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Mar 24 21:02:19 2016 +0800
+
+    uploaded screenshot
+
+[33mcommit b9e64c5baf29cdb885129c030d5a23ca34eee197[m
+Author: lilinmao <1009974907@qq.com>
+Date:   Thu Mar 24 20:34:04 2016 +0800
+
+    Initial commit

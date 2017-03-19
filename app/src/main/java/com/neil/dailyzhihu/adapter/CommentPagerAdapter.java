@@ -23,9 +23,25 @@ import java.util.List;
  * 邮箱：cn.neillee@gmail.com
  */
 public class CommentPagerAdapter extends PagerAdapter {
+
+    public enum CommentType {
+        LONG("长评论", "/long-comments", 0), SHORT("短评论", "/short-comments", 1);
+        public String cn;
+        public String en;
+        public int index;
+
+        CommentType(String cnName, String enName, int index) {
+            this.cn = cnName;
+            this.en = enName;
+            this.index = index;
+        }
+
+        public static CommentType getType(int index) {
+            return index == CommentType.LONG.index ? CommentType.LONG : CommentType.SHORT;
+        }
+    }
+
     private List<View> mViews = new ArrayList<>();
-    private String[] mTitles = new String[]{"长评论", "短评论"};
-    private String[] mCommentTails = new String[]{"/long-comments", "/short-comments"};
     private Context mContext;
     private String mStoryId;
 
@@ -56,15 +72,13 @@ public class CommentPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         final View view = mViews.get(position);
-//        final TextView tv = (TextView) view.findViewById(R.id.commentType);
         final ListView lv = (ListView) view.findViewById(R.id.lv_comment);
 
-//        tv.setText(mTitles[position]);
-        LoaderFactory.getContentLoader().loadContent(API.STORY_COMMENT_PREFIX + mStoryId + mCommentTails[position],
+        LoaderFactory.getContentLoader().loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(position).en,
                 new OnContentLoadingFinishedListener() {
                     @Override
-                    public void onFinish(String content) {
-                        Log.e("COMMENTACTIVITY", position + "URL:" + API.STORY_COMMENT_PREFIX + mStoryId + mCommentTails[position] + "\nContent:" + content);
+                    public void onFinish(String content, String url) {
+                        Log.e("COMMENTACTIVITY", position + "URL:" + url + "\nContent:" + content);
                         LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
                         if (longComment == null) return;
                         List<LongComment.CommentsBean> data = longComment.getComments();

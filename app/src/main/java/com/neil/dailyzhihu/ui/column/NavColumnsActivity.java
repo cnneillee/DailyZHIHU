@@ -53,8 +53,7 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_sections);
         ButterKnife.bind(this);
 
@@ -73,15 +72,15 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 
         LoaderFactory.getContentLoader().loadContent(API.SECTIONS,
                 new OnContentLoadingFinishedListener() {
-            @Override
-            public void onFinish(String content) {
-                Logger.json(content);
-                SectionList sectionList = GsonDecoder.getDecoder().decoding(content, SectionList.class);
-                mDatas = sectionList.getData();
-                SectionGridAdapter adapter = new SectionGridAdapter(NavColumnsActivity.this, sectionList);
-                gvSections.setAdapter(adapter);
-            }
-        });
+                    @Override
+                    public void onFinish(String content,String url) {
+                        Logger.json(content);
+                        SectionList sectionList = GsonDecoder.getDecoder().decoding(content, SectionList.class);
+                        mDatas = sectionList.getData();
+                        SectionGridAdapter adapter = new SectionGridAdapter(NavColumnsActivity.this, sectionList);
+                        gvSections.setAdapter(adapter);
+                    }
+                });
     }
 
     @Override

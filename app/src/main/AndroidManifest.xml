@@ -28,13 +28,13 @@
         android:icon="@drawable/icon_dailyzhihu"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppDayTheme">
+        android:theme="@style/AppNightTheme">
 
         <!--主Activity窗口注册-->
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -45,20 +45,20 @@
         <activity
             android:name=".ui.theme.NavThemesActivity"
             android:label="@string/activity_topics"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
         </activity>
 
         <!--关于窗口注册-->
         <activity
             android:name=".ui.about.AboutActivity"
             android:label="@string/activity_about"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
         </activity>
 
         <!--某一主题窗口注册-->
         <activity
             android:name=".ui.theme.CertainThemeActivity"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.neil.dailyzhihu.ui.main.MainActivity"/>
@@ -68,13 +68,13 @@
         <activity
             android:name=".ui.column.NavColumnsActivity"
             android:label="@string/nav_columns"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
         </activity>
 
         <!--某一栏目窗口注册-->
         <activity
             android:name=".ui.column.CertainColumnActivity"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.neil.dailyzhihu.ui.main.MainActivity"/>
@@ -83,13 +83,13 @@
         <!--Story窗口注册-->
         <activity
             android:name=".ui.story.CertainStoryActivity"
-            android:theme="@style/AppDayTheme.NoActionBar"/>
+            android:theme="@style/AppNightTheme.NoActionBar"/>
 
         <!--Story窗口注册-->
         <activity
             android:name=".ui.story.CertainStoryCommentActivity"
             android:label="@string/activity_comment"
-            android:theme="@style/AppDayTheme"/>
+            android:theme="@style/AppNightTheme"/>
 
         <!--Mob分享窗口注册-->
         <activity
@@ -109,23 +109,23 @@
 
         <activity
             android:name=".ui.story.ImageStoryActivity"
-            android:theme="@style/AppDayTheme"/>
+            android:theme="@style/AppNightTheme"/>
 
         <!--二维码扫描窗口注册-->
         <activity
             android:name="com.xys.libzxing.zxing.activity.CaptureActivity"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
         </activity>
 
         <activity
             android:name=".ui.story.ShareActivity"
-            android:theme="@style/AppDayTheme.NoActionBar">
+            android:theme="@style/AppNightTheme.NoActionBar">
         </activity>
 
         <activity
             android:name=".ui.setting.SettingActivity"
             android:label="@string/activity_setting"
-            android:theme="@style/AppDayTheme">
+            android:theme="@style/AppNightTheme">
         </activity>
 
     </application>

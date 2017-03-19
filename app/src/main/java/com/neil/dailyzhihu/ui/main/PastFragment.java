@@ -127,7 +127,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         LoaderFactory.getContentLoader().loadContent(API.BEFORE_NEWS_PREFIX + pickedDate,
                 new OnContentLoadingFinishedListener() {
                     @Override
-                    public void onFinish(String content) {
+                    public void onFinish(String content,String url) {
                         Logger.json(content);
                         BeforeStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
                         PastStoryListAdapter adapter = new PastStoryListAdapter(mContext, beforeStory);

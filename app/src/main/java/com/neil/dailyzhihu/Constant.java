@@ -1,7 +1,8 @@
 package com.neil.dailyzhihu;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 01:09.
+ * 邮箱：cn.neillee@gmail.com
  */
 public class Constant {
 
@@ -13,4 +14,6 @@ public class Constant {
 
     public static final int NIGHT_BRIGHTNESS = 40;
     public static final int DAY_BRIGHTNESS = 150;
+
+    public static final int EXIT_CONFIRM_TIME = 2000;
 }

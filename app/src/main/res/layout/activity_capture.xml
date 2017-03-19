@@ -55,7 +55,7 @@
                 android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:id="@+id/iv_album"
-                android:src="@drawable/ic_album"/>
+                android:src="@drawable/img_loading_default"/>
         </LinearLayout>
 
         <ImageView

@@ -74,7 +74,7 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
         LoaderFactory.getContentLoader().loadContent(API.HOT_NEWS,
                 new OnContentLoadingFinishedListener() {
             @Override
-            public void onFinish(String content) {
+            public void onFinish(String content,String url) {
                 Logger.json(content);
                 mSrlRefresh.setRefreshing(false);
                 HotStory hotStories = GsonDecoder.getDecoder().decoding(content, HotStory.class);

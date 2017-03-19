@@ -10,7 +10,7 @@
         android:id="@+id/iv_start"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/start"
+        android:background="@drawable/example"
         android:scaleType="centerCrop"/>
 
     <TextView

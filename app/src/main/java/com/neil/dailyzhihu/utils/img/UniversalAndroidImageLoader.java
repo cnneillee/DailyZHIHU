@@ -35,8 +35,8 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, File imageFile, DisplayOption option) {
-        int imageLoadingResId = R.mipmap.img_default;
-        int imageErrorResId = R.mipmap.img_error;
+        int imageLoadingResId = R.drawable.img_loading_default;
+        int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
             imageLoadingResId = option.loadingResId;
             imageErrorResId = option.loadErrorResId;
@@ -55,8 +55,8 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     // @Override
     public void displayImage(ImageView imageView, File imageFile, DisplayOption option, File file) {
-        int imageLoadingResId = R.mipmap.img_default;
-        int imageErrorResId = R.mipmap.img_error;
+        int imageLoadingResId = R.drawable.img_loading_default;
+        int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
             imageLoadingResId = option.loadingResId;
             imageErrorResId = option.loadErrorResId;
@@ -75,8 +75,8 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option) {
-        int imageLoadingResId = R.mipmap.img_default;
-        int imageErrorResId = R.mipmap.img_error;
+        int imageLoadingResId = R.drawable.img_loading_default;
+        int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
             imageLoadingResId = option.loadingResId;
             imageErrorResId = option.loadErrorResId;
@@ -100,8 +100,8 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener) {
-        int imageLoadingResId = R.mipmap.img_default;
-        int imageErrorResId = R.mipmap.img_error;
+        int imageLoadingResId = R.drawable.img_loading_default;
+        int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
             imageLoadingResId = option.loadingResId;
             imageErrorResId = option.loadErrorResId;
@@ -126,8 +126,8 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener, ImageLoadingProgressListener progressListener) {
-        int imageLoadingResId = R.mipmap.img_default;
-        int imageErrorResId = R.mipmap.img_error;
+        int imageLoadingResId = R.drawable.img_loading_default;
+        int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
             imageLoadingResId = option.loadingResId;
             imageErrorResId = option.loadErrorResId;

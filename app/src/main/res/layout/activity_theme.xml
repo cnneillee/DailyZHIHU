@@ -26,5 +26,7 @@
         android:id="@+id/lv_theme_story_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:divider="@android:color/transparent"/>
 </LinearLayout>

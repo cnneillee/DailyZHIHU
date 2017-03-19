@@ -57,8 +57,7 @@ public class CertainThemeActivity extends BaseActivity implements
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_theme);
         ButterKnife.bind(this);
 
@@ -104,7 +103,7 @@ public class CertainThemeActivity extends BaseActivity implements
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.THEME_PREFIX, themeId),
                 new OnContentLoadingFinishedListener() {
             @Override
-            public void onFinish(String content) {
+            public void onFinish(String content,String url) {
                 Logger.json(content);
                 ThemeStoryList themeStoryList = GsonDecoder.getDecoder().decoding(content, ThemeStoryList.class);
                 ThemeStoryListAdapter adapter = new ThemeStoryListAdapter(CertainThemeActivity.this,themeStoryList);

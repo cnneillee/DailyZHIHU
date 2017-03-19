@@ -3,7 +3,7 @@
       xmlns:holo="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_action_collect"
         android:orderInCategory="100"
         android:title="搜索"
         holo:showAsAction="never"/>

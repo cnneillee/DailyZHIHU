@@ -43,14 +43,14 @@ public class WebviewActivity extends AppCompatActivity {
 
     private OnContentLoadingFinishedListener mListener = new OnContentLoadingFinishedListener() {
         @Override
-        public void onFinish(String content) {
+        public void onFinish(String content, String url) {
             StoryContent story = GsonDecoder.getDecoder().decoding(content, StoryContent.class);
             List<String> cssArr = story.getCss();
             List<String> jsArr = story.getJs();
-            String head = "<head><style type=\"text/css\">"+cssArr.get(0)+"</style></head>";
-            String html = "<html>"+head+"<body>" + story.getBody() + " </body></html>";
+            String head = "<head><style type=\"text/css\">" + cssArr.get(0) + "</style></head>";
+            String html = "<html>" + head + "<body>" + story.getBody() + " </body></html>";
             mWebview.loadData(html, "text/html; charset=UTF-8", null);
-            Log.e("HTML",html);
+            Log.e("HTML", html);
 //            mWebview.loadData(content,"text/html","utf-8");
         }
     };

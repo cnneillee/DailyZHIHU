@@ -19,7 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 03:50.
+ * 邮箱：cn.neillee@gmail.com
  */
 public class LongCommentListAdapter extends BaseAdapter {
     private Context context;
