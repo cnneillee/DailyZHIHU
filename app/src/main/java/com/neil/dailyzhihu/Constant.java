@@ -14,4 +14,6 @@ public class Constant {
 
     public static final int NIGHT_BRIGHTNESS = 40;
     public static final int DAY_BRIGHTNESS = 150;
+
+    public static final int EXIT_CONFIRM_TIME = 2000;
 }

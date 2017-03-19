@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -72,16 +73,16 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_section);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbarView);
         mToolbarView.setNavigationIcon(R.drawable.ic_action_back);
         mToolbarView.setNavigationOnClickListener(upBtnListener);
-
-        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.primary)));
+        TypedValue typedValue = new TypedValue();
+        this.getTheme().resolveAttribute(R.attr.barBgColor, typedValue, true);
+        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, typedValue.data));
 
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
 
@@ -115,14 +116,14 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
     private void fillContent() {
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.SECTION_PREFIX, sectionId),
                 new OnContentLoadingFinishedListener() {
-            @Override
-            public void onFinish(String content) {
-                Logger.json(content);
-                SectionStoryList sectionStoryList = GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
-                SectionStoryListAdapter adapter = new SectionStoryListAdapter(CertainColumnActivity.this,sectionStoryList);
-                mListView.setAdapter(adapter);
-            }
-        });
+                    @Override
+                    public void onFinish(String content,String url) {
+                        Logger.json(content);
+                        SectionStoryList sectionStoryList = GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
+                        SectionStoryListAdapter adapter = new SectionStoryListAdapter(CertainColumnActivity.this, sectionStoryList);
+                        mListView.setAdapter(adapter);
+                    }
+                });
         setActionBarText();
     }
 

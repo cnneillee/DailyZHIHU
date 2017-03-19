@@ -4,6 +4,14 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
 
+        <!--Android原生属性-->
+        <!-- Actionbar Toolbar 三点menu 颜色 -->
+        <item name="colorControlNormal">@color/white</item>
+        <!-- 浮动菜单背景色 -->
+        <item name="android:colorBackground">@color/white</item>
+        <!-- 浮动菜单文字颜色 -->
+        <item name="android:textColor">@color/black</item>
+
         <!--经典的主题-->
         <item name="colorPrimary">@color/ZHIHUBlue</item>
         <item name="colorPrimaryDark">@color/ZHIHUBlue</item>
@@ -16,8 +24,9 @@
 
         <!--widget-->
         <item name="barBgColor">@color/ZHIHUBlue</item>
-        <item name="cardViewBgColor">@color/ivoryWhite</item>
+        <item name="cardViewBgColor">@color/white</item>
         <item name="tabsBgColor">@color/ZHIHUBlue</item>
+        <item name="btnBgColor">#FFCA28</item>
 
         <!--文字相关-->
         <item name="barTitleColor">@color/white</item>
@@ -30,13 +39,24 @@
         <item name="cardViewDescColor">@color/deepGray</item>
         <!--support-->
         <item name="supportTitleColor">@color/black</item>
-        <item name="supportDescColor">@color/deepGray</item>
+        <item name="supportDescColor">#737373</item>
         <!--tabs-->
-        <item name="tabTitleColor">@color/white</item>
-        <item name="tabSelectedTitleColor">@color/lightGray</item>
+        <item name="tabTitleColor">#98C9F4</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabSelectedTitleColor">@color/white</item>
+        <!--comments-->
+        <item name="commentUserTextColor">#E2E4E4</item>
+        <item name="commentContentTextColor">#999EA0</item>
+        <item name="commentExtraTextColor">#798F97</item>
     </style>
 
     <style name="AppNightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Actionbar Toolbar 三点menu 颜色 -->
+        <item name="colorControlNormal">@color/white</item>
+        <!-- 浮动菜单背景色 -->
+        <item name="android:colorBackground">#303030</item>
+        <!-- 浮动菜单文字颜色 -->
+        <item name="android:textColor">@color/white</item>
 
         <!--经典的主题-->
         <item name="colorPrimary">@color/night_primary</item>
@@ -44,26 +64,35 @@
         <item name="colorAccent">@color/night_accent</item>
 
         <!--自定义的主题(背景)-->
-        <item name="prefRootViewBgColor">@color/white</item>
-        <item name="sectionRootViewBgColor">@color/white</item>
-        <item name="mainPageRootViewBgColor">@color/lightGray</item>
+        <item name="prefRootViewBgColor">#212B30</item>
+        <item name="sectionRootViewBgColor">#212B30</item>
+        <item name="mainPageRootViewBgColor">#212B30</item>
 
         <!--widget-->
-        <item name="barBgColor">@color/night_primary</item>
-        <item name="cardViewBgColor">@color/night_primary</item>
-        <item name="tabsBgColor">@color/night_primary</item>
+        <item name="barBgColor">#263238</item>
+        <item name="tabsBgColor">#263238</item>
+        <item name="cardViewBgColor">#37474F</item>
+        <item name="btnBgColor">#546E7A</item>
+
         <!--文字相关-->
-        <item name="barTitleColor">@color/white</item>
-        <item name="barSubTitleColor">@color/white</item>
+        <item name="barTitleColor">#E5E7E8</item>
+        <item name="barSubTitleColor">#E5E7E8</item>
         <!--grid view text-->
-        <item name="gridViewTitleColor">@color/white</item>
+        <item name="gridViewTitleColor">#E5E7E8</item>
         <item name="gridViewDescColor">@color/ZHIHUGreen</item>
         <!--card View-->
-        <item name="cardViewTitleColor">@color/white</item>
-        <item name="cardViewDescColor">@color/text_light</item>
+        <item name="cardViewTitleColor">#E5E7E8</item>
+        <item name="cardViewDescColor">#687D84</item>
         <!--support-->
-        <item name="supportTitleColor">@color/white</item>
-        <item name="supportDescColor">@color/text_light</item>
+        <item name="supportTitleColor">#E2E4E4</item>
+        <item name="supportDescColor">#999EA0</item>
+        <!--tabs-->
+        <item name="tabTitleColor">#9BA1A4</item>
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabSelectedTitleColor">@color/white</item>
+        <!--comments-->
+        <item name="commentUserTextColor">#E2E4E4</item>
+        <item name="commentContentTextColor">#999EA0</item>
+        <item name="commentExtraTextColor">#798F97</item>
     </style>
-
 </resources>

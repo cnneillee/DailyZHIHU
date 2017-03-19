@@ -14,11 +14,11 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ZHIHUBlue"
-        app:tabIndicatorColor="@color/white"
+        android:background="?attr/tabsBgColor"
+        app:tabIndicatorColor="?attr/tabIndicatorColor"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/lightGray">
+        app:tabSelectedTextColor="?attr/tabSelectedTitleColor"
+        app:tabTextColor="?attr/tabTitleColor">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"

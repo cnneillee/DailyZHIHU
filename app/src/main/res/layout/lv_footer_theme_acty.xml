@@ -8,14 +8,14 @@
         android:id="@+id/tv_loading_editor"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="@color/ivoryWhite"
+        android:background="?attr/btnBgColor"
         android:clickable="false"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
         android:padding="6dp"
         android:text="点击加载编辑信息"
-        android:textColor="@color/black"
+        android:textColor="?attr/supportTitleColor"
         android:textSize="13sp"/>
 
     <LinearLayout
@@ -33,14 +33,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="@color/ivoryWhite"
+            android:background="@drawable/btn_bg_color"
             android:clickable="false"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
             android:padding="6dp"
             android:text="没有内容了！啦啦啦~~~"
-            android:textColor="@color/black"
+            android:textColor="?attr/supportTitleColor"
             android:textSize="13sp"/>
     </LinearLayout>
 </LinearLayout>

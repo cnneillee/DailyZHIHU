@@ -1,7 +1,6 @@
 package com.neil.dailyzhihu.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -11,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -21,12 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.MainPageFragmentPagerAdapter;
+import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
 import com.neil.dailyzhihu.ui.theme.NavThemesActivity;
 import com.neil.dailyzhihu.ui.setting.SettingActivity;
+import com.neil.dailyzhihu.utils.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
 /**
  * MainActivity
  */
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends NightModeBaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -55,21 +56,22 @@ public class MainActivity extends AppCompatActivity
     @Bind(R.id.app_bar_main)
     LinearLayout mContentMain;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private Settings mSettings = Settings.getInstance();
+    private long lastPressTime = 0;
 
+    protected void initViews() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         setSupportActionBar(mToolbar);
 
-        String tabsTitleArray[] = {getResources().getString(R.string.tab_latest), getResources().getString(R.string.tab_hot), getResources().getString(R.string.tab_past)};
+        String tabsTitleArray[] = {getResources().getString(R.string.tab_latest), getResources()
+                .getString(R.string.tab_hot), getResources().getString(R.string.tab_past)};
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new LatestFragment());
         fragmentList.add(new HotFragment());
         fragmentList.add(new PastFragment());
-        FragmentPagerAdapter fAdapter = new MainPageFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, tabsTitleArray);
+        FragmentPagerAdapter fAdapter = new MainPageFragmentPagerAdapter(getSupportFragmentManager()
+                , fragmentList, tabsTitleArray);
         // Tabs与FragmentPager关联
         mvpNewsTab.setAdapter(fAdapter);
         mTabs.setupWithViewPager(mvpNewsTab);
@@ -132,7 +134,9 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, SettingActivity.class);
                 break;
             case R.id.nav_night:
-                Snackbar.make(mContentMain, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+                Settings.isNightMode = !Settings.isNightMode;
+                mSettings.putBoolean(Settings.NIGHT_MODE, Settings.isNightMode);
+                MainActivity.this.recreate();
                 break;
             case R.id.nav_about:
                 intent = new Intent(this, AboutActivity.class);
@@ -146,9 +150,20 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (canExit()) {
             super.onBackPressed();
         }
+    }
+
+    protected boolean canExit() {
+        if (Settings.isExitConfirm) {
+            if (System.currentTimeMillis() - lastPressTime > Constant.EXIT_CONFIRM_TIME) {
+                lastPressTime = System.currentTimeMillis();
+                Snackbar.make(getCurrentFocus(), R.string.notify_exit_confirm, Snackbar.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

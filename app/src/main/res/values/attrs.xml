@@ -18,6 +18,9 @@
     <attr name="cardViewBgColor" format="color"/>
     <!--mainPage Activity/Fragment background-->
     <attr name="tabsBgColor" format="color"/>
+    <attr name="tabIndicatorColor" format="color"/>
+    <!--Button bg in activity-->
+    <attr name="btnBgColor" format="color"/>
 
     <!--文字-->
     <attr name="barTitleColor" format="color"/>
@@ -34,4 +37,8 @@
     <!--tabs-->
     <attr name="tabTitleColor" format="color"/>
     <attr name="tabSelectedTitleColor" format="color"/>
+    <!--comments-->
+    <attr name="commentUserTextColor" format="color"/>
+    <attr name="commentContentTextColor" format="color"/>
+    <attr name="commentExtraTextColor" format="color"/>
 </resources>

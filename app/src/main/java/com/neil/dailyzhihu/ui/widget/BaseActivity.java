@@ -29,10 +29,11 @@ import android.widget.ListView;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.SimpleHeaderRecyclerAdapter;
 import com.neil.dailyzhihu.adapter.SimpleRecyclerAdapter;
+import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
 import java.util.ArrayList;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends NightModeBaseActivity {
     private static final int NUM_OF_ITEMS = 100;
     private static final int NUM_OF_ITEMS_FEW = 3;
 

@@ -3,24 +3,29 @@
     <PreferenceCategory android:title="偏好">
         <Preference
             android:key="key_switch_theme"
+            android:layout="@layout/preference_custom"
             android:summary="目前提供3中主题"
             android:title="主题切换"/>
         <CheckBoxPreference
             android:key="key_day_night_mode"
+            android:layout="@layout/preference_custom"
             android:summary="适于夜间阅读"
             android:title="夜间模式"/>
         <CheckBoxPreference
             android:key="key_exit_with_ensuring"
+            android:layout="@layout/preference_custom"
             android:summary="按两次返回键退出应用"
             android:title="退出确认"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="网络">
         <CheckBoxPreference
             android:key="key_no_image_mode"
+            android:layout="@layout/preference_custom"
             android:summary="仅在WiFi下加载图片"
             android:title="无图模式"/>
         <Preference
             android:key="key_clear_cache"
+            android:layout="@layout/preference_custom"
             android:summary="清除DailyZHIHU的缓存"
             android:title="清除缓存"/>
     </PreferenceCategory>

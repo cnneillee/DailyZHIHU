@@ -19,7 +19,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     android:background="?attr/sectionRootViewBgColor">
 
     <ImageView
@@ -89,8 +89,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left|top"
-        android:src="@drawable/plus"
-        app:backgroundTint="#30469b"
+        android:src="@drawable/ic_action_plus"
+        app:backgroundTint="@color/ZHIHUBlue"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"

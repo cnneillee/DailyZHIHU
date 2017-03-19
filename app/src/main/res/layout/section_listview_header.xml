@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="6dp"
-        android:background="@color/ivoryWhite"
+        android:background="@drawable/btn_bg_color"
         android:gravity="center_horizontal|center_vertical"
         android:text="点击管理Section（添加/取消订阅）"
         android:textColor="?attr/supportTitleColor"

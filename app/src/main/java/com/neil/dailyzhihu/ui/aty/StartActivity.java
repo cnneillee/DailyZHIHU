@@ -23,7 +23,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Neil on 2016/3/22.
+ * 作者：Neil on 2016/3/22 19:08.
+ * 邮箱：cn.neillee@gmail.com
  */
 public class StartActivity extends AppCompatActivity {
     @Bind(R.id.iv_start)
@@ -38,7 +39,7 @@ public class StartActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         LoaderFactory.getContentLoader().loadContent(startImgSize, new OnContentLoadingFinishedListener() {
             @Override
-            public void onFinish(String content) {
+            public void onFinish(String content, String url) {
                 Gson gson = new Gson();
                 StartImg startImg = gson.fromJson(content, StartImg.class);
                 String imgUrl = startImg.getImg();

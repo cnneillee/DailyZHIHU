@@ -1,7 +1,8 @@
 package com.neil.dailyzhihu.listener;
 
 /**
- * Created by Neil on 2016/4/15.
+ * 作者：Neil on 2016/4/15 18:53.
+ * 邮箱：cn.neillee@gmail.com
  */
 public interface OnContentLoadingFinishedListener {
     /**
@@ -9,5 +10,5 @@ public interface OnContentLoadingFinishedListener {
      *
      * @param content 加载完成的内容
      */
-    public void onFinish(String content);
+    public void onFinish(String content,String url);
 }

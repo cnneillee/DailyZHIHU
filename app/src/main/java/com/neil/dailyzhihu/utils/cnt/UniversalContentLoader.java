@@ -52,7 +52,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
 
         @Override
         protected void onPostExecute(String s) {
-            if (mListener != null) mListener.onFinish(s);
+            if (mListener != null) mListener.onFinish(s, mContentUrl);
         }
 
         private String doLoad(Request request, OkHttpClient client) {

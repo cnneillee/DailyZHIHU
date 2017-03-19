@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
 /**
  * 作者：Neil on 2017/3/5 20:48.
@@ -18,12 +20,12 @@ import com.neil.dailyzhihu.R;
  */
 
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
-    private Activity mContext;
+    private SettingActivity mContext;
 
     private Preference mSwitchTheme;
-    private Preference mDayNightMode;
-    private Preference mExitWithEnsuring;
-    private Preference mNoImageMode;
+    private CheckBoxPreference mDayNightMode;
+    private CheckBoxPreference mExitWithEnsuring;
+    private CheckBoxPreference mNoImageMode;
     private Preference mClearCache;
 
     private String SWITCH_THEME = "key_switch_theme";
@@ -38,15 +40,15 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.setting);
 
-        mContext = getActivity();
+        mContext = (SettingActivity) getActivity();
         initAllPreferences();
     }
 
     private void initAllPreferences() {
         mSwitchTheme = findPreference(SWITCH_THEME);
-        mDayNightMode = findPreference(DAY_NIGHT_MODE);
-        mExitWithEnsuring = findPreference(EXIT_WITH_ENSURING);
-        mNoImageMode = findPreference(NO_IMAGE_MODE);
+        mDayNightMode = (CheckBoxPreference) findPreference(DAY_NIGHT_MODE);
+        mExitWithEnsuring = (CheckBoxPreference) findPreference(EXIT_WITH_ENSURING);
+        mNoImageMode = (CheckBoxPreference) findPreference(NO_IMAGE_MODE);
         mClearCache = findPreference(CLEAR_CACHE);
 
         mSwitchTheme.setOnPreferenceClickListener(this);
@@ -54,6 +56,11 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mExitWithEnsuring.setOnPreferenceClickListener(this);
         mNoImageMode.setOnPreferenceClickListener(this);
         mClearCache.setOnPreferenceClickListener(this);
+
+        // init preference state
+        mDayNightMode.setChecked(mContext.isNightMode());
+        mExitWithEnsuring.setChecked(mContext.isExitConfirm());
+        mNoImageMode.setChecked(mContext.isNoPicMode());
     }
 
     @Override
@@ -62,11 +69,11 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         if (mSwitchTheme == preference) {
             Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
         } else if (mDayNightMode == preference) {
-            Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+            mContext.callChangeNightMode();
         } else if (mExitWithEnsuring == preference) {
-            Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+            mContext.callChangeExitConfirm();
         } else if (mNoImageMode == preference) {
-            Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+            mContext.callChangeNoPicMode();
         } else if (mClearCache == preference) {
             Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
         }

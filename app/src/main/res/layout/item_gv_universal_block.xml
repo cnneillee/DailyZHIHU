@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="166dp"
     android:layout_height="166dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp">
 
@@ -22,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_progressing_hourglass"/>
+                android:src="@drawable/img_loading_default"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,8 +52,8 @@
                     android:ellipsize="end"
                     android:gravity="top"
                     android:lines="2"
-                    android:text="了解自己和别人，了解彼此的欲望和局限。"
-                    android:textColor="?attr/gridViewTitleColor"
+                    tools:text="了解自己和别人，了解彼此的欲望和局限。"
+                    android:textColor="?attr/gridViewDescColor"
                     android:textSize="12sp"/>
             </LinearLayout>
 

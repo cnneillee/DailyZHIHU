@@ -96,7 +96,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         LoaderFactory.getContentLoaderVolley().loadContent(API.LATEST_NEWS,
                 new OnContentLoadingFinishedListener() {
                     @Override
-                    public void onFinish(String content) {
+                    public void onFinish(String content,String url) {
                         Logger.json(content);
                         mSrlRefresh.setRefreshing(false);
                         LatestStory latestStory = GsonDecoder.getDecoder().decoding(content, LatestStory.class);

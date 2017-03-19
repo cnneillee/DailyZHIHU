@@ -1,10 +1,7 @@
 package com.neil.dailyzhihu.ui.theme;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +15,7 @@ import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.ThemeGridAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.ThemeList;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
@@ -35,7 +33,7 @@ import butterknife.ButterKnife;
 /**
  * 主题日报窗口
  */
-public class NavThemesActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
+public class NavThemesActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
     @Bind(R.id.gv_themes)
     ObservableGridView gvThemes;
     @Bind(R.id.toolbar)
@@ -50,8 +48,7 @@ public class NavThemesActivity extends AppCompatActivity implements AdapterView.
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_themes);
         ButterKnife.bind(this);
 
@@ -64,15 +61,15 @@ public class NavThemesActivity extends AppCompatActivity implements AdapterView.
         gvThemes.setScrollViewCallbacks(this);
         LoaderFactory.getContentLoader().loadContent(API.THEMES,
                 new OnContentLoadingFinishedListener() {
-            @Override
-            public void onFinish(String content) {
-                Logger.json(content);
-                ThemeList themes = GsonDecoder.getDecoder().decoding(content, ThemeList.class);
-                ThemeGridAdapter adapter = new ThemeGridAdapter(NavThemesActivity.this,themes);
-                mDatas = themes.getOthers();
-                gvThemes.setAdapter(adapter);
-            }
-        });
+                    @Override
+                    public void onFinish(String content, String url) {
+                        Logger.json(content);
+                        ThemeList themes = GsonDecoder.getDecoder().decoding(content, ThemeList.class);
+                        ThemeGridAdapter adapter = new ThemeGridAdapter(NavThemesActivity.this, themes);
+                        mDatas = themes.getOthers();
+                        gvThemes.setAdapter(adapter);
+                    }
+                });
     }
 
     @Override

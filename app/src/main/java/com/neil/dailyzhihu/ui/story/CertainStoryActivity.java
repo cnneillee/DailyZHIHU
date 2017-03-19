@@ -22,9 +22,7 @@ import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -36,7 +34,6 @@ import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
-import com.neil.dailyzhihu.ui.widget.ShareStoryPopupWindow;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
@@ -88,7 +85,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
 
     private OnContentLoadingFinishedListener mWebLoadListener = new OnContentLoadingFinishedListener() {
         @Override
-        public void onFinish(String content) {
+        public void onFinish(String content, String url) {
             // TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。type=0正常，type特殊情况
             mStoryContent = GsonDecoder.getDecoder().decoding(content, StoryContent.class);
             mStoryTitle = mStoryContent.getTitle();
@@ -118,7 +115,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
             String html = "<html><head>" + cssContent + "</head><body>" + mStoryContent.getBody() + " </body></html>";
             mStoryHtmlContent = html;
             mWebView.setHorizontalScrollBarEnabled(false);
-            //style="width:100%;height:auto"
+            // style="width:100%;height:auto"
             WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
             webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
             mWebView.loadData(html, "text/html; charset=UTF-8", null);
@@ -133,10 +130,8 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
         }
     };
 
-    @TargetApi(Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_story);
         ButterKnife.bind(this);
 
@@ -201,9 +196,9 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
     }
 
     private void fillingContent() {
-        String URL = "http://news-at.zhihu.com/api/4/news/" + mStoryId;
-        Log.e("HTML", "URL:" + URL);
-        LoaderFactory.getContentLoader().loadContent(API.STORY_PREFIX + mStoryId, mWebLoadListener);
+        String contentUrl = API.STORY_PREFIX + mStoryId;
+        Log.e("HTML", "URL:" + contentUrl);
+        LoaderFactory.getContentLoader().loadContent(contentUrl, mWebLoadListener);
     }
 
     private void setActionBarText(String storyTitle) {
@@ -276,7 +271,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
         float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, MAX_TEXT_SCALE_DELTA);
         ViewHelper.setPivotX(mTitleView, 0);
         ViewHelper.setPivotY(mTitleView, 0);
-//        ViewHelper.setScaleX(mTitleView, scale);
+        // ViewHelper.setScaleX(mTitleView, scale);
         ViewHelper.setScaleY(mTitleView, scale);
 
         // Translate title text
@@ -335,7 +330,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
         }
     }
 
-    //PopupWindow消失时，使屏幕恢复正常
+    // PopupWindow消失时，使屏幕恢复正常
     private void lightOn() {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 1.0f;

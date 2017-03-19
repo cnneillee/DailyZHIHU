@@ -14,6 +14,7 @@ public class Settings {
     public static boolean noPicMode = false;
     public static boolean isNightMode = false;
     public static boolean isExitConfirm = true;
+    public static boolean needRecreate = false;
 
     public static final String XML_NAME = "settings";
 
@@ -41,7 +42,7 @@ public class Settings {
     }
 
     public Settings putBoolean(String key, boolean value) {
-        mPrefs.edit().putBoolean(key, value).commit();
+        mPrefs.edit().putBoolean(key, value).apply();
         return this;
     }
 
@@ -50,7 +51,7 @@ public class Settings {
     }
 
     public Settings putInt(String key, int value) {
-        mPrefs.edit().putInt(key, value).commit();
+        mPrefs.edit().putInt(key, value).apply();
         return this;
     }
 
@@ -59,7 +60,7 @@ public class Settings {
     }
 
     public Settings putString(String key, String value) {
-        mPrefs.edit().putString(key, value).commit();
+        mPrefs.edit().putString(key, value).apply();
         return this;
     }
 

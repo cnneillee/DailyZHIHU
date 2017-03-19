@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="360dp"
-              android:background="@color/lightGray"
+              android:background="?attr/mainPageRootViewBgColor"
               android:orientation="vertical"
               android:paddingTop="8dp">
 
@@ -10,19 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="12dp">
 
         <Button
             android:id="@+id/btn_pickDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击选择查看日期"/>
+            android:background="@drawable/btn_bg_color"
+            android:text="历史跳转"
+            android:textColor="?attr/supportTitleColor"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_loadsetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="缓存设置"/>
+            android:background="@drawable/btn_bg_color"
+            android:text="缓存设置"
+            android:textColor="?attr/supportTitleColor"/>
 
     </LinearLayout>
 
@@ -31,11 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="2016-02-06"/>
+        android:textColor="?attr/supportTitleColor"
+        tools:text="2016-02-06"/>
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/material_calendarview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:background="?attr/mainPageRootViewBgColor"/>
 </LinearLayout>

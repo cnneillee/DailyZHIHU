@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.ShareRecord;
+import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.widget.ShareMenuPopupWindow;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.share.ShareHelper;
@@ -33,7 +34,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 /**
  * Created by Neil on 2016/4/19.
  */
-public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, PlatformActionListener {
+public class ImageStoryActivity extends NightModeBaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, PlatformActionListener {
     private static final String LOG_TAG = ImageStoryActivity.class.getName();
     @Bind(R.id.rg_share_type)
     RadioGroup mRgImgStoryTheme;
@@ -51,8 +52,7 @@ public class ImageStoryActivity extends AppCompatActivity implements RadioGroup.
     private int storyId = -1;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initViews() {
         setContentView(R.layout.activity_image_story);
         ButterKnife.bind(this);
         setDefaultStyle();
