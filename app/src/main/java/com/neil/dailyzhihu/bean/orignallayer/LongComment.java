@@ -29,12 +29,23 @@ public class LongComment extends OrignalStory{
     }
 
     public class CommentsBean {
+        /**
+         * author : 楚亦锦
+         * content : 第三个，那本书叫《数字图像处理》（估计是讲类似PS 毁图秀秀等一众软件的底层技术），然后作者在扉页写到： 致我无需修图的妻子，Shelly。 嗯……当着众读者的面讨好媳妇，秀一波恩爱 (╯°□°）╯︵ ┻━┻
+         * avatar : http://pic4.zhimg.com/c98bc5e4f_im.jpg
+         * time : 1488589198
+         * id : 28293001
+         * likes : 76
+         * reply_to : {"content":"翻译咋说的？","status":0,"id":28292612,"author":"李春骋"}
+         */
+
         private String author;
         private String content;
         private String avatar;
         private int time;
         private int id;
         private int likes;
+        private ReplyToBean reply_to;
 
         public String getAuthor() {
             return author;
@@ -82,6 +93,69 @@ public class LongComment extends OrignalStory{
 
         public void setLikes(int likes) {
             this.likes = likes;
+        }
+
+        public ReplyToBean getReply_to() {
+            return reply_to;
+        }
+
+        public void setReply_to(ReplyToBean reply_to) {
+            this.reply_to = reply_to;
+        }
+
+        public class ReplyToBean {
+            /**
+             * content : 翻译咋说的？
+             * status : 0
+             * id : 28292612
+             * author : 李春骋
+             */
+
+            private String content;
+            private int status;
+            private int id;
+            private String author;
+            private String err_msg;
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getAuthor() {
+                return author;
+            }
+
+            public void setAuthor(String author) {
+                this.author = author;
+            }
+
+            public String getErr_msg() {
+                return err_msg;
+            }
+
+            public void setErr_msg(String err_msg) {
+                this.err_msg = err_msg;
+            }
         }
     }
 }

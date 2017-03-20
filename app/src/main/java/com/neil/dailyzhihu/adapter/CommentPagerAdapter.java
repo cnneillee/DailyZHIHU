@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.API;
@@ -14,7 +15,6 @@ import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.cnt.ContentLoaderWrapper;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +24,6 @@ import java.util.List;
  * 邮箱：cn.neillee@gmail.com
  */
 public class CommentPagerAdapter extends PagerAdapter {
-
-    private static final String LOG_TAG = CommentPagerAdapter.class.getSimpleName();
-    private ContentLoaderWrapper mLoaderWrapper;
 
     public enum CommentType {
         LONG("长评论", "/long-comments", 0), SHORT("短评论", "/short-comments", 1);
@@ -47,21 +44,20 @@ public class CommentPagerAdapter extends PagerAdapter {
 
     private List<View> mViews = new ArrayList<>();
     private Context mContext;
-    private String mStoryId;
 
     public CommentPagerAdapter(Context context, String storyId) {
         this.mContext = context;
-        this.mStoryId = storyId;
         View view1 = LayoutInflater.from(mContext).inflate(R.layout.vp_item_comment, null, false);
         View view2 = LayoutInflater.from(mContext).inflate(R.layout.vp_item_comment, null, false);
         mViews.add(view1);
         mViews.add(view2);
-        mLoaderWrapper = LoaderFactory.getContentLoader();
-        loadData(view1, 0);
-        loadData1(view2, 1);
+        loadComments(storyId);
+    }
 
-//        loadData(view1, CommentType.LONG.index);
-//        loadData(view2, CommentType.SHORT.index);
+    private void loadComments(String storyId) {
+        ContentLoaderWrapper loaderWrapper = LoaderFactory.getContentLoader();
+        loaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + storyId + CommentType.LONG.en, mListenerLong);
+        loaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + storyId + CommentType.SHORT.en, mListenerShort);
     }
 
     //viewpager中的组件数量
@@ -72,8 +68,7 @@ public class CommentPagerAdapter extends PagerAdapter {
 
     // 滑动切换的时候销毁当前的组件
     @Override
-    public void destroyItem(ViewGroup container, int position,
-                            Object object) {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(mViews.get(position));
     }
 
@@ -82,9 +77,6 @@ public class CommentPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View view = mViews.get(position);
-//        loadData(mViews.get(0), 0);
-//        loadData1(mViews.get(1), 1);
-//        Logger.e(position + "");
         container.addView(view);
         return view;
     }
@@ -104,37 +96,37 @@ public class CommentPagerAdapter extends PagerAdapter {
         return "标题" + position;
     }
 
-    private OnContentLoadedListener mListener1 = new OnContentLoadedListener() {
+    private OnContentLoadedListener mListenerLong = new OnContentLoadedListener() {
         @Override
         public void onSuccess(String content, String url) {
-            View view = mViews.get(0);
+            View view = mViews.get(CommentType.LONG.index);
             ListView listView = (ListView) view.findViewById(R.id.lv_comment);
-            Logger.e("onSuccess: " + 0 + "-" + url);
+            TextView addonView = (TextView) view.findViewById(R.id.tv_addon_info);
             LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
-            if (longComment == null) return;
-            List<LongComment.CommentsBean> data = longComment.getComments();
-            listView.setAdapter(new LongCommentListAdapter(mContext, data));
+            if (longComment != null) {
+                List<LongComment.CommentsBean> data = longComment.getComments();
+                listView.setAdapter(new LongCommentListAdapter(mContext, data));
+                addonView.setVisibility((data==null||data.size()<=0)?View.VISIBLE:View.INVISIBLE);
+            }else{
+                addonView.setVisibility(View.VISIBLE);
+            }
         }
     };
-    private OnContentLoadedListener mListener2 = new OnContentLoadedListener() {
-        @Override
-        public void onSuccess(String content, String url) {
-            View view = mViews.get(1);
-            ListView listView = (ListView) view.findViewById(R.id.lv_comment);
-            Logger.e("onSuccess: " + 1 + "-" + url);
-            LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
-            if (longComment == null) return;
-            List<LongComment.CommentsBean> data = longComment.getComments();
-            listView.setAdapter(new LongCommentListAdapter(mContext, data));
-        }
-    };
-    private void loadData(View view, final int index) {
-        Logger.e(index + "-" + API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en);
-        mLoaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en,mListener1);
-    }
 
-    private void loadData1(View view, final int index) {
-        Logger.e(index + "-" + API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en);
-        mLoaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en, mListener2);
-    }
+    private OnContentLoadedListener mListenerShort = new OnContentLoadedListener() {
+        @Override
+        public void onSuccess(String content, String url) {
+            View view = mViews.get(CommentType.SHORT.index);
+            ListView listView = (ListView) view.findViewById(R.id.lv_comment);
+            TextView addonView = (TextView) view.findViewById(R.id.tv_addon_info);
+            LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
+            if (longComment != null) {
+                List<LongComment.CommentsBean> data = longComment.getComments();
+                listView.setAdapter(new LongCommentListAdapter(mContext, data));
+                addonView.setVisibility((data==null||data.size()<=0)?View.VISIBLE:View.INVISIBLE);
+            }else{
+                addonView.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 }

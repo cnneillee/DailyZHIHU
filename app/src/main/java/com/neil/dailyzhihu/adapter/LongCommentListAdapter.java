@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
@@ -48,24 +49,38 @@ public class LongCommentListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+        ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).
-                    inflate(R.layout.item_long_comment, parent, false);
-            vh = new ViewHolder(convertView);
-            convertView.setTag(vh);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_long_comment, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
         } else {
-            vh = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        LoaderFactory.getImageLoader().displayImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
-        vh.tvAuthor.setText(mDatas.get(position).getAuthor());
-        vh.tvContent.setText(mDatas.get(position).getContent());
-        //vh.tvId.setText(mDatas.get(position).getSectionId() + "");
-        vh.tvLikes.setText(mDatas.get(position).getLikes() + " 个赞");
+        LoaderFactory.getImageLoader().displayImage(viewHolder.ivAvatar, mDatas.get(position).getAvatar(), null);
+        viewHolder.tvAuthor.setText(mDatas.get(position).getAuthor());
+        viewHolder.tvContent.setText(mDatas.get(position).getContent());
+        viewHolder.tvLikes.setText(String.valueOf(mDatas.get(position).getLikes()));
         long timestamp = mDatas.get(position).getTime();
         String result = Formater.formatData("yyyy/MM/dd HH:mm", timestamp);
-//        String result = (String) DateUtils.getRelativeTimeSpanString(context, timestamp);
-        vh.tvTime.setText(result);
+        viewHolder.tvTime.setText(result);
+        // replay to
+        LongComment.CommentsBean.ReplyToBean replyToBean = mDatas.get(position).getReply_to();
+        if(replyToBean!=null){
+            viewHolder.llReplyTo.setVisibility(View.VISIBLE);
+            viewHolder.tvAuthorReplyTo.setText(replyToBean.getAuthor());
+            int status = replyToBean.getStatus();
+            if (status==0){// 正常
+                viewHolder.tvContentReplyTo.setText(replyToBean.getContent());
+                viewHolder.tvStatusReplyTo.setVisibility(View.GONE);
+            }else{
+                viewHolder.tvStatusReplyTo.setVisibility(View.VISIBLE);
+                viewHolder.tvStatusReplyTo.setText("[已删除]");
+                viewHolder.tvContentReplyTo.setText(replyToBean.getErr_msg());
+            }
+        }else {
+            viewHolder.llReplyTo.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
@@ -80,6 +95,14 @@ public class LongCommentListAdapter extends BaseAdapter {
         TextView tvTime;
         @Bind(R.id.tv_likes)
         TextView tvLikes;
+        @Bind(R.id.ll_reply_to)
+        LinearLayout llReplyTo;
+        @Bind(R.id.tv_status)
+        TextView tvStatusReplyTo;
+        @Bind(R.id.tv_author_reply_to)
+        TextView tvAuthorReplyTo;
+        @Bind(R.id.tv_content_reply_to)
+        TextView tvContentReplyTo;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

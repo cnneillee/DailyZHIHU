@@ -45,9 +45,9 @@
         <item name="tabIndicatorColor">@color/white</item>
         <item name="tabSelectedTitleColor">@color/white</item>
         <!--comments-->
-        <item name="commentUserTextColor">#E2E4E4</item>
-        <item name="commentContentTextColor">#999EA0</item>
-        <item name="commentExtraTextColor">#798F97</item>
+        <item name="commentUserTextColor">@color/black</item>
+        <item name="commentContentTextColor">@color/black</item>
+        <item name="commentExtraTextColor">#999EA0</item>
     </style>
 
     <style name="AppNightTheme" parent="Theme.AppCompat.Light.NoActionBar">
