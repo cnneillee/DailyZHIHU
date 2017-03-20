@@ -52,6 +52,8 @@ public class CommentPagerAdapter extends PagerAdapter {
         View view2 = LayoutInflater.from(mContext).inflate(R.layout.vp_item_comment, null, false);
         mViews.add(view1);
         mViews.add(view2);
+        loadData(view1, CommentType.LONG.index);
+        loadData(view2, CommentType.SHORT.index);
     }
 
     //viewpager中的组件数量
@@ -71,25 +73,7 @@ public class CommentPagerAdapter extends PagerAdapter {
     // 每次滑动的时候生成的组件
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        final View view = mViews.get(position);
-        final ListView lv = (ListView) view.findViewById(R.id.lv_comment);
-
-        LoaderFactory.getContentLoader().loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(position).en,
-                new OnContentLoadingFinishedListener() {
-                    @Override
-                    public void onFinish(String content, String url) {
-                        Log.e("COMMENTACTIVITY", position + "URL:" + url + "\nContent:" + content);
-                        LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
-                        if (longComment == null) return;
-                        List<LongComment.CommentsBean> data = longComment.getComments();
-                        Log.e("longcomment", data.size() + "个");
-                        for (int i = 0; i < data.size(); i++) {
-                            Log.e("longcomment", data.get(i).getContent());
-                        }
-                        lv.setAdapter(new LongCommentListAdapter(mContext, data));
-                        Log.e("longcomment", lv.getCount() + "个");
-                    }
-                });
+        View view = mViews.get(position);
         container.addView(view);
         return view;
     }
@@ -107,5 +91,25 @@ public class CommentPagerAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return "标题" + position;
+    }
+
+    private void loadData(View view, final int index) {
+        final ListView commentListView = (ListView) view.findViewById(R.id.lv_comment);
+        LoaderFactory.getContentLoader().loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en,
+                new OnContentLoadingFinishedListener() {
+                    @Override
+                    public void onFinish(String content, String url) {
+                        Log.e("COMMENTACTIVITY", index + "URL:" + url + "\nContent:" + content);
+                        LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
+                        if (longComment == null) return;
+                        List<LongComment.CommentsBean> data = longComment.getComments();
+                        Log.e("longcomment", data.size() + "个");
+                        for (int i = 0; i < data.size(); i++) {
+                            Log.e("longcomment", data.get(i).getContent());
+                        }
+                        commentListView.setAdapter(new LongCommentListAdapter(mContext, data));
+                        Log.e("longcomment", commentListView.getCount() + "个");
+                    }
+                });
     }
 }
