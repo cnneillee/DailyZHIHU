@@ -10,7 +10,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.ThemeGridAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.ThemeList;
@@ -60,9 +60,9 @@ public class NavThemesActivity extends NightModeBaseActivity implements AdapterV
         gvThemes.setOnItemClickListener(this);
         gvThemes.setScrollViewCallbacks(this);
         LoaderFactory.getContentLoader().loadContent(API.THEMES,
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
                     @Override
-                    public void onFinish(String content, String url) {
+                    public void onSuccess(String content, String url) {
                         Logger.json(content);
                         ThemeList themes = GsonDecoder.getDecoder().decoding(content, ThemeList.class);
                         ThemeGridAdapter adapter = new ThemeGridAdapter(NavThemesActivity.this, themes);

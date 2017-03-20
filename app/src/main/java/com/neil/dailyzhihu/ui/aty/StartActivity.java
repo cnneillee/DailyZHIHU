@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignallayer.StartImg;
 import com.neil.dailyzhihu.ui.main.MainActivity;
@@ -37,9 +37,9 @@ public class StartActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
-        LoaderFactory.getContentLoader().loadContent(startImgSize, new OnContentLoadingFinishedListener() {
+        LoaderFactory.getContentLoader().loadContent(startImgSize, new OnContentLoadedListener() {
             @Override
-            public void onFinish(String content, String url) {
+            public void onSuccess(String content, String url) {
                 Gson gson = new Gson();
                 StartImg startImg = gson.fromJson(content, StartImg.class);
                 String imgUrl = startImg.getImg();

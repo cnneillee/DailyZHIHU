@@ -2,7 +2,6 @@ package com.neil.dailyzhihu.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,11 @@ import android.widget.ListView;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.bean.orignallayer.LongComment;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.utils.GsonDecoder;
+import com.neil.dailyzhihu.utils.cnt.ContentLoaderWrapper;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
  * 邮箱：cn.neillee@gmail.com
  */
 public class CommentPagerAdapter extends PagerAdapter {
+
+    private static final String LOG_TAG = CommentPagerAdapter.class.getSimpleName();
+    private ContentLoaderWrapper mLoaderWrapper;
 
     public enum CommentType {
         LONG("长评论", "/long-comments", 0), SHORT("短评论", "/short-comments", 1);
@@ -52,8 +56,12 @@ public class CommentPagerAdapter extends PagerAdapter {
         View view2 = LayoutInflater.from(mContext).inflate(R.layout.vp_item_comment, null, false);
         mViews.add(view1);
         mViews.add(view2);
-        loadData(view1, CommentType.LONG.index);
-        loadData(view2, CommentType.SHORT.index);
+        mLoaderWrapper = LoaderFactory.getContentLoader();
+        loadData(view1, 0);
+        loadData1(view2, 1);
+
+//        loadData(view1, CommentType.LONG.index);
+//        loadData(view2, CommentType.SHORT.index);
     }
 
     //viewpager中的组件数量
@@ -74,6 +82,9 @@ public class CommentPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View view = mViews.get(position);
+//        loadData(mViews.get(0), 0);
+//        loadData1(mViews.get(1), 1);
+//        Logger.e(position + "");
         container.addView(view);
         return view;
     }
@@ -93,23 +104,37 @@ public class CommentPagerAdapter extends PagerAdapter {
         return "标题" + position;
     }
 
+    private OnContentLoadedListener mListener1 = new OnContentLoadedListener() {
+        @Override
+        public void onSuccess(String content, String url) {
+            View view = mViews.get(0);
+            ListView listView = (ListView) view.findViewById(R.id.lv_comment);
+            Logger.e("onSuccess: " + 0 + "-" + url);
+            LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
+            if (longComment == null) return;
+            List<LongComment.CommentsBean> data = longComment.getComments();
+            listView.setAdapter(new LongCommentListAdapter(mContext, data));
+        }
+    };
+    private OnContentLoadedListener mListener2 = new OnContentLoadedListener() {
+        @Override
+        public void onSuccess(String content, String url) {
+            View view = mViews.get(1);
+            ListView listView = (ListView) view.findViewById(R.id.lv_comment);
+            Logger.e("onSuccess: " + 1 + "-" + url);
+            LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
+            if (longComment == null) return;
+            List<LongComment.CommentsBean> data = longComment.getComments();
+            listView.setAdapter(new LongCommentListAdapter(mContext, data));
+        }
+    };
     private void loadData(View view, final int index) {
-        final ListView commentListView = (ListView) view.findViewById(R.id.lv_comment);
-        LoaderFactory.getContentLoader().loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en,
-                new OnContentLoadingFinishedListener() {
-                    @Override
-                    public void onFinish(String content, String url) {
-                        Log.e("COMMENTACTIVITY", index + "URL:" + url + "\nContent:" + content);
-                        LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
-                        if (longComment == null) return;
-                        List<LongComment.CommentsBean> data = longComment.getComments();
-                        Log.e("longcomment", data.size() + "个");
-                        for (int i = 0; i < data.size(); i++) {
-                            Log.e("longcomment", data.get(i).getContent());
-                        }
-                        commentListView.setAdapter(new LongCommentListAdapter(mContext, data));
-                        Log.e("longcomment", commentListView.getCount() + "个");
-                    }
-                });
+        Logger.e(index + "-" + API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en);
+        mLoaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en,mListener1);
+    }
+
+    private void loadData1(View view, final int index) {
+        Logger.e(index + "-" + API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en);
+        mLoaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + mStoryId + CommentType.getType(index).en, mListener2);
     }
 }

@@ -1,11 +1,8 @@
 package com.neil.dailyzhihu.ui.story;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -29,7 +26,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
@@ -83,9 +80,9 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
 
     private static final String LOG_TAG = CertainStoryActivity.class.getSimpleName();
 
-    private OnContentLoadingFinishedListener mWebLoadListener = new OnContentLoadingFinishedListener() {
+    private OnContentLoadedListener mWebLoadListener = new OnContentLoadedListener() {
         @Override
-        public void onFinish(String content, String url) {
+        public void onSuccess(String content, String url) {
             // TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。type=0正常，type特殊情况
             mStoryContent = GsonDecoder.getDecoder().decoding(content, StoryContent.class);
             mStoryTitle = mStoryContent.getTitle();

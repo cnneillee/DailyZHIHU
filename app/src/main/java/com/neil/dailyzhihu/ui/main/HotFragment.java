@@ -19,7 +19,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.bean.orignallayer.RecentBean;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.HotStoryListAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.HotStory;
@@ -72,9 +72,9 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
 
     private void loadDataFromInternet() {
         LoaderFactory.getContentLoader().loadContent(API.HOT_NEWS,
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
             @Override
-            public void onFinish(String content,String url) {
+            public void onSuccess(String content, String url) {
                 Logger.json(content);
                 mSrlRefresh.setRefreshing(false);
                 HotStory hotStories = GsonDecoder.getDecoder().decoding(content, HotStory.class);

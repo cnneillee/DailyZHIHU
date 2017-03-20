@@ -19,7 +19,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestStoryListAdapter;
 import com.neil.dailyzhihu.adapter.LatestTopStoryPagerAdapter;
@@ -94,9 +94,9 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
      */
     private void loadLatestNewsFromInternet() {
         LoaderFactory.getContentLoaderVolley().loadContent(API.LATEST_NEWS,
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
                     @Override
-                    public void onFinish(String content,String url) {
+                    public void onSuccess(String content, String url) {
                         Logger.json(content);
                         mSrlRefresh.setRefreshing(false);
                         LatestStory latestStory = GsonDecoder.getDecoder().decoding(content, LatestStory.class);

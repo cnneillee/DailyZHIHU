@@ -25,8 +25,8 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.api.API;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.PastStoryListAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.BeforeStoryListBean;
@@ -125,9 +125,9 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
     private void loadPickedDateStory() {
         LoaderFactory.getContentLoader().loadContent(API.BEFORE_NEWS_PREFIX + pickedDate,
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
                     @Override
-                    public void onFinish(String content,String url) {
+                    public void onSuccess(String content, String url) {
                         Logger.json(content);
                         BeforeStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
                         PastStoryListAdapter adapter = new PastStoryListAdapter(mContext, beforeStory);

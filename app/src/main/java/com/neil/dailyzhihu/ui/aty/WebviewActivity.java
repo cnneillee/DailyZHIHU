@@ -9,7 +9,7 @@ import android.webkit.WebView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
@@ -41,9 +41,9 @@ public class WebviewActivity extends AppCompatActivity {
         setContent();
     }
 
-    private OnContentLoadingFinishedListener mListener = new OnContentLoadingFinishedListener() {
+    private OnContentLoadedListener mListener = new OnContentLoadedListener() {
         @Override
-        public void onFinish(String content, String url) {
+        public void onSuccess(String content, String url) {
             StoryContent story = GsonDecoder.getDecoder().decoding(content, StoryContent.class);
             List<String> cssArr = story.getCss();
             List<String> jsArr = story.getJs();

@@ -28,13 +28,13 @@ public class PastStoryListAdapter extends BaseAdapter {
     private Context mContext;
 
     public PastStoryListAdapter(Context context, BeforeStoryListBean beforeStoryListBean) {
-        this.mPastStoryList = beforeStoryListBean.getStories();
+        if (beforeStoryListBean != null) this.mPastStoryList = beforeStoryListBean.getStories();
         this.mContext = context;
     }
 
     @Override
     public int getCount() {
-        return mPastStoryList != null ? mPastStoryList.size():0;
+        return mPastStoryList != null ? mPastStoryList.size() : 0;
     }
 
     @Override

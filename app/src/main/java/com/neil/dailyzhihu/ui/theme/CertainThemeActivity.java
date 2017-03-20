@@ -1,7 +1,6 @@
 package com.neil.dailyzhihu.ui.theme;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.adapter.ThemeStoryListAdapter;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.EditorListAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.ThemeStoryList;
@@ -101,9 +100,9 @@ public class CertainThemeActivity extends BaseActivity implements
     /*填充内容*/
     private void fillContent() {
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.THEME_PREFIX, themeId),
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
             @Override
-            public void onFinish(String content,String url) {
+            public void onSuccess(String content, String url) {
                 Logger.json(content);
                 ThemeStoryList themeStoryList = GsonDecoder.getDecoder().decoding(content, ThemeStoryList.class);
                 ThemeStoryListAdapter adapter = new ThemeStoryListAdapter(CertainThemeActivity.this,themeStoryList);

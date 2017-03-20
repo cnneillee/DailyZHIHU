@@ -1,32 +1,14 @@
 package com.neil.dailyzhihu.ui.story;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.ViewStubCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.CommentPagerAdapter;
-import com.neil.dailyzhihu.adapter.LongCommentListAdapter;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.bean.orignallayer.LongComment;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,7 +1,6 @@
 package com.neil.dailyzhihu.ui.column;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +12,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.SectionGridAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.SectionList;
@@ -71,9 +70,9 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 //        Utility.setGridViewHeightBasedOnChildren(gvSections);
 
         LoaderFactory.getContentLoader().loadContent(API.SECTIONS,
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
                     @Override
-                    public void onFinish(String content,String url) {
+                    public void onSuccess(String content, String url) {
                         Logger.json(content);
                         SectionList sectionList = GsonDecoder.getDecoder().decoding(content, SectionList.class);
                         mDatas = sectionList.getData();

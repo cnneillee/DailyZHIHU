@@ -30,13 +30,13 @@ public class HotStoryListAdapter extends BaseAdapter {
     private Context mContext;
 
     public HotStoryListAdapter(Context context, HotStory hotStory) {
-        this.mHotStoryList = hotStory.getRecent();
+        if (hotStory != null) this.mHotStoryList = hotStory.getRecent();
         this.mContext = context;
     }
 
     @Override
     public int getCount() {
-        return mHotStoryList != null ? mHotStoryList.size():0;
+        return mHotStoryList != null ? mHotStoryList.size() : 0;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class HotStoryListAdapter extends BaseAdapter {
         }
         RecentBean recentStory = mHotStoryList.get(position);
         viewHolder.tvTitle.setText(recentStory.getTitle());
-        Log.e(LOG_TAG,"设置title");
+        Log.e(LOG_TAG, "设置title");
         LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, recentStory.getImages().get(0), null);
 
         return convertView;

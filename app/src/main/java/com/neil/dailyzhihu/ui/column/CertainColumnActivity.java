@@ -31,7 +31,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.SectionStoryListAdapter;
 import com.neil.dailyzhihu.bean.orignallayer.SectionStoryList;
@@ -115,9 +115,9 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
 
     private void fillContent() {
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.SECTION_PREFIX, sectionId),
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
                     @Override
-                    public void onFinish(String content,String url) {
+                    public void onSuccess(String content, String url) {
                         Logger.json(content);
                         SectionStoryList sectionStoryList = GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
                         SectionStoryListAdapter adapter = new SectionStoryListAdapter(CertainColumnActivity.this, sectionStoryList);

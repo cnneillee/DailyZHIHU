@@ -27,13 +27,13 @@ public class ThemeGridAdapter extends BaseAdapter {
     private List<ThemeList.OthersBean> mDatas;
 
     public ThemeGridAdapter(Context context, ThemeList themeList) {
+        if (themeList != null) this.mDatas = themeList.getOthers();
         this.mContext = context;
-        this.mDatas = themeList.getOthers();
     }
 
     @Override
     public int getCount() {
-        return mDatas != null ? mDatas.size():0;
+        return mDatas != null ? mDatas.size() : 0;
     }
 
     @Override
