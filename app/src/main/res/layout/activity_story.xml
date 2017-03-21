@@ -18,9 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    android:background="?attr/sectionRootViewBgColor">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/image"
@@ -102,11 +100,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0000"
+        android:background="?attr/barBgColor"
         android:fitsSystemWindows="true"
         android:minHeight="?actionBarSize"
         app:titleMargins="0dp"
         app:titleTextAppearance="?android:textAppearanceMedium"
-        app:titleTextColor="@color/white"/>
+        app:titleTextColor="?attr/barTitleColor"/>
 
 </FrameLayout>

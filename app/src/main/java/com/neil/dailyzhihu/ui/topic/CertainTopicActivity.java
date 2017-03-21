@@ -126,9 +126,8 @@ public class CertainTopicActivity extends BaseActivity implements
     /*设置标题*/
     private void setActionBarText(String themeName) {
         ActionBar ab = getSupportActionBar();
-        if (ab == null || themeId < 0)
-            return;
-        ab.setTitle("日报·主题" + "\t" + themeName);
+        if (ab == null || themeId < 0) return;
+        ab.setTitle("日报·主题\t" + themeName);
     }
 
     /*某一主题日报中的某个新闻项被点击*/

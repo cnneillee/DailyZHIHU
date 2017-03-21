@@ -33,7 +33,8 @@ import butterknife.ButterKnife;
 /**
  * 主题日报窗口
  */
-public class NavTopicsActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
+public class NavTopicsActivity extends NightModeBaseActivity implements
+        AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
     @Bind(R.id.gv_themes)
     ObservableGridView gvThemes;
     @Bind(R.id.toolbar)
@@ -78,20 +79,14 @@ public class NavTopicsActivity extends NightModeBaseActivity implements AdapterV
         ButterKnife.unbind(this);
     }
 
-    /**
-     * 列表项子项的点击事件
-     *
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TopicListBean.TopicBean bean = mDatas.get(position);
         int sectionId = bean.getStoryId();
+        String topicImg = bean.getImage();
         Intent intent = new Intent(this, CertainTopicActivity.class);
         intent.putExtra(AtyExtraKeyConstant.THEME_ID, sectionId);
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, topicImg);
         startActivity(intent);
     }
 

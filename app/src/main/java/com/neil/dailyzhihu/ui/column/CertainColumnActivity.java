@@ -104,6 +104,7 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
         getExtras();
         if (sectionId > 0) fillContent();
         mListView.setOnItemClickListener(this);
+        LoaderFactory.getImageLoader().displayImage(mImageView, sectionImg, null);
     }
 
     private int getExtras() {
