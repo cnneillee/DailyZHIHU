@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.ui.theme;
+package com.neil.dailyzhihu.ui.topic;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -9,12 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.neil.dailyzhihu.adapter.ThemeStoryListAdapter;
+import com.neil.dailyzhihu.adapter.TopicStoryListAdapter;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.EditorListAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.ThemeStoryList;
+import com.neil.dailyzhihu.adapter.TopicEditorListAdapter;
+import com.neil.dailyzhihu.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * 作者：Neil on 2016/3/23 11:05.
  * 邮箱：cn.neillee@gmail.com
  */
-public class CertainThemeActivity extends BaseActivity implements
+public class CertainTopicActivity extends BaseActivity implements
         AdapterView.OnItemClickListener, View.OnClickListener {
 
     @Bind(R.id.toolbar)
@@ -42,6 +42,7 @@ public class CertainThemeActivity extends BaseActivity implements
 
     // 当前Theme的Id
     private int themeId = -1;
+    private String defaultImgUrl;
 
     // 添加的Theme介绍、编辑介绍等
     private TextView tvIntro;
@@ -51,7 +52,7 @@ public class CertainThemeActivity extends BaseActivity implements
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            CertainThemeActivity.this.finish();
+            CertainTopicActivity.this.finish();
         }
     };
 
@@ -93,6 +94,7 @@ public class CertainThemeActivity extends BaseActivity implements
     private int getExtras() {
         if (getIntent().getExtras() != null) {
             themeId = getIntent().getIntExtra(AtyExtraKeyConstant.THEME_ID, -2);
+            defaultImgUrl = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         }
         return themeId;
     }
@@ -101,23 +103,24 @@ public class CertainThemeActivity extends BaseActivity implements
     private void fillContent() {
         LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.THEME_PREFIX, themeId),
                 new OnContentLoadedListener() {
-            @Override
-            public void onSuccess(String content, String url) {
-                Logger.json(content);
-                ThemeStoryList themeStoryList = GsonDecoder.getDecoder().decoding(content, ThemeStoryList.class);
-                ThemeStoryListAdapter adapter = new ThemeStoryListAdapter(CertainThemeActivity.this,themeStoryList);
-                mlvStoryList.setAdapter(adapter);
+                    @Override
+                    public void onSuccess(String content, String url) {
+                        Logger.json(content);
+                        TopicStoryListBean topicStoryListBean = GsonDecoder.getDecoder().decoding(content, TopicStoryListBean.class);
+                        TopicStoryListAdapter adapter = new TopicStoryListAdapter(CertainTopicActivity.this, topicStoryListBean);
+                        adapter.setDefaultImgUrl(defaultImgUrl);
+                        mlvStoryList.setAdapter(adapter);
 
 //                String themeBGImgUrl = cleanThemeStoryListBean.getBackground();
-                String introDes = themeStoryList.getDescription();
-                String actionbarTitle = themeStoryList.getName();
-                tvIntro.setText(introDes);
-                setActionBarText(actionbarTitle);
+                        String introDes = topicStoryListBean.getDescription();
+                        String actionbarTitle = topicStoryListBean.getName();
+                        tvIntro.setText(introDes);
+                        setActionBarText(actionbarTitle);
 //                LoaderFactory.getImageLoader().displayImage(mImageView, themeBGImgUrl, null);
-                List<ThemeStoryList.EditorsBean> editorsBeanList = themeStoryList.getEditors();
-                lvEditor.setAdapter(new EditorListAdapter(CertainThemeActivity.this, editorsBeanList));
-            }
-        });
+                        List<TopicStoryListBean.EditorsBean> editorsBeanList = topicStoryListBean.getEditors();
+                        lvEditor.setAdapter(new TopicEditorListAdapter(CertainTopicActivity.this, editorsBeanList));
+                    }
+                });
     }
 
     /*设置标题*/
@@ -131,10 +134,12 @@ public class CertainThemeActivity extends BaseActivity implements
     /*某一主题日报中的某个新闻项被点击*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ThemeStoryList.StoriesBean bean = (ThemeStoryList.StoriesBean) parent.getAdapter().getItem(position);
+        TopicStoryListBean.TopicStory bean = (TopicStoryListBean.TopicStory) parent.getAdapter().getItem(position);
         int storyId = bean.getStoryId();
+        defaultImgUrl = (bean.getImage() == null) ? defaultImgUrl : bean.getImage();
         Intent intent = new Intent(this, CertainStoryActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, storyId);
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, defaultImgUrl);
         startActivity(intent);
     }
 

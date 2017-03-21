@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.ThemeList;
+import com.neil.dailyzhihu.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -22,18 +22,18 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class ThemeGridAdapter extends BaseAdapter {
+public class ColumnGridBaseAdapter extends BaseAdapter {
     private Context mContext;
-    private List<ThemeList.OthersBean> mDatas;
+    private List<ColumnListBean.ColumnBean> mDatas;
 
-    public ThemeGridAdapter(Context context, ThemeList themeList) {
-        if (themeList != null) this.mDatas = themeList.getOthers();
+    public ColumnGridBaseAdapter(Context context, ColumnListBean columnListBean) {
         this.mContext = context;
+        this.mDatas = columnListBean.getData();
     }
 
     @Override
     public int getCount() {
-        return mDatas != null ? mDatas.size() : 0;
+        return mDatas != null ? mDatas.size():0;
     }
 
     @Override

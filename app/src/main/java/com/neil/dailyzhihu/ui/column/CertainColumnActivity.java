@@ -30,11 +30,11 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.SectionStoryListAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.SectionStoryList;
+import com.neil.dailyzhihu.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
@@ -65,6 +65,7 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
 
     private int sectionId = -1;
     private String sectionName = null;
+    private String sectionImg = null;
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -109,6 +110,7 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
         if (getIntent().getExtras() != null) {
             sectionId = getIntent().getIntExtra(AtyExtraKeyConstant.SECTION_ID, -2);
             sectionName = getIntent().getStringExtra(AtyExtraKeyConstant.SECTION_NAME);
+            sectionImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         }
         return sectionId;
     }
@@ -119,8 +121,9 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
                     @Override
                     public void onSuccess(String content, String url) {
                         Logger.json(content);
-                        SectionStoryList sectionStoryList = GsonDecoder.getDecoder().decoding(content, SectionStoryList.class);
-                        SectionStoryListAdapter adapter = new SectionStoryListAdapter(CertainColumnActivity.this, sectionStoryList);
+                        ColumnStoryListBean columnStoryListBean = GsonDecoder.getDecoder().decoding(content, ColumnStoryListBean.class);
+                        ColumnStoryListBaseAdapter adapter = new ColumnStoryListBaseAdapter(CertainColumnActivity.this, columnStoryListBean);
+                        adapter.setDefaultImgUrl(sectionImg);
                         mListView.setAdapter(adapter);
                     }
                 });
@@ -137,10 +140,12 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SectionStoryList.StoriesBean bean = (SectionStoryList.StoriesBean) parent.getAdapter().getItem(position);
+        ColumnStoryListBean.ColumnStory bean = (ColumnStoryListBean.ColumnStory) parent.getAdapter().getItem(position);
         int storyId = bean.getStoryId();
+        String imgUrl = (bean.getImage() == null) ? sectionImg : bean.getImage();
         Intent intent = new Intent(CertainColumnActivity.this, CertainStoryActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, storyId);
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, imgUrl);
         CertainColumnActivity.this.startActivity(intent);
     }
 

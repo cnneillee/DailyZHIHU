@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.bean.orignallayer.LongComment;
+import com.neil.dailyzhihu.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.cnt.ContentLoaderWrapper;
@@ -23,7 +23,7 @@ import java.util.List;
  * 作者：Neil on 2016/4/21 22:35.
  * 邮箱：cn.neillee@gmail.com
  */
-public class CommentPagerAdapter extends PagerAdapter {
+public class CommentTypesPagerAdapter extends PagerAdapter {
 
     public enum CommentType {
         LONG("长评论", "/long-comments", 0), SHORT("短评论", "/short-comments", 1);
@@ -45,7 +45,7 @@ public class CommentPagerAdapter extends PagerAdapter {
     private List<View> mViews = new ArrayList<>();
     private Context mContext;
 
-    public CommentPagerAdapter(Context context, String storyId) {
+    public CommentTypesPagerAdapter(Context context, String storyId) {
         this.mContext = context;
         View view1 = LayoutInflater.from(mContext).inflate(R.layout.vp_item_comment, null, false);
         View view2 = LayoutInflater.from(mContext).inflate(R.layout.vp_item_comment, null, false);
@@ -102,10 +102,10 @@ public class CommentPagerAdapter extends PagerAdapter {
             View view = mViews.get(CommentType.LONG.index);
             ListView listView = (ListView) view.findViewById(R.id.lv_comment);
             TextView addonView = (TextView) view.findViewById(R.id.tv_addon_info);
-            LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
-            if (longComment != null) {
-                List<LongComment.CommentsBean> data = longComment.getComments();
-                listView.setAdapter(new LongCommentListAdapter(mContext, data));
+            CommentListBean commentListBean = GsonDecoder.getDecoder().decoding(content, CommentListBean.class);
+            if (commentListBean != null) {
+                List<CommentListBean.CommentsBean> data = commentListBean.getComments();
+                listView.setAdapter(new CommentListBaseAdapter(mContext, data));
                 addonView.setVisibility((data==null||data.size()<=0)?View.VISIBLE:View.INVISIBLE);
             }else{
                 addonView.setVisibility(View.VISIBLE);
@@ -119,10 +119,10 @@ public class CommentPagerAdapter extends PagerAdapter {
             View view = mViews.get(CommentType.SHORT.index);
             ListView listView = (ListView) view.findViewById(R.id.lv_comment);
             TextView addonView = (TextView) view.findViewById(R.id.tv_addon_info);
-            LongComment longComment = GsonDecoder.getDecoder().decoding(content, LongComment.class);
-            if (longComment != null) {
-                List<LongComment.CommentsBean> data = longComment.getComments();
-                listView.setAdapter(new LongCommentListAdapter(mContext, data));
+            CommentListBean commentListBean = GsonDecoder.getDecoder().decoding(content, CommentListBean.class);
+            if (commentListBean != null) {
+                List<CommentListBean.CommentsBean> data = commentListBean.getComments();
+                listView.setAdapter(new CommentListBaseAdapter(mContext, data));
                 addonView.setVisibility((data==null||data.size()<=0)?View.VISIBLE:View.INVISIBLE);
             }else{
                 addonView.setVisibility(View.VISIBLE);

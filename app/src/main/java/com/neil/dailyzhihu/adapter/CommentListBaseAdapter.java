@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.LongComment;
+import com.neil.dailyzhihu.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
  * 作者：Neil on 2016/3/23 03:50.
  * 邮箱：cn.neillee@gmail.com
  */
-public class LongCommentListAdapter extends BaseAdapter {
+public class CommentListBaseAdapter extends BaseAdapter {
     private Context context;
-    private List<LongComment.CommentsBean> mDatas;
+    private List<CommentListBean.CommentsBean> mDatas;
 
-    public LongCommentListAdapter(Context context, List<LongComment.CommentsBean> mDatas) {
+    public CommentListBaseAdapter(Context context, List<CommentListBean.CommentsBean> mDatas) {
         this.context = context;
         this.mDatas = mDatas;
     }
@@ -65,7 +65,7 @@ public class LongCommentListAdapter extends BaseAdapter {
         String result = Formater.formatData("yyyy/MM/dd HH:mm", timestamp);
         viewHolder.tvTime.setText(result);
         // replay to
-        LongComment.CommentsBean.ReplyToBean replyToBean = mDatas.get(position).getReply_to();
+        CommentListBean.CommentsBean.ReplyToBean replyToBean = mDatas.get(position).getReplyTo();
         if(replyToBean!=null){
             viewHolder.llReplyTo.setVisibility(View.VISIBLE);
             viewHolder.tvAuthorReplyTo.setText(replyToBean.getAuthor());
@@ -76,7 +76,7 @@ public class LongCommentListAdapter extends BaseAdapter {
             }else{
                 viewHolder.tvStatusReplyTo.setVisibility(View.VISIBLE);
                 viewHolder.tvStatusReplyTo.setText("[已删除]");
-                viewHolder.tvContentReplyTo.setText(replyToBean.getErr_msg());
+                viewHolder.tvContentReplyTo.setText(replyToBean.getErrMsg());
             }
         }else {
             viewHolder.llReplyTo.setVisibility(View.GONE);

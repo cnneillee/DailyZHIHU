@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.ThemeStoryList;
+import com.neil.dailyzhihu.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -20,11 +20,11 @@ import butterknife.ButterKnife;
 /**
  * Created by Neil on 2016/3/23.
  */
-public class EditorListAdapter extends BaseAdapter {
+public class TopicEditorListAdapter extends BaseAdapter {
     private Context mContext;
-    private List<ThemeStoryList.EditorsBean> mDatas;
+    private List<TopicStoryListBean.EditorsBean> mDatas;
 
-    public EditorListAdapter(Context mContext, List<ThemeStoryList.EditorsBean> mDatas) {
+    public TopicEditorListAdapter(Context mContext, List<TopicStoryListBean.EditorsBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -64,7 +64,7 @@ public class EditorListAdapter extends BaseAdapter {
 //            @Override
 //            public void onClick(View v) {
 //                int themeId = mDatas.get(position).getSectionId();
-//                Intent intent = new Intent(mContext, CertainThemeActivity.class);
+//                Intent intent = new Intent(mContext, CertainTopicActivity.class);
 //                intent.getIntExtra("THEME_ID", themeId);
 //                mContext.startActivity(intent);
 //            }

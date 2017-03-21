@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.CommentPagerAdapter;
+import com.neil.dailyzhihu.adapter.CommentTypesPagerAdapter;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
@@ -24,7 +24,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
     Toolbar mToolbar;
     @Bind(R.id.view_pager_comments)
     ViewPager mViewPagerComments;
-    private CommentPagerAdapter mViewPagerAdapter;
+    private CommentTypesPagerAdapter mViewPagerAdapter;
 
     private int mStoryId;
     private Activity mContext = CertainStoryCommentActivity.this;
@@ -51,7 +51,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
     private void initViewPager() {
 
-        mViewPagerAdapter = new CommentPagerAdapter(mContext, mStoryId + "");
+        mViewPagerAdapter = new CommentTypesPagerAdapter(mContext, mStoryId + "");
         mViewPagerComments.setAdapter(mViewPagerAdapter);
 
         mViewPagerComments.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -62,7 +62,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
             @Override
             public void onPageSelected(final int position) {
-                mToolbar.setSubtitle(position == 0 ? CommentPagerAdapter.CommentType.LONG.cn : CommentPagerAdapter.CommentType.SHORT.cn);
+                mToolbar.setSubtitle(position == 0 ? CommentTypesPagerAdapter.CommentType.LONG.cn : CommentTypesPagerAdapter.CommentType.SHORT.cn);
             }
 
             @Override

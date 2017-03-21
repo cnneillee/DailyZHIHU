@@ -17,12 +17,11 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.neil.dailyzhihu.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.bean.orignallayer.RecentBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.HotStoryListAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.HotStory;
+import com.neil.dailyzhihu.bean.orignal.HotStoryListBean;
 import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -77,8 +76,8 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
             public void onSuccess(String content, String url) {
                 Logger.json(content);
                 mSrlRefresh.setRefreshing(false);
-                HotStory hotStories = GsonDecoder.getDecoder().decoding(content, HotStory.class);
-                HotStoryListAdapter adapter = new HotStoryListAdapter(mContext,hotStories);
+                HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
+                HotStoryListBaseAdapter adapter = new HotStoryListBaseAdapter(mContext,hotStories);
                 lvHot.setAdapter(adapter);
             }
         });
@@ -118,9 +117,10 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RecentBean bean = (RecentBean) parent.getAdapter().getItem(position);
+        HotStoryListBean.HotStory bean = (HotStoryListBean.HotStory) parent.getAdapter().getItem(position);
         Intent intent = new Intent(mContext, CertainStoryActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, bean.getStoryId());
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, bean.getThumbnail());
         startActivity(intent);
     }
 

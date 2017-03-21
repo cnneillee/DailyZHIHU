@@ -25,7 +25,7 @@ import com.neil.dailyzhihu.adapter.MainPageFragmentPagerAdapter;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
-import com.neil.dailyzhihu.ui.theme.NavThemesActivity;
+import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.ui.setting.SettingActivity;
 import com.neil.dailyzhihu.utils.Settings;
 
@@ -121,7 +121,7 @@ public class MainActivity extends NightModeBaseActivity
                 break;
             case R.id.nav_topics:
                 Log.i(LOG_TAG, "主题item被点击");
-                intent = new Intent(this, NavThemesActivity.class);
+                intent = new Intent(this, NavTopicsActivity.class);
                 break;
             case R.id.nav_columns:
                 Log.i(LOG_TAG, "模块item被点击");

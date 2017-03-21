@@ -14,7 +14,7 @@ import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.StartImg;
+import com.neil.dailyzhihu.bean.orignal.StartImgBean;
 import com.neil.dailyzhihu.ui.main.MainActivity;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -41,9 +41,9 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String content, String url) {
                 Gson gson = new Gson();
-                StartImg startImg = gson.fromJson(content, StartImg.class);
-                String imgUrl = startImg.getImg();
-                String imgSign = startImg.getText();
+                StartImgBean startImgBean = gson.fromJson(content, StartImgBean.class);
+                String imgUrl = startImgBean.getImg();
+                String imgSign = startImgBean.getText();
                 loadImg(imgUrl, imgSign);
             }
         });

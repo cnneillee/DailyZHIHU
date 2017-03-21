@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.BeforeStoryListBean;
+import com.neil.dailyzhihu.bean.orignal.PastStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -22,13 +22,13 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class PastStoryListAdapter extends BaseAdapter {
+public class PastStoryListBaseAdapter extends BaseAdapter {
 
-    private List<BeforeStoryListBean.StoriesBean> mPastStoryList;
+    private List<PastStoryListBean.PastStory> mPastStoryList;
     private Context mContext;
 
-    public PastStoryListAdapter(Context context, BeforeStoryListBean beforeStoryListBean) {
-        if (beforeStoryListBean != null) this.mPastStoryList = beforeStoryListBean.getStories();
+    public PastStoryListBaseAdapter(Context context, PastStoryListBean pastStoryListBean) {
+        if (pastStoryListBean != null) this.mPastStoryList = pastStoryListBean.getStories();
         this.mContext = context;
     }
 
@@ -58,9 +58,9 @@ public class PastStoryListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        BeforeStoryListBean.StoriesBean pastStory = mPastStoryList.get(position);
+        PastStoryListBean.PastStory pastStory = mPastStoryList.get(position);
         viewHolder.tvTitle.setText(pastStory.getTitle());
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, pastStory.getImages().get(0), null);
+        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, pastStory.getImage(), null);
 
         return convertView;
     }

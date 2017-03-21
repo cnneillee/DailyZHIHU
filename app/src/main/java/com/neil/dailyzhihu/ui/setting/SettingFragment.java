@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.utils.Settings;
 
 /**
  * 作者：Neil on 2017/3/5 20:48.
@@ -58,9 +59,9 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mClearCache.setOnPreferenceClickListener(this);
 
         // init preference state
-        mDayNightMode.setChecked(mContext.isNightMode());
-        mExitWithEnsuring.setChecked(mContext.isExitConfirm());
-        mNoImageMode.setChecked(mContext.isNoPicMode());
+        mDayNightMode.setChecked(Settings.isNightMode);
+        mExitWithEnsuring.setChecked(Settings.isExitConfirm);
+        mNoImageMode.setChecked(Settings.noPicMode);
     }
 
     @Override

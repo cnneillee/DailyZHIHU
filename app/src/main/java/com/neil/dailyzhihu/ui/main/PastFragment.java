@@ -28,8 +28,8 @@ import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.PastStoryListAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.BeforeStoryListBean;
+import com.neil.dailyzhihu.adapter.PastStoryListBaseAdapter;
+import com.neil.dailyzhihu.bean.orignal.PastStoryListBean;
 import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.date.DateInNumbers;
@@ -129,8 +129,8 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                     @Override
                     public void onSuccess(String content, String url) {
                         Logger.json(content);
-                        BeforeStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
-                        PastStoryListAdapter adapter = new PastStoryListAdapter(mContext, beforeStory);
+                        PastStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, PastStoryListBean.class);
+                        PastStoryListBaseAdapter adapter = new PastStoryListBaseAdapter(mContext, beforeStory);
                         mLvBefore.setAdapter(adapter);
                         updateDateDisplay();
                     }
@@ -140,9 +140,10 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        BeforeStoryListBean.StoriesBean storiesBean = (BeforeStoryListBean.StoriesBean) parent.getAdapter().getItem(position);
+        PastStoryListBean.PastStory pastStory = (PastStoryListBean.PastStory) parent.getAdapter().getItem(position);
         Intent intent = new Intent(mContext, CertainStoryActivity.class);
-        intent.putExtra(AtyExtraKeyConstant.STORY_ID, storiesBean.getStoryId());
+        intent.putExtra(AtyExtraKeyConstant.STORY_ID, pastStory.getStoryId());
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, pastStory.getImage());
         mContext.startActivity(intent);
     }
 

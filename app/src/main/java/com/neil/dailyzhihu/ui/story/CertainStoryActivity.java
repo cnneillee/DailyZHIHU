@@ -28,7 +28,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
+import com.neil.dailyzhihu.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
@@ -71,10 +71,8 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
     private Activity mContext = CertainStoryActivity.this;
 
     private int mStoryId;
-    private StoryContent mStoryContent;
     private String mStoryTitle;
-    private String mStoryImageUrl;
-    private String mStoryHtmlContent;
+    private String mDefaultImg;
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
@@ -84,33 +82,32 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
         @Override
         public void onSuccess(String content, String url) {
             // TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。type=0正常，type特殊情况
-            mStoryContent = GsonDecoder.getDecoder().decoding(content, StoryContent.class);
-            mStoryTitle = mStoryContent.getTitle();
-            mStoryImageUrl = mStoryContent.getImage();
+            CertainStoryBean certainStoryBean = GsonDecoder.getDecoder().decoding(content, CertainStoryBean.class);
+            mStoryTitle = certainStoryBean.getTitle();
             Bitmap bm = ImageExternalDirectoryUtil.getBitmap(mContext, mStoryId);
             if (bm == null) {
                 ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-                loader.displayImage(mImageView, mStoryContent.getImage(), null, null);
+                String imgUrl = certainStoryBean.getImage() == null ? mDefaultImg : certainStoryBean.getImage();
+                loader.displayImage(mImageView, imgUrl, null, null);
             } else {
                 mImageView.setImageBitmap(bm);
                 Log.e(LOG_TAG, "BITMAP LOADED FROM SD CARD");
             }
 
-            String storyTitle = mStoryContent.getTitle();
+            String storyTitle = certainStoryBean.getTitle();
             setActionBarText(storyTitle);
             mTitleView.setText(storyTitle);
 
 //            List<String> jsArr = mStoryContent.getJs();
             String cssContent = "";
-            if (mStoryContent.getCss() != null && mStoryContent.getCss().size() > 0) {// 构建CSS
+            if (certainStoryBean.getCss() != null && certainStoryBean.getCss().size() > 0) {// 构建CSS
 //                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
                 cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
                         "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
-                        "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + mStoryContent.getCss().get(0) + "\">\n"
+                        "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + certainStoryBean.getCss().get(0) + "\">\n"
                         + "<style>.headline{display:none;}</style>";
             }
-            String html = "<html><head>" + cssContent + "</head><body>" + mStoryContent.getBody() + " </body></html>";
-            mStoryHtmlContent = html;
+            String html = "<html><head>" + cssContent + "</head><body>" + certainStoryBean.getBody() + " </body></html>";
             mWebView.setHorizontalScrollBarEnabled(false);
             // style="width:100%;height:auto"
             WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
@@ -188,6 +185,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
     private void fillingLoadingValues() {
         if (getIntent().getExtras() == null) return;
         mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
+        mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         if (mStoryId <= 0) return;
         fillingContent();
     }

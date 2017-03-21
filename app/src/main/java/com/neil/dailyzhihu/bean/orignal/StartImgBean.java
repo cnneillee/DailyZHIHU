@@ -1,13 +1,15 @@
-package com.neil.dailyzhihu.bean.orignallayer;
+package com.neil.dailyzhihu.bean.orignal;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 14:59.
+ * 邮箱：cn.neillee@gmail.com
  */
-public class StartImg {
+public class StartImgBean {
     /**
      * text : © Fido Dido
      * img : http://p2.zhimg.com/10/7b/107bb4894b46d75a892da6fa80ef504a.jpg
      */
+
     private String text;
     private String img;
 

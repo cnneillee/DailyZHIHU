@@ -1,11 +1,10 @@
-package com.neil.dailyzhihu.bean.orignallayer;
-
-import com.neil.dailyzhihu.bean.orignallayer.OrignalStory;
+package com.neil.dailyzhihu.bean.orignal;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 14:17.
+ * 邮箱：cn.neillee@gmail.com
  */
-public class StoryExtra extends OrignalStory{
+public class StoryExtraInfoBean extends OriginalStory {
     /**
      * post_reasons : 0
      * long_comments : 14
@@ -14,6 +13,7 @@ public class StoryExtra extends OrignalStory{
      * comments : 95
      * short_comments : 81
      */
+
     private int post_reasons;
     private int long_comments;
     private int popularity;
@@ -25,7 +25,7 @@ public class StoryExtra extends OrignalStory{
         return post_reasons;
     }
 
-    public int getLong_comments() {
+    public int getLongComments() {
         return long_comments;
     }
 
@@ -33,7 +33,7 @@ public class StoryExtra extends OrignalStory{
         return popularity;
     }
 
-    public int getNormal_comments() {
+    public int getNormalComments() {
         return normal_comments;
     }
 
@@ -41,7 +41,7 @@ public class StoryExtra extends OrignalStory{
         return comments;
     }
 
-    public int getShort_comments() {
+    public int getShortComments() {
         return short_comments;
     }
 }

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.SectionStoryList;
+import com.neil.dailyzhihu.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -18,28 +18,29 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 作者：Neil on 2017/2/16 22:12.
+ * 作者：Neil on 2017/2/16 23:00.
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class SectionStoryListAdapter extends BaseAdapter {
+public class TopicStoryListAdapter extends BaseAdapter {
 
-    private List<SectionStoryList.StoriesBean> mSectionStoryList;
+    private List<TopicStoryListBean.TopicStory> mThemeStoryList;
     private Context mContext;
+    private String defaultImgUrl;
 
-    public SectionStoryListAdapter(Context context, SectionStoryList sectionStoryList) {
-        this.mSectionStoryList = sectionStoryList.getStories();
+    public TopicStoryListAdapter(Context context, TopicStoryListBean topicStoryListBean) {
+        this.mThemeStoryList = topicStoryListBean.getStories();
         this.mContext = context;
     }
 
     @Override
     public int getCount() {
-        return mSectionStoryList != null ? mSectionStoryList.size() : 0;
+        return mThemeStoryList != null ? mThemeStoryList.size() : 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return mSectionStoryList.get(position);
+        return mThemeStoryList.get(position);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class SectionStoryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (mSectionStoryList == null) return null;
+        if (mThemeStoryList == null) return null;
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_story_universal, parent, false);
@@ -58,11 +59,16 @@ public class SectionStoryListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        SectionStoryList.StoriesBean sectionStory = mSectionStoryList.get(position);
-        viewHolder.tvTitle.setText(sectionStory.getTitle());
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, sectionStory.getImages().get(0), null);
+        TopicStoryListBean.TopicStory themeStory = mThemeStoryList.get(position);
+        viewHolder.tvTitle.setText(themeStory.getTitle());
+        String imgUrl = (themeStory.getImage() == null) ? defaultImgUrl : themeStory.getImage();
+        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
 
         return convertView;
+    }
+
+    public void setDefaultImgUrl(String defaultImgUrl) {
+        this.defaultImgUrl = defaultImgUrl;
     }
 
     class ViewHolder {

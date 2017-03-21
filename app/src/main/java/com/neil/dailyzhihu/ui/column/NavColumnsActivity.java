@@ -11,11 +11,11 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.neil.dailyzhihu.adapter.ColumnGridBaseAdapter;
 import com.neil.dailyzhihu.api.API;
+import com.neil.dailyzhihu.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.SectionGridAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.SectionList;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class NavColumnsActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener, View.OnClickListener {
 
-    private static final String LOG_TAG = CertainColumnActivity.class.getSimpleName();
+    private static final String LOG_TAG = NavColumnsActivity.class.getSimpleName();
 
     @Bind(R.id.gv_sections)
     ObservableGridView gvSections;
@@ -43,7 +43,7 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    private List<SectionList.DataBean> mDatas;
+    private List<ColumnListBean.ColumnBean> mDatas;
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -74,9 +74,9 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
                     @Override
                     public void onSuccess(String content, String url) {
                         Logger.json(content);
-                        SectionList sectionList = GsonDecoder.getDecoder().decoding(content, SectionList.class);
-                        mDatas = sectionList.getData();
-                        SectionGridAdapter adapter = new SectionGridAdapter(NavColumnsActivity.this, sectionList);
+                        ColumnListBean columnListBean = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
+                        mDatas = columnListBean.getData();
+                        ColumnGridBaseAdapter adapter = new ColumnGridBaseAdapter(NavColumnsActivity.this, columnListBean);
                         gvSections.setAdapter(adapter);
                     }
                 });
@@ -115,12 +115,14 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        SectionList.DataBean bean = mDatas.get((int) id);
+        ColumnListBean.ColumnBean bean = mDatas.get((int) id);
         int sectionId = bean.getStoryId();
         String sectionName = bean.getTitle();
+        String sectionImg = bean.getImages() == null ? null : bean.getImages().get(0);
         Intent intent = new Intent(this, CertainColumnActivity.class);
         intent.putExtra(AtyExtraKeyConstant.SECTION_ID, sectionId);
         intent.putExtra(AtyExtraKeyConstant.SECTION_NAME, sectionName);
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, sectionImg);
         startActivity(intent);
     }
 

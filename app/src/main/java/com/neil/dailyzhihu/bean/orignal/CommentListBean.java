@@ -1,12 +1,13 @@
-package com.neil.dailyzhihu.bean.orignallayer;
+package com.neil.dailyzhihu.bean.orignal;
 
 
 import java.util.List;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 14:11.
+ * 邮箱：cn.neillee@gmail.com
  */
-public class LongComment extends OrignalStory{
+public class CommentListBean extends OriginalStory {
     /**
      * author : 思霖Candy
      * content : 估计是我喜欢清淡吧，舌头很敏感，一直觉得飞机餐挺好吃的。感觉到的问题，一个是味道不纯粹，可能饭菜一起加热的缘故，然后味觉下降应该是感觉的到的，以前不知道，还以为是环境影响的～
@@ -95,11 +96,11 @@ public class LongComment extends OrignalStory{
             this.likes = likes;
         }
 
-        public ReplyToBean getReply_to() {
+        public ReplyToBean getReplyTo() {
             return reply_to;
         }
 
-        public void setReply_to(ReplyToBean reply_to) {
+        public void setReplyTo(ReplyToBean reply_to) {
             this.reply_to = reply_to;
         }
 
@@ -149,11 +150,11 @@ public class LongComment extends OrignalStory{
                 this.author = author;
             }
 
-            public String getErr_msg() {
+            public String getErrMsg() {
                 return err_msg;
             }
 
-            public void setErr_msg(String err_msg) {
+            public void setErrMsg(String err_msg) {
                 this.err_msg = err_msg;
             }
         }

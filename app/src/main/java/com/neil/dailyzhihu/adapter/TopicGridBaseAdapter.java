@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.SectionList;
+import com.neil.dailyzhihu.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -22,18 +22,18 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class SectionGridAdapter extends BaseAdapter {
+public class TopicGridBaseAdapter extends BaseAdapter {
     private Context mContext;
-    private List<SectionList.DataBean> mDatas;
+    private List<TopicListBean.TopicBean> mDatas;
 
-    public SectionGridAdapter(Context context, SectionList sectionList) {
+    public TopicGridBaseAdapter(Context context, TopicListBean topicListBean) {
+        if (topicListBean != null) this.mDatas = topicListBean.getOthers();
         this.mContext = context;
-        this.mDatas = sectionList.getData();
     }
 
     @Override
     public int getCount() {
-        return mDatas != null ? mDatas.size():0;
+        return mDatas != null ? mDatas.size() : 0;
     }
 
     @Override

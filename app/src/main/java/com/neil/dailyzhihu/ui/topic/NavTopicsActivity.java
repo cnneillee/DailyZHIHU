@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.ui.theme;
+package com.neil.dailyzhihu.ui.topic;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -9,11 +9,11 @@ import android.widget.AdapterView;
 import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.neil.dailyzhihu.adapter.TopicGridBaseAdapter;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.ThemeGridAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.ThemeList;
+import com.neil.dailyzhihu.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -33,17 +33,17 @@ import butterknife.ButterKnife;
 /**
  * 主题日报窗口
  */
-public class NavThemesActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
+public class NavTopicsActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
     @Bind(R.id.gv_themes)
     ObservableGridView gvThemes;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    private List<ThemeList.OthersBean> mDatas;
+    private List<TopicListBean.TopicBean> mDatas;
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            NavThemesActivity.this.finish();
+            NavTopicsActivity.this.finish();
         }
     };
 
@@ -64,8 +64,8 @@ public class NavThemesActivity extends NightModeBaseActivity implements AdapterV
                     @Override
                     public void onSuccess(String content, String url) {
                         Logger.json(content);
-                        ThemeList themes = GsonDecoder.getDecoder().decoding(content, ThemeList.class);
-                        ThemeGridAdapter adapter = new ThemeGridAdapter(NavThemesActivity.this, themes);
+                        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
+                        TopicGridBaseAdapter adapter = new TopicGridBaseAdapter(NavTopicsActivity.this, themes);
                         mDatas = themes.getOthers();
                         gvThemes.setAdapter(adapter);
                     }
@@ -88,9 +88,9 @@ public class NavThemesActivity extends NightModeBaseActivity implements AdapterV
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ThemeList.OthersBean bean = mDatas.get(position);
+        TopicListBean.TopicBean bean = mDatas.get(position);
         int sectionId = bean.getStoryId();
-        Intent intent = new Intent(this, CertainThemeActivity.class);
+        Intent intent = new Intent(this, CertainTopicActivity.class);
         intent.putExtra(AtyExtraKeyConstant.THEME_ID, sectionId);
         startActivity(intent);
     }

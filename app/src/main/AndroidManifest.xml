@@ -43,7 +43,7 @@
 
         <!--所有主题窗口注册-->
         <activity
-            android:name=".ui.theme.NavThemesActivity"
+            android:name=".ui.topic.NavTopicsActivity"
             android:label="@string/activity_topics"
             android:theme="@style/AppNightTheme">
         </activity>
@@ -57,7 +57,7 @@
 
         <!--某一主题窗口注册-->
         <activity
-            android:name=".ui.theme.CertainThemeActivity"
+            android:name=".ui.topic.CertainTopicActivity"
             android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
