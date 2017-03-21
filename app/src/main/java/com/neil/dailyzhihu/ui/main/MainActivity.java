@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.MainPageFragmentPagerAdapter;
+import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
@@ -87,6 +88,7 @@ public class MainActivity extends NightModeBaseActivity
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mNavView.setNavigationItemSelectedListener(this);
+        mNavView.setCheckedItem(R.id.nav_mainpage);
 
         LinearLayout header = (LinearLayout) navigationView.getHeaderView(0);
         ImageView avatar = (ImageView) header.findViewById(R.id.iv_avatar);
@@ -103,7 +105,6 @@ public class MainActivity extends NightModeBaseActivity
             // 抽屉顶部的点击事件
             case R.id.iv_avatar:
             case R.id.tv_name:
-
             case R.id.tv_email:
                 Snackbar.make(mDrawerLayout, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
                 break;
@@ -142,7 +143,7 @@ public class MainActivity extends NightModeBaseActivity
                 intent = new Intent(this, AboutActivity.class);
                 break;
         }
-        if (intent != null) startActivity(intent);
+        if (intent != null) startActivityForResult(intent, AtyExtraKeyConstant.EXIT_NORMALLY);
         return true;
     }
 
@@ -182,8 +183,15 @@ public class MainActivity extends NightModeBaseActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, AtyExtraKeyConstant.EXIT_NORMALLY);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AtyExtraKeyConstant.EXIT_NORMALLY){
+            mNavView.setCheckedItem(R.id.nav_mainpage);
+        }
     }
 }
