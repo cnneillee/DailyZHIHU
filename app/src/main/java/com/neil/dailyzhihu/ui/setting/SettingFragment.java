@@ -8,12 +8,11 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.Settings;
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 
 /**
  * 作者：Neil on 2017/3/5 20:48.
@@ -68,7 +67,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     public boolean onPreferenceClick(Preference preference) {
         View view = getView();
         if (mSwitchTheme == preference) {
-            Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
         } else if (mDayNightMode == preference) {
             mContext.callChangeNightMode();
         } else if (mExitWithEnsuring == preference) {
@@ -76,7 +75,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         } else if (mNoImageMode == preference) {
             mContext.callChangeNoPicMode();
         } else if (mClearCache == preference) {
-            Snackbar.make(view, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
         }
         return false;
     }

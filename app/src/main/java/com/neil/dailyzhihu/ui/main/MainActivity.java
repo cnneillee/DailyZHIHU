@@ -2,7 +2,6 @@ package com.neil.dailyzhihu.ui.main;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -29,6 +28,7 @@ import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
 import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.ui.setting.SettingActivity;
 import com.neil.dailyzhihu.utils.Settings;
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +106,7 @@ public class MainActivity extends NightModeBaseActivity
             case R.id.iv_avatar:
             case R.id.tv_name:
             case R.id.tv_email:
-                Snackbar.make(mDrawerLayout, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+                SnackbarUtil.ShortSnackbar(mDrawerLayout, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
         }
     }
@@ -129,7 +129,7 @@ public class MainActivity extends NightModeBaseActivity
                 intent = new Intent(this, NavColumnsActivity.class);
                 break;
             case R.id.nav_collection:
-                Snackbar.make(mContentMain, getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+                SnackbarUtil.ShortSnackbar(mContentMain, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.nav_setting:
                 intent = new Intent(this, SettingActivity.class);
@@ -160,7 +160,7 @@ public class MainActivity extends NightModeBaseActivity
         if (Settings.isExitConfirm) {
             if (System.currentTimeMillis() - lastPressTime > Constant.EXIT_CONFIRM_TIME) {
                 lastPressTime = System.currentTimeMillis();
-                Snackbar.make(getCurrentFocus(), R.string.notify_exit_confirm, Snackbar.LENGTH_SHORT).show();
+                SnackbarUtil.ShortSnackbar(getCurrentFocus(), getResources().getString(R.string.notify_exit_confirm), SnackbarUtil.Warning).show();
                 return false;
             }
         }

@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +35,7 @@ import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
 import com.neil.dailyzhihu.utils.storage.ImageExternalDirectoryUtil;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
@@ -228,7 +228,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
         switch (item.getItemId()) {
             case R.id.menu_item_action_text_size:
                 //TODO 设置字体大小
-                Snackbar.make(mRootView, mContext.getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+                SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.menu_item_action_comment:
                 Intent intent = new Intent(mContext, CertainStoryCommentActivity.class);
@@ -237,7 +237,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
                 break;
             case R.id.menu_item_action_star:
                 //TODO 收藏
-                Snackbar.make(mRootView, mContext.getResources().getString(R.string.to_do), Snackbar.LENGTH_SHORT).show();
+                SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.menu_item_action_qrcode:
                 // 生成二维码
@@ -258,7 +258,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
                     public boolean onLongClick(View v) {
                         String path = StorageOperatingHelper.savingBitmap2SD(mContext, bm, shareUrl);
                         if (!TextUtils.isEmpty(path))
-                            Snackbar.make(mRootView, "保存成功" + path, Snackbar.LENGTH_SHORT).show();
+                            SnackbarUtil.ShortSnackbar(mRootView, "保存成功" + path, SnackbarUtil.Info).show();
                         return true;
                     }
                 });

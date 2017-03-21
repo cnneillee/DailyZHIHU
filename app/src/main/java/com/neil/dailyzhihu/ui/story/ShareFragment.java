@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.share.PlatformInfoUtils;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.listener.BitmapLoadCallback;
@@ -74,17 +75,17 @@ public class ShareFragment extends Fragment {
 
         @Override
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-            Snackbar.make(mRootView, platform.getName() + "分享成功", Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(mRootView, platform.getName() + "分享成功", SnackbarUtil.Info).show();
         }
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
-            Snackbar.make(mRootView, platform.getName() + "分享失败", Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(mRootView, platform.getName() + "分享失败", SnackbarUtil.Alert).show();
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
-            Snackbar.make(mRootView, platform.getName() + "分享被取消", Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(mRootView, platform.getName() + "分享被取消", SnackbarUtil.Info).show();
         }
     };
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
