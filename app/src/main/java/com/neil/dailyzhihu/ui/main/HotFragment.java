@@ -22,7 +22,7 @@ import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignal.HotStoryListBean;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
@@ -118,7 +118,7 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         HotStoryListBean.HotStory bean = (HotStoryListBean.HotStory) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(mContext, CertainStoryActivity.class);
+        Intent intent = new Intent(mContext, StoryDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, bean.getStoryId());
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, bean.getThumbnail());
         startActivity(intent);

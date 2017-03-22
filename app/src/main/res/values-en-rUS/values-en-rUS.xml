@@ -11,74 +11,67 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
 
     <!--Menu-->
     <!--MainActivity-->
-    <string name="action_settings">设置</string>
-    <string name="action_text_qrcode">二维码</string>
+    <string name="action_settings">Setting</string>
+    <string name="action_text_qrcode">QR Code</string>
     <!--关于界面-->
-    <string name="current_version_info">当前版本：1.1.0</string>
-    <string name="feature_intro">功能介绍</string>
-    <string name="update">检查更新</string>
-    <string name="feedback">意见反馈</string>
-    <string name="opensrc_intro">开源许可</string>
-    <string name="author_intro">作者介绍</string>
-    <string name="copyright_info">Copyright © 2015–2016 Neil Lee\nAll Rights Reserved</string>
+    <string name="copyright_info">Copyright © 2015-2016 Neil Lee\nAll Rights Reserved</string>
 
     <!--主界面-->
-    <string name="tab_latest">最新</string>
-    <string name="tab_hot">最热</string>
-    <string name="tab_past">过往</string>
+    <string name="tab_latest">LATEST</string>
+    <string name="tab_hot">HOT</string>
+    <string name="tab_past">PAST</string>
 
     <!--抽屉菜单栏-->
-    <string name="nav_mainpage">主页</string>
-    <string name="nav_topics">主题日报</string>
-    <string name="nav_columns">栏目纵览</string>
-    <string name="nav_collection">收藏</string>
+    <string name="nav_mainpage">Home</string>
+    <string name="nav_topics">Topics</string>
+    <string name="nav_columns">Columns</string>
+    <string name="nav_collection">Collections</string>
     <string name="daily_zhihu">Daily Zhihu</string>
-    <string name="nav_night">夜间模式</string>
-    <string name="nav_setting">设置</string>
-    <string name="nav_about">关于</string>
+    <string name="nav_night">Night Mode</string>
+    <string name="nav_setting">Settings</string>
+    <string name="nav_about">About</string>
 
     <!--activity名-->
-    <string name="activity_topics">主题日报</string>
-    <string name="activity_columns">栏目纵览</string>
-    <string name="activity_about">关于</string>
-    <string name="activity_setting">设置</string>
-    <string name="activity_comment">评论</string>
+    <string name="activity_topics">Topics</string>
+    <string name="activity_columns">Columns</string>
+    <string name="activity_about">About</string>
+    <string name="activity_setting">Settings</string>
+    <string name="activity_comment">Comments</string>
 
-    <string name="extras">热度：-，评论：-L + -S</string>
-    <string name="action_text_size">字体大小</string>
-    <string name="share">分享</string>
-    <string name="action_text_star">收藏</string>
-    <string name="action_text_comment">评论</string>
+    <string name="action_text_size">Text Size</string>
+    <string name="share">Share</string>
+    <string name="action_text_star">Collect</string>
+    <string name="action_text_comment">Comment</string>
 
     <!--其他-->
-    <string name="to_do">此功能待开发</string>
+    <string name="to_do">Being developed</string>
 
     <!--通知信息-->
-    <string name="notify_info_copied">信息已添加至剪切板,你可以将其粘贴到编辑区域</string>
-    <string name="notify_exit_confirm">再按一次退出</string>
+    <string name="notify_info_copied">Info has been copied, you can paste!</string>
+    <string name="notify_exit_confirm">Again to Exit</string>
 
 
     <!--about preference-->
-    <string name="intro_title">应用简介</string>
-    <string name="intro_summary">一款基于知乎日报内容的第三方应用</string>
-    <string name="checkupdate_title">检查更新</string>
-    <string name="checkupdate_summary">当前版本 1.0.0</string>
-    <string name="versioninfo_title">版本信息</string>
-    <string name="shareapp_title">分享应用</string>
-    <string name="shareapp_sumary">好的东西值得被分享</string>
-    <string name="shareapp_content">DailyZHIHU，一款基于知乎日报内容的第三方应用\\n下载地址：https://github.com/neilleecn/DailyZHIHU</string>
-    <string name="author">作者</string>
-    <string name="blog_title">博客</string>
+    <string name="intro_title">App Intro</string>
+    <string name="intro_summary">A third party app based on the content of ZhihuDaily.</string>
+    <string name="checkupdate_title">Check for Update</string>
+    <string name="checkupdate_summary">Version 1.0.0</string>
+    <string name="versioninfo_title">Version Info</string>
+    <string name="shareapp_title">Share App</string>
+    <string name="shareapp_sumary">Good app worth to spreading.</string>
+    <string name="shareapp_content">DailyZHIHU, A third party app based on the content of ZhihuDaily.\\nDownload URL：https://github.com/neilleecn/DailyZHIHU</string>
+    <string name="author">Author</string>
+    <string name="blog_title">Blog</string>
     <string name="blog_summary">http://cnneillee.github.io/</string>
     <string name="github_address_title">Author\'s Github</string>
     <string name="github_address">https://github.com/cnneillee</string>
     <string name="email">E-Mail</string>
     <string name="email_address">cn.neillee@github.com</string>
-    <string name="data_title">内容</string>
-    <string name="data_summary">此应用内容来自第三方接口，版权归原作者所有</string>
-    <string name="attention_title">注意</string>
-    <string name="attention_content">此应用及相关产物禁止用于商业目的</string>
-    <string name="opensource_title">开源许可</string>
+    <string name="data_title">Content</string>
+    <string name="data_summary">Contents of this app is from third-party interface, copyrights reserved by the original author.</string>
+    <string name="attention_title">Attention</string>
+    <string name="attention_content">This app and its assets are not allowed for business purpose.</string>
+    <string name="opensource_title">Opensource Permits</string>
     <string name="license_title">License</string>
     <string name="MIT_license">Copyright © 2017 Neil Lee\n
         \nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

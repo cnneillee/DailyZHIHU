@@ -50,7 +50,7 @@ public class TopicGridBaseAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gv_universal_block, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gv_block, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {

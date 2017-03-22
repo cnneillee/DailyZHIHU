@@ -15,7 +15,7 @@ import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.TopicEditorListAdapter;
 import com.neil.dailyzhihu.bean.orignal.TopicStoryListBean;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.Formater;
@@ -58,7 +58,7 @@ public class CertainTopicActivity extends BaseActivity implements
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_theme);
+        setContentView(R.layout.activity_topic_detail);
         ButterKnife.bind(this);
 
         // 对ActionBar进行设置
@@ -136,7 +136,7 @@ public class CertainTopicActivity extends BaseActivity implements
         TopicStoryListBean.TopicStory bean = (TopicStoryListBean.TopicStory) parent.getAdapter().getItem(position);
         int storyId = bean.getStoryId();
         defaultImgUrl = (bean.getImage() == null) ? defaultImgUrl : bean.getImage();
-        Intent intent = new Intent(this, CertainStoryActivity.class);
+        Intent intent = new Intent(this, StoryDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, storyId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, defaultImgUrl);
         startActivity(intent);

@@ -47,7 +47,7 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CertainStoryActivity extends BaseActivity implements ObservableScrollViewCallbacks {
+public class StoryDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks {
     @Bind(R.id.image)
     ImageView mImageView;
     @Bind(R.id.overlay)
@@ -71,7 +71,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
     private int mFabMargin;
     private boolean mFabIsShown;
 
-    private Activity mContext = CertainStoryActivity.this;
+    private Activity mContext = StoryDetailActivity.this;
 
     private int mStoryId;
     private String mStoryTitle;
@@ -79,7 +79,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
-    private static final String LOG_TAG = CertainStoryActivity.class.getSimpleName();
+    private static final String LOG_TAG = StoryDetailActivity.class.getSimpleName();
 
     private OnContentLoadedListener mWebLoadListener = new OnContentLoadedListener() {
         @Override
@@ -142,7 +142,7 @@ public class CertainStoryActivity extends BaseActivity implements ObservableScro
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
 
-        setContentView(R.layout.activity_story);
+        setContentView(R.layout.activity_story_detail);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolBar);

@@ -35,7 +35,7 @@ import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignal.ColumnStoryListBean;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.Formater;
@@ -75,7 +75,7 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_section);
+        setContentView(R.layout.activity_column_detail);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbarView);
@@ -144,7 +144,7 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
         ColumnStoryListBean.ColumnStory bean = (ColumnStoryListBean.ColumnStory) parent.getAdapter().getItem(position);
         int storyId = bean.getStoryId();
         String imgUrl = (bean.getImage() == null) ? sectionImg : bean.getImage();
-        Intent intent = new Intent(CertainColumnActivity.this, CertainStoryActivity.class);
+        Intent intent = new Intent(CertainColumnActivity.this, StoryDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, storyId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, imgUrl);
         CertainColumnActivity.this.startActivity(intent);

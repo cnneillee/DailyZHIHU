@@ -30,7 +30,7 @@ import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.PastStoryListBaseAdapter;
 import com.neil.dailyzhihu.bean.orignal.PastStoryListBean;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.date.DateInNumbers;
 import com.neil.dailyzhihu.utils.date.DateUtil;
@@ -90,7 +90,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     private void initViews() {
-        View header = LayoutInflater.from(mContext).inflate(R.layout.fm_past_header, null);
+        View header = LayoutInflater.from(mContext).inflate(R.layout.fragment_past_header, null);
         Button btnPickDate = (Button) header.findViewById(R.id.btn_pickDate);
         mBtnLoadSetting = (Button) header.findViewById(R.id.btn_loadsetting);
         mMCV = (MaterialCalendarView) header.findViewById(R.id.material_calendarview);
@@ -141,7 +141,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         PastStoryListBean.PastStory pastStory = (PastStoryListBean.PastStory) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(mContext, CertainStoryActivity.class);
+        Intent intent = new Intent(mContext, StoryDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, pastStory.getStoryId());
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, pastStory.getImage());
         mContext.startActivity(intent);

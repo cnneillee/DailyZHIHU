@@ -135,7 +135,7 @@ public class ShareMenuPopupWindow extends PopupWindow {
                     if (storyText == null)
                         return;
                     Toast.makeText(mContext, "更多分享", Toast.LENGTH_SHORT).show();
-                    ShareHelper.orignalMsgShare(mContext, "CertainStoryActivity", storyText, storyText, null);
+                    ShareHelper.orignalMsgShare(mContext, "StoryDetailActivity", storyText, storyText, null);
                     ShareRecord shareRecord = new ShareRecord(mCertainStoryBean.getId(),
                             System.currentTimeMillis(), "UNKNOWN", "More-Link", "20160427");
                     Toast.makeText(mContext, "分享成功", Toast.LENGTH_SHORT).show();

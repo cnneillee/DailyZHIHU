@@ -31,14 +31,14 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
     private Preference mEmail;
     private Preference mOpensourceLicense;
 
-    private String APP_INTRO = "key_app_intro";
-    private String CHECK_UPDATE = "key_checkupdate";
-    private String VERSION_INFO = "key_versioninfo";
-    private String SHARE_APP = "key_shareapp";
-    private String BLOG = "key_blog";
-    private String GITHUB = "key_github";
-    private String EMAIL = "key_email";
-    private String OPENSOURCE_LICENSE = "key_opensource_license";
+    private static final String APP_INTRO = "key_app_intro";
+    private static final String CHECK_UPDATE = "key_checkupdate";
+    private static final String VERSION_INFO = "key_versioninfo";
+    private static final String SHARE_APP = "key_shareapp";
+    private static final String BLOG = "key_blog";
+    private static final String GITHUB = "key_github";
+    private static final String EMAIL = "key_email";
+    private static final String OPENSOURCE_LICENSE = "key_opensource_license";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +101,6 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         } else if (mOpensourceLicense == preference) {
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
         }
-        return false;
+        return true;
     }
 }

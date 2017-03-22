@@ -61,7 +61,7 @@ public class ShareImageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_share_iamge, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_share_image, container, false);
         ButterKnife.bind(this, mRootView);
         mWebView.loadData(mHtmlContent, "text/html; charset=UTF-8", null);
         mWebView.setWebViewClient(new WebViewClient() {

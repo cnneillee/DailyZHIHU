@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignal.LatestStoryListBean;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
@@ -31,7 +31,7 @@ public class LatestTopStoryPagerAdapter extends PagerAdapter {
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext, CertainStoryActivity.class);
+            Intent intent = new Intent(mContext, StoryDetailActivity.class);
             intent.putExtra(AtyExtraKeyConstant.STORY_ID, currentStoryId);
             intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, currentImg);
             mContext.startActivity(intent);

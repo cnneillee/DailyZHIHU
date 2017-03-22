@@ -95,4 +95,9 @@
         <item name="commentContentTextColor">#999EA0</item>
         <item name="commentExtraTextColor">#798F97</item>
     </style>
+
+    <style name="SplashTheme" parent="AppDayTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 </resources>

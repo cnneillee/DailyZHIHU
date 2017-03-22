@@ -24,7 +24,7 @@ import com.neil.dailyzhihu.bean.orignal.LatestStoryListBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestTopStoryPagerAdapter;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -148,7 +148,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LatestStoryListBean.LatestStory latestStory = (LatestStoryListBean.LatestStory) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(mContext, CertainStoryActivity.class);
+        Intent intent = new Intent(mContext, StoryDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, latestStory.getStoryId());
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, latestStory.getImage());
         mContext.startActivity(intent);

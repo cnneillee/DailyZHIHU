@@ -50,7 +50,7 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_themes);
+        setContentView(R.layout.activity_topics);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);

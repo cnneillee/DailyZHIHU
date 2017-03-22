@@ -38,7 +38,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_certain_story_comment);
+        setContentView(R.layout.activity_story_comment);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);

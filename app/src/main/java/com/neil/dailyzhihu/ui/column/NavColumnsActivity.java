@@ -53,7 +53,7 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_sections);
+        setContentView(R.layout.activity_columns);
         ButterKnife.bind(this);
 
         // 将ToolBar设置为ActionBar
