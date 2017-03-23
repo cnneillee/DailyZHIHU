@@ -15,6 +15,7 @@ public class Settings {
     public static boolean isNightMode = false;
     public static boolean isExitConfirm = true;
     public static boolean needRecreate = false;
+    public static boolean hasImgSplash = false;
 
     public static final String XML_NAME = "settings";
 
@@ -25,6 +26,8 @@ public class Settings {
     public static final String EXIT_CONFIRM = "exit_confirm";
 
     public static final String CLEAR_CACHE = "clear_cache";
+
+    public static final String HAS_IMG_SPLASH = "has_img_splash";
 
     private static Settings sInstance;
 

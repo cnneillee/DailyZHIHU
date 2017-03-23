@@ -23,7 +23,7 @@
 //import com.neil.dailyzhihu.Constant;
 //import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
 //import com.neil.dailyzhihu.R;
-//import com.neil.dailyzhihu.bean.orignallayer.SectionList;
+//import com.neil.dailyzhihu.bean.orignallayer.ColumnListBean;
 //import com.neil.dailyzhihu.bean.cleanlayer.CleanSectionAndThemeBean;
 //import com.neil.dailyzhihu.utils.GsonDecoder;
 //import com.neil.dailyzhihu.utils.load.LoaderFactory;
@@ -91,8 +91,8 @@
 //        LoaderFactory.getContentLoader().loadContent(Constant.SECTIONS, new OnContentLoadingFinishedListener() {
 //            @Override
 //            public void onFinish(String content) {
-//                SectionList sectionList = GsonDecoder.getDecoder().decoding(content, SectionList.class);
-//                List<SectionList.DataBean> mDatas = sectionList.getData();
+//                ColumnListBean sectionList = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
+//                List<ColumnListBean.ColumnBean> mDatas = sectionList.getData();
 //                mCleanSectionAndThemeBeanList = new ArrayList<>();
 //                for (int i = 0; i < mDatas.size(); i++) {
 //                    CleanSectionAndThemeBean cleanSectionAndThemeBean = CleanDataHelper.convertDataBean2CleanSectionBean(mDatas.get(i));

@@ -56,7 +56,7 @@
             android:summary="@string/MIT_license"
             android:title="@string/license_title"/>
         <PreferenceScreen
-            android:layout="@layout/copyright_bar">
+            android:layout="@layout/bar_copyright">
         </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

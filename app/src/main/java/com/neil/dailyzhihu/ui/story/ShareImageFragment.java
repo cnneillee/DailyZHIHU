@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +18,7 @@ import android.webkit.WebViewClient;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.listener.BitmapLoadCallback;
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,14 +46,14 @@ public class ShareImageFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_share_image,menu);
+        inflater.inflate(R.menu.fragment_share_image, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_item_action_change_color:
-                Snackbar.make(mRootView,"此功能待开发",Snackbar.LENGTH_SHORT).show();
+                SnackbarUtil.ShortSnackbar(mRootView, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -61,10 +61,10 @@ public class ShareImageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_share_iamge, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_share_image, container, false);
         ButterKnife.bind(this, mRootView);
         mWebView.loadData(mHtmlContent, "text/html; charset=UTF-8", null);
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -91,15 +91,17 @@ public class ShareImageFragment extends Fragment {
     public void setHtmlContent(String htmlContent) {
         mHtmlContent = htmlContent;
     }
+
     /**
      * 截取webView快照(webView加载的整个内容的大小)
+     *
      * @param webView
      * @return
      */
-    private Bitmap captureWebView(WebView webView){
+    private Bitmap captureWebView(WebView webView) {
         Picture snapShot = webView.capturePicture();
 
-        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(),snapShot.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bmp = Bitmap.createBitmap(snapShot.getWidth(), snapShot.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bmp);
         snapShot.draw(canvas);
         return bmp;

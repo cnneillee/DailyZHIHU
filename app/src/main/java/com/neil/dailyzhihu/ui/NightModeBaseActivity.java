@@ -60,20 +60,17 @@ public abstract class NightModeBaseActivity extends AppCompatActivity {
     }
 
     protected void changeExitConfirm() {
-        boolean isExitConfirm = !this.mSettings.getBoolean(Settings.EXIT_CONFIRM, true);
-        this.mSettings.putBoolean(Settings.EXIT_CONFIRM, isExitConfirm);
+        Settings.isExitConfirm = !Settings.isExitConfirm;
+        this.mSettings.putBoolean(Settings.EXIT_CONFIRM, Settings.isExitConfirm);
     }
 
     protected void changeNoPicMode() {
-        boolean isNoPicMode = !this.mSettings.getBoolean(Settings.NO_PIC_MODE, false);
-        this.mSettings.putBoolean(Settings.NO_PIC_MODE, isNoPicMode);
+        Settings.isExitConfirm = !Settings.isExitConfirm;
+        this.mSettings.putBoolean(Settings.NO_PIC_MODE, Settings.isExitConfirm);
     }
 
-    protected void changeNeedRecreated(){
+    protected void changeNeedRecreated() {
         Settings.needRecreate = true;
     }
 
-    public boolean isNoPicMode() {
-        return this.mSettings.getBoolean(Settings.NO_PIC_MODE, false);
-    }
 }

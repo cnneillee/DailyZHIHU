@@ -35,21 +35,17 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile files('libs/volley.jar')
     compile files('libs/universal-image-loader-1.9.5-javadoc.jar')
     compile files('libs/universal-image-loader-1.9.5-sources.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile project(':onekeyshare')
     compile files('libs/zxing.jar')
-    compile files('libs/jsoup-1.8.3.jar')
     compile 'in.srain.cube:ultra-ptr:1.0.11'
-    compile files('libs/retrofit-2.0.0-beta2.jar')
     compile 'com.prolificinteractive:material-calendarview:1.2.0'
     compile 'com.squareup:android-times-square:1.6.5@aar'
     compile 'com.orhanobut:logger:1.15'
     compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
-
     }
 }

@@ -18,7 +18,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
+import com.neil.dailyzhihu.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.utils.storage.StorageOperatingHelper;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
 
@@ -37,7 +37,7 @@ public class StoryFabMenuPopupWindow extends PopupWindow {
     private static final String MENU_STRING = "string";
 
     private Context mContext;
-    private StoryContent mStoryContent;
+    private CertainStoryBean mCertainStoryBean;
     private FrameLayout mMainLayout;
 
 //    private static final String LOG_TAG = StoryFabMenuPopupWindow.class.getSimpleName();
@@ -67,9 +67,9 @@ public class StoryFabMenuPopupWindow extends PopupWindow {
         }
     };
 
-    public StoryFabMenuPopupWindow(Context context, StoryContent story, FrameLayout mainLayout) {
+    public StoryFabMenuPopupWindow(Context context, CertainStoryBean story, FrameLayout mainLayout) {
         this.mContext = context;
-        this.mStoryContent = story;
+        this.mCertainStoryBean = story;
         this.mMainLayout = mainLayout;
 
         // Construct the PopupWindow view
@@ -120,22 +120,22 @@ public class StoryFabMenuPopupWindow extends PopupWindow {
 
     // 显示分享PopupWindow
     private void showSharePopupWindow() {
-        ShareMenuPopupWindow popupWindow = new ShareMenuPopupWindow(mContext, mStoryContent,mMainLayout);
+        ShareMenuPopupWindow popupWindow = new ShareMenuPopupWindow(mContext, mCertainStoryBean,mMainLayout);
         // 设置layout在PopupWindow中显示的位置
         popupWindow.showAtLocation(mMainLayout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         this.dismiss();
     }
 
     private void viewComment() {
-        if (mStoryContent == null) return;
-        CommentAlertDialog commentAlertDialog = new CommentAlertDialog(mContext, mStoryContent.getId() + "");
+        if (mCertainStoryBean == null) return;
+        CommentAlertDialog commentAlertDialog = new CommentAlertDialog(mContext, mCertainStoryBean.getId() + "");
         commentAlertDialog.show();
         this.dismiss();
     }
 
     // 生成二维码
     private void makingQRCode() {
-        final String shareUrl = mStoryContent.getShare_url();
+        final String shareUrl = mCertainStoryBean.getShareUrl();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_qr_display, null, false);
