@@ -99,6 +99,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
         mLvBefore.setOnItemClickListener(this);
         btnPickDate.setOnClickListener(this);
+        mTvDateDisplay.setOnClickListener(this);
         mBtnLoadSetting.setOnClickListener(this);
 
         // 初始化MaterialCalendarView
@@ -185,6 +186,9 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pickDate:
+                pickDate();
+                break;
+            case R.id.tv_dateDisplay:
                 pickDate();
                 break;
             case R.id.btn_loadsetting:

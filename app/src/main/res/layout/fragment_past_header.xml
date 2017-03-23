@@ -13,7 +13,8 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btn_pickDate"
@@ -43,7 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:padding="16dp"
         android:textColor="?attr/supportTitleColor"
+        android:textSize="18sp"
         tools:text="2016-02-06"/>
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView

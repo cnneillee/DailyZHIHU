@@ -5,10 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.BoolRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
@@ -17,22 +16,13 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.bean.orignal.StartImgBean;
 import com.neil.dailyzhihu.ui.main.MainActivity;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.orhanobut.logger.Logger;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,7 +31,7 @@ import butterknife.ButterKnife;
  * 作者：Neil on 2016/3/22 19:08.
  * 邮箱：cn.neillee@gmail.com
  */
-public class StartActivity extends AppCompatActivity {
+public class ImageSplashActivity extends AppCompatActivity {
     @Bind(R.id.view_container)
     ViewSwitcher mSwitcher;
     @Bind(R.id.iv_splash)
@@ -65,20 +55,20 @@ public class StartActivity extends AppCompatActivity {
                 case IMG_LOADED:
                     mIsImgLoaded = true;
                     mSwitcher.showNext();
-                    mSplash.setAnimation(AnimationUtils.loadAnimation(StartActivity.this, R.anim.splash));
+                    mSplash.setAnimation(AnimationUtils.loadAnimation(ImageSplashActivity.this, R.anim.splash));
                     mHandler.sendEmptyMessageDelayed(DISPLAY_END, MAX_IMG_DISPLAY_MILLIS);
                     break;
                 case TIME_UP:
                     if (!mIsImgLoaded) {
-                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                        Intent intent = new Intent(ImageSplashActivity.this, MainActivity.class);
                         startActivity(intent);
-                        StartActivity.this.finish();
+                        ImageSplashActivity.this.finish();
                     }
                     break;
                 case DISPLAY_END:
-                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    Intent intent = new Intent(ImageSplashActivity.this, MainActivity.class);
                     startActivity(intent);
-                    StartActivity.this.finish();
+                    ImageSplashActivity.this.finish();
                     break;
             }
         }
@@ -140,4 +130,14 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return false;
+    }
+
 }

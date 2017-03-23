@@ -98,6 +98,6 @@
 
     <style name="SplashTheme" parent="AppDayTheme">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowBackground">@drawable/splash_logo_xml</item>
     </style>
 </resources>
