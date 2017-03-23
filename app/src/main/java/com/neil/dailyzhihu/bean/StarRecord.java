@@ -1,7 +1,8 @@
 package com.neil.dailyzhihu.bean;
 
 /**
- * Created by Neil on 2016/4/27.
+ * 作者：Neil on 2016/4/27 15:11.
+ * 邮箱：cn.neillee@gmail.com
  */
 public class StarRecord {
     private int storyId;

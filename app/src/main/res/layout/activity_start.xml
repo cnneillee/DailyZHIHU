@@ -1,25 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/mainPageRootViewBgColor"
-    android:orientation="vertical">
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/view_container"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:fitsSystemWindows="true"
+              android:inAnimation="@anim/abc_fade_in"
+              android:outAnimation="@anim/abc_fade_out">
 
-    <ImageView
-        android:id="@+id/iv_start"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/example"
-        android:scaleType="centerCrop"/>
+        android:background="@color/ZHIHUBlue"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="50dp"
-        android:gravity="center_horizontal"
-        android:text="neil lee版权"
-        android:textColor="@color/white"
-        android:textSize="20sp"/>
-</FrameLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/zhihu_huaji"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="Copyright © 2017 Neil Lee"
+            android:textColor="@color/ZHIHUGreen"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:text="Powered by daily.zhihu.com"
+            android:textColor="@color/ZHIHUGreen"/>
+    </LinearLayout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/iv_splash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/splash_logo"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_img_source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            tools:text="每日一图 · Daily Zhihu"/>
+    </FrameLayout>
+
+</ViewSwitcher>

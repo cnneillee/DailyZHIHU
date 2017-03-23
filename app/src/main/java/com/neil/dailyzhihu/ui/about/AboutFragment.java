@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.utils.AppUtil;
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 
 /**
  * 作者：Neil on 2017/2/26 01:34.
@@ -31,14 +31,14 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
     private Preference mEmail;
     private Preference mOpensourceLicense;
 
-    private String APP_INTRO = "key_app_intro";
-    private String CHECK_UPDATE = "key_checkupdate";
-    private String VERSION_INFO = "key_versioninfo";
-    private String SHARE_APP = "key_shareapp";
-    private String BLOG = "key_blog";
-    private String GITHUB = "key_github";
-    private String EMAIL = "key_email";
-    private String OPENSOURCE_LICENSE = "key_opensource_license";
+    private static final String APP_INTRO = "key_app_intro";
+    private static final String CHECK_UPDATE = "key_checkupdate";
+    private static final String VERSION_INFO = "key_versioninfo";
+    private static final String SHARE_APP = "key_shareapp";
+    private static final String BLOG = "key_blog";
+    private static final String GITHUB = "key_github";
+    private static final String EMAIL = "key_email";
+    private static final String OPENSOURCE_LICENSE = "key_opensource_license";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,33 +74,33 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
     @Override
     public boolean onPreferenceClick(Preference preference) {
         View view = getView();
-        if(mAppIntro == preference){
-            Snackbar.make(view,getResources().getString(R.string.to_do),Snackbar.LENGTH_SHORT).show();
-        }else if(mCheckUpdate == preference){
-            Snackbar.make(view,getResources().getString(R.string.to_do),Snackbar.LENGTH_SHORT).show();
-        }else if(mVersionIntro == preference){
-            Snackbar.make(view,getResources().getString(R.string.to_do),Snackbar.LENGTH_SHORT).show();
-        }else if(mShareApp == preference){
+        if (mAppIntro == preference) {
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+        } else if (mCheckUpdate == preference) {
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+        } else if (mVersionIntro == preference) {
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+        } else if (mShareApp == preference) {
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.shareapp_content));
-            Snackbar.make(view,getResources().getString(R.string.notify_info_copied),Snackbar.LENGTH_SHORT).show();
-        }else if(mBlog == preference){
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
+        } else if (mBlog == preference) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
             Uri content_url = Uri.parse(getString(R.string.blog_summary));
             intent.setData(content_url);
             startActivity(intent);
-        }else if(mGithub == preference){
+        } else if (mGithub == preference) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
             Uri content_url = Uri.parse(getString(R.string.github_address));
             intent.setData(content_url);
             startActivity(intent);
-        }else if(mEmail == preference){
+        } else if (mEmail == preference) {
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.email_address));
-            Snackbar.make(view,getResources().getString(R.string.notify_info_copied),Snackbar.LENGTH_SHORT).show();
-        }else if(mOpensourceLicense == preference){
-            Snackbar.make(view,getResources().getString(R.string.to_do),Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
+        } else if (mOpensourceLicense == preference) {
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
         }
-        return false;
+        return true;
     }
 }

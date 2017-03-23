@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_addon_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="没有更多评论了？(..•˘_˘•..)\n那就试试左右划一下吧(ง •̀_•́)ง"/>
 
     <ListView
         android:id="@+id/lv_comment"
@@ -10,9 +17,4 @@
         android:layout_height="wrap_content"
         android:focusable="true"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="没有更多评论了？(..•˘_˘•..)那就试试左右划一下吧(ง •̀_•́)ง"/>
-</LinearLayout>
+</FrameLayout>

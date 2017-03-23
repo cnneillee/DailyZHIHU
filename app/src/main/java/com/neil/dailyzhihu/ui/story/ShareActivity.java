@@ -2,12 +2,9 @@ package com.neil.dailyzhihu.ui.story;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +12,7 @@ import android.widget.ImageView;
 
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.share.PlatformInfoUtils;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.listener.BitmapLoadCallback;
@@ -100,7 +98,7 @@ public class ShareActivity extends NightModeBaseActivity implements BitmapLoadCa
             String title = PlatformInfoUtils.SharePlatformSeries.getTitle(mShareType);
             mToolbar.setTitle(title);
         } else {
-            Snackbar.make(mVpShare, "程序异常，请重试", Snackbar.LENGTH_SHORT).show();
+            SnackbarUtil.ShortSnackbar(mVpShare, "程序异常，请重试", SnackbarUtil.Info).show();
         }
     }
 

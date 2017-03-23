@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.bean.ShareRecord;
-import com.neil.dailyzhihu.bean.orignallayer.StoryContent;
+import com.neil.dailyzhihu.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.ui.story.ImageStoryActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.share.ShareHelper;
@@ -39,7 +39,7 @@ import cn.sharesdk.framework.PlatformActionListener;
  */
 public class ShareMenuPopupWindow extends PopupWindow {
     private Context mContext;
-    private StoryContent mStoryContent;
+    private CertainStoryBean mCertainStoryBean;
     private FrameLayout mMainLayout;
 
     @SuppressLint("PrivateResource")
@@ -67,10 +67,10 @@ public class ShareMenuPopupWindow extends PopupWindow {
         this.setBackgroundDrawable(dw);
     }
 
-    public ShareMenuPopupWindow(Context context, StoryContent story, FrameLayout mainLayout) {
+    public ShareMenuPopupWindow(Context context, CertainStoryBean story, FrameLayout mainLayout) {
         super(context);
         this.mContext = context;
-        this.mStoryContent = story;
+        this.mCertainStoryBean = story;
         this.mMainLayout = mainLayout;
         View popupView = LayoutInflater.from(mContext).inflate(R.layout.popup_share_menu, null, false);
         GridView gvShare = (GridView) popupView.findViewById(R.id.gv_sharePopup);
@@ -100,15 +100,15 @@ public class ShareMenuPopupWindow extends PopupWindow {
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String title = mStoryContent.getTitle();
-            String shareUrl = mStoryContent.getShare_url();
-            String img = mStoryContent.getImage();
+            String title = mCertainStoryBean.getTitle();
+            String shareUrl = mCertainStoryBean.getShareUrl();
+            String img = mCertainStoryBean.getImage();
             String text = title + "\tmore? via zhihuDaily--->\t" + shareUrl;
             switch (position) {
                 case 0://生成图片
                     Intent intent = new Intent(mContext, ImageStoryActivity.class);
-                    intent.putExtra(AtyExtraKeyConstant.STORY_BODY, mStoryContent.getBody());
-                    intent.putExtra(AtyExtraKeyConstant.STORY_ID, mStoryContent.getId());
+                    intent.putExtra(AtyExtraKeyConstant.STORY_BODY, mCertainStoryBean.getBody());
+                    intent.putExtra(AtyExtraKeyConstant.STORY_ID, mCertainStoryBean.getId());
                     mContext.startActivity(intent);
                     break;
                 case 1://微信好友
@@ -135,8 +135,8 @@ public class ShareMenuPopupWindow extends PopupWindow {
                     if (storyText == null)
                         return;
                     Toast.makeText(mContext, "更多分享", Toast.LENGTH_SHORT).show();
-                    ShareHelper.orignalMsgShare(mContext, "CertainStoryActivity", storyText, storyText, null);
-                    ShareRecord shareRecord = new ShareRecord(mStoryContent.getId(),
+                    ShareHelper.orignalMsgShare(mContext, "StoryDetailActivity", storyText, storyText, null);
+                    ShareRecord shareRecord = new ShareRecord(mCertainStoryBean.getId(),
                             System.currentTimeMillis(), "UNKNOWN", "More-Link", "20160427");
                     Toast.makeText(mContext, "分享成功", Toast.LENGTH_SHORT).show();
                     break;
@@ -145,9 +145,9 @@ public class ShareMenuPopupWindow extends PopupWindow {
 
         private String makeShareText() {
             String shareText = null;
-            if (mStoryContent != null){
-                shareText = String.format("%s->%s\nvia DailyZHIHU", mStoryContent.getTitle(),
-                        (API.STORY_PREFIX + mStoryContent.getId()));
+            if (mCertainStoryBean != null){
+                shareText = String.format("%s->%s\nvia DailyZHIHU", mCertainStoryBean.getTitle(),
+                        (API.STORY_PREFIX + mCertainStoryBean.getId()));
             }
             return shareText;
         }
@@ -159,7 +159,7 @@ public class ShareMenuPopupWindow extends PopupWindow {
       */
         @Override
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-            ShareRecord shareRecord = new ShareRecord(mStoryContent.getId(), System.currentTimeMillis(),
+            ShareRecord shareRecord = new ShareRecord(mCertainStoryBean.getId(), System.currentTimeMillis(),
                     platform.getName(), "SDKShare-Link", "20160427");
 //        int resultCode = (int) DBFactory.getsIDBShareRecordDetailStoryTabledao(this).addShareRecord(shareRecord);
 //        if (resultCode > 0)
@@ -174,11 +174,11 @@ public class ShareMenuPopupWindow extends PopupWindow {
         public void onCancel(Platform platform, int i) {
         }
 
-        public void share(StoryContent story) {
+        public void share(CertainStoryBean story) {
             if (story == null)
                 return;
             ShareHelper.onKeyShareText(mContext, story.getTitle(),
-                    story.getTitle() + "via zhihuDaily" + story.getShare_url(), story.getImage());
+                    story.getTitle() + "via zhihuDaily" + story.getShareUrl(), story.getImage());
         }
 
     };

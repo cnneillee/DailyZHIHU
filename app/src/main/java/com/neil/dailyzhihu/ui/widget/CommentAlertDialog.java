@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.CommentPagerAdapter;
+import com.neil.dailyzhihu.adapter.CommentTypesPagerAdapter;
 
 /**
  * 作者：Neil on 2016/4/22 22:49.
@@ -37,7 +37,7 @@ public class CommentAlertDialog extends android.app.AlertDialog {
         params.height = dialogHeight;
         window.setAttributes(params);
         ViewPager viewPager = (ViewPager) contentView.findViewById(R.id.vp_comment);
-        viewPager.setAdapter(new CommentPagerAdapter(context, storyId));
+        viewPager.setAdapter(new CommentTypesPagerAdapter(context, storyId));
         vp = viewPager;
         this.setTitle("查看评论");
     }

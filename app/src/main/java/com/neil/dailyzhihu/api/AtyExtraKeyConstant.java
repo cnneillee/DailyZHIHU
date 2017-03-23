@@ -30,4 +30,7 @@ public class AtyExtraKeyConstant {
 
     /*section name*/
     public static final String SECTION_NAME = "SECTION_NAME";
+    public static final String DEFAULT_IMG_URL = "DEFAULT_IMG_URL";
+
+    public static final int EXIT_NORMALLY = 1;
 }

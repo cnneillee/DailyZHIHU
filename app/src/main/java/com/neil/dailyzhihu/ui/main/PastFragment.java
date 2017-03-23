@@ -25,12 +25,12 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.api.API;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.PastStoryListAdapter;
-import com.neil.dailyzhihu.bean.orignallayer.BeforeStoryListBean;
-import com.neil.dailyzhihu.ui.story.CertainStoryActivity;
+import com.neil.dailyzhihu.adapter.PastStoryListBaseAdapter;
+import com.neil.dailyzhihu.bean.orignal.PastStoryListBean;
+import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.date.DateInNumbers;
 import com.neil.dailyzhihu.utils.date.DateUtil;
@@ -90,7 +90,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     private void initViews() {
-        View header = LayoutInflater.from(mContext).inflate(R.layout.fm_past_header, null);
+        View header = LayoutInflater.from(mContext).inflate(R.layout.fragment_past_header, null);
         Button btnPickDate = (Button) header.findViewById(R.id.btn_pickDate);
         mBtnLoadSetting = (Button) header.findViewById(R.id.btn_loadsetting);
         mMCV = (MaterialCalendarView) header.findViewById(R.id.material_calendarview);
@@ -99,6 +99,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
         mLvBefore.setOnItemClickListener(this);
         btnPickDate.setOnClickListener(this);
+        mTvDateDisplay.setOnClickListener(this);
         mBtnLoadSetting.setOnClickListener(this);
 
         // 初始化MaterialCalendarView
@@ -125,12 +126,12 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
     private void loadPickedDateStory() {
         LoaderFactory.getContentLoader().loadContent(API.BEFORE_NEWS_PREFIX + pickedDate,
-                new OnContentLoadingFinishedListener() {
+                new OnContentLoadedListener() {
                     @Override
-                    public void onFinish(String content,String url) {
+                    public void onSuccess(String content, String url) {
                         Logger.json(content);
-                        BeforeStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, BeforeStoryListBean.class);
-                        PastStoryListAdapter adapter = new PastStoryListAdapter(mContext, beforeStory);
+                        PastStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, PastStoryListBean.class);
+                        PastStoryListBaseAdapter adapter = new PastStoryListBaseAdapter(mContext, beforeStory);
                         mLvBefore.setAdapter(adapter);
                         updateDateDisplay();
                     }
@@ -140,9 +141,10 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        BeforeStoryListBean.StoriesBean storiesBean = (BeforeStoryListBean.StoriesBean) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(mContext, CertainStoryActivity.class);
-        intent.putExtra(AtyExtraKeyConstant.STORY_ID, storiesBean.getStoryId());
+        PastStoryListBean.PastStory pastStory = (PastStoryListBean.PastStory) parent.getAdapter().getItem(position);
+        Intent intent = new Intent(mContext, StoryDetailActivity.class);
+        intent.putExtra(AtyExtraKeyConstant.STORY_ID, pastStory.getStoryId());
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, pastStory.getImage());
         mContext.startActivity(intent);
     }
 
@@ -184,6 +186,9 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pickDate:
+                pickDate();
+                break;
+            case R.id.tv_dateDisplay:
                 pickDate();
                 break;
             case R.id.btn_loadsetting:
