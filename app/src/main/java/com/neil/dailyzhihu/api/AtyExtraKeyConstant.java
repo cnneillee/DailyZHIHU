@@ -33,4 +33,6 @@ public class AtyExtraKeyConstant {
     public static final String DEFAULT_IMG_URL = "DEFAULT_IMG_URL";
 
     public static final int EXIT_NORMALLY = 1;
+
+    public static final String WEB_URL = "WEB_URL";
 }

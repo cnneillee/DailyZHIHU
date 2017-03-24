@@ -8,36 +8,36 @@
               android:inAnimation="@anim/abc_fade_in"
               android:outAnimation="@anim/abc_fade_out">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/ZHIHUBlue"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/zhihu_huaji"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/splash_logo"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:gravity="center"
-            android:text="Copyright © 2017 Neil Lee"
-            android:textColor="@color/ZHIHUGreen"/>
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:paddingBottom="16dp"
-            android:text="Powered by daily.zhihu.com"
-            android:textColor="@color/ZHIHUGreen"/>
-    </LinearLayout>
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="Copyright © 2017 Neil Lee\nPowered by daily.zhihu.com"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+    </FrameLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                  android:layout_width="fill_parent"
@@ -53,8 +53,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/splash_logo"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/splash_logo_origin"/>
 
         <TextView
             android:id="@+id/tv_img_source"
@@ -66,5 +66,4 @@
             android:textColor="@color/white"
             tools:text="每日一图 · Daily Zhihu"/>
     </FrameLayout>
-
 </ViewSwitcher>
