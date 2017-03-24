@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="?attr/supportDescColor"
+        tools:text="版本：v1.0.1(15)"/>
+
+    <TextView
+        android:id="@+id/tv_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="?attr/supportDescColor"
+        tools:text="更新包体积：28.9MB"/>
+
+    <TextView
+        android:id="@+id/tv_update_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="?attr/supportDescColor"
+        tools:text="更新内容：\n【新增】 附近阿斯科利的风景啊附件阿斯科阿斯科利的风景啊附件阿斯科阿斯科利的风景啊附件阿斯科阿斯科利的风景啊附件阿斯科阿斯科利的风景啊附件阿斯科利附近\n【新增】 附近阿斯科利的风景啊附件阿斯科利附近\n【新增】 附近阿斯科利的风景啊附件阿斯科利附近\n【优化】 附近阿斯科利的风景啊附件阿斯科利附近\n"/>
+
+</LinearLayout>

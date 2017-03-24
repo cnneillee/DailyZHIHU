@@ -43,8 +43,8 @@ public class ImageSplashActivity extends AppCompatActivity {
     private static final int IMG_LOADED = 0;
     private static final int TIME_UP = 1;
     private static final int DISPLAY_END = 2;
-    private static final int MAX_IMG_LOADED_MILLIS = 2500;
-    private static final int MAX_IMG_DISPLAY_MILLIS = 1500;
+    private static final int MAX_IMG_LOADED_MILLIS = 1500;
+    private static final int MAX_IMG_DISPLAY_MILLIS = 2000;
 
     private boolean mIsImgLoaded = false;
 
@@ -54,15 +54,16 @@ public class ImageSplashActivity extends AppCompatActivity {
             switch (msg.what) {
                 case IMG_LOADED:
                     mIsImgLoaded = true;
-                    mSwitcher.showNext();
-                    mSplash.setAnimation(AnimationUtils.loadAnimation(ImageSplashActivity.this, R.anim.splash));
-                    mHandler.sendEmptyMessageDelayed(DISPLAY_END, MAX_IMG_DISPLAY_MILLIS);
                     break;
                 case TIME_UP:
                     if (!mIsImgLoaded) {
                         Intent intent = new Intent(ImageSplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         ImageSplashActivity.this.finish();
+                    } else {
+                        mSwitcher.showNext();
+                        mSplash.setAnimation(AnimationUtils.loadAnimation(ImageSplashActivity.this, R.anim.splash));
+                        mHandler.sendEmptyMessageDelayed(DISPLAY_END, MAX_IMG_DISPLAY_MILLIS);
                     }
                     break;
                 case DISPLAY_END:
