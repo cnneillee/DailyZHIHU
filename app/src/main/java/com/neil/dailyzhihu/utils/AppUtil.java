@@ -40,6 +40,23 @@ public class AppUtil {
         return versionCode;
     }
 
+    /**
+     * 获取版本号
+     *
+     * @param context 上下文环境
+     * @return 版本号信息
+     */
+    public static int getVersionCode(Context context) {
+        int versionCode = 0;
+        try {
+            PackageInfo pkginfo = context.getPackageManager().getPackageInfo(((Activity) context).getApplication().getPackageName(), 0);
+            versionCode = pkginfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
     public static void copyText2Clipboard(Context context, String content) {
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("text", content);
@@ -75,6 +92,20 @@ public class AppUtil {
             resolver.notifyChange(uri, null); // 实时通知改变
         } catch (Exception e) {
             Log.e(LOG_TAG, "获取系统亮度失败：" + e);
+        }
+    }
+
+    public static String bytes2kmgb(int bytes) {
+        float result = (float) (bytes / 1024.0);
+        if (result > 1024) {
+            result = (float) (bytes / (1024 * 1024.0));
+            if (result >= 1024) {
+                return String.format("%.2f GB", bytes / (1024 * 1024.0 * 1024.0));
+            } else {
+                return String.format("%.2f MB", result);
+            }
+        } else {
+            return String.format("%.2f KB", result);
         }
     }
 }

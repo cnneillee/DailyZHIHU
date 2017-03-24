@@ -46,11 +46,11 @@ public class API {
     public static final String WEB_STORY_PREFIX = "http://daily.zhihu.com/story/";
 
     /*version info*/
-    public static final String VERSION_INFO = "https://lilinmao.github.io/projects/dailyzhihu/api/1/version";
+    public static final String VERSION_INFO = "https://lilinmao.github.io/projects/dailyzhihu/api/1/version/index.html";
     /*open source license*/
-    public static final String OPENSOURCE_LICENSE = "https://lilinmao.github.io/projects/dailyzhihu/api/1/license";
+    public static final String OPENSOURCE_LICENSE = "https://lilinmao.github.io/projects/dailyzhihu/api/1/license/index.html";
     /*App intro*/
-    public static final String APP_INTRODUCTION = "https://lilinmao.github.io/projects/dailyzhihu/api/1/intro";
+    public static final String APP_INTRODUCTION = "https://lilinmao.github.io/projects/dailyzhihu/api/1/intro/index.html";
     /*update*/
-    public static final String APP_CHECK_FOR_UPDATES = "https://lilinmao.github.io/projects/dailyzhihu/api/1/updates";
+    public static final String CHECK_FOR_UPDATES = "https://lilinmao.github.io/projects/dailyzhihu/api/1/updates/index.html";
 }

@@ -85,4 +85,9 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
         \nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
         \nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
 
+    <!--update-->
+    <string name="ignore_this_update">忽略该版更新</string>
+    <string name="update_later">以后再说</string>
+    <string name="update_now">立即更新</string>
+    <string name="is_updated">已是最新</string>
 </resources>
