@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.api.API;
+import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 import com.neil.dailyzhihu.utils.AppUtil;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 
@@ -75,11 +78,15 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
     public boolean onPreferenceClick(Preference preference) {
         View view = getView();
         if (mAppIntro == preference) {
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+            Intent intent = new Intent(mContext, WebViewActivity.class);
+            intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.APP_INTRODUCTION);
+            startActivity(intent);
         } else if (mCheckUpdate == preference) {
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
         } else if (mVersionIntro == preference) {
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+            Intent intent = new Intent(mContext, WebViewActivity.class);
+            intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.VERSION_INFO);
+            startActivity(intent);
         } else if (mShareApp == preference) {
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.shareapp_content));
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
@@ -99,7 +106,9 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.email_address));
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
         } else if (mOpensourceLicense == preference) {
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+            Intent intent = new Intent(mContext, WebViewActivity.class);
+            intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.OPENSOURCE_LICENSE);
+            startActivity(intent);
         }
         return true;
     }

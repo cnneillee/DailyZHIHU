@@ -44,4 +44,13 @@ public class API {
 
     /*web story url prefix*/
     public static final String WEB_STORY_PREFIX = "http://daily.zhihu.com/story/";
+
+    /*version info*/
+    public static final String VERSION_INFO = "https://lilinmao.github.io/projects/dailyzhihu/api/1/version";
+    /*open source license*/
+    public static final String OPENSOURCE_LICENSE = "https://lilinmao.github.io/projects/dailyzhihu/api/1/license";
+    /*App intro*/
+    public static final String APP_INTRODUCTION = "https://lilinmao.github.io/projects/dailyzhihu/api/1/intro";
+    /*update*/
+    public static final String APP_CHECK_FOR_UPDATES = "https://lilinmao.github.io/projects/dailyzhihu/api/1/updates";
 }
