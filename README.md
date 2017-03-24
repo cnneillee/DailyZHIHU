@@ -60,7 +60,7 @@
 ![贴图][14]
 
 [0]: https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90
-[1]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/01.png
+[1]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.3.x/01.png
 [2]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/02.png
 [3]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/03.png
 [4]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/04.png
