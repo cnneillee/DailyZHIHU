@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.utils;
 
-import com.neil.dailyzhihu.bean.orignallayer.StoryExtra;
+import com.neil.dailyzhihu.bean.orignal.StoryExtraInfoBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,11 +10,11 @@ import java.util.Date;
  * 邮箱：cn.neillee@gmail.com
  */
 public class Formater {
-    public static String formatStoryExtra(StoryExtra extra) {
+    public static String formatStoryExtra(StoryExtraInfoBean extra) {
         String result = "热度：-，评论：-L + -S";
         if (extra != null)
             result = String.format("热度：%d，评论：%dL + %dS", extra.getPopularity(),
-                    extra.getLong_comments(), extra.getShort_comments());
+                    extra.getLongComments(), extra.getShortComments());
         return result;
     }
 

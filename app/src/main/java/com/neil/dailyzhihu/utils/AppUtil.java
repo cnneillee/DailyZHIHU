@@ -32,7 +32,7 @@ public class AppUtil {
         String versionCode;
         try {
             PackageInfo pkginfo = context.getPackageManager().getPackageInfo(((Activity) context).getApplication().getPackageName(), 0);
-            versionCode = "当前版本号：" + pkginfo.versionName;
+            versionCode = "当前版本号：" + pkginfo.versionName + "(" + pkginfo.versionCode + ")";
         } catch (PackageManager.NameNotFoundException e) {
             versionCode = "版本号获取失败";
             e.printStackTrace();
@@ -40,7 +40,24 @@ public class AppUtil {
         return versionCode;
     }
 
-    public static void copyText2Clipboard(Context context,String content){
+    /**
+     * 获取版本号
+     *
+     * @param context 上下文环境
+     * @return 版本号信息
+     */
+    public static int getVersionCode(Context context) {
+        int versionCode = 0;
+        try {
+            PackageInfo pkginfo = context.getPackageManager().getPackageInfo(((Activity) context).getApplication().getPackageName(), 0);
+            versionCode = pkginfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    public static void copyText2Clipboard(Context context, String content) {
         ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("text", content);
         cm.setPrimaryClip(clipData);
@@ -49,7 +66,9 @@ public class AppUtil {
     /**
      * 获得当前系统的亮度值： 0~255
      */
-    /** 可调节的最大亮度值 */
+    /**
+     * 可调节的最大亮度值
+     */
     public static final int MAX_BRIGHTNESS = 255;
 
     public static int getSysScreenBrightness() {
@@ -57,7 +76,7 @@ public class AppUtil {
         try {
             screenBrightness = android.provider.Settings.System.getInt(mContext.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS);
         } catch (Exception e) {
-            Log.e(LOG_TAG,"获取系统亮度失败："+e);
+            Log.e(LOG_TAG, "获取系统亮度失败：" + e);
         }
         return screenBrightness;
     }
@@ -72,7 +91,21 @@ public class AppUtil {
             android.provider.Settings.System.putInt(resolver, android.provider.Settings.System.SCREEN_BRIGHTNESS, brightness);
             resolver.notifyChange(uri, null); // 实时通知改变
         } catch (Exception e) {
-            Log.e(LOG_TAG,"获取系统亮度失败："+e);
+            Log.e(LOG_TAG, "获取系统亮度失败：" + e);
+        }
+    }
+
+    public static String bytes2kmgb(int bytes) {
+        float result = (float) (bytes / 1024.0);
+        if (result > 1024) {
+            result = (float) (bytes / (1024 * 1024.0));
+            if (result >= 1024) {
+                return String.format("%.2f GB", bytes / (1024 * 1024.0 * 1024.0));
+            } else {
+                return String.format("%.2f MB", result);
+            }
+        } else {
+            return String.format("%.2f KB", result);
         }
     }
 }

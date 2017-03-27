@@ -2,11 +2,13 @@ package com.neil.dailyzhihu.utils.img;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.utils.Settings;
 import com.neil.dailyzhihu.utils.storage.ImageExternalDirectoryUtil;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -34,47 +36,11 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
     }
 
     @Override
-    public void displayImage(ImageView imageView, File imageFile, DisplayOption option) {
-        int imageLoadingResId = R.drawable.img_loading_default;
-        int imageErrorResId = R.drawable.img_loading_error;
-        if (option != null) {
-            imageLoadingResId = option.loadingResId;
-            imageErrorResId = option.loadErrorResId;
-        }
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(imageLoadingResId)
-                .showImageForEmptyUri(imageErrorResId)
-                .showImageOnFail(imageErrorResId)
-                .cacheInMemory(true) //加载本地图片不需要再做SD卡缓存，只做内存缓存即可
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-        String uri = ImageDownloader.Scheme.FILE.wrap(imageFile.getAbsolutePath());
-        ImageLoader.getInstance().displayImage(uri, imageView, options);
-    }
-
-    // @Override
-    public void displayImage(ImageView imageView, File imageFile, DisplayOption option, File file) {
-        int imageLoadingResId = R.drawable.img_loading_default;
-        int imageErrorResId = R.drawable.img_loading_error;
-        if (option != null) {
-            imageLoadingResId = option.loadingResId;
-            imageErrorResId = option.loadErrorResId;
-        }
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(imageLoadingResId)
-                .showImageForEmptyUri(imageErrorResId)
-                .showImageOnFail(imageErrorResId)
-                .cacheInMemory(true) //加载本地图片不需要再做SD卡缓存，只做内存缓存即可
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-        String uri = ImageDownloader.Scheme.FILE.wrap(imageFile.getAbsolutePath());
-        ImageLoader.getInstance().displayImage(uri, imageView, options);
-    }
-
-    @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option) {
+        if (option != null && option.noPicMode) {
+            imageView.setVisibility(View.GONE);
+            return;
+        }
         int imageLoadingResId = R.drawable.img_loading_default;
         int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
@@ -91,15 +57,14 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
         ImageLoader.getInstance().displayImage(imageUrl, imageView, options);
-       /* if (imageUrl.startsWith(HTTPS)) {
-            String uri = ImageDownloader.Scheme.HTTPS.wrap(imageUrl);
-        } else if (imageUrl.startsWith(HTTP)) {
-            String uri = ImageDownloader.Scheme.HTTP.wrap(imageUrl);
-        }*/
     }
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener) {
+        if (option != null && option.noPicMode) {
+            imageView.setVisibility(View.GONE);
+            return;
+        }
         int imageLoadingResId = R.drawable.img_loading_default;
         int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
@@ -117,15 +82,14 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
         ImageLoader.getInstance().displayImage(imageUrl, imageView, options, listener);
-        /*if (imageUrl.startsWith(HTTPS)) {
-            String uri = ImageDownloader.Scheme.HTTPS.wrap(imageUrl);
-        } else if (imageUrl.startsWith(HTTP)) {
-            String uri = ImageDownloader.Scheme.HTTP.wrap(imageUrl);
-        }*/
     }
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener, ImageLoadingProgressListener progressListener) {
+        if (option != null && option.noPicMode) {
+            imageView.setVisibility(View.GONE);
+            return;
+        }
         int imageLoadingResId = R.drawable.img_loading_default;
         int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
@@ -153,18 +117,6 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
             String uri = ImageDownloader.Scheme.HTTP.wrap(imageUrl);
             ImageLoader.getInstance().displayImage(uri, imageView, options, listener, progressListener);
         }
-    }
-
-    @Override
-    public void downloadImage(final Context context, String imageUrl, String imagePath, final int imageName, ImageLoadingListener listener) {
-        ImageRequest imageRequest = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap bitmap) {
-                //StorageOperatingHelper.savingStoryImgBitmap2SD(context, bitmap, imageName + "");
-                ImageExternalDirectoryUtil.saveImgIntoCertainImgDirectory(context, bitmap, imageName, 100, ImageExternalDirectoryUtil.UtilType.STORY_IMG);
-            }
-        }, 0, 0, Bitmap.Config.ARGB_8888, null);
-//        UniversalContentLoader.getRequestQueue(context).add(imageRequest);
     }
 
     /**

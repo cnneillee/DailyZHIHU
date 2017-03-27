@@ -1,7 +1,7 @@
 package com.neil.dailyzhihu.utils;
 
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.bean.orignallayer.OrignalStory;
+import com.neil.dailyzhihu.bean.orignal.OriginalStory;
 
 /**
  * 作者：Neil on 2016/4/16 23:50.
@@ -15,7 +15,7 @@ public class GsonDecoder {
         return new GsonDecoder();
     }
 
-    public <T extends OrignalStory> T decoding(String gsonStr, Class<T> classOfT) {
+    public <T extends OriginalStory> T decoding(String gsonStr, Class<T> classOfT) {
         T t;
         Gson gson = new Gson();
         t = gson.fromJson(gsonStr, classOfT);

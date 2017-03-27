@@ -1,32 +1,14 @@
 package com.neil.dailyzhihu.ui.story;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.ViewStubCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.CommentPagerAdapter;
-import com.neil.dailyzhihu.adapter.LongCommentListAdapter;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.bean.orignallayer.LongComment;
-import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
+import com.neil.dailyzhihu.adapter.CommentTypesPagerAdapter;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,7 +24,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
     Toolbar mToolbar;
     @Bind(R.id.view_pager_comments)
     ViewPager mViewPagerComments;
-    private CommentPagerAdapter mViewPagerAdapter;
+    private CommentTypesPagerAdapter mViewPagerAdapter;
 
     private int mStoryId;
     private Activity mContext = CertainStoryCommentActivity.this;
@@ -56,7 +38,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_certain_story_comment);
+        setContentView(R.layout.activity_story_comment);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
@@ -69,7 +51,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
     private void initViewPager() {
 
-        mViewPagerAdapter = new CommentPagerAdapter(mContext, mStoryId + "");
+        mViewPagerAdapter = new CommentTypesPagerAdapter(mContext, mStoryId + "");
         mViewPagerComments.setAdapter(mViewPagerAdapter);
 
         mViewPagerComments.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -80,7 +62,7 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
             @Override
             public void onPageSelected(final int position) {
-                mToolbar.setSubtitle(position == 0 ? CommentPagerAdapter.CommentType.LONG.cn : CommentPagerAdapter.CommentType.SHORT.cn);
+                mToolbar.setSubtitle(position == 0 ? CommentTypesPagerAdapter.CommentType.LONG.cn : CommentTypesPagerAdapter.CommentType.SHORT.cn);
             }
 
             @Override

@@ -14,13 +14,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="action_settings">设置</string>
     <string name="action_text_qrcode">二维码</string>
     <!--关于界面-->
-    <string name="current_version_info">当前版本：1.1.0</string>
-    <string name="feature_intro">功能介绍</string>
-    <string name="update">检查更新</string>
-    <string name="feedback">意见反馈</string>
-    <string name="opensrc_intro">开源许可</string>
-    <string name="author_intro">作者介绍</string>
-    <string name="copyright_info">Copyright © 2015-2016 Neil Lee\nAll Rights Reserved</string>
+    <string name="copyright_info">Copyright © 2015–2016 Neil Lee\nAll Rights Reserved</string>
 
     <!--主界面-->
     <string name="tab_latest">最新</string>
@@ -55,6 +49,8 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
 
     <!--通知信息-->
     <string name="notify_info_copied">信息已添加至剪切板,你可以将其粘贴到编辑区域</string>
+    <string name="notify_exit_confirm">再按一次退出</string>
+
 
     <!--about preference-->
     <string name="intro_title">应用简介</string>
@@ -67,9 +63,9 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="shareapp_content">DailyZHIHU，一款基于知乎日报内容的第三方应用\\n下载地址：https://github.com/neilleecn/DailyZHIHU</string>
     <string name="author">作者</string>
     <string name="blog_title">博客</string>
-    <string name="blog_summary">http://neilleecn.github.io/</string>
+    <string name="blog_summary">http://cnneillee.github.io/</string>
     <string name="github_address_title">Author\'s Github</string>
-    <string name="github_address">https://github.com/neilleecn</string>
+    <string name="github_address">https://github.com/cnneillee</string>
     <string name="email">E-Mail</string>
     <string name="email_address">cn.neillee@github.com</string>
     <string name="data_title">内容</string>
@@ -78,13 +74,15 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="attention_content">此应用及相关产物禁止用于商业目的</string>
     <string name="opensource_title">开源许可</string>
     <string name="license_title">License</string>
-    <string name="MIT_license">Copyright (C) 2017 Neil Lee
+    <string name="MIT_license">Copyright © 2017 Neil Lee\n
+        \nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        \nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        \nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
-    <string name="notify_exit_confirm">再按一次退出</string>
-
+    <!--update-->
+    <string name="ignore_this_update">忽略该版更新</string>
+    <string name="update_later">以后再说</string>
+    <string name="update_now">立即更新</string>
+    <string name="is_updated">已是最新</string>
+    <string name="editor">主编</string>
 </resources>

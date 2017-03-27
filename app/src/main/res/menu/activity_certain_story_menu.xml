@@ -2,24 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_item_action_text_size"
         android:title="@string/action_text_size"
-        app:showAsAction="never"
-        android:id="@+id/menu_item_action_text_size"/>
+        app:showAsAction="never"/>
 
     <item
-        android:title="@string/action_text_star"
+        android:id="@+id/menu_item_action_star"
         android:icon="@drawable/ic_action_collect"
-        app:showAsAction="never"
-        android:id="@+id/menu_item_action_star"/>
+        android:title="@string/action_text_star"
+        app:showAsAction="never"/>
 
     <item
-        android:title="@string/action_text_comment"
-        app:showAsAction="ifRoom"
+        android:id="@+id/menu_item_action_comment"
         android:icon="@drawable/ic_action_comment"
-        android:id="@+id/menu_item_action_comment"/>
+        android:title="@string/action_text_comment"
+        app:showAsAction="ifRoom"/>
     <item
-    android:title="@string/action_text_qrcode"
-    app:showAsAction="never"
-    android:icon="@drawable/ic_menu_qr_code"
-    android:id="@+id/menu_item_action_qrcode"/>
+        android:id="@+id/menu_item_action_qrcode"
+        android:icon="@drawable/ic_menu_qr_code"
+        android:title="@string/action_text_qrcode"
+        android:visible="false"
+        app:showAsAction="never"/>
 </menu>

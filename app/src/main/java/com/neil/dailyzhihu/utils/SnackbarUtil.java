@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.neil.dailyzhihu.R;
 
 /**
- * Created by 赵晨璞 on 2016/5/1.
+ * 作者：赵晨璞 on 2016/5/1 12:48.
  */
 public class SnackbarUtil {
 
@@ -29,11 +29,11 @@ public class SnackbarUtil {
     /**
      * 短显示Snackbar，自定义颜色
      *
-     * @param view
-     * @param message
-     * @param messageColor
-     * @param backgroundColor
-     * @return
+     * @param view            View
+     * @param message         Message
+     * @param messageColor    Color of message
+     * @param backgroundColor Color of background
+     * @return Snackbar created
      */
     public static Snackbar ShortSnackbar(View view, String message, int messageColor, int backgroundColor) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
@@ -44,11 +44,11 @@ public class SnackbarUtil {
     /**
      * 长显示Snackbar，自定义颜色
      *
-     * @param view
-     * @param message
-     * @param messageColor
-     * @param backgroundColor
-     * @return
+     * @param view            View
+     * @param message         Message
+     * @param messageColor    Color of message
+     * @param backgroundColor Color of background
+     * @return Snackbar created
      */
     public static Snackbar LongSnackbar(View view, String message, int messageColor, int backgroundColor) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
@@ -59,11 +59,11 @@ public class SnackbarUtil {
     /**
      * 自定义时常显示Snackbar，自定义颜色
      *
-     * @param view
-     * @param message
-     * @param messageColor
-     * @param backgroundColor
-     * @return
+     * @param view            View
+     * @param message         Message
+     * @param messageColor    Color of message
+     * @param backgroundColor Color of background
+     * @return Snackbar created
      */
     public static Snackbar IndefiniteSnackbar(View view, String message, int duration, int messageColor, int backgroundColor) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE).setDuration(duration);
@@ -74,10 +74,10 @@ public class SnackbarUtil {
     /**
      * 短显示Snackbar，可选预设类型
      *
-     * @param view
-     * @param message
-     * @param type
-     * @return
+     * @param view    View
+     * @param message Message
+     * @param type    Message type
+     * @return Snackbar created
      */
     public static Snackbar ShortSnackbar(View view, String message, int type) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
@@ -88,10 +88,10 @@ public class SnackbarUtil {
     /**
      * 长显示Snackbar，可选预设类型
      *
-     * @param view
-     * @param message
-     * @param type
-     * @return
+     * @param view    View
+     * @param message Message
+     * @param type    Message type
+     * @return Snackbar created
      */
     public static Snackbar LongSnackbar(View view, String message, int type) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
@@ -102,10 +102,10 @@ public class SnackbarUtil {
     /**
      * 自定义时常显示Snackbar，可选预设类型
      *
-     * @param view
-     * @param message
-     * @param type
-     * @return
+     * @param view    View
+     * @param message Message
+     * @param type    Message type
+     * @return Snackbar created
      */
     public static Snackbar IndefiniteSnackbar(View view, String message, int duration, int type) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE).setDuration(duration);
@@ -134,43 +134,39 @@ public class SnackbarUtil {
     /**
      * 设置Snackbar背景颜色
      *
-     * @param snackbar
-     * @param backgroundColor
+     * @param snackbar        Snackbar
+     * @param backgroundColor Color of background
      */
     public static void setSnackbarColor(Snackbar snackbar, int backgroundColor) {
         View view = snackbar.getView();
-        if (view != null) {
-            view.setBackgroundColor(backgroundColor);
-        }
+        view.setBackgroundColor(backgroundColor);
     }
 
     /**
      * 设置Snackbar文字和背景颜色
      *
-     * @param snackbar
-     * @param messageColor
-     * @param backgroundColor
+     * @param snackbar        Snackbar
+     * @param messageColor    Color of message
+     * @param backgroundColor Color of background
      */
     public static void setSnackbarColor(Snackbar snackbar, int messageColor, int backgroundColor) {
         View view = snackbar.getView();
-        if (view != null) {
-            view.setBackgroundColor(backgroundColor);
-            ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);
-        }
+        view.setBackgroundColor(backgroundColor);
+        ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);
     }
 
     /**
      * 向Snackbar中添加view
      *
-     * @param snackbar
-     * @param layoutId
-     * @param index    新加布局在Snackbar中的位置
+     * @param snackbar Snackbar
+     * @param layoutId Layout id of new view
+     * @param index    Position of new view in Snackbar
      */
     public static void SnackbarAddView(Snackbar snackbar, int layoutId, int index) {
-        View snackbarview = snackbar.getView();
-        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbarview;
+        View snackbarView = snackbar.getView();
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbarView;
 
-        View add_view = LayoutInflater.from(snackbarview.getContext()).inflate(layoutId, null);
+        View add_view = LayoutInflater.from(snackbarView.getContext()).inflate(layoutId, null);
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         p.gravity = Gravity.CENTER_VERTICAL;

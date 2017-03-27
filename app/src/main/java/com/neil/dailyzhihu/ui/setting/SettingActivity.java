@@ -44,18 +44,6 @@ public class SettingActivity extends NightModeBaseActivity {
         this.finish();
     }
 
-    public boolean isNightMode() {
-        return Settings.isNightMode;
-    }
-
-    public boolean isNoPicMode() {
-        return Settings.noPicMode;
-    }
-
-    public boolean isExitConfirm() {
-        return Settings.isExitConfirm;
-    }
-
     public void callChangeNightMode() {
         this.changeNightMode();
         this.changeNeedRecreated();
@@ -67,5 +55,6 @@ public class SettingActivity extends NightModeBaseActivity {
 
     public void callChangeNoPicMode() {
         this.changeNoPicMode();
+        this.changeNeedRecreated();
     }
 }
