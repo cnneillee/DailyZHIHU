@@ -8,14 +8,25 @@ android {
         applicationId "com.neil.dailyzhihu"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 3
-        versionName "0.3.1"
+        versionCode 4
+        versionName "1.0.0"
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // 移除无用的resource文件
+            shrinkResources true
+        }
+    }
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }

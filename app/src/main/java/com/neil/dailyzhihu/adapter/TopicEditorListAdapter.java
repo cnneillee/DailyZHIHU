@@ -18,7 +18,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Neil on 2016/3/23.
+ * 作者：Neil on 2016/3/23 14:16.
+ * 邮箱：cn.neillee@gmail.com
  */
 public class TopicEditorListAdapter extends BaseAdapter {
     private Context mContext;
@@ -58,17 +59,7 @@ public class TopicEditorListAdapter extends BaseAdapter {
         }
         vh.tvBio.setText(mDatas.get(position).getBio());
         vh.tvName.setText(mDatas.get(position).getName());
-        vh.tvUrl.setText(mDatas.get(position).getUrl());
         LoaderFactory.getImageLoader().displayImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
-//        vh.ivImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int themeId = mDatas.get(position).getSectionId();
-//                Intent intent = new Intent(mContext, CertainTopicActivity.class);
-//                intent.getIntExtra("THEME_ID", themeId);
-//                mContext.startActivity(intent);
-//            }
-//        });
         return convertView;
     }
 
@@ -79,8 +70,6 @@ public class TopicEditorListAdapter extends BaseAdapter {
         TextView tvName;
         @Bind(R.id.tv_bio)
         TextView tvBio;
-        @Bind(R.id.tv_url)
-        TextView tvUrl;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
