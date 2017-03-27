@@ -170,19 +170,6 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                     intent.putExtra(Intent.EXTRA_TEXT, text);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(Intent.createChooser(intent, "分享到..."));
-
-//                    ShareStoryPopupWindow sspw = new ShareStoryPopupWindow(mContext, mStoryId + "", mStoryTitle,
-//                            mStoryImageUrl, mStoryHtmlContent);
-//                    sspw.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                        @Override
-//                        public void onDismiss() {
-//                            lightOn();
-//                        }
-//                    });
-//                    //点击时弹出PopupWindow，屏幕变暗
-////                    sspw.setAnimationStyle(R.style.ListphotoSelect);
-//                    sspw.showAsDropDown(v, 0, 0);
-//                    lightOff();
                 }
             }
         });

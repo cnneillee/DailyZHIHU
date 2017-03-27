@@ -94,14 +94,8 @@
 -keepattributes *Annotation*
 -keep class com.google.gson.** { *; }
 -dontwarn com.google.gson.**
--keep class com.envy15.cherry.fragment.crossover.model.** { *; }
--dontwarn com.envy15.cherry.fragment.crossover.model.**
--keep class com.envy15.cherry.fragment.discover.model.** { *; }
--dontwarn com.envy15.cherry.fragment.discover.model.**
--keep class com.envy15.cherry.fragment.local.model.** { *; }
--dontwarn com.envy15.cherry.fragment.local.model.**
--keep class com.envy15.cherry.fragment.setting.model.** { *; }
--dontwarn com.envy15.cherry.fragment.setting.model.**
+-keep class com.neil.dailyzhihu.bean.**{ *; }
+-keep class com.neil.dailyzhihu.bean.original.**{ *; }
 
 # ShareSDK 混淆
 -dontwarn cn.sharesdk.**

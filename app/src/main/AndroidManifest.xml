@@ -129,19 +129,10 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.story.ImageStoryActivity"
-            android:theme="@style/AppNightTheme"/>
-
         <!--二维码扫描窗口注册-->
         <activity
             android:name="com.xys.libzxing.zxing.activity.CaptureActivity"
             android:theme="@style/AppNightTheme">
-        </activity>
-
-        <activity
-            android:name=".ui.story.ShareActivity"
-            android:theme="@style/AppNightTheme.NoActionBar">
         </activity>
 
         <activity
