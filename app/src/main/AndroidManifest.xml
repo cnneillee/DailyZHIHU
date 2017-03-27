@@ -70,11 +70,19 @@
 
         <!--某一主题窗口注册-->
         <activity
-            android:name=".ui.topic.CertainTopicActivity"
+            android:name=".ui.topic.TopicDetailActivity"
             android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.neil.dailyzhihu.ui.main.MainActivity"/>
+        </activity>
+        <!--某一主题窗口注册-->
+        <activity
+            android:name=".ui.topic.TopicEditorsActivity"
+            android:theme="@style/AppNightTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.neil.dailyzhihu.ui.topic.TopicDetailActivity"/>
         </activity>
 
         <!--所有栏目窗口注册-->

@@ -35,4 +35,7 @@ public class AtyExtraKeyConstant {
     public static final int EXIT_NORMALLY = 1;
 
     public static final String WEB_URL = "WEB_URL";
+
+    public static final String EDITORS_LIST = "EDITORS_LIST";
+    public static final String TOPIC_NAME = "TOPIC_NAME";
 }
