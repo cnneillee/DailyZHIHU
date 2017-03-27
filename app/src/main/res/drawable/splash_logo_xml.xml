@@ -3,7 +3,7 @@
     <!-- 底层白色 -->
     <item android:drawable="@color/ZHIHUBlue"/>
 
-    <!-- 顶层Logo居中 -->
+    <!--&lt;!&ndash; 顶层Logo居中 &ndash;&gt;-->
     <item>
         <bitmap
             android:gravity="center"
