@@ -84,7 +84,7 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
         TopicListBean.TopicBean bean = mDatas.get(position);
         int sectionId = bean.getStoryId();
         String topicImg = bean.getImage();
-        Intent intent = new Intent(this, CertainTopicActivity.class);
+        Intent intent = new Intent(this, TopicDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.THEME_ID, sectionId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, topicImg);
         startActivity(intent);

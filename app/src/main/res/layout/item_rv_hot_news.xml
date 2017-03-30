@@ -11,7 +11,7 @@
         android:contentDescription="example"
         android:foreground="@drawable/frosted_glass_black"
         android:scaleType="centerCrop"
-        android:src="@drawable/example"/>
+        android:src="@drawable/img_loading_default"/>
 
     <TextView
         android:id="@+id/tv_title"

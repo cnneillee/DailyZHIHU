@@ -1,11 +1,14 @@
 package com.neil.dailyzhihu.ui.aty;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
@@ -47,7 +50,13 @@ public class WebViewActivity extends NightModeBaseActivity {
         setContent();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setContent() {
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebView.getSettings().setSupportMultipleWindows(true);
+        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.loadUrl(mUrl);
     }
 

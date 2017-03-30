@@ -17,19 +17,12 @@
 package com.neil.dailyzhihu.ui.column;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.ListView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
@@ -41,27 +34,19 @@ import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.nineoldandroids.view.ViewHelper;
 import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CertainColumnActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener {
+public class CertainColumnActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private static final String LOG_TAG = CertainColumnActivity.class.getSimpleName();
 
-    @Bind(R.id.image)
-    ImageView mImageView;
-    // mListBackgroundView makes ListView's background except header view.
-    @Bind(R.id.list_background)
-    View mListBackgroundView;
     @Bind(R.id.list)
-    ObservableListView mListView;
+    ListView mListView;
     @Bind(R.id.toolbar)
     Toolbar mToolbarView;
-
-    private int mParallaxImageHeight;
 
     private int sectionId = -1;
     private String sectionName = null;
@@ -81,30 +66,12 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
         setSupportActionBar(mToolbarView);
         mToolbarView.setNavigationIcon(R.drawable.ic_action_back);
         mToolbarView.setNavigationOnClickListener(upBtnListener);
-        TypedValue typedValue = new TypedValue();
-        this.getTheme().resolveAttribute(R.attr.barBgColor, typedValue, true);
-        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, typedValue.data));
 
-        mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
-
-        mListView = (ObservableListView) findViewById(R.id.list);
-        mListView.setScrollViewCallbacks(this);
-        // Set padding view for ListView. This is the flexible space.
-        View paddingView = new View(this);
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                mParallaxImageHeight);
-        paddingView.setLayoutParams(lp);
-
-        // This is required to disable header's list selector effect
-        paddingView.setClickable(true);
-
-        mListView.addHeaderView(paddingView);
-        setDummyData(mListView);
+        mListView = (ListView) findViewById(R.id.list);
 
         getExtras();
         if (sectionId > 0) fillContent();
         mListView.setOnItemClickListener(this);
-        LoaderFactory.getImageLoader().displayImage(mImageView, sectionImg, null);
     }
 
     private int getExtras() {
@@ -148,31 +115,6 @@ public class CertainColumnActivity extends BaseActivity implements ObservableScr
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, storyId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, imgUrl);
         CertainColumnActivity.this.startActivity(intent);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        onScrollChanged(mListView.getCurrentScrollY(), false, false);
-    }
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.ZHIHUBlue);
-        float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
-        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
-        ViewHelper.setTranslationY(mImageView, -scrollY / 2);
-
-        // Translate list background
-        ViewHelper.setTranslationY(mListBackgroundView, Math.max(0, -scrollY + mParallaxImageHeight));
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
     }
 
     @Override
