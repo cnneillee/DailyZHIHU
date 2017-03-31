@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="偏好">
+        <ListPreference
+            android:dialogTitle="Splash 源设置"
+            android:enabled="true"
+            android:entries="@array/splash_entries"
+            android:entryValues="@array/splash_entry_values"
+            android:key="key_set_splash"
+            android:layout="@layout/preference_custom"
+            android:summary="不显示（默认）"
+            android:title="Splash 设置"/>
         <Preference
             android:key="key_switch_theme"
             android:layout="@layout/preference_custom"

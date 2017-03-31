@@ -38,4 +38,6 @@ public class AtyExtraKeyConstant {
 
     public static final String EDITORS_LIST = "EDITORS_LIST";
     public static final String TOPIC_NAME = "TOPIC_NAME";
+
+    public static final String SPLASH_TYPE = "SPLASH_TYPE";
 }
