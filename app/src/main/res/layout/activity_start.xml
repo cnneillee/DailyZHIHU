@@ -28,26 +28,25 @@
             android:paddingBottom="32dp">
 
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="12sp"
                 android:text="Copyright © 2017 Neil Lee\nPowered by daily.zhihu.com"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
         </LinearLayout>
-
     </FrameLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                  android:layout_width="fill_parent"
-                 android:layout_height="fill_parent">
+                 android:layout_height="fill_parent"
+                 android:background="@color/black">
 
         <ImageView
             android:id="@+id/iv_splash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/splash"/>
 
         <ImageView
