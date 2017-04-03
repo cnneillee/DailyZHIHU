@@ -126,4 +126,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="no_image_mode_title">无图模式</string>
     <string name="clear_cache_summary">清除DailyZHIHU的缓存</string>
     <string name="clear_cache_title">清除缓存</string>
+
+    <string name="jump_now">立即体验</string>
 </resources>

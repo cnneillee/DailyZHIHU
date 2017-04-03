@@ -24,11 +24,17 @@ public class LogoSplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         Intent intent = new Intent();
         int splashSetting = mSettings.getInt(Settings.SPLASH_SETTING, 0);
-        if (splashSetting == 0) {
-            intent.setClass(LogoSplashActivity.this, MainActivity.class);
-        } else {
-            intent.setClass(LogoSplashActivity.this, ImageSplashActivity.class);
-            intent.putExtra(AtyExtraKeyConstant.SPLASH_TYPE, splashSetting);
+        boolean firstTime = mSettings.getBoolean(Settings.FIRST_TIME, true);
+        if (firstTime) {
+            intent.setClass(LogoSplashActivity.this, GuideActivity.class);
+            mSettings.putBoolean(Settings.FIRST_TIME, false);
+        }else{
+            if (splashSetting == 0) {
+                intent.setClass(LogoSplashActivity.this, MainActivity.class);
+            } else {
+                intent.setClass(LogoSplashActivity.this, ImageSplashActivity.class);
+                intent.putExtra(AtyExtraKeyConstant.SPLASH_TYPE, splashSetting);
+            }
         }
         startActivity(intent);
         this.finish();

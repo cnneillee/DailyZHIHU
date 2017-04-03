@@ -48,6 +48,11 @@
             android:label="@string/app_name"
             android:theme="@style/SplashTheme"/>
 
+        <!--引导界面-->
+        <activity
+            android:name=".ui.aty.GuideActivity"
+            android:label="@string/app_name"/>
+
         <!--主窗口注册-->
         <activity
             android:name=".ui.main.MainActivity"
