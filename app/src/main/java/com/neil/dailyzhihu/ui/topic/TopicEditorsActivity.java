@@ -62,7 +62,7 @@ public class TopicEditorsActivity extends NightModeBaseActivity implements Adapt
                 }.getType());
         mLvEditors.setAdapter(new TopicEditorListAdapter(this, editorsBeanList));
         mLvEditors.setOnItemClickListener(this);
-        setTitle("主编 · " + topicName);
+        setTitle(getResources().getString(R.string.activity_editor) + " · " + topicName);
     }
 
     @Override

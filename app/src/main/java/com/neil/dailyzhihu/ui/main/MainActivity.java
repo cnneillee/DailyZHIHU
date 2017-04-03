@@ -118,14 +118,11 @@ public class MainActivity extends NightModeBaseActivity
         Intent intent = null;
         switch (item.getItemId()) {
             case R.id.nav_mainpage:
-                Log.i(LOG_TAG, "主页item被点击");
                 break;
             case R.id.nav_topics:
-                Log.i(LOG_TAG, "主题item被点击");
                 intent = new Intent(this, NavTopicsActivity.class);
                 break;
             case R.id.nav_columns:
-                Log.i(LOG_TAG, "模块item被点击");
                 intent = new Intent(this, NavColumnsActivity.class);
                 break;
             case R.id.nav_collection:

@@ -16,7 +16,7 @@ import com.neil.dailyzhihu.utils.Settings;
 
 public abstract class NightModeBaseActivity extends AppCompatActivity {
 
-    protected Settings mSettings = Settings.getInstance();
+    public Settings mSettings = Settings.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

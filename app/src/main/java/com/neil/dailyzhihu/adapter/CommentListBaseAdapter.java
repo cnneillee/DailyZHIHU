@@ -75,7 +75,7 @@ public class CommentListBaseAdapter extends BaseAdapter {
                 viewHolder.tvStatusReplyTo.setVisibility(View.GONE);
             }else{
                 viewHolder.tvStatusReplyTo.setVisibility(View.VISIBLE);
-                viewHolder.tvStatusReplyTo.setText("[已删除]");
+                viewHolder.tvStatusReplyTo.setText(R.string.state_deleted);
                 viewHolder.tvContentReplyTo.setText(replyToBean.getErrMsg());
             }
         }else {

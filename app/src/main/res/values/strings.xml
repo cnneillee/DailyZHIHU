@@ -37,6 +37,9 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="activity_about">关于</string>
     <string name="activity_setting">设置</string>
     <string name="activity_comment">评论</string>
+    <string name="activity_editor">主编</string>
+    <string name="activity_column">栏目</string>
+    <string name="activity_topic">日报</string>
 
     <string name="extras">热度：-，评论：-L + -S</string>
     <string name="action_text_size">字体大小</string>
@@ -46,11 +49,28 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
 
     <!--其他-->
     <string name="to_do">此功能待开发</string>
+    <string name="state_deleted">[已删除]</string>
+    <string name="long_comment">长评论</string>
+    <string name="short_comment">短评论</string>
+    <string name="prompt">提示</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="hide_cache_setting">隐藏缓存设置</string>
+    <string name="cache_setting">缓存设置</string>
+    <string name="cache_past_news_msg">即将出现新闻日历表，点击日历项，即可缓存当天新闻列表及新闻内容。</string>
+    <string name="share_qr_code">二维码分享</string>
+    <string name="share_to">分享到...</string>
+
+    <!--Splash-->
+    <string name="daily_splash">日报开屏</string>
+    <string name="one_pic_per_day">每日一图</string>
 
     <!--通知信息-->
     <string name="notify_info_copied">信息已添加至剪切板,你可以将其粘贴到编辑区域</string>
     <string name="notify_exit_confirm">再按一次退出</string>
-
+    <string name="notify_columns_subscribing_clicked">栏目订阅被点击！</string>
+    <string name="notify_refreshing_data">正在更新数据</string>
+    <string name="notify_saved">保存成功</string>
 
     <!--about preference-->
     <string name="intro_title">应用简介</string>
@@ -60,21 +80,21 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="versioninfo_title">版本信息</string>
     <string name="shareapp_title">分享应用</string>
     <string name="shareapp_sumary">好的东西值得被分享</string>
-    <string name="shareapp_content">DailyZHIHU，一款基于知乎日报内容的第三方应用\\n下载地址：https://github.com/neilleecn/DailyZHIHU</string>
+    <string name="shareapp_content">DailyZHIHU，一款基于知乎日报内容的第三方应用\n下载地址：https://github.com/neilleecn/DailyZHIHU</string>
     <string name="author">作者</string>
     <string name="blog_title">博客</string>
     <string name="blog_summary">http://cnneillee.github.io/</string>
-    <string name="github_address_title">Author\'s Github</string>
+    <string name="github_address_title">代码库</string>
     <string name="github_address">https://github.com/cnneillee</string>
-    <string name="email">E-Mail</string>
-    <string name="email_address">cn.neillee@github.com</string>
+    <string name="email">邮箱</string>
+    <string name="email_address">cn.neillee@gmail.com</string>
     <string name="data_title">内容</string>
     <string name="data_summary">此应用内容来自第三方接口，版权归原作者所有</string>
     <string name="attention_title">注意</string>
     <string name="attention_content">此应用及相关产物禁止用于商业目的</string>
     <string name="opensource_title">开源许可</string>
     <string name="license_title">License</string>
-    <string name="MIT_license">Copyright © 2017 Neil Lee\n
+    <string name="MIT_license">Copyright © 2017 Neil Lee
         \nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
         \nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
         \nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
@@ -84,5 +104,28 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="update_later">以后再说</string>
     <string name="update_now">立即更新</string>
     <string name="is_updated">已是最新</string>
-    <string name="editor">主编</string>
+    <string name="get_updates">检查到更新</string>
+    <string name="version">版本</string>
+    <string name="update_pkg_size">更新包体积</string>
+    <string name="error_in_getting_version_info">版本号获取失败</string>
+
+
+    <!--setting-->
+    <string name="setting_group_preferences">偏好</string>
+    <string name="set_splash_src_dialog">Splash 源设置</string>
+    <string name="set_splash_src_summary">不显示（默认）</string>
+    <string name="set_splash_src_title">Splash 设置</string>
+    <string name="switch_theme_summary">目前提供3种主题</string>
+    <string name="switch_theme_title">主题切换</string>
+    <string name="day_night_mode_summary">适于夜间阅读</string>
+    <string name="day_night_mode_title">夜间模式</string>
+    <string name="exit_with_ensuring_summary">按两次返回键退出应用</string>
+    <string name="exit_with_ensuring_title">退出确认</string>
+    <string name="setting_group_network">网络</string>
+    <string name="no_image_mode_summary">仅在WiFi下加载图片</string>
+    <string name="no_image_mode_title">无图模式</string>
+    <string name="clear_cache_summary">清除DailyZHIHU的缓存</string>
+    <string name="clear_cache_title">清除缓存</string>
+
+    <string name="jump_now">立即体验</string>
 </resources>
