@@ -21,7 +21,7 @@ import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.bean.orignal.GankSplashBean;
-import com.neil.dailyzhihu.bean.orignal.LofterSplashBean;
+import com.neil.dailyzhihu.bean.orignal.HuaBanSplashBean;
 import com.neil.dailyzhihu.bean.orignal.ZhihuSplashBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.main.MainActivity;
@@ -89,11 +89,19 @@ public class ImageSplashActivity extends AppCompatActivity {
         mHandler.sendEmptyMessageDelayed(TIME_UP, MAX_IMG_LOADED_MILLIS);
 
         String url = API.ZHIHU_SPLASH;
-        if (splashType == 3) {
-            url = API.GANK_SPLASH;
-        }
-        if (splashType == 4) {
-            url = API.LOFTER_SPLASH;
+        switch (splashType) {
+            case 1:
+                url = API.PUSH_SPLASH;
+                break;
+            case 2:
+                url = API.ERCIYUAN_SPLASH;
+                break;
+            case 3:
+                url = API.ZHIHU_SPLASH;
+                break;
+            case 4:
+                url = API.GANK_SPLASH;
+                break;
         }
 
         LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadedListener() {
@@ -103,6 +111,15 @@ public class ImageSplashActivity extends AppCompatActivity {
                 String imgUrl = "";
                 String imgSign = "";
                 switch (url) {
+                    case API.PUSH_SPLASH:
+                    case API.ERCIYUAN_SPLASH: {
+                        HuaBanSplashBean splashBean = gson.fromJson(content, HuaBanSplashBean.class);
+                        if (splashBean.getPins() != null || splashBean.getPins().size() > 0) {
+                            imgUrl = API.HUABAN_IMG_HEADER + splashBean.getPins().get(0).getFile().getKey();
+                            imgSign = splashBean.getPins().get(0).getRaw_text();
+                        }
+                        break;
+                    }
                     case API.ZHIHU_SPLASH: {
                         ZhihuSplashBean splashBean = gson.fromJson(content, ZhihuSplashBean.class);
                         imgUrl = splashBean.getLaunch_ads() == null || splashBean.getLaunch_ads().size() == 0 ?
@@ -116,13 +133,6 @@ public class ImageSplashActivity extends AppCompatActivity {
                                 "" : splashBean.getResults().get(0).getUrl();
                         imgSign = splashBean.isError() || splashBean.getResults().size() == 0 ?
                                 "" : splashBean.getResults().get(0).getSource();
-                        break;
-                    }
-                    case API.LOFTER_SPLASH: {
-                        LofterSplashBean splashBean = gson.fromJson(content, LofterSplashBean.class);
-                        imgUrl = splashBean.getList() == null || splashBean.getList().size() == 0 ?
-                                "" : splashBean.getList().get(0);
-                        imgSign = "Lofter开屏";
                         break;
                     }
                 }

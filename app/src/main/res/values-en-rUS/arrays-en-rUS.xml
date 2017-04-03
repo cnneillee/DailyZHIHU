@@ -29,11 +29,11 @@
         <!-- TODO -->
     </declare-styleable>
     <string-array name="splash_entries">
-        <item>Do not show</item>
-        <item>Zhihu Splash</item>
+        <item>No Splash</item>
         <item>Random Splash</item>
+        <item>MAG(Manga Anime Games)</item>
+        <item>Zhihu Splash</item>
         <item>Gank (Caution)</item>
-        <item>LOFTER (Caution)</item>
     </string-array>
     <string-array name="splash_entry_values">
         <item>0</item>
