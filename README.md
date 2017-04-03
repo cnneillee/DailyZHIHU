@@ -23,12 +23,21 @@
 - 0.2.1(2) --- 基础构建
 - 0.3.1(3) --- 基础构建
 - 1.0.0(4) --- 完成基本功能
+- 1.1.0(5) --- 引导页、Splash功能
 
 ### TODO
 1.1.0 ：
-- 功能的 ViewPager 展示
-- 添加 Splash 选项（不加载、从 多个源中自定义 加载）
-- Splash 优化
+- ~~功能的 ViewPager 展示~~
+- ~~添加 Splash 选项（不加载、从 多个源中自定义 加载）~~
+- ~~Splash 优化~~
+- ~~修复更新页面的更新信息乱码问题~~
+
+~~引导页：~~
+![贴图][15] ![贴图][16] ![贴图][17]
+
+~~Splash设置：~~
+![贴图][18] ![贴图][19] ![贴图][20]
+![贴图][21]
 
 1.2.0 ：
 - 意见反馈功能添加（About->DailyZhihu）
@@ -60,19 +69,15 @@
 
 新热旧文，主页一应俱全。
 
-![贴图][4]
-![贴图][5]
-![贴图][6]
+![贴图][4] ![贴图][5] ![贴图][6]
 
 主题日报，想看什么看什么。
 
-![贴图][7]
-![贴图][8]
+![贴图][7] ![贴图][8]
 
 栏目纵览，总有一个适合你。
 
-![贴图][9]
-![贴图][10]
+![贴图][9] ![贴图][10]
 
 治愈长夜的无聊！
 
@@ -80,8 +85,7 @@
 
 爱上毒舌的快感！
 
-![贴图][12]
-![贴图][13]
+![贴图][12] ![贴图][13]
 
 畅享阅读的高潮！
 
@@ -102,3 +106,10 @@
 [12]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/12.png
 [13]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/13.png
 [14]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v0.2.x/14.png
+[15]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/01.png
+[16]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/02.png
+[17]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/03.png
+[18]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/05.png
+[19]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/06.png
+[20]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/07.png
+[21]: https://github.com/neilleecn/DailyZHIHU/blob/master/screenshot/v1.1.0/04.png
