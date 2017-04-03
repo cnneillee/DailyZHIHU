@@ -27,13 +27,13 @@ public class CommentTypesPagerAdapter extends PagerAdapter {
 
     public enum CommentType {
         LONG("长评论", "/long-comments", 0), SHORT("短评论", "/short-comments", 1);
-        public String cn;
-        public String en;
+        public String name;
+        public String urlSuffix;
         public int index;
 
         CommentType(String cnName, String enName, int index) {
-            this.cn = cnName;
-            this.en = enName;
+            this.name = cnName;
+            this.urlSuffix = enName;
             this.index = index;
         }
 
@@ -56,8 +56,8 @@ public class CommentTypesPagerAdapter extends PagerAdapter {
 
     private void loadComments(String storyId) {
         ContentLoaderWrapper loaderWrapper = LoaderFactory.getContentLoader();
-        loaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + storyId + CommentType.LONG.en, mListenerLong);
-        loaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + storyId + CommentType.SHORT.en, mListenerShort);
+        loaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + storyId + CommentType.LONG.urlSuffix, mListenerLong);
+        loaderWrapper.loadContent(API.STORY_COMMENT_PREFIX + storyId + CommentType.SHORT.urlSuffix, mListenerShort);
     }
 
     //viewpager中的组件数量
@@ -93,7 +93,7 @@ public class CommentTypesPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "标题" + position;
+        return CommentType.getType(position).name;
     }
 
     private OnContentLoadedListener mListenerLong = new OnContentLoadedListener() {
@@ -106,8 +106,8 @@ public class CommentTypesPagerAdapter extends PagerAdapter {
             if (commentListBean != null) {
                 List<CommentListBean.CommentsBean> data = commentListBean.getComments();
                 listView.setAdapter(new CommentListBaseAdapter(mContext, data));
-                addonView.setVisibility((data==null||data.size()<=0)?View.VISIBLE:View.INVISIBLE);
-            }else{
+                addonView.setVisibility((data == null || data.size() <= 0) ? View.VISIBLE : View.INVISIBLE);
+            } else {
                 addonView.setVisibility(View.VISIBLE);
             }
         }
@@ -123,8 +123,8 @@ public class CommentTypesPagerAdapter extends PagerAdapter {
             if (commentListBean != null) {
                 List<CommentListBean.CommentsBean> data = commentListBean.getComments();
                 listView.setAdapter(new CommentListBaseAdapter(mContext, data));
-                addonView.setVisibility((data==null||data.size()<=0)?View.VISIBLE:View.INVISIBLE);
-            }else{
+                addonView.setVisibility((data == null || data.size() <= 0) ? View.VISIBLE : View.INVISIBLE);
+            } else {
                 addonView.setVisibility(View.VISIBLE);
             }
         }
