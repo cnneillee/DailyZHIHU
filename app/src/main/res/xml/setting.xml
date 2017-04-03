@@ -14,7 +14,7 @@
             android:key="key_switch_theme"
             android:layout="@layout/preference_custom"
             android:summary="@string/switch_theme_summary"
-            android:title="switch_theme_title"/>
+            android:title="@string/switch_theme_title"/>
         <CheckBoxPreference
             android:key="key_day_night_mode"
             android:layout="@layout/preference_custom"
