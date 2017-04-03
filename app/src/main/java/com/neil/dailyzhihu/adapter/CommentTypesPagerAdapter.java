@@ -26,14 +26,14 @@ import java.util.List;
 public class CommentTypesPagerAdapter extends PagerAdapter {
 
     public enum CommentType {
-        LONG("长评论", "/long-comments", 0), SHORT("短评论", "/short-comments", 1);
-        public String name;
+        LONG(R.string.long_comment, "/long-comments", 0), SHORT(R.string.short_comment, "/short-comments", 1);
+        public int nameRes;
         public String urlSuffix;
         public int index;
 
-        CommentType(String cnName, String enName, int index) {
-            this.name = cnName;
-            this.urlSuffix = enName;
+        CommentType(int nameRes, String urlSuffix, int index) {
+            this.nameRes = nameRes;
+            this.urlSuffix = urlSuffix;
             this.index = index;
         }
 
@@ -93,7 +93,7 @@ public class CommentTypesPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return CommentType.getType(position).name;
+        return mContext != null ? mContext.getResources().getString(CommentType.getType(position).nameRes) : "";
     }
 
     private OnContentLoadedListener mListenerLong = new OnContentLoadedListener() {

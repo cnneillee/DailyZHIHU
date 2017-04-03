@@ -62,7 +62,8 @@ public class CertainStoryCommentActivity extends NightModeBaseActivity {
 
             @Override
             public void onPageSelected(final int position) {
-                mToolbar.setSubtitle(position == 0 ? CommentTypesPagerAdapter.CommentType.LONG.name : CommentTypesPagerAdapter.CommentType.SHORT.name);
+                mToolbar.setSubtitle(position == 0 ? CommentTypesPagerAdapter.CommentType.LONG.nameRes
+                        : CommentTypesPagerAdapter.CommentType.SHORT.nameRes);
             }
 
             @Override

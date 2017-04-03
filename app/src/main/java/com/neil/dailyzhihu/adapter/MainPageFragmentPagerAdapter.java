@@ -32,7 +32,7 @@ public class MainPageFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return mFragmentList != null ? mFragmentList.size():0;
+        return mFragmentList != null ? mFragmentList.size() : 0;
     }
 
     //此方法用来显示tab上的名字

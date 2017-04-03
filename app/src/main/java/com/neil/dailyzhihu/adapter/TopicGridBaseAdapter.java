@@ -57,7 +57,7 @@ public class TopicGridBaseAdapter extends BaseAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.ivTitle.setText(mDatas.get(position).getTitle());
-        vh.ivDescribsion.setText(mDatas.get(position).getDescription());
+        vh.ivDescription.setText(mDatas.get(position).getDescription());
         LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
         return convertView;
     }
@@ -67,8 +67,8 @@ public class TopicGridBaseAdapter extends BaseAdapter {
         ImageView ivImg;
         @Bind(R.id.iv_title)
         TextView ivTitle;
-        @Bind(R.id.tv_describsion)
-        TextView ivDescribsion;
+        @Bind(R.id.tv_description)
+        TextView ivDescription;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

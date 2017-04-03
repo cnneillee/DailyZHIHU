@@ -46,10 +46,31 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
 
     <!--其他-->
     <string name="to_do">Being developed</string>
+    <string name="state_deleted">[Deleted]</string>
+    <string name="long_comment">LONG COMMENTS</string>
+    <string name="short_comment">SHORT COMMENTS</string>
+    <string name="column">Column</string>
+    <string name="prompt">Prompt</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="hide_cache_setting">Hide cache setting</string>
+    <string name="cache_setting">Cache setting</string>
+    <string name="cache_past_news_msg">News calendar is showing! Click the calendar to cache news list and contents of selected day.</string>
+    <string name="share_qr_code">Share qr Code</string>
+    <string name="share_to">Share to...</string>
+    <string name="topic">Topic</string>
+
+    <!--Splash-->
+    <string name="daily_splash">Daily Splash</string>
+    <string name="one_pic_per_day">One Pic per Day</string>
 
     <!--通知信息-->
     <string name="notify_info_copied">Info has been copied, you can paste!</string>
     <string name="notify_exit_confirm">Again to Exit</string>
+    <string name="notify_columns_subscribing_clicked">Columns subscribing clicked!</string>
+    <string name="notify_refreshing_data">Refreshing data</string>
+    <string name="notify_saved">Saved</string>
+
 
     <!--about preference-->
     <string name="intro_title">App Intro</string>
@@ -77,10 +98,33 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
         \nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
         \nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
         \nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
+
     <!--update-->
     <string name="ignore_this_update">Ignore this version</string>
     <string name="update_later">Update Later</string>
     <string name="update_now">Update Now</string>
     <string name="is_updated">Is Updated</string>
+    <string name="get_updates">Get Updates</string>
+    <string name="version">Version</string>
+    <string name="update_pkg_size">Package Size</string>
+    <string name="error_in_getting_version_info">Error in getting version info</string>
+
     <string name="editor">Editor</string>
+
+    <!--setting-->
+    <string name="setting_group_preferences">Preferences</string>
+    <string name="set_splash_src_dialog">Set Splash src</string>
+    <string name="set_splash_src_summary">No splash(Default)</string>
+    <string name="set_splash_src_title">Set Splash</string>
+    <string name="switch_theme_summary">3 available themes to choose</string>
+    <string name="switch_theme_title">Switch Theme</string>
+    <string name="day_night_mode_summary">Fit to read at night</string>
+    <string name="day_night_mode_title">Night Mode</string>
+    <string name="exit_with_ensuring_summary">Click twice back key to exit app</string>
+    <string name="exit_with_ensuring_title">Exit with Ensuring</string>
+    <string name="setting_group_network">Network</string>
+    <string name="no_image_mode_summary">Loading pic only on WiFi condition</string>
+    <string name="no_image_mode_title">No pic mode</string>
+    <string name="clear_cache_summary">Clear DailyZHIHU cache</string>
+    <string name="clear_cache_title">Clear Cache</string>
 </resources>

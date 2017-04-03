@@ -72,15 +72,15 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     private void loadDataFromInternet() {
         LoaderFactory.getContentLoader().loadContent(API.HOT_NEWS,
                 new OnContentLoadedListener() {
-            @Override
-            public void onSuccess(String content, String url) {
-                Logger.json(content);
-                mSrlRefresh.setRefreshing(false);
-                HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
-                HotStoryListBaseAdapter adapter = new HotStoryListBaseAdapter(mContext,hotStories);
-                lvHot.setAdapter(adapter);
-            }
-        });
+                    @Override
+                    public void onSuccess(String content, String url) {
+                        Logger.json(content);
+                        mSrlRefresh.setRefreshing(false);
+                        HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
+                        HotStoryListBaseAdapter adapter = new HotStoryListBaseAdapter(mContext, hotStories);
+                        lvHot.setAdapter(adapter);
+                    }
+                });
     }
 
     @Override
@@ -126,7 +126,7 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
 
     @Override
     public void onRefresh() {
-        Toast.makeText(mContext, "正在更新数据", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, getResources().getString(R.string.notify_refreshing_data), Toast.LENGTH_SHORT).show();
         loadDataFromInternet();
     }
 }

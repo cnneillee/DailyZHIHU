@@ -60,7 +60,6 @@ public class HotStoryListBaseAdapter extends BaseAdapter {
         }
         HotStoryListBean.HotStory recentStory = mHotStoryList.get(position);
         viewHolder.tvTitle.setText(recentStory.getTitle());
-        Log.e(LOG_TAG, "设置title");
         LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, recentStory.getImage(), null);
 
         return convertView;

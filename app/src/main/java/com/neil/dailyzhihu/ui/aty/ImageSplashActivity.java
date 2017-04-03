@@ -25,6 +25,7 @@ import com.neil.dailyzhihu.bean.orignal.HuaBanSplashBean;
 import com.neil.dailyzhihu.bean.orignal.ZhihuSplashBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.main.MainActivity;
+import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -124,7 +125,7 @@ public class ImageSplashActivity extends AppCompatActivity {
                         ZhihuSplashBean splashBean = gson.fromJson(content, ZhihuSplashBean.class);
                         imgUrl = splashBean.getLaunch_ads() == null || splashBean.getLaunch_ads().size() == 0 ?
                                 "" : splashBean.getLaunch_ads().get(0).getImage();
-                        imgSign = "日报开屏";
+                        imgSign = getResources().getString(R.string.daily_splash);
                         break;
                     }
                     case API.GANK_SPLASH: {
@@ -136,7 +137,7 @@ public class ImageSplashActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                mTvImgSource.setText("每日一图 · " + imgSign);
+                mTvImgSource.setText(Formater.fromatOneDayOnPicInfo(ImageSplashActivity.this, imgSign));
                 if (TextUtils.isEmpty(imgUrl)) {
                     mHandler.sendEmptyMessage(DISPLAY_END);
                     return;
