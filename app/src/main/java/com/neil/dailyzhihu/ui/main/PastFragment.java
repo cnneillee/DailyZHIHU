@@ -195,14 +195,15 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                 shouldShownMCV = !shouldShownMCV;
                 if (shouldShownMCV) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("提示").setMessage("即将出现新闻日历表，点击日历项，即可缓存当天新闻列表及新闻内容。")
-                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mMCV.setVisibility(View.VISIBLE);
-                            mBtnLoadSetting.setText("隐藏缓存设置");
-                        }
-                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    builder.setTitle(getResources().getString(R.string.prompt))
+                            .setMessage(getResources().getString(R.string.cache_past_news_msg))
+                            .setPositiveButton(getResources().getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mMCV.setVisibility(View.VISIBLE);
+                                    mBtnLoadSetting.setText(getResources().getString(R.string.hide_cache_setting));
+                                }
+                            }).setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -210,7 +211,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                     }).create().show();
                 } else {
                     mMCV.setVisibility(View.GONE);
-                    mBtnLoadSetting.setText("缓存设置");
+                    mBtnLoadSetting.setText(getResources().getString(R.string.cache_setting));
                 }
                 break;
         }
@@ -229,7 +230,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                 Toast.makeText(mContext, pickedDate, Toast.LENGTH_SHORT).show();
                 loadPickedDateStory();
             }
-        },dateInNumbers.getYear() , dateInNumbers.getMonthOfYear() - 1, dateInNumbers.getDayOfMonth());
+        }, dateInNumbers.getYear(), dateInNumbers.getMonthOfYear() - 1, dateInNumbers.getDayOfMonth());
         dialog.show();
 
         // 设置日期选择器的日期选择区间（最大为今日，最小为2013年5月20日）

@@ -169,7 +169,7 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                     String text = mStoryTitle + " via " + "http://daily.zhihu.com/story/" + mStoryId + "\n(powered by DailyZHIHU)\n";
                     intent.putExtra(Intent.EXTRA_TEXT, text);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(Intent.createChooser(intent, "分享到..."));
+                    mContext.startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_to)));
                 }
             }
         });
@@ -233,7 +233,7 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_qr_display, null, false);
                 ImageView ivQR = (ImageView) view.findViewById(R.id.iv_qrDisplay);
-                AlertDialog dialog = builder.setView(view).setTitle("二维码分享").create();
+                AlertDialog dialog = builder.setView(view).setTitle(getResources().getString(R.string.share_qr_code)).create();
                 dialog.show();
 
                 ViewGroup.LayoutParams pm = ivQR.getLayoutParams();
@@ -245,7 +245,7 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                     public boolean onLongClick(View v) {
                         String path = StorageOperatingHelper.savingBitmap2SD(mContext, bm, shareUrl);
                         if (!TextUtils.isEmpty(path))
-                            SnackbarUtil.ShortSnackbar(mRootView, "保存成功" + path, SnackbarUtil.Info).show();
+                            SnackbarUtil.ShortSnackbar(mRootView, getResources().getString(R.string.notify_saved) + path, SnackbarUtil.Info).show();
                         return true;
                     }
                 });

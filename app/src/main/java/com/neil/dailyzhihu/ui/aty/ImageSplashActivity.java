@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -18,11 +19,15 @@ import android.widget.ViewSwitcher;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignal.StartImgBean;
+import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.bean.orignal.GankSplashBean;
+import com.neil.dailyzhihu.bean.orignal.HuaBanSplashBean;
+import com.neil.dailyzhihu.bean.orignal.ZhihuSplashBean;
+import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.main.MainActivity;
+import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,7 +44,6 @@ public class ImageSplashActivity extends AppCompatActivity {
     @Bind(R.id.tv_img_source)
     TextView mTvImgSource;
 
-    private String startImgSize = API.START_IMG_SIZE_LARGE;
     private static final int IMG_LOADED = 0;
     private static final int TIME_UP = 1;
     private static final int DISPLAY_END = 2;
@@ -82,52 +86,69 @@ public class ImageSplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
 
+        int splashType = getIntent().getExtras().getInt(AtyExtraKeyConstant.SPLASH_TYPE, 1);
         mHandler.sendEmptyMessageDelayed(TIME_UP, MAX_IMG_LOADED_MILLIS);
 
-        new Thread() {
-            @Override
-            public void run() {
-                int sleepMillies = (int) (2000 * Math.random());
-                try {
-                    Thread.sleep(sleepMillies);
-                    Logger.e("sleepMillies：" + sleepMillies);
-                    mockData();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.run();
-//        LoaderFactory.getContentLoader().loadContent(startImgSize, new OnContentLoadedListener() {
-//            @Override
-//            public void onSuccess(String content, String url) {
-//                Gson gson = new Gson();
-//                StartImgBean startImgBean = gson.fromJson(content, StartImgBean.class);
-//                String imgUrl = startImgBean.getImg();
-//                String imgSign = startImgBean.getText();
-//                mTvImgSource.setText("每日一图 · " + imgSign);
-//                LoaderFactory.getImageLoader().displayImage(mSplash, imgUrl, null, new SimpleImageLoadingListener() {
-//                    @Override
-//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                        super.onLoadingComplete(imageUri, view, loadedImage);
-//                        mHandler.sendEmptyMessage(IMG_LOADED);
-//                    }
-//                });
-//            }
-//        });
-    }
+        String url = API.ZHIHU_SPLASH;
+        switch (splashType) {
+            case 1:
+                url = API.PUSH_SPLASH;
+                break;
+            case 2:
+                url = API.ERCIYUAN_SPLASH;
+                break;
+            case 3:
+                url = API.ZHIHU_SPLASH;
+                break;
+            case 4:
+                url = API.GANK_SPLASH;
+                break;
+        }
 
-    public void mockData() {
-        String content = "{text: \"© Fido Dido\",img: \"http://p2.zhimg.com/10/7b/107bb4894b46d75a892da6fa80ef504a.jpg\"}  ";
-        Gson gson = new Gson();
-        StartImgBean startImgBean = gson.fromJson(content, StartImgBean.class);
-        String imgUrl = startImgBean.getImg();
-        String imgSign = startImgBean.getText();
-        mTvImgSource.setText("每日一图 · " + imgSign);
-        LoaderFactory.getImageLoader().displayImage(mSplash, imgUrl, null, new SimpleImageLoadingListener() {
+        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadedListener() {
             @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                mHandler.sendEmptyMessage(IMG_LOADED);
+            public void onSuccess(String content, String url) {
+                Gson gson = new Gson();
+                String imgUrl = "";
+                String imgSign = "";
+                switch (url) {
+                    case API.PUSH_SPLASH:
+                    case API.ERCIYUAN_SPLASH: {
+                        HuaBanSplashBean splashBean = gson.fromJson(content, HuaBanSplashBean.class);
+                        if (splashBean.getPins() != null || splashBean.getPins().size() > 0) {
+                            imgUrl = API.HUABAN_IMG_HEADER + splashBean.getPins().get(0).getFile().getKey();
+                            imgSign = splashBean.getPins().get(0).getRaw_text();
+                        }
+                        break;
+                    }
+                    case API.ZHIHU_SPLASH: {
+                        ZhihuSplashBean splashBean = gson.fromJson(content, ZhihuSplashBean.class);
+                        imgUrl = splashBean.getLaunch_ads() == null || splashBean.getLaunch_ads().size() == 0 ?
+                                "" : splashBean.getLaunch_ads().get(0).getImage();
+                        imgSign = getResources().getString(R.string.daily_splash);
+                        break;
+                    }
+                    case API.GANK_SPLASH: {
+                        GankSplashBean splashBean = gson.fromJson(content, GankSplashBean.class);
+                        imgUrl = splashBean.isError() || splashBean.getResults().size() == 0 ?
+                                "" : splashBean.getResults().get(0).getUrl();
+                        imgSign = splashBean.isError() || splashBean.getResults().size() == 0 ?
+                                "" : splashBean.getResults().get(0).getSource();
+                        break;
+                    }
+                }
+                mTvImgSource.setText(Formater.fromatOneDayOnPicInfo(ImageSplashActivity.this, imgSign));
+                if (TextUtils.isEmpty(imgUrl)) {
+                    mHandler.sendEmptyMessage(DISPLAY_END);
+                    return;
+                }
+                LoaderFactory.getImageLoader().displayImage(mSplash, imgUrl, null, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        mHandler.sendEmptyMessage(IMG_LOADED);
+                    }
+                });
             }
         });
     }
@@ -140,5 +161,4 @@ public class ImageSplashActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
     }
-
 }

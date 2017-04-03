@@ -19,6 +19,7 @@ import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.bean.orignal.UpdateInfoBean;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 import com.neil.dailyzhihu.utils.AppUtil;
+import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.update.UpdateAppUtils;
 
@@ -155,13 +156,13 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
 
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_update, null);
         TextView tvVersion = (TextView) contentView.findViewById(R.id.tv_version);
-        tvVersion.setText("版本：" + versionName + "(" + versionCode + ")");
+        tvVersion.setText(Formater.fromatUpdateVersionInfo(mContext, versionName, versionCode));
         TextView tvSize = (TextView) contentView.findViewById(R.id.tv_size);
-        tvSize.setText("更新包体积：" + size);
+        tvSize.setText(Formater.fromatUpdatePgSize(mContext, size));
         TextView tvDesc = (TextView) contentView.findViewById(R.id.tv_update_info);
         tvDesc.setText(desc);
 
-        new AlertDialog.Builder(mContext).setTitle("检查到更新")
+        new AlertDialog.Builder(mContext).setTitle(getResources().getString(R.string.get_updates))
                 .setPositiveButton(getResources().getString(R.string.update_now),
                         new DialogInterface.OnClickListener() {
                             @Override

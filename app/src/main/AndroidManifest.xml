@@ -48,6 +48,11 @@
             android:label="@string/app_name"
             android:theme="@style/SplashTheme"/>
 
+        <!--引导界面-->
+        <activity
+            android:name=".ui.aty.GuideActivity"
+            android:label="@string/app_name"/>
+
         <!--主窗口注册-->
         <activity
             android:name=".ui.main.MainActivity"
@@ -55,7 +60,7 @@
             android:theme="@style/AppDayTheme">
         </activity>
 
-        <!--所有主题窗口注册-->
+        <!--主题窗口注册-->
         <activity
             android:name=".ui.topic.NavTopicsActivity"
             android:label="@string/activity_topics"
@@ -72,14 +77,17 @@
         <!--某一主题窗口注册-->
         <activity
             android:name=".ui.topic.TopicDetailActivity"
+            android:label="@string/activity_topics"
             android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.neil.dailyzhihu.ui.main.MainActivity"/>
         </activity>
-        <!--某一主题窗口注册-->
+
+        <!--某一主题编辑窗口注册-->
         <activity
             android:name=".ui.topic.TopicEditorsActivity"
+            android:label="@string/activity_editor"
             android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -89,13 +97,14 @@
         <!--所有栏目窗口注册-->
         <activity
             android:name=".ui.column.NavColumnsActivity"
-            android:label="@string/nav_columns"
+            android:label="@string/activity_columns"
             android:theme="@style/AppNightTheme">
         </activity>
 
         <!--某一栏目窗口注册-->
         <activity
             android:name=".ui.column.CertainColumnActivity"
+            android:label="@string/activity_column"
             android:theme="@style/AppNightTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

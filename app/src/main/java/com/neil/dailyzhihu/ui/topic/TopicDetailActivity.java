@@ -179,7 +179,7 @@ public class TopicDetailActivity extends BaseActivity implements ObservableScrol
     private void setActionBarText(String themeName) {
         ActionBar ab = getSupportActionBar();
         if (ab == null || mThemeId < 0) return;
-        ab.setTitle("日报·主题\t" + themeName);
+        ab.setTitle(getResources().getString(R.string.activity_topic) + " · " + themeName);
     }
 
     /*某一主题日报中的某个新闻项被点击*/

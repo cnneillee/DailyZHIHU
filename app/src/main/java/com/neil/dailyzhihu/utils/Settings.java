@@ -27,7 +27,9 @@ public class Settings {
 
     public static final String CLEAR_CACHE = "clear_cache";
 
-    public static final String HAS_IMG_SPLASH = "has_img_splash";
+    public static final String SPLASH_SETTING = "splash_setting";
+
+    public static final String FIRST_TIME = "first_time";
 
     private static Settings sInstance;
 

@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="偏好">
+    <PreferenceCategory android:title="@string/setting_group_preferences">
+        <ListPreference
+            android:dialogTitle="@string/set_splash_src_dialog"
+            android:enabled="true"
+            android:entries="@array/splash_entries"
+            android:entryValues="@array/splash_entry_values"
+            android:key="key_set_splash"
+            android:layout="@layout/preference_custom"
+            android:summary="@string/set_splash_src_summary"
+            android:title="@string/set_splash_src_title"/>
         <Preference
             android:key="key_switch_theme"
             android:layout="@layout/preference_custom"
-            android:summary="目前提供3中主题"
-            android:title="主题切换"/>
+            android:summary="@string/switch_theme_summary"
+            android:title="@string/switch_theme_title"/>
         <CheckBoxPreference
             android:key="key_day_night_mode"
             android:layout="@layout/preference_custom"
-            android:summary="适于夜间阅读"
-            android:title="夜间模式"/>
+            android:summary="@string/day_night_mode_summary"
+            android:title="@string/day_night_mode_title"/>
         <CheckBoxPreference
             android:key="key_exit_with_ensuring"
             android:layout="@layout/preference_custom"
-            android:summary="按两次返回键退出应用"
-            android:title="退出确认"/>
+            android:summary="@string/exit_with_ensuring_summary"
+            android:title="@string/exit_with_ensuring_title"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="网络">
+    <PreferenceCategory android:title="@string/setting_group_network">
         <CheckBoxPreference
             android:key="key_no_image_mode"
             android:layout="@layout/preference_custom"
-            android:summary="仅在WiFi下加载图片"
-            android:title="无图模式"/>
+            android:summary="@string/no_image_mode_summary"
+            android:title="@string/no_image_mode_title"/>
         <Preference
             android:key="key_clear_cache"
             android:layout="@layout/preference_custom"
-            android:summary="清除DailyZHIHU的缓存"
-            android:title="清除缓存"/>
+            android:summary="@string/clear_cache_summary"
+            android:title="@string/clear_cache_title"/>
     </PreferenceCategory>
 </PreferenceScreen>
