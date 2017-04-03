@@ -37,6 +37,9 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="activity_about">关于</string>
     <string name="activity_setting">设置</string>
     <string name="activity_comment">评论</string>
+    <string name="activity_editor">主编</string>
+    <string name="activity_column">栏目</string>
+    <string name="activity_topic">日报</string>
 
     <string name="extras">热度：-，评论：-L + -S</string>
     <string name="action_text_size">字体大小</string>
@@ -49,7 +52,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="state_deleted">[已删除]</string>
     <string name="long_comment">长评论</string>
     <string name="short_comment">短评论</string>
-    <string name="column">栏目</string>
     <string name="prompt">提示</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
@@ -58,7 +60,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="cache_past_news_msg">即将出现新闻日历表，点击日历项，即可缓存当天新闻列表及新闻内容。</string>
     <string name="share_qr_code">二维码分享</string>
     <string name="share_to">分享到...</string>
-    <string name="topic">日报</string>
 
     <!--Splash-->
     <string name="daily_splash">日报开屏</string>
@@ -108,7 +109,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="update_pkg_size">更新包体积</string>
     <string name="error_in_getting_version_info">版本号获取失败</string>
 
-    <string name="editor">主编</string>
 
     <!--setting-->
     <string name="setting_group_preferences">偏好</string>

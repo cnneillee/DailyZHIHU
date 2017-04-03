@@ -103,7 +103,7 @@ public class CertainColumnActivity extends BaseActivity implements AdapterView.O
         if (ab == null || sectionId < 0)
             return;
         //sectionName也可以从当前的sectionStoryList中取得
-        ab.setTitle(getResources().getString(R.string.column) + " · " + sectionName);
+        ab.setTitle(getResources().getString(R.string.activity_column) + " · " + sectionName);
     }
 
     @Override

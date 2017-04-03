@@ -38,18 +38,16 @@ public class Formater {
             return "";
         }
         timeStamp = timeStamp * 1000;
-        String result = "";
         SimpleDateFormat format = new SimpleDateFormat(dataFormat);
-        result = format.format(new Date(timeStamp));
-        return result;
+        return format.format(new Date(timeStamp));
     }
 
     public static String fromatUpdateVersionInfo(Context context, String versionName, int versionCode) {
-        return context.getResources().getString(R.string.version) + versionName + "(" + versionCode + ")";
+        return context.getResources().getString(R.string.version) +": "+ versionName + "(" + versionCode + ")";
     }
 
     public static String fromatUpdatePgSize(Context context, String size) {
-        return context.getResources().getString(R.string.update_pkg_size) + "：" + size;
+        return context.getResources().getString(R.string.update_pkg_size) + ": " + size;
     }
 
     public static String fromatOneDayOnPicInfo(Context context, String name) {

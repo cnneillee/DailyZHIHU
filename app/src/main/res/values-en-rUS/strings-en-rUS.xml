@@ -37,6 +37,9 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="activity_about">About</string>
     <string name="activity_setting">Settings</string>
     <string name="activity_comment">Comments</string>
+    <string name="activity_editor">Editor</string>
+    <string name="activity_topic">Topic</string>
+    <string name="activity_column">Column</string>
 
     <string name="extras">Hot：-, comments：-L + -S</string>
     <string name="action_text_size">Text Size</string>
@@ -49,7 +52,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="state_deleted">[Deleted]</string>
     <string name="long_comment">LONG COMMENTS</string>
     <string name="short_comment">SHORT COMMENTS</string>
-    <string name="column">Column</string>
     <string name="prompt">Prompt</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
@@ -58,7 +60,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="cache_past_news_msg">News calendar is showing! Click the calendar to cache news list and contents of selected day.</string>
     <string name="share_qr_code">Share qr Code</string>
     <string name="share_to">Share to...</string>
-    <string name="topic">Topic</string>
 
     <!--Splash-->
     <string name="daily_splash">Daily Splash</string>
@@ -109,7 +110,6 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="update_pkg_size">Package Size</string>
     <string name="error_in_getting_version_info">Error in getting version info</string>
 
-    <string name="editor">Editor</string>
 
     <!--setting-->
     <string name="setting_group_preferences">Preferences</string>
