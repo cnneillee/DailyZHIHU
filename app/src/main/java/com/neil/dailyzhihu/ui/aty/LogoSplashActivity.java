@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Menu;
 
+import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.main.MainActivity;
 import com.neil.dailyzhihu.utils.Settings;
 
@@ -20,12 +22,19 @@ public class LogoSplashActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Settings.hasImgSplash = mSettings.getBoolean(Settings.HAS_IMG_SPLASH, true);
         Intent intent = new Intent();
-        if (Settings.hasImgSplash) {
-            intent.setClass(LogoSplashActivity.this, ImageSplashActivity.class);
-        } else {
-            intent.setClass(LogoSplashActivity.this, MainActivity.class);
+        int splashSetting = mSettings.getInt(Settings.SPLASH_SETTING, 0);
+        boolean firstTime = mSettings.getBoolean(Settings.FIRST_TIME, true);
+        if (firstTime) {
+            intent.setClass(LogoSplashActivity.this, GuideActivity.class);
+            mSettings.putBoolean(Settings.FIRST_TIME, false);
+        }else{
+            if (splashSetting == 0) {
+                intent.setClass(LogoSplashActivity.this, MainActivity.class);
+            } else {
+                intent.setClass(LogoSplashActivity.this, ImageSplashActivity.class);
+                intent.putExtra(AtyExtraKeyConstant.SPLASH_TYPE, splashSetting);
+            }
         }
         startActivity(intent);
         this.finish();

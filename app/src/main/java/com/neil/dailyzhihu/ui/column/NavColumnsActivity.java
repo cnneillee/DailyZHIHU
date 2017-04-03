@@ -131,6 +131,6 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
     public void onClick(View v) {
 //        Intent intent = new Intent(this, SectionSettingActivity.class);
 //        this.startActivity(intent);
-        Toast.makeText(this, "栏目订阅被点击！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.notify_columns_subscribing_clicked), Toast.LENGTH_SHORT).show();
     }
 }

@@ -13,7 +13,7 @@
         android:background="?attr/barBgColor"
         android:fitsSystemWindows="true"
         android:minHeight="?actionBarSize"
-        app:subtitle="长评论"
+        app:subtitle="@string/long_comment"
         app:subtitleTextColor="?attr/barSubTitleColor"
         app:titleTextColor="?attr/barTitleColor"/>
 

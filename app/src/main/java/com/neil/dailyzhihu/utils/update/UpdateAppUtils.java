@@ -1,22 +1,14 @@
 package com.neil.dailyzhihu.utils.update;
 
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
-import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.api.API;
 import com.neil.dailyzhihu.bean.orignal.UpdateInfoBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
-import com.neil.dailyzhihu.utils.AppUtil;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
@@ -122,8 +114,6 @@ public class UpdateAppUtils {
     // 错误回调
     public interface UpdateCallback {
         void onSuccess(UpdateInfoBean updateInfo);
-
         void onError();
-
     }
 }

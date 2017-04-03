@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.neil.dailyzhihu.MyApplication;
+import com.neil.dailyzhihu.R;
 
 /**
  * 作者：Neil on 2017/3/5 17:34.
@@ -32,9 +33,9 @@ public class AppUtil {
         String versionCode;
         try {
             PackageInfo pkginfo = context.getPackageManager().getPackageInfo(((Activity) context).getApplication().getPackageName(), 0);
-            versionCode = "当前版本号：" + pkginfo.versionName + "(" + pkginfo.versionCode + ")";
+            versionCode = Formater.fromatUpdateVersionInfo(context, pkginfo.versionName, pkginfo.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
-            versionCode = "版本号获取失败";
+            versionCode = context.getResources().getString(R.string.error_in_getting_version_info);
             e.printStackTrace();
         }
         return versionCode;

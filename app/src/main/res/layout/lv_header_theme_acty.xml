@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:padding="8dp"
-        android:text="@string/editor"/>
+        android:text="@string/activity_editor"/>
 
     <LinearLayout
         android:id="@+id/ll_editors"
