@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.api;
+package com.neil.dailyzhihu.model.http.api;
 
 /**
  * 作者：Neil on 2017/3/5 18:40.

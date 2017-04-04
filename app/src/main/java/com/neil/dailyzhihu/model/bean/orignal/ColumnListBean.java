@@ -1,6 +1,6 @@
-package com.neil.dailyzhihu.bean.orignal;
+package com.neil.dailyzhihu.model.bean.orignal;
 
-import com.neil.dailyzhihu.bean.IBlockBean;
+import com.neil.dailyzhihu.model.bean.IBlockBean;
 
 import java.util.ArrayList;
 import java.util.List;

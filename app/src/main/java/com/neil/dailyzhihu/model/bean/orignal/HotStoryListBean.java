@@ -1,6 +1,6 @@
-package com.neil.dailyzhihu.bean.orignal;
+package com.neil.dailyzhihu.model.bean.orignal;
 
-import com.neil.dailyzhihu.bean.IStoryBean;
+import com.neil.dailyzhihu.model.bean.IStoryBean;
 
 import java.util.List;
 

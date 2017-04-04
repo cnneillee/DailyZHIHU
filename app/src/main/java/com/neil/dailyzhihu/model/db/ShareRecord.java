@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.bean;
+package com.neil.dailyzhihu.model.db;
 
 /**
  * 作者：Neil on 2016/4/27 15:10.

@@ -14,9 +14,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.bean.orignal.UpdateInfoBean;
+import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.model.bean.orignal.UpdateInfoBean;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 import com.neil.dailyzhihu.utils.AppUtil;
 import com.neil.dailyzhihu.utils.Formater;

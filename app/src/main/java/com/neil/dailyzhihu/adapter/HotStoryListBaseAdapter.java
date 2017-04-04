@@ -1,7 +1,6 @@
 package com.neil.dailyzhihu.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignal.HotStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.HotStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;

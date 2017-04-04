@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.CommentTypesPagerAdapter;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
 import butterknife.Bind;
