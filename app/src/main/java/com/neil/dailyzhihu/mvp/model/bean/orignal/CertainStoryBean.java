@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.model.bean.orignal;
+package com.neil.dailyzhihu.mvp.model.bean.orignal;
 
 import java.util.List;
 
