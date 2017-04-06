@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.mvp.view.story;
+package com.neil.dailyzhihu.ui.story;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -72,7 +72,7 @@ public class StoryCommentFragment extends Fragment implements StoryCommentContra
     }
 
     @Override
-    public void setPresenter(Object presenter) {
-//        mPresenter = presenter;
+    public void setPresenter(StoryCommentContract.Presenter presenter) {
+
     }
 }
