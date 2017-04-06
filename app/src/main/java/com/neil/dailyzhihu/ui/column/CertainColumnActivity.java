@@ -24,13 +24,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.bean.orignal.ColumnStoryListBean;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;

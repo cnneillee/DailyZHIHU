@@ -1,7 +1,7 @@
 package com.neil.dailyzhihu.utils;
 
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.OriginalStory;
 
 /**
  * 作者：Neil on 2016/4/16 23:50.

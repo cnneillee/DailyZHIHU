@@ -12,8 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.TopicEditorListAdapter;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 

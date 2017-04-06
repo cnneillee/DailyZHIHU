@@ -27,13 +27,14 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
+import com.neil.dailyzhihu.mvp.view.story.StoryCommentActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
@@ -218,7 +219,8 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                 SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.menu_item_action_comment:
-                Intent intent = new Intent(mContext, CertainStoryCommentActivity.class);
+                // TODO 替换
+                Intent intent = new Intent(mContext, StoryCommentActivity.class);
                 intent.putExtra(AtyExtraKeyConstant.STORY_ID, mStoryId);
                 startActivity(intent);
                 break;

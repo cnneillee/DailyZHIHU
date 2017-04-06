@@ -17,12 +17,12 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.model.bean.orignal.GankSplashBean;
-import com.neil.dailyzhihu.model.bean.orignal.HuaBanSplashBean;
-import com.neil.dailyzhihu.model.bean.orignal.ZhihuSplashBean;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.GankSplashBean;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.HuaBanSplashBean;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.ZhihuSplashBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.main.MainActivity;
 import com.neil.dailyzhihu.utils.Formater;

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.MainPageFragmentPagerAdapter;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;

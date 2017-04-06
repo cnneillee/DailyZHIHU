@@ -122,6 +122,12 @@
             android:label="@string/activity_comment"
             android:theme="@style/AppNightTheme"/>
 
+        <!--Story窗口注册-->
+        <activity
+            android:name=".mvp.view.story.StoryCommentActivity"
+            android:label="@string/activity_comment"
+            android:theme="@style/AppNightTheme"/>
+
         <!--Mob分享窗口注册-->
         <activity
             android:name="com.mob.tools.MobUIShell"
