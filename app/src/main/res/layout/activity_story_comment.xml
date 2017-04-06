@@ -3,22 +3,45 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="?attr/sectionRootViewBgColor"
               android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/barBgColor"
+            android:fitsSystemWindows="true"
+            android:minHeight="?actionBarSize"
+            app:titleTextColor="?attr/barTitleColor"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/barBgColor"
-        android:fitsSystemWindows="true"
-        android:minHeight="?actionBarSize"
-        app:subtitle="@string/long_comment"
-        app:subtitleTextColor="?attr/barSubTitleColor"
-        app:titleTextColor="?attr/barTitleColor"/>
+        android:background="?attr/tabsBgColor"
+        app:tabIndicatorColor="?attr/tabIndicatorColor"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="?attr/tabSelectedTitleColor"
+        app:tabTextColor="?attr/tabTitleColor">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/long_comment"/>
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/short_comment"/>
+    </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager_comments"
+        android:id="@+id/vp_comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

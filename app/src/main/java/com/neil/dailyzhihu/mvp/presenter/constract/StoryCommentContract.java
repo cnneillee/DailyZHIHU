@@ -10,7 +10,7 @@ import com.neil.dailyzhihu.mvp.model.bean.orignal.CommentListBean;
  */
 
 public interface StoryCommentContract {
-    interface View extends BaseView {//<Presenter>
+    interface View extends BaseView<Presenter> {
 
         void showContent(CommentListBean commentList);
 

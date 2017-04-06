@@ -31,7 +31,6 @@ import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
-import com.neil.dailyzhihu.mvp.view.story.StoryCommentActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;

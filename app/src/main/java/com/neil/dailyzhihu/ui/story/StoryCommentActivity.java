@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.mvp.view.story;
+package com.neil.dailyzhihu.ui.story;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -44,7 +44,7 @@ public class StoryCommentActivity extends NightModeBaseActivity {
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.mvp_activity_story_comment);
+        setContentView(R.layout.activity_story_comment);
         ButterKnife.bind(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -62,13 +62,17 @@ public class StoryCommentActivity extends NightModeBaseActivity {
         longFragment.setArguments(longBundle);
 
         StoryCommentFragment shortFragment = StoryCommentFragment.newInstance();
-        Bundle shortBundle = new Bundle();
+        final Bundle shortBundle = new Bundle();
         shortBundle.putInt(STORY_ID, storyId);
         shortBundle.putInt(COMMENT_TYPE, 1);
         shortFragment.setArguments(shortBundle);
 
         mFragmentList.add(longFragment);
         mFragmentList.add(shortFragment);
+
+        final String longCommentTitle = getResources().getString(R.string.long_comment);
+        final String shortCommentTitle = getResources().getString(R.string.short_comment);
+        getResources().getString(R.string.short_comment);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -78,6 +82,11 @@ public class StoryCommentActivity extends NightModeBaseActivity {
             @Override
             public int getCount() {
                 return mFragmentList.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return position == 0 ? longCommentTitle : shortCommentTitle;
             }
         });
         mTabs.setupWithViewPager(mViewPager);
