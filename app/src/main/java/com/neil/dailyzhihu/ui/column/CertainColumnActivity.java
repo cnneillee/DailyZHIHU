@@ -24,22 +24,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
+import com.neil.dailyzhihu.mvp.presenter.ColumnDetailPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.ColumnDetailContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.utils.Formater;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CertainColumnActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class CertainColumnActivity extends BaseActivity implements
+        AdapterView.OnItemClickListener, ColumnDetailContract.View {
 
     private static final String LOG_TAG = CertainColumnActivity.class.getSimpleName();
 
@@ -70,7 +67,10 @@ public class CertainColumnActivity extends BaseActivity implements AdapterView.O
         mListView = (ListView) findViewById(R.id.list);
 
         getExtras();
-        if (sectionId > 0) fillContent();
+        if (sectionId > 0) {
+            ColumnDetailPresenter presenter = new ColumnDetailPresenter(this);
+            presenter.getColumnDetailData(sectionId);
+        }
         mListView.setOnItemClickListener(this);
     }
 
@@ -81,21 +81,6 @@ public class CertainColumnActivity extends BaseActivity implements AdapterView.O
             sectionImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         }
         return sectionId;
-    }
-
-    private void fillContent() {
-        LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.SECTION_PREFIX, sectionId),
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        ColumnStoryListBean columnStoryListBean = GsonDecoder.getDecoder().decoding(content, ColumnStoryListBean.class);
-                        ColumnStoryListBaseAdapter adapter = new ColumnStoryListBaseAdapter(CertainColumnActivity.this, columnStoryListBean);
-                        adapter.setDefaultImgUrl(sectionImg);
-                        mListView.setAdapter(adapter);
-                    }
-                });
-        setActionBarText();
     }
 
     private void setActionBarText() {
@@ -120,5 +105,18 @@ public class CertainColumnActivity extends BaseActivity implements AdapterView.O
     @Override
     public void onBackPressed() {
         this.finish();
+    }
+
+    @Override
+    public void setPresenter(ColumnDetailContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showContent(ColumnStoryListBean bean) {
+        ColumnStoryListBaseAdapter adapter = new ColumnStoryListBaseAdapter(CertainColumnActivity.this, bean);
+        adapter.setDefaultImgUrl(sectionImg);
+        mListView.setAdapter(adapter);
+        setActionBarText();
     }
 }

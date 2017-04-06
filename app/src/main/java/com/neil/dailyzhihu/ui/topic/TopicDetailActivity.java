@@ -18,9 +18,10 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.adapter.TopicStoryListAdapter;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.mvp.presenter.TopicDetailPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.TopicDetailContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
@@ -41,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 邮箱：cn.neillee@gmail.com
  */
 public class TopicDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, TopicDetailContract.View {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbarView;
@@ -57,6 +58,8 @@ public class TopicDetailActivity extends BaseActivity implements ObservableScrol
     private int mParallaxImageHeight;
     private LinearLayout mLLEditors;
     private List<TopicStoryListBean.EditorsBean> mEditors;
+
+    private TopicDetailPresenter mPresenter;
 
     // 当前Theme的Id
     private int mThemeId = -1;
@@ -126,8 +129,10 @@ public class TopicDetailActivity extends BaseActivity implements ObservableScrol
 
         // 获取ThemeId，填充内容
         getExtras();
-        if (mThemeId > 0)
-            fillContent();
+        if (mThemeId > 0) {
+            mPresenter = new TopicDetailPresenter(this);
+            mPresenter.getTopicDetailData(mThemeId);
+        }
 
         // 设置StoryList的Item点击事件
         mListView.setOnItemClickListener(this);
@@ -140,39 +145,6 @@ public class TopicDetailActivity extends BaseActivity implements ObservableScrol
             mDefaultImgUrl = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         }
         return mThemeId;
-    }
-
-    /*填充内容*/
-    private void fillContent() {
-        LoaderFactory.getContentLoader().loadContent(Formater.formatUrl(API.THEME_PREFIX, mThemeId),
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        TopicStoryListBean topicStoryListBean = GsonDecoder.getDecoder().decoding(content, TopicStoryListBean.class);
-                        TopicStoryListAdapter adapter = new TopicStoryListAdapter(TopicDetailActivity.this, topicStoryListBean);
-                        adapter.setDefaultImgUrl(mDefaultImgUrl);
-                        mListView.setAdapter(adapter);
-
-                        String bgUrl = topicStoryListBean.getBackground();
-                        LoaderFactory.getImageLoader().displayImage(mImageView, bgUrl, null);
-                        String introDes = topicStoryListBean.getDescription();
-                        mTopicName = topicStoryListBean.getName();
-                        tvIntro.setText(introDes);
-                        setActionBarText(mTopicName);
-//                LoaderFactory.getImageLoader().displayImage(mImageView, themeBGImgUrl, null);
-                        mEditors = topicStoryListBean.getEditors();
-                        for (int i = 0; i < mEditors.size(); i++) {
-                            TopicStoryListBean.EditorsBean bean = mEditors.get(i);
-                            CircleImageView imageView = new CircleImageView(TopicDetailActivity.this);
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            mLLEditors.addView(imageView, params);
-                            LoaderFactory.getImageLoader().displayImage(imageView, bean.getAvatar(), null);
-                        }
-//                        lvEditor.setAdapter(new TopicEditorListAdapter(TopicDetailActivity.this, editorsBeanList));
-                    }
-                });
     }
 
     /*设置标题*/
@@ -213,5 +185,37 @@ public class TopicDetailActivity extends BaseActivity implements ObservableScrol
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
+    }
+
+    @Override
+    public void setPresenter(TopicDetailContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        TopicStoryListBean topicStoryListBean = GsonDecoder.getDecoder().decoding(content, TopicStoryListBean.class);
+        TopicStoryListAdapter adapter = new TopicStoryListAdapter(TopicDetailActivity.this, topicStoryListBean);
+        adapter.setDefaultImgUrl(mDefaultImgUrl);
+        mListView.setAdapter(adapter);
+
+        String bgUrl = topicStoryListBean.getBackground();
+        LoaderFactory.getImageLoader().displayImage(mImageView, bgUrl, null);
+        String introDes = topicStoryListBean.getDescription();
+        mTopicName = topicStoryListBean.getName();
+        tvIntro.setText(introDes);
+        setActionBarText(mTopicName);
+//                LoaderFactory.getImageLoader().displayImage(mImageView, themeBGImgUrl, null);
+        mEditors = topicStoryListBean.getEditors();
+        for (int i = 0; i < mEditors.size(); i++) {
+            TopicStoryListBean.EditorsBean bean = mEditors.get(i);
+            CircleImageView imageView = new CircleImageView(TopicDetailActivity.this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mLLEditors.addView(imageView, params);
+            LoaderFactory.getImageLoader().displayImage(imageView, bean.getAvatar(), null);
+        }
+//                        lvEditor.setAdapter(new TopicEditorListAdapter(TopicDetailActivity.this, editorsBeanList));
     }
 }

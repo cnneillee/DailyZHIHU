@@ -15,6 +15,8 @@ import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
@@ -34,7 +36,7 @@ import butterknife.ButterKnife;
  * 主题日报窗口
  */
 public class NavTopicsActivity extends NightModeBaseActivity implements
-        AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
+        AdapterView.OnItemClickListener, ObservableScrollViewCallbacks, BlockGridContract.View {
     @Bind(R.id.gv_themes)
     ObservableGridView gvThemes;
     @Bind(R.id.toolbar)
@@ -60,17 +62,8 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
 
         gvThemes.setOnItemClickListener(this);
         gvThemes.setScrollViewCallbacks(this);
-        LoaderFactory.getContentLoader().loadContent(API.THEMES,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
-                        TopicGridBaseAdapter adapter = new TopicGridBaseAdapter(NavTopicsActivity.this, themes);
-                        mDatas = themes.getOthers();
-                        gvThemes.setAdapter(adapter);
-                    }
-                });
+        BlockGridPresenter presenter = new BlockGridPresenter(this);
+        presenter.getBlockData(API.THEMES);
     }
 
     @Override
@@ -121,5 +114,19 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
                 ab.show();
             }
         }
+    }
+
+    @Override
+    public void setPresenter(BlockGridContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
+        TopicGridBaseAdapter adapter = new TopicGridBaseAdapter(NavTopicsActivity.this, themes);
+        mDatas = themes.getOthers();
+        gvThemes.setAdapter(adapter);
     }
 }

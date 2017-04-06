@@ -22,6 +22,8 @@ import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.HotStoryListBean;
+import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -32,9 +34,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HotFragment extends Fragment implements ObservableScrollViewCallbacks,
-        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, MainFragmentContract.View {
 
     private static final String LOG_TAG = HotFragment.class.getSimpleName();
+
+    private MainFragmentContract.Presenter mPresenter;
 
     @Bind(R.id.lv_hot)
     ObservableListView lvHot;
@@ -42,13 +46,6 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     SwipeRefreshLayout mSrlRefresh;
 
     private Context mContext;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 加载
-        loadDataFromInternet();
-    }
 
     @Nullable
     @Override
@@ -67,20 +64,8 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getContext();
-    }
-
-    private void loadDataFromInternet() {
-        LoaderFactory.getContentLoader().loadContent(API.HOT_NEWS,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        mSrlRefresh.setRefreshing(false);
-                        HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
-                        HotStoryListBaseAdapter adapter = new HotStoryListBaseAdapter(mContext, hotStories);
-                        lvHot.setAdapter(adapter);
-                    }
-                });
+        mPresenter = new MainFragmentPresenter(this);
+        mPresenter.getNewsListData(API.HOT_NEWS);
     }
 
     @Override
@@ -127,6 +112,25 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     @Override
     public void onRefresh() {
         Toast.makeText(mContext, getResources().getString(R.string.notify_refreshing_data), Toast.LENGTH_SHORT).show();
-        loadDataFromInternet();
+        mPresenter.getNewsListData(API.HOT_NEWS);
+    }
+
+    @Override
+    public void setPresenter(Object presenter) {
+        // DO NOTHING
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        mSrlRefresh.setRefreshing(false);
+        HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
+        HotStoryListBaseAdapter adapter = new HotStoryListBaseAdapter(mContext, hotStories);
+        lvHot.setAdapter(adapter);
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        // ERROR处理
     }
 }

@@ -26,6 +26,8 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.PastStoryListBaseAdapter;
@@ -47,9 +49,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class PastFragment extends Fragment implements AdapterView.OnItemClickListener,
-        ObservableScrollViewCallbacks, View.OnClickListener {
+        ObservableScrollViewCallbacks, View.OnClickListener, MainFragmentContract.View {
 
     private static final String LOG_TAG = PastFragment.class.getSimpleName();
+    private MainFragmentPresenter mPresenter;
 
     @Bind(R.id.lv_before)
     ObservableListView mLvBefore;
@@ -70,7 +73,8 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         super.onCreate(savedInstanceState);
         // 初始化今天
         pickedDate = DateUtil.calendar2yyyyMMDD(Calendar.getInstance());
-        loadPickedDateStory();
+        mPresenter = new MainFragmentPresenter(this);
+        mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
     }
 
     @Override
@@ -118,25 +122,10 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                     widget.invalidateDecorators();
                 } else {//已下载
                     pickedDate = DateUtil.calendar2yyyyMMDD(date.getCalendar());
-                    loadPickedDateStory();
+                    mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
                 }
             }
         });
-    }
-
-    private void loadPickedDateStory() {
-        LoaderFactory.getContentLoader().loadContent(API.BEFORE_NEWS_PREFIX + pickedDate,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        PastStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, PastStoryListBean.class);
-                        PastStoryListBaseAdapter adapter = new PastStoryListBaseAdapter(mContext, beforeStory);
-                        mLvBefore.setAdapter(adapter);
-                        updateDateDisplay();
-                    }
-                }
-        );
     }
 
     @Override
@@ -228,7 +217,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 pickedDate = DateUtil.dateInNumbers2yyyyMMDD(year, monthOfYear + 1, dayOfMonth);
                 Toast.makeText(mContext, pickedDate, Toast.LENGTH_SHORT).show();
-                loadPickedDateStory();
+                mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
             }
         }, dateInNumbers.getYear(), dateInNumbers.getMonthOfYear() - 1, dateInNumbers.getDayOfMonth());
         dialog.show();
@@ -279,9 +268,28 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
             return;
         }
         //getData();//数据请求
-        loadPickedDateStory();
+        mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
     }
 
     protected void onInvisible() {
+    }
+
+    @Override
+    public void setPresenter(Object presenter) {
+
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        PastStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, PastStoryListBean.class);
+        PastStoryListBaseAdapter adapter = new PastStoryListBaseAdapter(mContext, beforeStory);
+        mLvBefore.setAdapter(adapter);
+        updateDateDisplay();
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+
     }
 }

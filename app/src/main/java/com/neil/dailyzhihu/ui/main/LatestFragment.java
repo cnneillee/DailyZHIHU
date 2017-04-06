@@ -21,14 +21,16 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.adapter.LatestStoryListBaseAdapter;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean.LatestStory;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean.TopStoriesBean;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestTopStoryPagerAdapter;
+import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -38,9 +40,11 @@ import butterknife.ButterKnife;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks,
-        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, MainFragmentContract.View {
 
     private static final String LOG_TAG = LatestFragment.class.getSimpleName();
+
+    private MainFragmentPresenter mPresenter;
 
     // 最新新闻展示（头部为轮播新闻）
     @Bind(R.id.lv_latest)
@@ -65,6 +69,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         mLvLatest.setScrollViewCallbacks(this);
         // 设置刷新事件监听
         mSrlRefresh.setOnRefreshListener(this);
+        mPresenter = new MainFragmentPresenter(this);
         return view;
     }
 
@@ -87,29 +92,6 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         // SwipeRefreshLayout加载时的效果显示
         mSrlRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, 24));
         mSrlRefresh.setRefreshing(true);
-    }
-
-    /**
-     * 从网络加载最新新闻
-     */
-    private void loadLatestNewsFromInternet() {
-        LoaderFactory.getContentLoaderVolley().loadContent(API.LATEST_NEWS,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        mSrlRefresh.setRefreshing(false);
-                        LatestStoryListBean latestStoryListBean = GsonDecoder.getDecoder().decoding(content, LatestStoryListBean.class);
-                        if (latestStoryListBean == null) return;
-                        Log.i(LOG_TAG, "LatestStoryListBean loaded:" + latestStoryListBean.getStories().size());
-                        List<LatestStoryListBean.LatestStory> latestStoryList = latestStoryListBean.getStories();
-                        List<LatestStoryListBean.TopStoriesBean> topStoriesBeanList = latestStoryListBean.getTopStories();
-                        LatestStoryListBaseAdapter adapter = new LatestStoryListBaseAdapter(mContext, latestStoryList);
-                        mLvLatest.setAdapter(adapter);
-                        LatestTopStoryPagerAdapter topAdapter = new LatestTopStoryPagerAdapter(mContext, topStoriesBeanList);
-                        mTopStoryViewPager.setAdapter(topAdapter);
-                    }
-                });
     }
 
     @Override
@@ -147,7 +129,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     // 点击单条新闻进行跳转
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LatestStoryListBean.LatestStory latestStory = (LatestStoryListBean.LatestStory) parent.getAdapter().getItem(position);
+        LatestStory latestStory = (LatestStory) parent.getAdapter().getItem(position);
         Intent intent = new Intent(mContext, StoryDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, latestStory.getStoryId());
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, latestStory.getImage());
@@ -156,7 +138,7 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
 
     @Override
     public void onRefresh() {
-        loadLatestNewsFromInternet();
+        mPresenter.getNewsListData(API.LATEST_NEWS);
     }
 
     // 标志位，标志已经初始化完成，因为setUserVisibleHint是在onCreateView之前调用的，
@@ -195,9 +177,32 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
             return;
         }
         //getData();//数据请求
-        loadLatestNewsFromInternet();
+        mPresenter.getNewsListData(API.LATEST_NEWS);
     }
 
     protected void onInvisible() {
+    }
+
+    @Override
+    public void setPresenter(Object presenter) {
+
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        mSrlRefresh.setRefreshing(false);
+        LatestStoryListBean latestStoryListBean = GsonDecoder.getDecoder().decoding(content, LatestStoryListBean.class);
+        if (latestStoryListBean == null) return;
+        Log.i(LOG_TAG, "LatestStoryListBean loaded:" + latestStoryListBean.getStories().size());
+        List<LatestStory> latestStoryList = latestStoryListBean.getStories();
+        List<TopStoriesBean> topStoriesBeanList = latestStoryListBean.getTopStories();
+        mLvLatest.setAdapter(new LatestStoryListBaseAdapter(mContext, latestStoryList));
+        mTopStoryViewPager.setAdapter(new LatestTopStoryPagerAdapter(mContext, topStoriesBeanList));
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+
     }
 }

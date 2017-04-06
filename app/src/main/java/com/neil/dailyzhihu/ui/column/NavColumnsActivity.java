@@ -16,6 +16,8 @@ import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
+import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
@@ -32,7 +34,8 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class NavColumnsActivity extends BaseActivity implements ObservableScrollViewCallbacks, AdapterView.OnItemClickListener, View.OnClickListener {
+public class NavColumnsActivity extends BaseActivity implements ObservableScrollViewCallbacks,
+        AdapterView.OnItemClickListener, View.OnClickListener, BlockGridContract.View {
 
     private static final String LOG_TAG = NavColumnsActivity.class.getSimpleName();
 
@@ -68,18 +71,8 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
         gvSections.setOnItemClickListener(this);
         tvHeader.setOnClickListener(this);
 //        Utility.setGridViewHeightBasedOnChildren(gvSections);
-
-        LoaderFactory.getContentLoader().loadContent(API.SECTIONS,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        ColumnListBean columnListBean = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
-                        mDatas = columnListBean.getData();
-                        ColumnGridBaseAdapter adapter = new ColumnGridBaseAdapter(NavColumnsActivity.this, columnListBean);
-                        gvSections.setAdapter(adapter);
-                    }
-                });
+        BlockGridPresenter presenter = new BlockGridPresenter(this);
+        presenter.getBlockData(API.SECTIONS);
     }
 
     @Override
@@ -132,5 +125,19 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 //        Intent intent = new Intent(this, SectionSettingActivity.class);
 //        this.startActivity(intent);
         Toast.makeText(this, getResources().getString(R.string.notify_columns_subscribing_clicked), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(BlockGridContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        ColumnListBean columnListBean = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
+        mDatas = columnListBean.getData();
+        ColumnGridBaseAdapter adapter = new ColumnGridBaseAdapter(NavColumnsActivity.this, columnListBean);
+        gvSections.setAdapter(adapter);
     }
 }
