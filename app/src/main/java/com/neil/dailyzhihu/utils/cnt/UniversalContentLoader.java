@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -37,7 +37,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REQUEST_SUCCESS:
-                    OnContentLoadedListener listener = (OnContentLoadedListener) msg.obj;
+                    OnContentLoadListener listener = (OnContentLoadListener) msg.obj;
                     String networkData = msg.getData().getString(KEY_NETWORK_DATA);
                     String url = msg.getData().getString(KEY_URL);
                     listener.onSuccess(networkData, url);
@@ -50,7 +50,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
     };
 
     @Override
-    public void loadContent(final String contentUrl, final OnContentLoadedListener listener) {
+    public void loadContent(final String contentUrl, final OnContentLoadListener listener) {
         Runnable requestTask = new Runnable() {
             @Override
             public void run() {
@@ -78,10 +78,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                             deliverBundle.putString(KEY_NETWORK_DATA, networkData);
                             Log.e(LOG_TAG, response.code() + "SUCCESS —— onResponse: " + contentUrl + "\n" + networkData);
                         } else {
-                            String failureInfo = response.toString();
-                            deliverBundle.putString(KEY_FAILURE_INFO, failureInfo);
-                            msg.what = REQUEST_FAIL;
-                            Log.e(LOG_TAG, response.code() + "FAILURE —— onResponse: " + contentUrl + "\n" + failureInfo);
+                            throw new IOException("Unexpected code " + response);
                         }
                         msg.setData(deliverBundle);
                         msg.sendToTarget();

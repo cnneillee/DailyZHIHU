@@ -2,7 +2,7 @@ package com.neil.dailyzhihu.mvp.presenter;
 
 import com.neil.dailyzhihu.adapter.CommentTypesPagerAdapter;
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.presenter.constract.StoryCommentContract;
@@ -37,15 +37,16 @@ public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View
     @Override
     public void getCommentData(int id, final int commentType) {
         String url = API.STORY_COMMENT_PREFIX + id + CommentTypesPagerAdapter.CommentType.getType(commentType).urlSuffix;
-        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 CommentListBean bean = GsonDecoder.getDecoder().decoding(content, CommentListBean.class);
                 mView.showContent(bean);
-                // TODO ERROR
-                if (content == null) {
-                    mView.showError("No more content!");
-                }
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                mView.showError(errMsg);
             }
         });
     }

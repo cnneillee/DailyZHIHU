@@ -25,7 +25,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
@@ -37,7 +36,6 @@ import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.date.DateInNumbers;
 import com.neil.dailyzhihu.utils.date.DateUtil;
 import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;

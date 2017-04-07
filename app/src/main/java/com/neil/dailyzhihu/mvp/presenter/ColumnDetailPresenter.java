@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.mvp.presenter;
 
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.presenter.constract.ColumnDetailContract;
@@ -22,10 +22,15 @@ public class ColumnDetailPresenter implements ColumnDetailContract.Presenter {
 
     @Override
     public void getColumnDetailData(int columnId) {
-        LoaderFactory.getContentLoader().loadContent(API.SECTION_PREFIX + columnId, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(API.SECTION_PREFIX + columnId, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 mView.showContent(GsonDecoder.getDecoder().decoding(content, ColumnStoryListBean.class));
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                mView.showError(errMsg);
             }
         });
     }

@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.R;
@@ -118,5 +119,9 @@ public class CertainColumnActivity extends BaseActivity implements
         adapter.setDefaultImgUrl(sectionImg);
         mListView.setAdapter(adapter);
         setActionBarText();
+    }
+
+    @Override
+    public void showError(String errMsg) {
     }
 }

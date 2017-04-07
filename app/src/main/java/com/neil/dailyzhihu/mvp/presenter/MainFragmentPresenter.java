@@ -1,7 +1,7 @@
 package com.neil.dailyzhihu.mvp.presenter;
 
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
@@ -21,11 +21,15 @@ public class MainFragmentPresenter extends RxPresenter<MainFragmentContract.View
 
     @Override
     public void getNewsListData(String url) {
-        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 mView.showContent(content);
-                // TODO 处理ERROR
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                mView.showError(errMsg);
             }
         });
     }

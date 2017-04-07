@@ -1,7 +1,7 @@
 package com.neil.dailyzhihu.mvp.presenter;
 
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.presenter.constract.TopicDetailContract;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
@@ -22,10 +22,15 @@ public class TopicDetailPresenter extends RxPresenter<TopicDetailContract.View>
 
     @Override
     public void getTopicDetailData(int topicId) {
-        LoaderFactory.getContentLoader().loadContent(API.THEME_PREFIX + topicId, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(API.THEME_PREFIX + topicId, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 mView.showContent(content);
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                mView.showError(errMsg);
             }
         });
     }

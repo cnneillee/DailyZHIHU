@@ -19,7 +19,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.HotStoryListBean;
 import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
@@ -27,7 +26,6 @@ import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;

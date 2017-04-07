@@ -1,8 +1,7 @@
 package com.neil.dailyzhihu.mvp.presenter;
 
-import com.google.gson.Gson;
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
@@ -25,10 +24,15 @@ public class StoryDetailPresenter extends RxPresenter<MainFragmentContract.View>
 
     @Override
     public void getStoryData(int storyId) {
-        LoaderFactory.getContentLoader().loadContent(API.STORY_PREFIX + storyId, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(API.STORY_PREFIX + storyId, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 mView.showContent(GsonDecoder.getDecoder().decoding(content, CertainStoryBean.class));
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                mView.showError(errMsg);
             }
         });
 

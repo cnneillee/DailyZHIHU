@@ -14,14 +14,12 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.adapter.ColumnGridBaseAdapter;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnListBean;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -139,5 +137,10 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
         mDatas = columnListBean.getData();
         ColumnGridBaseAdapter adapter = new ColumnGridBaseAdapter(NavColumnsActivity.this, columnListBean);
         gvSections.setAdapter(adapter);
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
     }
 }

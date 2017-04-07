@@ -11,7 +11,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.adapter.TopicGridBaseAdapter;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
@@ -19,7 +18,6 @@ import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -128,5 +126,10 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
         TopicGridBaseAdapter adapter = new TopicGridBaseAdapter(NavTopicsActivity.this, themes);
         mDatas = themes.getOthers();
         gvThemes.setAdapter(adapter);
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
     }
 }

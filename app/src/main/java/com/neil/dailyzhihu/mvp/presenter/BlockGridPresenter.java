@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.mvp.presenter;
 
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
@@ -20,10 +20,15 @@ public class BlockGridPresenter implements BlockGridContract.Presenter {
 
     @Override
     public void getBlockData(String url) {
-        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 mView.showContent(content);
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                mView.showError(errMsg);
             }
         });
     }

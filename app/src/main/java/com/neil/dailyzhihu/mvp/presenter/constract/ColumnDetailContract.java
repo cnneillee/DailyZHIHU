@@ -11,6 +11,7 @@ import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
 public interface ColumnDetailContract {
     interface View extends BaseView<Presenter> {
         void showContent(ColumnStoryListBean bean);
+        void showError(String errMsg);
     }
 
     interface Presenter {

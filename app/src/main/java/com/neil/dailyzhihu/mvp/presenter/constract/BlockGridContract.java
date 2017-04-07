@@ -10,6 +10,7 @@ import com.neil.dailyzhihu.base.BaseView;
 public interface BlockGridContract {
     interface View extends BaseView<Presenter> {
         void showContent(String content);
+        void showError(String errMsg);
     }
 
     interface Presenter<View> {

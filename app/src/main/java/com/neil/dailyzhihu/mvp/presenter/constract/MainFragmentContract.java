@@ -2,7 +2,6 @@ package com.neil.dailyzhihu.mvp.presenter.constract;
 
 import com.neil.dailyzhihu.base.BasePresenter;
 import com.neil.dailyzhihu.base.BaseView;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.OriginalStory;
 
 /**
  * 作者：Neil on 2017/4/6 15:39.

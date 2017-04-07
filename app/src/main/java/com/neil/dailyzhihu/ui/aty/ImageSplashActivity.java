@@ -17,13 +17,13 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.google.gson.Gson;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.GankSplashBean;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.HuaBanSplashBean;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ZhihuSplashBean;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.ui.main.MainActivity;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
@@ -105,7 +105,7 @@ public class ImageSplashActivity extends AppCompatActivity {
                 break;
         }
 
-        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 Gson gson = new Gson();
@@ -149,6 +149,11 @@ public class ImageSplashActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessage(IMG_LOADED);
                     }
                 });
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+                
             }
         });
     }

@@ -11,6 +11,7 @@ import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
 public interface StoryDetailContract {
     interface View extends BaseView{
         void showContent(CertainStoryBean storyBean);
+        void showError(String errMsg);
     }
 
     interface Presenter {
