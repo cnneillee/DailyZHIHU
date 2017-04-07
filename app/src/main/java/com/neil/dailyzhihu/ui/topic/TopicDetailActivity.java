@@ -16,16 +16,14 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.adapter.TopicStoryListAdapter;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.adapter.TopicStoryListAdapter;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.TopicDetailPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.TopicDetailContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nineoldandroids.view.ViewHelper;
@@ -217,5 +215,10 @@ public class TopicDetailActivity extends BaseActivity implements ObservableScrol
             LoaderFactory.getImageLoader().displayImage(imageView, bean.getAvatar(), null);
         }
 //                        lvEditor.setAdapter(new TopicEditorListAdapter(TopicDetailActivity.this, editorsBeanList));
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
     }
 }

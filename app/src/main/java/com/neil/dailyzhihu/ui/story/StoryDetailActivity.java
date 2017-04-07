@@ -334,6 +334,11 @@ public class StoryDetailActivity extends BaseActivity
     }
 
     @Override
+    public void showError(String errMsg) {
+
+    }
+
+    @Override
     public void setPresenter(Object presenter) {
 
     }
