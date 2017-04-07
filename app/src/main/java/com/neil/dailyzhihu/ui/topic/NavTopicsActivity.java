@@ -22,7 +22,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -35,9 +35,9 @@ import butterknife.ButterKnife;
  */
 public class NavTopicsActivity extends NightModeBaseActivity implements
         AdapterView.OnItemClickListener, ObservableScrollViewCallbacks, BlockGridContract.View {
-    @Bind(R.id.gv_themes)
+    @BindView(R.id.gv_themes)
     ObservableGridView gvThemes;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private List<TopicListBean.TopicBean> mDatas;
@@ -62,12 +62,6 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
         gvThemes.setScrollViewCallbacks(this);
         BlockGridPresenter presenter = new BlockGridPresenter(this);
         presenter.getBlockData(API.THEMES);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

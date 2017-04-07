@@ -16,7 +16,7 @@ import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -85,23 +85,23 @@ public class CommentListBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        @Bind(R.id.iv_avatar)
+        @BindView(R.id.iv_avatar)
         ImageView ivAvatar;
-        @Bind(R.id.tv_author)
+        @BindView(R.id.tv_author)
         TextView tvAuthor;
-        @Bind(R.id.tv_content)
+        @BindView(R.id.tv_content)
         TextView tvContent;
-        @Bind(R.id.tv_time)
+        @BindView(R.id.tv_time)
         TextView tvTime;
-        @Bind(R.id.tv_likes)
+        @BindView(R.id.tv_likes)
         TextView tvLikes;
-        @Bind(R.id.ll_reply_to)
+        @BindView(R.id.ll_reply_to)
         LinearLayout llReplyTo;
-        @Bind(R.id.tv_status)
+        @BindView(R.id.tv_status)
         TextView tvStatusReplyTo;
-        @Bind(R.id.tv_author_reply_to)
+        @BindView(R.id.tv_author_reply_to)
         TextView tvAuthorReplyTo;
-        @Bind(R.id.tv_content_reply_to)
+        @BindView(R.id.tv_content_reply_to)
         TextView tvContentReplyTo;
 
         ViewHolder(View view) {

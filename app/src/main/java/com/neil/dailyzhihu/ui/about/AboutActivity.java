@@ -6,7 +6,7 @@ import android.view.View;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  */
 public class AboutActivity extends NightModeBaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private View.OnClickListener upBtnListener = new View.OnClickListener() {

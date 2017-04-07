@@ -35,7 +35,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
@@ -47,10 +47,10 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     private MainFragmentPresenter mPresenter;
 
     // 最新新闻展示（头部为轮播新闻）
-    @Bind(R.id.lv_latest)
+    @BindView(R.id.lv_latest)
     ObservableListView mLvLatest;
     // 下滑刷新
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private Context mContext;
@@ -118,12 +118,6 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
                 ab.show();
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     // 点击单条新闻进行跳转

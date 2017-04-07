@@ -17,18 +17,18 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.neil.dailyzhihu.adapter.HotStoryListBaseAdapter;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.HotStoryListBean;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.orhanobut.logger.Logger;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HotFragment extends Fragment implements ObservableScrollViewCallbacks,
@@ -38,9 +38,9 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
 
     private MainFragmentContract.Presenter mPresenter;
 
-    @Bind(R.id.lv_hot)
+    @BindView(R.id.lv_hot)
     ObservableListView lvHot;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
     private Context mContext;
@@ -64,12 +64,6 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
         mContext = getContext();
         mPresenter = new MainFragmentPresenter(this);
         mPresenter.getNewsListData(API.HOT_NEWS);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

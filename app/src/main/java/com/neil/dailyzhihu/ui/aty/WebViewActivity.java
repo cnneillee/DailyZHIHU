@@ -12,7 +12,7 @@ import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
  */
 
 public class WebViewActivity extends NightModeBaseActivity {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView mWebView;
 
     private String mUrl;

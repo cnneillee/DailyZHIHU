@@ -27,43 +27,43 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.StoryDetailPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.StoryDetailContract;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
+import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
+import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
 import com.neil.dailyzhihu.utils.storage.ImageExternalDirectoryUtil;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.storage.StorageOperatingHelper;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StoryDetailActivity extends BaseActivity
         implements ObservableScrollViewCallbacks, StoryDetailContract.View {
-    @Bind(R.id.image)
+    @BindView(R.id.image)
     ImageView mImageView;
-    @Bind(R.id.overlay)
+    @BindView(R.id.overlay)
     View mOverlayView;
-    @Bind(R.id.scroll)
+    @BindView(R.id.scroll)
     ObservableScrollView mScrollView;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mFab;
-    @Bind(R.id.main)
+    @BindView(R.id.main)
     FrameLayout mRootView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolBar;
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView mTitleView;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     ObservableWebView mWebView;
 
     private int mActionBarSize;

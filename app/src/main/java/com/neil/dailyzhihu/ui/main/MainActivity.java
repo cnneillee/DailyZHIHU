@@ -24,15 +24,15 @@ import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
-import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.ui.setting.SettingActivity;
+import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.utils.Settings;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -43,17 +43,17 @@ public class MainActivity extends NightModeBaseActivity
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTabs;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.vp_news_tab)
+    @BindView(R.id.vp_news_tab)
     ViewPager mvpNewsTab;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @Bind(R.id.app_bar_main)
+    @BindView(R.id.app_bar_main)
     LinearLayout mContentMain;
 
     private Settings mSettings = Settings.getInstance();

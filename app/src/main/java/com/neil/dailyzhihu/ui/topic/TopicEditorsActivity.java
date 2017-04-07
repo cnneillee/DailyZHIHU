@@ -19,7 +19,7 @@ import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
  */
 
 public class TopicEditorsActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.lv_editors)
+    @BindView(R.id.lv_editors)
     ListView mLvEditors;
 
     private View.OnClickListener upBtnListener = new View.OnClickListener() {

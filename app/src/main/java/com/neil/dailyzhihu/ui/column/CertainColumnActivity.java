@@ -22,18 +22,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.ColumnDetailPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.ColumnDetailContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.BaseActivity;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CertainColumnActivity extends BaseActivity implements
@@ -41,9 +40,9 @@ public class CertainColumnActivity extends BaseActivity implements
 
     private static final String LOG_TAG = CertainColumnActivity.class.getSimpleName();
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     ListView mListView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbarView;
 
     private int sectionId = -1;

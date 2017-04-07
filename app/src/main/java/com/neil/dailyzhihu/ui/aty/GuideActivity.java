@@ -18,7 +18,7 @@ import com.neil.dailyzhihu.ui.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -27,15 +27,15 @@ import butterknife.ButterKnife;
  */
 
 public class GuideActivity extends AppCompatActivity {
-    @Bind(R.id.vp_guide)
+    @BindView(R.id.vp_guide)
     ViewPager mVpGuide;
-    @Bind(R.id.iv_dot1)
+    @BindView(R.id.iv_dot1)
     ImageView mIvDot1;
-    @Bind(R.id.iv_dot2)
+    @BindView(R.id.iv_dot2)
     ImageView mIvDot2;
-    @Bind(R.id.iv_dot3)
+    @BindView(R.id.iv_dot3)
     ImageView mIvDot3;
-    @Bind(R.id.tv_jump)
+    @BindView(R.id.tv_jump)
     TextView mTvJump;
 
     private List<View> mViews;

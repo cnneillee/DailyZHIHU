@@ -9,6 +9,8 @@ import com.neil.dailyzhihu.mvp.presenter.constract.StoryCommentContract;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
+import javax.inject.Inject;
+
 
 /**
  * 作者：Neil on 2017/4/5 13:57.
@@ -19,7 +21,8 @@ public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View
         implements StoryCommentContract.Presenter {
     private StoryCommentContract.View mView;
 
-    public StoryCommentPresenter(StoryCommentContract.View view) {
+    @Inject
+    StoryCommentPresenter(StoryCommentContract.View view) {
         this.mView = view;
         mView.setPresenter(this);
     }

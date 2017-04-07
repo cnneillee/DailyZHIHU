@@ -3,12 +3,10 @@ package com.neil.dailyzhihu.ui.setting;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
-import com.neil.dailyzhihu.utils.Settings;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -17,7 +15,7 @@ import butterknife.ButterKnife;
  */
 
 public class SettingActivity extends NightModeBaseActivity {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private View.OnClickListener upBtnListener = new View.OnClickListener() {

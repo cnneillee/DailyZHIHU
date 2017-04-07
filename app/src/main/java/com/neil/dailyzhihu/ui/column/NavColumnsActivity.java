@@ -24,7 +24,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -37,11 +37,11 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 
     private static final String LOG_TAG = NavColumnsActivity.class.getSimpleName();
 
-    @Bind(R.id.gv_sections)
+    @BindView(R.id.gv_sections)
     ObservableGridView gvSections;
-    @Bind(R.id.tv_header)
+    @BindView(R.id.tv_header)
     TextView tvHeader;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private List<ColumnListBean.ColumnBean> mDatas;
@@ -76,7 +76,7 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        ButterKnife.bind(this);
     }
 
     @Override

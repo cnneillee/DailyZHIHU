@@ -43,7 +43,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.util.Calendar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PastFragment extends Fragment implements AdapterView.OnItemClickListener,
@@ -52,7 +52,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     private static final String LOG_TAG = PastFragment.class.getSimpleName();
     private MainFragmentPresenter mPresenter;
 
-    @Bind(R.id.lv_before)
+    @BindView(R.id.lv_before)
     ObservableListView mLvBefore;
 
     private Context mContext;
@@ -133,12 +133,6 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, pastStory.getStoryId());
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, pastStory.getImage());
         mContext.startActivity(intent);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

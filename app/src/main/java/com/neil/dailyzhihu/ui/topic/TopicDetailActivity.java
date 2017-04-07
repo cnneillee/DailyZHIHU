@@ -31,7 +31,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,16 +42,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class TopicDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks,
         AdapterView.OnItemClickListener, TopicDetailContract.View {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbarView;
     // mListBackgroundView makes ListView's background except header view.
-    @Bind(R.id.list_background)
+    @BindView(R.id.list_background)
     View mListBackgroundView;
-    @Bind(R.id.lv_theme_story_list)
+    @BindView(R.id.lv_theme_story_list)
     ObservableListView mListView;
-    @Bind(R.id.image)
+    @BindView(R.id.image)
     ImageView mImageView;
-    @Bind(R.id.tv_summary)
+    @BindView(R.id.tv_summary)
     TextView tvIntro;
     private int mParallaxImageHeight;
     private LinearLayout mLLEditors;

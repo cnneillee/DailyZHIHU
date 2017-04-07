@@ -11,11 +11,15 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.CommentListBaseAdapter;
+import com.neil.dailyzhihu.di.component.DaggerStoryCommentComponent;
+import com.neil.dailyzhihu.di.module.StoryCommentModule;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.mvp.presenter.StoryCommentPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.StoryCommentContract;
 
-import butterknife.Bind;
+import javax.inject.Inject;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
@@ -27,12 +31,13 @@ import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.STORY_I
  */
 
 public class StoryCommentFragment extends Fragment implements StoryCommentContract.View {
-    @Bind(R.id.tv_addon_info)
+    @BindView(R.id.tv_addon_info)
     TextView mTvAddonInfo;
-    @Bind(R.id.lv_comment)
+    @BindView(R.id.lv_comment)
     ListView mLvComment;
 
-    private StoryCommentContract.Presenter mPresenter;
+    @Inject
+    StoryCommentPresenter mPresenter;
 
     public static StoryCommentFragment newInstance() {
         return new StoryCommentFragment();
@@ -44,11 +49,15 @@ public class StoryCommentFragment extends Fragment implements StoryCommentContra
         View contentView = inflater.inflate(R.layout.vp_item_comment, container, false);
         ButterKnife.bind(this, contentView);
 
+        DaggerStoryCommentComponent.builder()
+                .storyCommentModule(new StoryCommentModule(this))
+                .build()
+                .inject(this);
+
         Bundle bundle = getArguments();
         int storyId = bundle.getInt(STORY_ID);
         int commentType = bundle.getInt(COMMENT_TYPE);
 
-        mPresenter = new StoryCommentPresenter(this);
         mPresenter.getCommentData(storyId, commentType);
 
         return contentView;
@@ -63,12 +72,6 @@ public class StoryCommentFragment extends Fragment implements StoryCommentContra
     @Override
     public void showError(String msg) {
         mTvAddonInfo.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

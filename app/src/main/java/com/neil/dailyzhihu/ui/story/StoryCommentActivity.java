@@ -14,7 +14,7 @@ import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
@@ -26,11 +26,11 @@ import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.STORY_I
  */
 
 public class StoryCommentActivity extends NightModeBaseActivity {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTabs;
-    @Bind(R.id.vp_comment)
+    @BindView(R.id.vp_comment)
     ViewPager mViewPager;
 
     private List<Fragment> mFragmentList;

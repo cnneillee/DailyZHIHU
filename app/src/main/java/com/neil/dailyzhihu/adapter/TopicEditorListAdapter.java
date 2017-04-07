@@ -14,7 +14,7 @@ import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -64,11 +64,11 @@ public class TopicEditorListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        @Bind(R.id.iv_avatar)
+        @BindView(R.id.iv_avatar)
         ImageView ivAvatar;
-        @Bind(R.id.tv_name)
+        @BindView(R.id.tv_name)
         TextView tvName;
-        @Bind(R.id.tv_bio)
+        @BindView(R.id.tv_bio)
         TextView tvBio;
 
         ViewHolder(View view) {

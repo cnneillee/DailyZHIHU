@@ -17,19 +17,19 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.google.gson.Gson;
-import com.neil.dailyzhihu.listener.OnContentLoadListener;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.GankSplashBean;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.HuaBanSplashBean;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ZhihuSplashBean;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.main.MainActivity;
 import com.neil.dailyzhihu.utils.Formater;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -37,11 +37,11 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 public class ImageSplashActivity extends AppCompatActivity {
-    @Bind(R.id.view_container)
+    @BindView(R.id.view_container)
     ViewSwitcher mSwitcher;
-    @Bind(R.id.iv_splash)
+    @BindView(R.id.iv_splash)
     ImageView mSplash;
-    @Bind(R.id.tv_img_source)
+    @BindView(R.id.tv_img_source)
     TextView mTvImgSource;
 
     private static final int IMG_LOADED = 0;

@@ -14,7 +14,7 @@ import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -66,9 +66,9 @@ public class PastStoryListBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        @Bind(R.id.tv_title)
+        @BindView(R.id.tv_title)
         TextView tvTitle;
-        @Bind(R.id.iv_img)
+        @BindView(R.id.iv_img)
         ImageView ivImg;
 
         ViewHolder(View view) {

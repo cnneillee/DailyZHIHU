@@ -14,7 +14,7 @@ import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -63,11 +63,11 @@ public class ColumnGridBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        @Bind(R.id.iv_img)
+        @BindView(R.id.iv_img)
         ImageView ivImg;
-        @Bind(R.id.iv_title)
+        @BindView(R.id.iv_title)
         TextView ivTitle;
-        @Bind(R.id.tv_description)
+        @BindView(R.id.tv_description)
         TextView ivDescription;
 
         ViewHolder(View view) {
