@@ -72,7 +72,7 @@ public class StoryCommentActivity extends NightModeBaseActivity {
 
         final String longCommentTitle = getResources().getString(R.string.long_comment);
         final String shortCommentTitle = getResources().getString(R.string.short_comment);
-        getResources().getString(R.string.short_comment);
+
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
