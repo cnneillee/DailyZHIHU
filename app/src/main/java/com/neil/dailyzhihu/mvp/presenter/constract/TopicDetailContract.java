@@ -9,7 +9,7 @@ import com.neil.dailyzhihu.base.BaseView;
  */
 
 public interface TopicDetailContract {
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
         void showContent(String content);
         void showError(String errMsg);
     }

@@ -2,21 +2,20 @@ package com.neil.dailyzhihu.ui.story;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
@@ -28,26 +27,24 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.StoryDetailPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.StoryDetailContract;
-import com.neil.dailyzhihu.ui.widget.BaseActivity;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.neil.dailyzhihu.utils.share.QRCodeUtil;
-import com.neil.dailyzhihu.utils.storage.ImageExternalDirectoryUtil;
 import com.neil.dailyzhihu.utils.storage.StorageOperatingHelper;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class StoryDetailActivity extends BaseActivity
+public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         implements ObservableScrollViewCallbacks, StoryDetailContract.View {
     @BindView(R.id.image)
     ImageView mImageView;
@@ -82,8 +79,6 @@ public class StoryDetailActivity extends BaseActivity
 
     private static final String LOG_TAG = StoryDetailActivity.class.getSimpleName();
 
-    private StoryDetailPresenter mPresenter;
-
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -92,34 +87,76 @@ public class StoryDetailActivity extends BaseActivity
     };
 
     @Override
-    protected void initViews() {
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
-        }
-
-        setContentView(R.layout.activity_story_detail);
-        ButterKnife.bind(this);
-
-        setSupportActionBar(mToolBar);
-        mToolBar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolBar.setNavigationOnClickListener(upBtnListener);
+    protected void initEventAndData() {
+//        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//            window.setNavigationBarColor(Color.TRANSPARENT);
+//        }
+//
+//        setContentView(R.layout.activity_story_detail);
+//        ButterKnife.bind(this);
+//
+//        setSupportActionBar(mToolBar);
+//        mToolBar.setNavigationIcon(R.drawable.ic_action_back);
+//        mToolBar.setNavigationOnClickListener(upBtnListener);
+        setToolbar(mToolBar, "");
         initObservableViewUIParams();
 
         if (getIntent().getExtras() == null) return;
         mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
         mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
-        if (mStoryId <= 0) return;
-        mPresenter = new StoryDetailPresenter(this);
         mPresenter.getStoryData(mStoryId);
+    }
+
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_story_detail;
+    }
+
+    @Override
+    public void showContent(CertainStoryBean storyBean) {
+        mStoryTitle = storyBean.getTitle();
+        ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
+        String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
+        loader.displayImage(mImageView, imgUrl, null, null);
+
+        String storyTitle = storyBean.getTitle();
+        setActionBarText(storyTitle);
+        mTitleView.setText(storyTitle);
+
+        String cssContent = "";
+        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
+//                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
+            cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
+                    "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
+                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + storyBean.getCss().get(0) + "\">\n"
+                    + "<style>.headline{display:none;}</style>";
+        }
+        String html = "<html><head>" + cssContent + "</head><body>" + storyBean.getBody() + " </body></html>";
+        mWebView.setHorizontalScrollBarEnabled(false);
+        // style="width:100%;height:auto"
+        WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
+        mWebView.loadData(html, "text/html; charset=UTF-8", null);
+        Log.e("HTML", html);
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
     }
 
     // 初始化ObservableView相关参数
@@ -298,48 +335,13 @@ public class StoryDetailActivity extends BaseActivity
         getWindow().setAttributes(lp);
     }
 
-    @Override
-    public void showContent(CertainStoryBean storyBean) {
-        mStoryTitle = storyBean.getTitle();
-        Bitmap bm = ImageExternalDirectoryUtil.getBitmap(mContext, mStoryId);
-        if (bm == null) {
-            ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-            String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
-            loader.displayImage(mImageView, imgUrl, null, null);
-        } else {
-            mImageView.setImageBitmap(bm);
-            Log.e(LOG_TAG, "BITMAP LOADED FROM SD CARD");
-        }
-
-        String storyTitle = storyBean.getTitle();
-        setActionBarText(storyTitle);
-        mTitleView.setText(storyTitle);
-
-//            List<String> jsArr = mStoryContent.getJs();
-        String cssContent = "";
-        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
-//                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
-            cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
-                    "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
-                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + storyBean.getCss().get(0) + "\">\n"
-                    + "<style>.headline{display:none;}</style>";
-        }
-        String html = "<html><head>" + cssContent + "</head><body>" + storyBean.getBody() + " </body></html>";
-        mWebView.setHorizontalScrollBarEnabled(false);
-        // style="width:100%;height:auto"
-        WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
-        mWebView.loadData(html, "text/html; charset=UTF-8", null);
-        Log.e("HTML", html);
-    }
-
-    @Override
-    public void showError(String errMsg) {
-
-    }
-
-    @Override
-    public void setPresenter(Object presenter) {
-
+    protected int getActionBarSize() {
+        TypedValue typedValue = new TypedValue();
+        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
+        int indexOfAttrTextSize = 0;
+        TypedArray a = obtainStyledAttributes(typedValue.data, textSizeAttr);
+        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
+        a.recycle();
+        return actionBarSize;
     }
 }

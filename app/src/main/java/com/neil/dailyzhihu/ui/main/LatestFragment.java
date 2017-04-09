@@ -1,84 +1,86 @@
 package com.neil.dailyzhihu.ui.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.LatestStoryListBaseAdapter;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
+import com.neil.dailyzhihu.adapter.LatestTopStoryPagerAdapter;
+import com.neil.dailyzhihu.base.BaseFragment;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean.LatestStory;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean.TopStoriesBean;
-import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.LatestTopStoryPagerAdapter;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.MainFragmentPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
-public class LatestFragment extends Fragment implements ObservableScrollViewCallbacks,
+public class LatestFragment extends BaseFragment<MainFragmentPresenter> implements ObservableScrollViewCallbacks,
         AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, MainFragmentContract.View {
 
     private static final String LOG_TAG = LatestFragment.class.getSimpleName();
 
-    private MainFragmentPresenter mPresenter;
-
-    // 最新新闻展示（头部为轮播新闻）
     @BindView(R.id.lv_latest)
     ObservableListView mLvLatest;
-    // 下滑刷新
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
-    private Context mContext;
-    private AutoScrollViewPager mTopStoryViewPager;
+    private List<TopStoriesBean> mTopStoriesBeanList;
+    private List<LatestStory> mLatestStoryList;
+    private LatestStoryListBaseAdapter mLatestAdapter;
+    private LatestTopStoryPagerAdapter mTopAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_latest, container, false);
-        ButterKnife.bind(this, view);
-        // 添加顶部新闻轮播
-        FrameLayout header = (FrameLayout) inflater.inflate(R.layout.viewpager_top_story, null);
-        mTopStoryViewPager = (AutoScrollViewPager) header.findViewById(R.id.view_pager);
-        mLvLatest.addHeaderView(header);
-        // 设置listview滑动事件监听，以让actionBar隐藏或显示
-        mLvLatest.setScrollViewCallbacks(this);
-        // 设置刷新事件监听
-        mSrlRefresh.setOnRefreshListener(this);
-        mPresenter = new MainFragmentPresenter(this);
-        return view;
+    protected void initInject() {
+        getFragmentComponent().inject(this);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mContext = getActivity();
-        // 设置新闻项点击事件
+    protected int getLayoutId() {
+        return R.layout.fragment_latest;
+    }
+
+    @Override
+    protected void initEventAndData() {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        FrameLayout mainHeader = (FrameLayout) inflater.inflate(R.layout.viewpager_top_story, null, false);
+        mLvLatest.addHeaderView(mainHeader);
+        AutoScrollViewPager topStoryViewPager = (AutoScrollViewPager) mainHeader.findViewById(R.id.view_pager);
+        topStoryViewPager.startAutoScroll(10000);
+
+        mLvLatest.setScrollViewCallbacks(this);
         mLvLatest.setOnItemClickListener(this);
+
+        mTopStoriesBeanList = new ArrayList<>();
+        mLatestStoryList = new ArrayList<>();
+        mLatestAdapter = new LatestStoryListBaseAdapter(mContext, mLatestStoryList);
+        mTopAdapter = new LatestTopStoryPagerAdapter(mContext, mTopStoriesBeanList);
+        mLvLatest.setAdapter(mLatestAdapter);
+        topStoryViewPager.setAdapter(mTopAdapter);
+
+        mSrlRefresh.setOnRefreshListener(this);
         // 首次进入刷新
         mSrlRefresh.post(new Runnable() {
             @Override
@@ -86,20 +88,56 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
                 mSrlRefresh.setRefreshing(true);
             }
         });
-
-        // 自动轮播
-        mTopStoryViewPager.startAutoScroll(10000);
-        // SwipeRefreshLayout加载时的效果显示
         mSrlRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, 24));
         mSrlRefresh.setRefreshing(true);
     }
 
     @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+    public void showContent(String content) {
+        Logger.json(content);
+        mSrlRefresh.setRefreshing(false);
+
+        LatestStoryListBean latestStoryListBean = GsonDecoder.getDecoder().decoding(content, LatestStoryListBean.class);
+        if (latestStoryListBean == null) return;
+
+        Log.i(LOG_TAG, "LatestStoryListBean loaded:" + latestStoryListBean.getStories().size());
+        List<LatestStory> latestStoryList = latestStoryListBean.getStories();
+        List<TopStoriesBean> topStoriesBeanList = latestStoryListBean.getTopStories();
+
+        mLatestStoryList.clear();
+        mTopStoriesBeanList.clear();
+        for (int i = 0; i < latestStoryList.size(); i++) {
+            mLatestStoryList.add(latestStoryList.get(i));
+        }
+        for (int i = 0; i < topStoriesBeanList.size(); i++) {
+            mTopStoriesBeanList.add(topStoriesBeanList.get(i));
+        }
+        mLatestAdapter.notifyDataSetChanged();
+        mTopAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onDownMotionEvent() {
+    public void showError(String errorMsg) {
+        mSrlRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void refresh(String content) {
+        showContent(content);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getNewsListData(API.LATEST_NEWS);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        LatestStory latestStory = (LatestStory) parent.getAdapter().getItem(position);
+        Intent intent = new Intent(mContext, StoryDetailActivity.class);
+        intent.putExtra(AtyExtraKeyConstant.STORY_ID, latestStory.getStoryId());
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, latestStory.getImage());
+        mContext.startActivity(intent);
     }
 
     @Override
@@ -120,19 +158,12 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
         }
     }
 
-    // 点击单条新闻进行跳转
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LatestStory latestStory = (LatestStory) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(mContext, StoryDetailActivity.class);
-        intent.putExtra(AtyExtraKeyConstant.STORY_ID, latestStory.getStoryId());
-        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, latestStory.getImage());
-        mContext.startActivity(intent);
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
     }
 
     @Override
-    public void onRefresh() {
-        mPresenter.getNewsListData(API.LATEST_NEWS);
+    public void onDownMotionEvent() {
     }
 
     // 标志位，标志已经初始化完成，因为setUserVisibleHint是在onCreateView之前调用的，
@@ -175,28 +206,5 @@ public class LatestFragment extends Fragment implements ObservableScrollViewCall
     }
 
     protected void onInvisible() {
-    }
-
-    @Override
-    public void setPresenter(Object presenter) {
-
-    }
-
-    @Override
-    public void showContent(String content) {
-        Logger.json(content);
-        mSrlRefresh.setRefreshing(false);
-        LatestStoryListBean latestStoryListBean = GsonDecoder.getDecoder().decoding(content, LatestStoryListBean.class);
-        if (latestStoryListBean == null) return;
-        Log.i(LOG_TAG, "LatestStoryListBean loaded:" + latestStoryListBean.getStories().size());
-        List<LatestStory> latestStoryList = latestStoryListBean.getStories();
-        List<TopStoriesBean> topStoriesBeanList = latestStoryListBean.getTopStories();
-        mLvLatest.setAdapter(new LatestStoryListBaseAdapter(mContext, latestStoryList));
-        mTopStoryViewPager.setAdapter(new LatestTopStoryPagerAdapter(mContext, topStoriesBeanList));
-    }
-
-    @Override
-    public void showError(String errorMsg) {
-
     }
 }

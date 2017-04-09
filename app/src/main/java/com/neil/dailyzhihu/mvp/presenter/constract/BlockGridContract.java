@@ -1,5 +1,6 @@
 package com.neil.dailyzhihu.mvp.presenter.constract;
 
+import com.neil.dailyzhihu.base.BasePresenter;
 import com.neil.dailyzhihu.base.BaseView;
 
 /**
@@ -8,12 +9,12 @@ import com.neil.dailyzhihu.base.BaseView;
  */
 
 public interface BlockGridContract {
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
         void showContent(String content);
         void showError(String errMsg);
     }
 
-    interface Presenter<View> {
+    interface Presenter extends BasePresenter<View>{
         void getBlockData(String url);
     }
 }

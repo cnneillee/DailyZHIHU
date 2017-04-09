@@ -5,6 +5,5 @@ package com.neil.dailyzhihu.base;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public interface BaseView<T> {
-    void setPresenter(T presenter);
+public interface BaseView {
 }

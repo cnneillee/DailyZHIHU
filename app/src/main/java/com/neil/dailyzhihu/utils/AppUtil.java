@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 
-import com.neil.dailyzhihu.MyApplication;
+import com.neil.dailyzhihu.DailyApp;
 import com.neil.dailyzhihu.R;
 
 /**
@@ -21,7 +21,7 @@ import com.neil.dailyzhihu.R;
 public class AppUtil {
 
     private static final String LOG_TAG = AppUtil.class.getSimpleName();
-    private static Context mContext = MyApplication.AppContext;
+    private static Context mContext = DailyApp.AppContext;
 
     /**
      * 获取版本号信息

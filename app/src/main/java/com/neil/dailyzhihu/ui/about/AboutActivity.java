@@ -34,7 +34,8 @@ public class AboutActivity extends NightModeBaseActivity {
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(upBtnListener);
 
-        getFragmentManager().beginTransaction().replace(R.id.fl_about_fragment, new AboutFragment()).commit();
+        getFragmentManager().beginTransaction().
+                replace(R.id.fl_about_fragment, new AboutFragment()).commit();
     }
 
     @Override

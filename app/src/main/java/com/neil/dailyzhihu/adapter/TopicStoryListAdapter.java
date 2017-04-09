@@ -28,8 +28,8 @@ public class TopicStoryListAdapter extends BaseAdapter {
     private Context mContext;
     private String defaultImgUrl;
 
-    public TopicStoryListAdapter(Context context, TopicStoryListBean topicStoryListBean) {
-        this.mThemeStoryList = topicStoryListBean.getStories();
+    public TopicStoryListAdapter(Context context, List<TopicStoryListBean.TopicStory> topicStoryList) {
+        this.mThemeStoryList = topicStoryList;
         this.mContext = context;
     }
 

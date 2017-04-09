@@ -13,9 +13,14 @@ public interface MainFragmentContract {
         void showContent(String content);
 
         void showError(String errorMsg);
+
+        void refresh(String content);
     }
 
     interface Presenter extends BasePresenter<View> {
         void getNewsListData(String url);
+
+        void startRefresh(String refreshUrl);
+
     }
 }

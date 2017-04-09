@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Soichiro Kashima
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.neil.dailyzhihu.ui.column;
 
 import android.content.Intent;
@@ -25,17 +9,19 @@ import android.widget.ListView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
+import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.ColumnDetailPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.ColumnDetailContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.ui.widget.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class CertainColumnActivity extends BaseActivity implements
+public class CertainColumnActivity extends BaseActivity<ColumnDetailPresenter> implements
         AdapterView.OnItemClickListener, ColumnDetailContract.View {
 
     private static final String LOG_TAG = CertainColumnActivity.class.getSimpleName();
@@ -48,30 +34,46 @@ public class CertainColumnActivity extends BaseActivity implements
     private int sectionId = -1;
     private String sectionName = null;
     private String sectionImg = null;
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
-        }
-    };
+
+    private ColumnStoryListBaseAdapter mColumnStoryListBaseAdapter;
+    private List<ColumnStoryListBean.ColumnStory> mColumnStoryList;
 
     @Override
-    protected void initViews() {
-        setContentView(R.layout.activity_column_detail);
-        ButterKnife.bind(this);
-
-        setSupportActionBar(mToolbarView);
-        mToolbarView.setNavigationIcon(R.drawable.ic_action_back);
-        mToolbarView.setNavigationOnClickListener(upBtnListener);
-
+    protected void initEventAndData() {
+        setToolbar(mToolbarView, "");
         mListView = (ListView) findViewById(R.id.list);
-
-        getExtras();
-        if (sectionId > 0) {
-            ColumnDetailPresenter presenter = new ColumnDetailPresenter(this);
-            presenter.getColumnDetailData(sectionId);
-        }
         mListView.setOnItemClickListener(this);
+        getExtras();
+        mColumnStoryList = new ArrayList<>();
+        mColumnStoryListBaseAdapter = new ColumnStoryListBaseAdapter(this, mColumnStoryList);
+        mListView.setAdapter(mColumnStoryListBaseAdapter);
+        if (sectionId > 0) {
+            mPresenter.getColumnDetailData(sectionId);
+        }
+    }
+
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_column_detail;
+    }
+
+    @Override
+    public void showContent(ColumnStoryListBean bean) {
+        mColumnStoryList.clear();
+        for (int i = 0; i < bean.getStories().size(); i++) {
+            mColumnStoryList.add(bean.getStories().get(i));
+        }
+        mColumnStoryListBaseAdapter.notifyDataSetChanged();
+        setActionBarText();
+    }
+
+    @Override
+    public void showError(String errMsg) {
     }
 
     private int getExtras() {
@@ -105,22 +107,5 @@ public class CertainColumnActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         this.finish();
-    }
-
-    @Override
-    public void setPresenter(ColumnDetailContract.Presenter presenter) {
-
-    }
-
-    @Override
-    public void showContent(ColumnStoryListBean bean) {
-        ColumnStoryListBaseAdapter adapter = new ColumnStoryListBaseAdapter(CertainColumnActivity.this, bean);
-        adapter.setDefaultImgUrl(sectionImg);
-        mListView.setAdapter(adapter);
-        setActionBarText();
-    }
-
-    @Override
-    public void showError(String errMsg) {
     }
 }

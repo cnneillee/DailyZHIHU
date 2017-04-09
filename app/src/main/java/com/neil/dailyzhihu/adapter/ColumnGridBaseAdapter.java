@@ -26,9 +26,9 @@ public class ColumnGridBaseAdapter extends BaseAdapter {
     private Context mContext;
     private List<ColumnListBean.ColumnBean> mDatas;
 
-    public ColumnGridBaseAdapter(Context context, ColumnListBean columnListBean) {
+    public ColumnGridBaseAdapter(Context context, List<ColumnListBean.ColumnBean> columnList) {
         this.mContext = context;
-        this.mDatas = columnListBean.getData();
+        this.mDatas = columnList;
     }
 
     @Override

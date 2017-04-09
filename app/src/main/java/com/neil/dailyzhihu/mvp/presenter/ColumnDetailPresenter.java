@@ -1,5 +1,6 @@
 package com.neil.dailyzhihu.mvp.presenter;
 
+import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
@@ -7,17 +8,17 @@ import com.neil.dailyzhihu.mvp.presenter.constract.ColumnDetailContract;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
+import javax.inject.Inject;
+
 /**
  * 作者：Neil on 2017/4/6 22:37.
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class ColumnDetailPresenter implements ColumnDetailContract.Presenter {
-    private ColumnDetailContract.View mView;
+public class ColumnDetailPresenter extends RxPresenter<ColumnDetailContract.View> implements ColumnDetailContract.Presenter {
 
-    public ColumnDetailPresenter(ColumnDetailContract.View view) {
-        mView = view;
-        mView.setPresenter(this);
+    @Inject
+    public ColumnDetailPresenter() {
     }
 
     @Override

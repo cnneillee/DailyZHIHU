@@ -25,16 +25,16 @@ import butterknife.ButterKnife;
 public class LatestStoryListBaseAdapter extends BaseAdapter {
 
     private List<LatestStoryListBean.LatestStory> mLatestStoryList;
-    private Context mContext;
+    private LayoutInflater mInflater;
 
     public LatestStoryListBaseAdapter(Context context, List<LatestStoryListBean.LatestStory> latestStoryList) {
         this.mLatestStoryList = latestStoryList;
-        this.mContext = context;
+        this.mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return mLatestStoryList != null ? mLatestStoryList.size():0;
+        return mLatestStoryList != null ? mLatestStoryList.size() : 0;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class LatestStoryListBaseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_story_universal, parent, false);
+            convertView = mInflater.inflate(R.layout.item_lv_story_universal, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {

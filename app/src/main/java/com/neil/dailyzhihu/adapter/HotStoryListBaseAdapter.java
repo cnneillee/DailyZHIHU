@@ -27,8 +27,8 @@ public class HotStoryListBaseAdapter extends BaseAdapter {
     private List<HotStoryListBean.HotStory> mHotStoryList;
     private Context mContext;
 
-    public HotStoryListBaseAdapter(Context context, HotStoryListBean hotStoryListBean) {
-        if (hotStoryListBean != null) this.mHotStoryList = hotStoryListBean.getStories();
+    public HotStoryListBaseAdapter(Context context, List<HotStoryListBean.HotStory> hotStoryList) {
+        this.mHotStoryList = hotStoryList;
         this.mContext = context;
     }
 

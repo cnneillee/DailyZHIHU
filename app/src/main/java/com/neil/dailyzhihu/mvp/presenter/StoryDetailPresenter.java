@@ -4,22 +4,21 @@ import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.mvp.presenter.constract.MainFragmentContract;
 import com.neil.dailyzhihu.mvp.presenter.constract.StoryDetailContract;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
+
+import javax.inject.Inject;
 
 /**
  * 作者：Neil on 2017/4/6 17:17.
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class StoryDetailPresenter extends RxPresenter<MainFragmentContract.View>
-        implements StoryDetailContract.Presenter {
-    private StoryDetailContract.View mView;
+public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> implements StoryDetailContract.Presenter {
 
-    public StoryDetailPresenter(StoryDetailContract.View view) {
-        mView = view;
+    @Inject
+    public StoryDetailPresenter() {
     }
 
     @Override
@@ -35,6 +34,5 @@ public class StoryDetailPresenter extends RxPresenter<MainFragmentContract.View>
                 mView.showError(errMsg);
             }
         });
-
     }
 }

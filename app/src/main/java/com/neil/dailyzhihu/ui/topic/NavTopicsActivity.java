@@ -9,38 +9,37 @@ import android.widget.AdapterView;
 import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.neil.dailyzhihu.adapter.TopicGridBaseAdapter;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.adapter.TopicGridBaseAdapter;
+import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicListBean;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
 import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者：Neil on 2017/1/19 17:53.
  * 邮箱：cn.neillee@gmail.com
- */
-
-/**
  * 主题日报窗口
  */
-public class NavTopicsActivity extends NightModeBaseActivity implements
+public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implements
         AdapterView.OnItemClickListener, ObservableScrollViewCallbacks, BlockGridContract.View {
     @BindView(R.id.gv_themes)
     ObservableGridView gvThemes;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private List<TopicListBean.TopicBean> mDatas;
+    private List<TopicListBean.TopicBean> mTopicBeanList;
+    private TopicGridBaseAdapter mTopicAdapter;
+
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -49,41 +48,56 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
     };
 
     @Override
-    protected void initViews() {
-        setContentView(R.layout.activity_topics);
-        ButterKnife.bind(this);
-
-        setSupportActionBar(mToolbar);
+    protected void initEventAndData() {
+        setToolbar(mToolbar, getResources().getString(R.string.nav_topics));
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
 
         gvThemes.setOnItemClickListener(this);
         gvThemes.setScrollViewCallbacks(this);
-        BlockGridPresenter presenter = new BlockGridPresenter(this);
-        presenter.getBlockData(API.THEMES);
+
+        mTopicBeanList = new ArrayList<>();
+        mTopicAdapter = new TopicGridBaseAdapter(mContext, mTopicBeanList);
+        gvThemes.setAdapter(mTopicAdapter);
+
+        mPresenter.getBlockData(API.THEMES);
+    }
+
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_topics;
+    }
+
+    @Override
+    public void showContent(String content) {
+        Logger.json(content);
+        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
+        List<TopicListBean.TopicBean> topicBeanList = themes.getOthers();
+        mTopicBeanList.clear();
+        for (int i = 0; i < topicBeanList.size(); i++) {
+            mTopicBeanList.add(topicBeanList.get(i));
+        }
+        mTopicAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TopicListBean.TopicBean bean = mDatas.get(position);
+        TopicListBean.TopicBean bean = mTopicBeanList.get(position);
         int sectionId = bean.getStoryId();
         String topicImg = bean.getImage();
         Intent intent = new Intent(this, TopicDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.THEME_ID, sectionId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, topicImg);
         startActivity(intent);
-    }
-
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-
     }
 
     /**
@@ -109,21 +123,12 @@ public class NavTopicsActivity extends NightModeBaseActivity implements
     }
 
     @Override
-    public void setPresenter(BlockGridContract.Presenter presenter) {
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
 
     }
 
     @Override
-    public void showContent(String content) {
-        Logger.json(content);
-        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
-        TopicGridBaseAdapter adapter = new TopicGridBaseAdapter(NavTopicsActivity.this, themes);
-        mDatas = themes.getOthers();
-        gvThemes.setAdapter(adapter);
-    }
-
-    @Override
-    public void showError(String errMsg) {
+    public void onDownMotionEvent() {
 
     }
 }

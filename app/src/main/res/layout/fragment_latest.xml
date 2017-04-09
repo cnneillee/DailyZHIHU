@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/mainPageRootViewBgColor"
@@ -17,7 +18,8 @@
             android:id="@+id/lv_latest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@android:color/transparent"/>
+            android:divider="@android:color/transparent"
+            tools:listheader="@layout/viewpager_top_story"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

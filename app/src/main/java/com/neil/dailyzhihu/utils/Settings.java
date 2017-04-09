@@ -3,7 +3,7 @@ package com.neil.dailyzhihu.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.neil.dailyzhihu.MyApplication;
+import com.neil.dailyzhihu.DailyApp;
 
 /**
  * 作者：Neil on 2016/4/16 23:50.
@@ -37,7 +37,7 @@ public class Settings {
 
     public static Settings getInstance() {
         if (sInstance == null) {
-            sInstance = new Settings(MyApplication.AppContext);
+            sInstance = new Settings(DailyApp.AppContext);
         }
         return sInstance;
     }

@@ -31,6 +31,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * 作者：Neil on 2016/3/22 19:08.
@@ -51,6 +52,7 @@ public class ImageSplashActivity extends AppCompatActivity {
     private static final int MAX_IMG_DISPLAY_MILLIS = 2000;
 
     private boolean mIsImgLoaded = false;
+    private Unbinder mUnBinder;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -84,7 +86,7 @@ public class ImageSplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_start);
-        ButterKnife.bind(this);
+        mUnBinder = ButterKnife.bind(this);
 
         int splashType = getIntent().getExtras().getInt(AtyExtraKeyConstant.SPLASH_TYPE, 1);
         mHandler.sendEmptyMessageDelayed(TIME_UP, MAX_IMG_LOADED_MILLIS);
@@ -165,5 +167,11 @@ public class ImageSplashActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnBinder.unbind();
     }
 }

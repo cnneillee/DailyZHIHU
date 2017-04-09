@@ -24,23 +24,23 @@ import butterknife.ButterKnife;
 
 public class ColumnStoryListBaseAdapter extends BaseAdapter {
 
-    private List<ColumnStoryListBean.ColumnStory> mSectionColumnStory;
+    private List<ColumnStoryListBean.ColumnStory> mColumnStoryList;
     private Context mContext;
     private String defaultImgUrl;
 
-    public ColumnStoryListBaseAdapter(Context context, ColumnStoryListBean columnStoryListBean) {
-        this.mSectionColumnStory = columnStoryListBean.getStories();
+    public ColumnStoryListBaseAdapter(Context context, List<ColumnStoryListBean.ColumnStory> ColumnStoryList) {
+        this.mColumnStoryList = ColumnStoryList;
         this.mContext = context;
     }
 
     @Override
     public int getCount() {
-        return mSectionColumnStory != null ? mSectionColumnStory.size() : 0;
+        return mColumnStoryList != null ? mColumnStoryList.size() : 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return mSectionColumnStory.get(position);
+        return mColumnStoryList.get(position);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ColumnStoryListBaseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (mSectionColumnStory == null) return null;
+        if (mColumnStoryList == null) return null;
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_story_universal, parent, false);
@@ -59,7 +59,7 @@ public class ColumnStoryListBaseAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ColumnStoryListBean.ColumnStory sectionStory = mSectionColumnStory.get(position);
+        ColumnStoryListBean.ColumnStory sectionStory = mColumnStoryList.get(position);
         viewHolder.tvTitle.setText(sectionStory.getTitle());
         String imgUrl = (sectionStory.getImage() == null) ? defaultImgUrl : sectionStory.getImage();
         LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);

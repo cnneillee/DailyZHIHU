@@ -17,14 +17,10 @@ import javax.inject.Inject;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View>
-        implements StoryCommentContract.Presenter {
-    private StoryCommentContract.View mView;
+public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View> implements StoryCommentContract.Presenter {
 
     @Inject
-    StoryCommentPresenter(StoryCommentContract.View view) {
-        this.mView = view;
-        mView.setPresenter(this);
+    public StoryCommentPresenter() {
     }
 
 //    /**

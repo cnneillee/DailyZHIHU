@@ -26,8 +26,8 @@ public class TopicGridBaseAdapter extends BaseAdapter {
     private Context mContext;
     private List<TopicListBean.TopicBean> mDatas;
 
-    public TopicGridBaseAdapter(Context context, TopicListBean topicListBean) {
-        if (topicListBean != null) this.mDatas = topicListBean.getOthers();
+    public TopicGridBaseAdapter(Context context, List<TopicListBean.TopicBean> topicBeanList) {
+        this.mDatas = topicBeanList;
         this.mContext = context;
     }
 

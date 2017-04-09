@@ -27,8 +27,8 @@ public class PastStoryListBaseAdapter extends BaseAdapter {
     private List<PastStoryListBean.PastStory> mPastStoryList;
     private Context mContext;
 
-    public PastStoryListBaseAdapter(Context context, PastStoryListBean pastStoryListBean) {
-        if (pastStoryListBean != null) this.mPastStoryList = pastStoryListBean.getStories();
+    public PastStoryListBaseAdapter(Context context, List<PastStoryListBean.PastStory> pastStoryList) {
+        this.mPastStoryList = pastStoryList;
         this.mContext = context;
     }
 

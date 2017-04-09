@@ -11,28 +11,28 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.neil.dailyzhihu.adapter.ColumnGridBaseAdapter;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.adapter.ColumnGridBaseAdapter;
+import com.neil.dailyzhihu.base.BaseActivity;
+import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnListBean;
+import com.neil.dailyzhihu.mvp.model.http.api.API;
+import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
-import com.neil.dailyzhihu.ui.widget.BaseActivity;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者：Neil on 2017/1/19 18:18.
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class NavColumnsActivity extends BaseActivity implements ObservableScrollViewCallbacks,
+public class NavColumnsActivity extends BaseActivity<BlockGridPresenter> implements ObservableScrollViewCallbacks,
         AdapterView.OnItemClickListener, View.OnClickListener, BlockGridContract.View {
 
     private static final String LOG_TAG = NavColumnsActivity.class.getSimpleName();
@@ -44,47 +44,47 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private List<ColumnListBean.ColumnBean> mDatas;
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            NavColumnsActivity.this.finish();
-        }
-    };
+    private List<ColumnListBean.ColumnBean> mColumnBeanList;
+    private ColumnGridBaseAdapter mColumnGridBaseAdapter;
 
     @Override
-    protected void initViews() {
-        setContentView(R.layout.activity_columns);
-        ButterKnife.bind(this);
-
-        // 将ToolBar设置为ActionBar
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
-//        getSupportActionBar().setNavigationMode();
-//        View header = LayoutInflater.from(mContext).inflate(R.layout.section_listview_header, null, false);
-//        header.setOnClickListener(this);
-//        gvSections.addHeaderView(header);
-//        gvSections.setScrollViewCallbacks(this);
+    protected void initEventAndData() {
+        setToolbar(mToolbar, getResources().getString(R.string.activity_columns));
         gvSections.setOnItemClickListener(this);
         tvHeader.setOnClickListener(this);
-//        Utility.setGridViewHeightBasedOnChildren(gvSections);
-        BlockGridPresenter presenter = new BlockGridPresenter(this);
-        presenter.getBlockData(API.SECTIONS);
+
+        mColumnBeanList = new ArrayList<>();
+        mColumnGridBaseAdapter = new ColumnGridBaseAdapter(this, mColumnBeanList);
+        gvSections.setAdapter(mColumnGridBaseAdapter);
+        mPresenter.getBlockData(API.SECTIONS);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ButterKnife.bind(this);
+    protected void initInject() {
+        getActivityComponent().inject(this);
     }
 
     @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+    protected int getLayout() {
+        return R.layout.activity_columns;
     }
 
     @Override
-    public void onDownMotionEvent() {
+    public void showContent(String content) {
+        Logger.json(content);
+        ColumnListBean columnListBean = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
+        List<ColumnListBean.ColumnBean> columnList = columnListBean.getData();
+
+        mColumnBeanList.clear();
+        for (int i = 0; i < columnList.size(); i++) {
+            mColumnBeanList.add(columnList.get(i));
+        }
+        mColumnGridBaseAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
     }
 
     @Override
@@ -105,8 +105,16 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
     }
 
     @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ColumnListBean.ColumnBean bean = mDatas.get((int) id);
+        ColumnListBean.ColumnBean bean = mColumnBeanList.get((int) id);
         int sectionId = bean.getStoryId();
         String sectionName = bean.getTitle();
         String sectionImg = bean.getImages() == null ? null : bean.getImages().get(0);
@@ -123,24 +131,5 @@ public class NavColumnsActivity extends BaseActivity implements ObservableScroll
 //        Intent intent = new Intent(this, SectionSettingActivity.class);
 //        this.startActivity(intent);
         Toast.makeText(this, getResources().getString(R.string.notify_columns_subscribing_clicked), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void setPresenter(BlockGridContract.Presenter presenter) {
-
-    }
-
-    @Override
-    public void showContent(String content) {
-        Logger.json(content);
-        ColumnListBean columnListBean = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
-        mDatas = columnListBean.getData();
-        ColumnGridBaseAdapter adapter = new ColumnGridBaseAdapter(NavColumnsActivity.this, columnListBean);
-        gvSections.setAdapter(adapter);
-    }
-
-    @Override
-    public void showError(String errMsg) {
-
     }
 }
