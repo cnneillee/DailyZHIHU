@@ -23,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:paddingLeft="8dp"
+            android:textColor="?attr/commentUserTextColor"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="?attr/commentUserTextColor"
             tools:text="思霖Candy"/>
     </LinearLayout>
 
@@ -41,38 +41,42 @@
     <LinearLayout
         android:id="@+id/ll_reply_to"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <ImageView
-            android:src="@drawable/ic_action_reply_to"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:src="?attr/commentReplyToIcon"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:padding="3dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="3dp">
 
                 <TextView
                     android:id="@+id/tv_author_reply_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
                     android:textColor="?attr/commentUserTextColor"
+                    android:textSize="14sp"
                     tools:text="思霖Candy"/>
+
                 <TextView
                     android:id="@+id/tv_status"
-                    android:paddingLeft="8dp"
-                    tools:text="[已删除]"
-                    android:textColor="?attr/commentExtraTextColor"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:textColor="?attr/commentExtraTextColor"
+                    tools:text="[已删除]"/>
             </LinearLayout>
 
             <TextView
@@ -102,10 +106,10 @@
             tools:text="1413721757"/>
 
         <ImageView
-            android:src="@drawable/ic_action_love"
-            android:layout_margin="8dp"
             android:layout_width="20dp"
-            android:layout_height="20dp"/>
+            android:layout_height="20dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_action_love"/>
 
         <TextView
             android:id="@+id/tv_likes"
