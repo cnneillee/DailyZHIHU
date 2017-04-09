@@ -12,8 +12,8 @@ import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.model.bean.orignal.UpdateInfoBean;
 
 import io.reactivex.Flowable;
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * 作者：Neil on 2017/4/5 14:19.

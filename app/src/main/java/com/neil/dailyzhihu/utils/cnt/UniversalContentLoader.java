@@ -6,12 +6,14 @@ import android.os.Message;
 import android.util.Log;
 
 import com.neil.dailyzhihu.listener.OnContentLoadListener;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 内容加载器包装的实现
@@ -61,7 +63,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                 final Request request = new Request.Builder().url(contentUrl).build();
                 mOkHttpClient.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Request request, IOException e) {
+                    public void onFailure(Call call, IOException e) {
                         String failureInfo = e.getMessage();
                         deliverBundle.putString(KEY_FAILURE_INFO, failureInfo);
                         msg.what = REQUEST_FAIL;
@@ -71,7 +73,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                     }
 
                     @Override
-                    public void onResponse(Response response) throws IOException {
+                    public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()) {
                             String networkData = response.body().string();
                             msg.what = REQUEST_SUCCESS;

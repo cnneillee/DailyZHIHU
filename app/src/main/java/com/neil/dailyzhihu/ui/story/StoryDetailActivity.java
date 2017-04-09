@@ -3,19 +3,14 @@ package com.neil.dailyzhihu.ui.story;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
@@ -29,7 +24,6 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
-import com.neil.dailyzhihu.model.http.api.API;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.StoryDetailPresenter;
 import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
@@ -37,8 +31,6 @@ import com.neil.dailyzhihu.ui.widget.ObservableWebView;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.neil.dailyzhihu.utils.share.QRCodeUtil;
-import com.neil.dailyzhihu.utils.storage.StorageOperatingHelper;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -226,28 +218,28 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 break;
             case R.id.menu_item_action_qrcode:
                 // 生成二维码
-                final String shareUrl = API.WEB_STORY_PREFIX + mStoryId;
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_qr_display, null, false);
-                ImageView ivQR = (ImageView) view.findViewById(R.id.iv_qrDisplay);
-                AlertDialog dialog = builder.setView(view).setTitle(getResources().getString(R.string.share_qr_code)).create();
-                dialog.show();
-
-                ViewGroup.LayoutParams pm = ivQR.getLayoutParams();
-                final Bitmap bm = QRCodeUtil.getQRBitmap(shareUrl, pm.width, pm.height, null);
-                ivQR.setImageBitmap(bm);
-
-                ivQR.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        String path = StorageOperatingHelper.savingBitmap2SD(mContext, bm, shareUrl);
-                        if (!TextUtils.isEmpty(path))
-                            SnackbarUtil.ShortSnackbar(mRootView, getResources().getString(R.string.notify_saved) + path, SnackbarUtil.Info).show();
-                        return true;
-                    }
-                });
-                break;
+//                final String shareUrl = API.WEB_STORY_PREFIX + mStoryId;
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//                View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_qr_display, null, false);
+//                ImageView ivQR = (ImageView) view.findViewById(R.id.iv_qrDisplay);
+//                AlertDialog dialog = builder.setView(view).setTitle(getResources().getString(R.string.share_qr_code)).create();
+//                dialog.show();
+//
+//                ViewGroup.LayoutParams pm = ivQR.getLayoutParams();
+//                final Bitmap bm = QRCodeUtil.getQRBitmap(shareUrl, pm.width, pm.height, null);
+//                ivQR.setImageBitmap(bm);
+//
+//                ivQR.setOnLongClickListener(new View.OnLongClickListener() {
+//                    @Override
+//                    public boolean onLongClick(View v) {
+//                        String path = StorageOperatingHelper.savingBitmap2SD(mContext, bm, shareUrl);
+//                        if (!TextUtils.isEmpty(path))
+//                            SnackbarUtil.ShortSnackbar(mRootView, getResources().getString(R.string.notify_saved) + path, SnackbarUtil.Info).show();
+//                        return true;
+//                    }
+//                });
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
