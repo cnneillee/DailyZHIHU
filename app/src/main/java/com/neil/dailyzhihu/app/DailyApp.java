@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu;
+package com.neil.dailyzhihu.app;
 
 import android.app.Activity;
 import android.app.Application;
@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.neil.dailyzhihu.app.InitializeService;
 import com.neil.dailyzhihu.di.component.AppComponent;
 import com.neil.dailyzhihu.di.component.DaggerAppComponent;
 import com.neil.dailyzhihu.di.module.AppModule;

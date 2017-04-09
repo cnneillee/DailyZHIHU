@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.neil.dailyzhihu.Constant;
-import com.neil.dailyzhihu.DailyApp;
+import com.neil.dailyzhihu.app.DailyApp;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.di.component.ActivityComponent;
 import com.neil.dailyzhihu.di.component.DaggerActivityComponent;

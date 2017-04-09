@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.di.component;
 
-import com.neil.dailyzhihu.DailyApp;
+import com.neil.dailyzhihu.app.DailyApp;
 import com.neil.dailyzhihu.di.module.AppModule;
 
 import javax.inject.Singleton;

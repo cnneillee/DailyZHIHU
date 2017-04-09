@@ -10,7 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 
-import com.neil.dailyzhihu.DailyApp;
+import com.neil.dailyzhihu.app.DailyApp;
 import com.neil.dailyzhihu.R;
 
 /**

@@ -3,7 +3,7 @@ package com.neil.dailyzhihu.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.neil.dailyzhihu.DailyApp;
+import com.neil.dailyzhihu.app.DailyApp;
 
 /**
  * 作者：Neil on 2016/4/16 23:50.

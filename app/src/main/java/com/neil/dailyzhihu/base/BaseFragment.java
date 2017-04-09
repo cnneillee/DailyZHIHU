@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.neil.dailyzhihu.DailyApp;
+import com.neil.dailyzhihu.app.DailyApp;
 import com.neil.dailyzhihu.di.component.DaggerFragmentComponent;
 import com.neil.dailyzhihu.di.component.FragmentComponent;
 import com.neil.dailyzhihu.di.module.FragmentModule;
