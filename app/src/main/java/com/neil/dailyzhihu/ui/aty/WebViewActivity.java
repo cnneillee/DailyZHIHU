@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.NightModeBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

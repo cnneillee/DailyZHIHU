@@ -14,7 +14,7 @@ import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.adapter.TopicEditorListAdapter;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 
 import java.util.List;

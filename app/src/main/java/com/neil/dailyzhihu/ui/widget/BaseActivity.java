@@ -28,7 +28,7 @@ import android.widget.ListView;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.ui.adapter.SimpleHeaderRecyclerAdapter;
 import com.neil.dailyzhihu.ui.adapter.SimpleRecyclerAdapter;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.NightModeBaseActivity;
 
 import java.util.ArrayList;
 

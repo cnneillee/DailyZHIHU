@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.ui;
+package com.neil.dailyzhihu.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
