@@ -17,7 +17,6 @@
 package com.neil.dailyzhihu.ui.widget;
 
 import android.content.res.TypedArray;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
@@ -27,8 +26,8 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.SimpleHeaderRecyclerAdapter;
-import com.neil.dailyzhihu.adapter.SimpleRecyclerAdapter;
+import com.neil.dailyzhihu.ui.adapter.SimpleHeaderRecyclerAdapter;
+import com.neil.dailyzhihu.ui.adapter.SimpleRecyclerAdapter;
 import com.neil.dailyzhihu.ui.NightModeBaseActivity;
 
 import java.util.ArrayList;

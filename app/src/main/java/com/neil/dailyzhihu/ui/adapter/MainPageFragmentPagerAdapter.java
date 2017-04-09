@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.adapter;
+package com.neil.dailyzhihu.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

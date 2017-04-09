@@ -12,7 +12,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.ColumnGridBaseAdapter;
+import com.neil.dailyzhihu.ui.adapter.ColumnGridBaseAdapter;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.model.http.api.API;

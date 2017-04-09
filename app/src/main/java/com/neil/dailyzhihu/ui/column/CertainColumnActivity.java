@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
+import com.neil.dailyzhihu.ui.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;

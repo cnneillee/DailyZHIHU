@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.adapter;
+package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

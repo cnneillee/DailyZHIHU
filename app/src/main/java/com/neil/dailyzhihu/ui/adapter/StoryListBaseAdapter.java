@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.adapter;
+package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.model.bean.IListBean;
+import com.neil.dailyzhihu.model.bean.IStoryBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -18,29 +19,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 作者：Neil on 2017/2/16 23:00.
+ * 作者：Neil on 2017/3/21 17:01.
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class TopicStoryListAdapter extends BaseAdapter {
-
-    private List<TopicStoryListBean.TopicStory> mThemeStoryList;
-    private Context mContext;
+public class StoryListBaseAdapter<T extends IListBean> extends BaseAdapter {
+    private List<IStoryBean> mItems;
     private String defaultImgUrl;
+    private LayoutInflater mInflater;
 
-    public TopicStoryListAdapter(Context context, List<TopicStoryListBean.TopicStory> topicStoryList) {
-        this.mThemeStoryList = topicStoryList;
-        this.mContext = context;
+    public StoryListBaseAdapter(Context context, IListBean listItem) {
+        this.mItems = listItem.getStories();
+        mInflater = LayoutInflater.from(context);
+    }
+
+    public void setDefaultImgUrl(String defaultImgUrl) {
+        this.defaultImgUrl = defaultImgUrl;
     }
 
     @Override
     public int getCount() {
-        return mThemeStoryList != null ? mThemeStoryList.size() : 0;
+        return mItems.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mThemeStoryList.get(position);
+        return mItems != null ? mItems.get(position) : 0;
     }
 
     @Override
@@ -50,25 +54,21 @@ public class TopicStoryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (mThemeStoryList == null) return null;
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_story_universal, parent, false);
+            convertView = mInflater.inflate(R.layout.item_lv_story_universal, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        TopicStoryListBean.TopicStory themeStory = mThemeStoryList.get(position);
-        viewHolder.tvTitle.setText(themeStory.getTitle());
-        String imgUrl = (themeStory.getImage() == null) ? defaultImgUrl : themeStory.getImage();
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
+
+        IStoryBean item = mItems.get(position);
+        viewHolder.tvTitle.setText(item.getTitle());
+        defaultImgUrl = (item.getImage() == null) ? defaultImgUrl : item.getImage();
+        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, defaultImgUrl, null);
 
         return convertView;
-    }
-
-    public void setDefaultImgUrl(String defaultImgUrl) {
-        this.defaultImgUrl = defaultImgUrl;
     }
 
     class ViewHolder {

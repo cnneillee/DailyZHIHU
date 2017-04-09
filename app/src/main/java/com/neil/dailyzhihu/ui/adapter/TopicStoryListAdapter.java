@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.adapter;
+package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -18,28 +18,29 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 作者：Neil on 2017/2/16 21:10.
+ * 作者：Neil on 2017/2/16 23:00.
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class LatestStoryListBaseAdapter extends BaseAdapter {
+public class TopicStoryListAdapter extends BaseAdapter {
 
-    private List<LatestStoryListBean.LatestStory> mLatestStoryList;
-    private LayoutInflater mInflater;
+    private List<TopicStoryListBean.TopicStory> mThemeStoryList;
+    private Context mContext;
+    private String defaultImgUrl;
 
-    public LatestStoryListBaseAdapter(Context context, List<LatestStoryListBean.LatestStory> latestStoryList) {
-        this.mLatestStoryList = latestStoryList;
-        this.mInflater = LayoutInflater.from(context);
+    public TopicStoryListAdapter(Context context, List<TopicStoryListBean.TopicStory> topicStoryList) {
+        this.mThemeStoryList = topicStoryList;
+        this.mContext = context;
     }
 
     @Override
     public int getCount() {
-        return mLatestStoryList != null ? mLatestStoryList.size() : 0;
+        return mThemeStoryList != null ? mThemeStoryList.size() : 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return mLatestStoryList.get(position);
+        return mThemeStoryList.get(position);
     }
 
     @Override
@@ -49,19 +50,25 @@ public class LatestStoryListBaseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (mThemeStoryList == null) return null;
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_lv_story_universal, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_lv_story_universal, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        LatestStoryListBean.LatestStory latestStory = mLatestStoryList.get(position);
-        viewHolder.tvTitle.setText(latestStory.getTitle());
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, latestStory.getImage(), null);
+        TopicStoryListBean.TopicStory themeStory = mThemeStoryList.get(position);
+        viewHolder.tvTitle.setText(themeStory.getTitle());
+        String imgUrl = (themeStory.getImage() == null) ? defaultImgUrl : themeStory.getImage();
+        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
 
         return convertView;
+    }
+
+    public void setDefaultImgUrl(String defaultImgUrl) {
+        this.defaultImgUrl = defaultImgUrl;
     }
 
     class ViewHolder {

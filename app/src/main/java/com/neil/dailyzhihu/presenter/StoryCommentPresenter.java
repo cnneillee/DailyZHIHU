@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.presenter;
 
-import com.neil.dailyzhihu.adapter.CommentTypesPagerAdapter;
+import com.neil.dailyzhihu.ui.adapter.CommentTypesPagerAdapter;
 import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;

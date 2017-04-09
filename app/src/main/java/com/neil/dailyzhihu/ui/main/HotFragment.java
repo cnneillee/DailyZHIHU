@@ -11,7 +11,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.HotStoryListBaseAdapter;
+import com.neil.dailyzhihu.ui.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
 import com.neil.dailyzhihu.model.bean.orignal.HotStoryListBean;
 import com.neil.dailyzhihu.model.http.api.API;

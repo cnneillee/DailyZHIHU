@@ -6,7 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.CommentListBaseAdapter;
+import com.neil.dailyzhihu.ui.adapter.CommentListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
 import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.presenter.StoryCommentPresenter;

@@ -23,7 +23,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.PastStoryListBaseAdapter;
+import com.neil.dailyzhihu.ui.adapter.PastStoryListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
 import com.neil.dailyzhihu.model.bean.orignal.PastStoryListBean;
 import com.neil.dailyzhihu.model.http.api.API;

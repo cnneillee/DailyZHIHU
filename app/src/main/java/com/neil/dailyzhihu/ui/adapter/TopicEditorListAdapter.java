@@ -1,4 +1,4 @@
-package com.neil.dailyzhihu.adapter;
+package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.bean.orignal.ColumnListBean;
+import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -18,22 +18,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 作者：Neil on 2017/2/16 22:29.
+ * 作者：Neil on 2016/3/23 14:16.
  * 邮箱：cn.neillee@gmail.com
  */
-
-public class ColumnGridBaseAdapter extends BaseAdapter {
+public class TopicEditorListAdapter extends BaseAdapter {
     private Context mContext;
-    private List<ColumnListBean.ColumnBean> mDatas;
+    private List<TopicStoryListBean.EditorsBean> mDatas;
 
-    public ColumnGridBaseAdapter(Context context, List<ColumnListBean.ColumnBean> columnList) {
-        this.mContext = context;
-        this.mDatas = columnList;
+    public TopicEditorListAdapter(Context mContext, List<TopicStoryListBean.EditorsBean> mDatas) {
+        this.mContext = mContext;
+        this.mDatas = mDatas;
     }
 
     @Override
     public int getCount() {
-        return mDatas != null ? mDatas.size():0;
+        if (mDatas == null) return -1;
+        return mDatas.size();
     }
 
     @Override
@@ -50,29 +50,29 @@ public class ColumnGridBaseAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gv_block, parent, false);
+            convertView = LayoutInflater.from(mContext).
+                    inflate(R.layout.item_lv_editor_theme, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.ivTitle.setText(mDatas.get(position).getTitle());
-        vh.ivDescription.setText(mDatas.get(position).getDescription());
-        LoaderFactory.getImageLoader().displayImage(vh.ivImg, mDatas.get(position).getImages().get(0), null);
+        vh.tvBio.setText(mDatas.get(position).getBio());
+        vh.tvName.setText(mDatas.get(position).getName());
+        LoaderFactory.getImageLoader().displayImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
         return convertView;
     }
 
     class ViewHolder {
-        @BindView(R.id.iv_img)
-        ImageView ivImg;
-        @BindView(R.id.iv_title)
-        TextView ivTitle;
-        @BindView(R.id.tv_description)
-        TextView ivDescription;
+        @BindView(R.id.iv_avatar)
+        ImageView ivAvatar;
+        @BindView(R.id.tv_name)
+        TextView tvName;
+        @BindView(R.id.tv_bio)
+        TextView tvBio;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
-
 }
