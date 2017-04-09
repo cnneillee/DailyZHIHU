@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.LatestStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;

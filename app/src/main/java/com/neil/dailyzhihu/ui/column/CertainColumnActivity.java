@@ -10,10 +10,10 @@ import android.widget.ListView;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.ColumnStoryListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseActivity;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.ColumnStoryListBean;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.mvp.presenter.ColumnDetailPresenter;
-import com.neil.dailyzhihu.mvp.presenter.constract.ColumnDetailContract;
+import com.neil.dailyzhihu.model.bean.orignal.ColumnStoryListBean;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.presenter.ColumnDetailPresenter;
+import com.neil.dailyzhihu.presenter.constract.ColumnDetailContract;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 
 import java.util.ArrayList;

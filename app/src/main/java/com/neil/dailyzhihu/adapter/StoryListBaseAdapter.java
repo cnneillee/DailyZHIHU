@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.mvp.model.bean.IListBean;
-import com.neil.dailyzhihu.mvp.model.bean.IStoryBean;
+import com.neil.dailyzhihu.model.bean.IListBean;
+import com.neil.dailyzhihu.model.bean.IStoryBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;

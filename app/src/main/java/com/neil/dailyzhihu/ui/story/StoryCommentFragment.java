@@ -8,14 +8,14 @@ import android.widget.TextView;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.CommentListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.CommentListBean;
-import com.neil.dailyzhihu.mvp.presenter.StoryCommentPresenter;
-import com.neil.dailyzhihu.mvp.presenter.constract.StoryCommentContract;
+import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;
+import com.neil.dailyzhihu.presenter.StoryCommentPresenter;
+import com.neil.dailyzhihu.presenter.constract.StoryCommentContract;
 
 import butterknife.BindView;
 
-import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
-import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.STORY_ID;
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.STORY_ID;
 
 /**
  * 作者：Neil on 2017/4/6 01:04.

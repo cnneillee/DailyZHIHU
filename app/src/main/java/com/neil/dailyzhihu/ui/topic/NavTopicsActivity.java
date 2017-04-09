@@ -12,11 +12,11 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.adapter.TopicGridBaseAdapter;
 import com.neil.dailyzhihu.base.BaseActivity;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.TopicListBean;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.mvp.presenter.BlockGridPresenter;
-import com.neil.dailyzhihu.mvp.presenter.constract.BlockGridContract;
+import com.neil.dailyzhihu.model.bean.orignal.TopicListBean;
+import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.presenter.BlockGridPresenter;
+import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.orhanobut.logger.Logger;
 

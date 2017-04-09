@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.di.module;
 
-import com.neil.dailyzhihu.mvp.presenter.constract.StoryCommentContract;
+import com.neil.dailyzhihu.presenter.constract.StoryCommentContract;
 
 import dagger.Module;
 import dagger.Provides;

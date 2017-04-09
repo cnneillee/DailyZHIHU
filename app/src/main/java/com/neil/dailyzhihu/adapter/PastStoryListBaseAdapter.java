@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.PastStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.PastStoryListBean;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;

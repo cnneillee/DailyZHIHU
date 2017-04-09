@@ -94,8 +94,8 @@
 -keepattributes *Annotation*
 -keep class com.google.gson.** { *; }
 -dontwarn com.google.gson.**
--keep class com.neil.dailyzhihu.mvp.model.bean.**{ *; }
--keep class com.neil.dailyzhihu.mvp.model.bean.original.**{ *; }
+-keep class com.neil.dailyzhihu.model.bean.**{ *; }
+-keep class com.neil.dailyzhihu.model.bean.original.**{ *; }
 
 # ShareSDK 混淆
 -dontwarn cn.sharesdk.**

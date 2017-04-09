@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.listener.OnContentLoadListener;
-import com.neil.dailyzhihu.mvp.model.http.api.API;
-import com.neil.dailyzhihu.mvp.model.bean.orignal.CommentListBean;
+import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.cnt.ContentLoaderWrapper;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;

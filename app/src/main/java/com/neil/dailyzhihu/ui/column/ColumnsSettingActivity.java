@@ -23,8 +23,8 @@
 //import com.neil.dailyzhihu.Constant;
 //import com.neil.dailyzhihu.listener.OnContentLoadingFinishedListener;
 //import com.neil.dailyzhihu.R;
-//import com.neil.dailyzhihu.mvp.model.bean.orignallayer.ColumnListBean;
-//import com.neil.dailyzhihu.mvp.model.bean.cleanlayer.CleanSectionAndThemeBean;
+//import com.neil.dailyzhihu.model.bean.orignallayer.ColumnListBean;
+//import com.neil.dailyzhihu.model.bean.cleanlayer.CleanSectionAndThemeBean;
 //import com.neil.dailyzhihu.utils.GsonDecoder;
 //import com.neil.dailyzhihu.utils.load.LoaderFactory;
 //import com.neil.dailyzhihu.utils.db.catalog.a.DBFactory;

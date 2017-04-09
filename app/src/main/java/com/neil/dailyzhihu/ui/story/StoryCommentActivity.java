@@ -17,8 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
-import static com.neil.dailyzhihu.mvp.model.http.api.AtyExtraKeyConstant.STORY_ID;
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.STORY_ID;
 
 /**
  * 作者：Neil on 2017/4/6 00:49.
