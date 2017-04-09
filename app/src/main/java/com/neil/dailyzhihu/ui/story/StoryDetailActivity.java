@@ -42,6 +42,9 @@ import com.neil.dailyzhihu.utils.storage.StorageOperatingHelper;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import butterknife.BindView;
 
 public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
@@ -137,20 +140,21 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         setActionBarText(storyTitle);
         mTitleView.setText(storyTitle);
 
-        String cssContent = "";
-        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
-//                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
-            cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
-                    "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
-                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + storyBean.getCss().get(0) + "\">\n"
-                    + "<style>.headline{display:none;}</style>";
-        }
-        String html = "<html><head>" + cssContent + "</head><body>" + storyBean.getBody() + " </body></html>";
+//        String cssContent = "";
+//        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
+////                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
+//            cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
+//                    "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
+//                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + storyBean.getCss().get(0) + "\">\n"
+//                    + "<style>.headline{display:none;}</style>";
+//        }
+//        String html = "<html><head>" + cssContent + "</head><body>" + storyBean.getBody() + " </body></html>";
+        String html = getFromAssets(storyBean.getBody());
         mWebView.setHorizontalScrollBarEnabled(false);
         // style="width:100%;height:auto"
         WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
-        mWebView.loadData(html, "text/html; charset=UTF-8", null);
+        mWebView.loadDataWithBaseURL(null, html, "text/html","UTF-8", null);
         Log.e("HTML", html);
     }
 
@@ -343,5 +347,29 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
         a.recycle();
         return actionBarSize;
+    }
+
+    /*
+    * 获取html文件
+    */
+    public String getFromAssets(String content) {
+        String htmlPath = "webview/html/certain_story.html";
+        try {
+            InputStreamReader inputReader = new InputStreamReader(getResources().getAssets().open(htmlPath));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line;
+            String Result = "";
+            while ((line = bufReader.readLine()) != null) {
+                Result += line;
+                if (line.contains("<!-- 此处加载内容 -->")) {
+                    Result += content;
+                    Log.e(LOG_TAG, line);
+                }
+            }
+            return Result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
