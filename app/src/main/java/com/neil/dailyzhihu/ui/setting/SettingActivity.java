@@ -31,7 +31,8 @@ public class SettingActivity extends NightModeBaseActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationOnClickListener(upBtnListener);
 
         getFragmentManager().beginTransaction().replace(R.id.fl_setting_fragment, new SettingFragment()).commit();

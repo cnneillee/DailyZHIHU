@@ -75,7 +75,9 @@ public class MainActivity extends NightModeBaseActivity
         // Tabs与FragmentPager关联
         mvpNewsTab.setAdapter(fAdapter);
         mTabs.setupWithViewPager(mvpNewsTab);
-
+        mTabs.getTabAt(0).setIcon(R.drawable.ic_tab_latest_selector);
+        mTabs.getTabAt(1).setIcon(R.drawable.ic_tab_hot_selector);
+        mTabs.getTabAt(2).setIcon(R.drawable.ic_tab_past_selector);
         // 初始化抽屉的header界面
         initDrawerLayout(mNavView);
     }
@@ -88,6 +90,7 @@ public class MainActivity extends NightModeBaseActivity
         toggle.syncState();
         mNavView.setNavigationItemSelectedListener(this);
         mNavView.setCheckedItem(R.id.nav_mainpage);
+        mNavView.setItemIconTintList(null);
 
         LinearLayout header = (LinearLayout) navigationView.getHeaderView(0);
         ImageView avatar = (ImageView) header.findViewById(R.id.iv_avatar);
@@ -186,7 +189,7 @@ public class MainActivity extends NightModeBaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == AtyExtraKeyConstant.EXIT_NORMALLY){
+        if (requestCode == AtyExtraKeyConstant.EXIT_NORMALLY) {
             mNavView.setCheckedItem(R.id.nav_mainpage);
         }
     }

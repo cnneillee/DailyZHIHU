@@ -40,17 +40,9 @@ public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implemen
     private List<TopicListBean.TopicBean> mTopicBeanList;
     private TopicGridBaseAdapter mTopicAdapter;
 
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            NavTopicsActivity.this.finish();
-        }
-    };
-
     @Override
     protected void initEventAndData() {
-        setToolbar(mToolbar, getResources().getString(R.string.nav_topics));
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        setToolbar(mToolbar, getResources().getString(R.string.activity_topics));
 
         gvThemes.setOnItemClickListener(this);
         gvThemes.setScrollViewCallbacks(this);

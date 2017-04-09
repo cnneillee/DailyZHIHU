@@ -46,7 +46,8 @@ public class TopicEditorsActivity extends NightModeBaseActivity implements Adapt
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationOnClickListener(upBtnListener);
         getExtras();
     }

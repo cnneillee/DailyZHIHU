@@ -68,8 +68,7 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
     @Override
     protected void initEventAndData() {
         // 对ActionBar进行设置
-        setToolbar(mToolbarView, "");
-        mToolbarView.setNavigationIcon(R.drawable.ic_action_back);
+        setToolbar(mToolbarView, getResources().getString(R.string.activity_topic));
 
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
 
