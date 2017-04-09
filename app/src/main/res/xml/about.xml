@@ -16,6 +16,11 @@
             android:layout="@layout/preference_custom"
             android:title="@string/versioninfo_title"/>
         <Preference
+            android:key="key_feedback"
+            android:layout="@layout/preference_custom"
+            android:summary="@string/feedback_summary"
+            android:title="@string/feedback_title"/>
+        <Preference
             android:key="key_shareapp"
             android:layout="@layout/preference_custom"
             android:summary="@string/shareapp_sumary"

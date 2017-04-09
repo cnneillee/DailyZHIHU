@@ -40,7 +40,7 @@
 ![贴图][21]
 
 1.2.0 ：
-- 意见反馈功能添加（About->DailyZhihu）
+- ~~意见反馈功能添加（About->DailyZhihu）~~
 - 图标的修改（Launcher、DrawerMenu的图标、MainActivity的Tabs图标）
 
 1.3.0以后：
