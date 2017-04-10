@@ -2,24 +2,18 @@ package com.neil.dailyzhihu.utils.img;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.Response;
-import com.android.volley.toolbox.ImageRequest;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.utils.Settings;
-import com.neil.dailyzhihu.utils.storage.ImageExternalDirectoryUtil;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.ImageDownloader;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
-
-import java.io.File;
 
 /**
  * 开源框架 Android-Universal-Image-Loader 的封装实现
@@ -37,10 +31,7 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option) {
-        if (option != null && option.noPicMode) {
-            imageView.setVisibility(View.GONE);
-            return;
-        }
+        if (Settings.noPicMode) return;
         int imageLoadingResId = R.drawable.img_loading_default;
         int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
@@ -61,10 +52,7 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener) {
-        if (option != null && option.noPicMode) {
-            imageView.setVisibility(View.GONE);
-            return;
-        }
+        if (Settings.noPicMode) return;
         int imageLoadingResId = R.drawable.img_loading_default;
         int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {
@@ -86,10 +74,7 @@ public class UniversalAndroidImageLoader implements ImageLoaderWrapper {
 
     @Override
     public void displayImage(ImageView imageView, String imageUrl, DisplayOption option, ImageLoadingListener listener, ImageLoadingProgressListener progressListener) {
-        if (option != null && option.noPicMode) {
-            imageView.setVisibility(View.GONE);
-            return;
-        }
+        if (Settings.noPicMode) return;
         int imageLoadingResId = R.drawable.img_loading_default;
         int imageErrorResId = R.drawable.img_loading_error;
         if (option != null) {

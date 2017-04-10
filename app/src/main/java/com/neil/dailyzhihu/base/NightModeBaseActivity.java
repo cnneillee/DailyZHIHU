@@ -65,8 +65,8 @@ public abstract class NightModeBaseActivity extends AppCompatActivity {
     }
 
     protected void changeNoPicMode() {
-        Settings.isExitConfirm = !Settings.isExitConfirm;
-        this.mSettings.putBoolean(Settings.NO_PIC_MODE, Settings.isExitConfirm);
+        Settings.noPicMode = !Settings.noPicMode;
+        this.mSettings.putBoolean(Settings.NO_PIC_MODE, Settings.noPicMode);
     }
 
     protected void changeNeedRecreated() {
