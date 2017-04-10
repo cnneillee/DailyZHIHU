@@ -130,8 +130,6 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
         }
         mTopicStoryListAdapter.notifyDataSetChanged();
 
-        mTopicStoryListAdapter.setDefaultImgUrl(mDefaultImgUrl);
-
         String bgUrl = topicStoryListBean.getBackground();
         LoaderFactory.getImageLoader().displayImage(mImageView, bgUrl, null);
         String introDes = topicStoryListBean.getDescription();
