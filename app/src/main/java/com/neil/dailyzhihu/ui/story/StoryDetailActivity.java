@@ -21,9 +21,11 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.google.gson.Gson;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
+import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.StoryDetailPresenter;
 import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
@@ -58,6 +60,9 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     @BindView(R.id.webview)
     ObservableWebView mWebView;
 
+    private MenuItem mCommentMenuItem;
+    private MenuItem mPraiseMenuItem;
+
     private int mActionBarSize;
     private int mFlexibleSpaceShowFabOffset;
     private int mFlexibleSpaceImageHeight;
@@ -67,6 +72,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     private Activity mContext = StoryDetailActivity.this;
 
     private int mStoryId;
+    private String mStoryExtra;
     private String mStoryTitle;
     private String mDefaultImg;
 
@@ -109,6 +115,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
         mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         mPresenter.getStoryData(mStoryId);
+        mPresenter.getStoryExtras(mStoryId);
     }
 
     @Override
@@ -128,9 +135,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
         loader.displayImage(mImageView, imgUrl, null, null);
 
-        String storyTitle = storyBean.getTitle();
-        setActionBarText(storyTitle);
-        mTitleView.setText(storyTitle);
+        setActionBarText(mStoryTitle);
+        mTitleView.setText(mStoryTitle);
 
 //        String cssContent = "";
 //        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
@@ -146,13 +152,24 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         // style="width:100%;height:auto"
         WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
-        mWebView.loadDataWithBaseURL(null, html, "text/html","UTF-8", null);
+        mWebView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
         Log.e("HTML", html);
     }
 
     @Override
     public void showError(String errMsg) {
 
+    }
+
+    @Override
+    public void showExtras(StoryExtraInfoBean infoBean) {
+        mStoryExtra = new Gson().toJson(infoBean);
+        if (mCommentMenuItem != null) {
+            mCommentMenuItem.setTitle(infoBean.getComments() + "");
+        }
+        if (mPraiseMenuItem != null) {
+            mPraiseMenuItem.setTitle(infoBean.getPopularity() + "");
+        }
     }
 
     // 初始化ObservableView相关参数
@@ -196,6 +213,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_certain_story_menu, menu);
+        mCommentMenuItem = menu.findItem(R.id.menu_item_action_comment);
+        mPraiseMenuItem = menu.findItem(R.id.menu_item_action_praise);
         return true;
     }
 
@@ -210,6 +229,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 // TODO 替换
                 Intent intent = new Intent(mContext, StoryCommentActivity.class);
                 intent.putExtra(AtyExtraKeyConstant.STORY_ID, mStoryId);
+                intent.putExtra(AtyExtraKeyConstant.STORY_EXTRAS, mStoryExtra);
                 startActivity(intent);
                 break;
             case R.id.menu_item_action_star:
@@ -307,6 +327,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
             ViewPropertyAnimator.animate(mFab).cancel();
             ViewPropertyAnimator.animate(mFab).scaleX(1).scaleY(1).setDuration(200).start();
             mFabIsShown = true;
+            setTitle("");
         }
     }
 
@@ -315,6 +336,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
             ViewPropertyAnimator.animate(mFab).cancel();
             ViewPropertyAnimator.animate(mFab).scaleX(0).scaleY(0).setDuration(200).start();
             mFabIsShown = false;
+            setTitle(mStoryTitle);
         }
     }
 

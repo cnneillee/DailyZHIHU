@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
+import com.neil.dailyzhihu.utils.GsonDecoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.STORY_EXTRAS;
 import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.STORY_ID;
 
 /**
@@ -49,6 +52,7 @@ public class StoryCommentActivity extends NightModeBaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         int storyId = bundle.getInt(STORY_ID, -1);
+        String storyExtra = bundle.getString(STORY_EXTRAS);
 
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_action_cancel);
@@ -70,8 +74,9 @@ public class StoryCommentActivity extends NightModeBaseActivity {
         mFragmentList.add(longFragment);
         mFragmentList.add(shortFragment);
 
-        final String longCommentTitle = getResources().getString(R.string.long_comment);
-        final String shortCommentTitle = getResources().getString(R.string.short_comment);
+        StoryExtraInfoBean bean = GsonDecoder.getDecoder().decoding(storyExtra, StoryExtraInfoBean.class);
+        final String longCommentTitle = getResources().getString(R.string.long_comment) + "(" + bean.getLongComments() + ")";
+        final String shortCommentTitle = getResources().getString(R.string.short_comment) + "(" + bean.getShortComments() + ")";
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
