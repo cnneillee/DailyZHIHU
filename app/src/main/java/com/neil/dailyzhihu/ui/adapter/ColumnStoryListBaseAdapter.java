@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,18 +62,13 @@ public class ColumnStoryListBaseAdapter extends BaseAdapter {
         }
         ColumnStoryListBean.ColumnStory sectionStory = mColumnStoryList.get(position);
         viewHolder.tvTitle.setText(sectionStory.getTitle());
-        String imgUrl = (sectionStory.getImage() == null) ? defaultImgUrl : sectionStory.getImage();
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
-
+        String imgUrl = sectionStory.getImage();
+        if (!TextUtils.isEmpty(imgUrl)) {
+            LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
+        } else {
+            viewHolder.ivImg.setVisibility(View.GONE);
+        }
         return convertView;
-    }
-
-    public String getDefaultImgUrl() {
-        return defaultImgUrl;
-    }
-
-    public void setDefaultImgUrl(String defaultImgUrl) {
-        this.defaultImgUrl = defaultImgUrl;
     }
 
     class ViewHolder {

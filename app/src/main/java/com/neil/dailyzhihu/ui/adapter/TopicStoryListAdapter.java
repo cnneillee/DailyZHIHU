@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,14 +62,13 @@ public class TopicStoryListAdapter extends BaseAdapter {
         }
         TopicStoryListBean.TopicStory themeStory = mThemeStoryList.get(position);
         viewHolder.tvTitle.setText(themeStory.getTitle());
-        String imgUrl = (themeStory.getImage() == null) ? defaultImgUrl : themeStory.getImage();
-        LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
-
+        String imgUrl = themeStory.getImage();
+        if (!TextUtils.isEmpty(imgUrl)) {
+            LoaderFactory.getImageLoader().displayImage(viewHolder.ivImg, imgUrl, null);
+        } else {
+            viewHolder.ivImg.setVisibility(View.GONE);
+        }
         return convertView;
-    }
-
-    public void setDefaultImgUrl(String defaultImgUrl) {
-        this.defaultImgUrl = defaultImgUrl;
     }
 
     class ViewHolder {
