@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -76,6 +77,7 @@ public class TopicEditorsActivity extends NightModeBaseActivity implements Adapt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TopicStoryListBean.EditorsBean bean = (TopicStoryListBean.EditorsBean) parent.getAdapter().getItem(position);
         String url = bean.getUrl();
+        if (TextUtils.isEmpty(url)) return;
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra(AtyExtraKeyConstant.WEB_URL, url);
         startActivity(intent);

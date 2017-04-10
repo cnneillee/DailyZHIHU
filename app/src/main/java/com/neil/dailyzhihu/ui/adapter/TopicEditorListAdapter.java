@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,13 @@ public class TopicEditorListAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.tvBio.setText(mDatas.get(position).getBio());
         vh.tvName.setText(mDatas.get(position).getName());
+        if (TextUtils.isEmpty(mDatas.get(position).getBio())) {
+            vh.tvBio.setVisibility(View.GONE);
+        } else {
+            vh.tvBio.setVisibility(View.VISIBLE);
+            vh.tvBio.setText(mDatas.get(position).getBio());
+        }
         LoaderFactory.getImageLoader().displayImage(vh.ivAvatar, mDatas.get(position).getAvatar(), null);
         return convertView;
     }

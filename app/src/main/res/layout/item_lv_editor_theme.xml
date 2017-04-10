@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/cardViewTitleColor"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="neillee"/>
@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:padding="6dp"
+            android:textColor="?attr/cardViewDescColor"
             android:textSize="12sp"
             tools:text="微在 Wezeit 主编"/>
     </LinearLayout>
