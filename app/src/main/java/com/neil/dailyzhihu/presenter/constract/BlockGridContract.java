@@ -2,6 +2,7 @@ package com.neil.dailyzhihu.presenter.constract;
 
 import com.neil.dailyzhihu.base.BasePresenter;
 import com.neil.dailyzhihu.base.BaseView;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
 
 /**
  * 作者：Neil on 2017/4/6 22:26.
@@ -9,12 +10,16 @@ import com.neil.dailyzhihu.base.BaseView;
  */
 
 public interface BlockGridContract {
+    public final static int COLUMN = 0;
+    public final static int TOPIC = 1;
+
     interface View extends BaseView {
-        void showContent(String content);
+        void showContent(OriginalStory content);
+
         void showError(String errMsg);
     }
 
-    interface Presenter extends BasePresenter<View>{
-        void getBlockData(String url);
+    interface Presenter extends BasePresenter<View> {
+        void getBlockData(int type);
     }
 }

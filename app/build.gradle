@@ -46,6 +46,7 @@ android {
         compile rootProject.ext.dependencies["volley"]
         compile rootProject.ext.dependencies["okhttp"]
         compile rootProject.ext.dependencies["retrofit"]
+        compile rootProject.ext.dependencies["retrofit-converter-gson"]
         compile rootProject.ext.dependencies["universal-image-loader"]
 
         // ui

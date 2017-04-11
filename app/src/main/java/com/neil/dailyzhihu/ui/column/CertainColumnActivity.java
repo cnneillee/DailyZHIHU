@@ -41,7 +41,6 @@ public class CertainColumnActivity extends BaseActivity<ColumnDetailPresenter> i
     @Override
     protected void initEventAndData() {
         setToolbar(mToolbarView, "");
-        mListView = (ListView) findViewById(R.id.list);
         mListView.setOnItemClickListener(this);
         getExtras();
         mColumnStoryList = new ArrayList<>();

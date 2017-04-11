@@ -1,15 +1,15 @@
 package com.neil.dailyzhihu.presenter;
 
-import com.neil.dailyzhihu.ui.adapter.CommentTypesPagerAdapter;
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.StoryCommentContract;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -19,8 +19,11 @@ import javax.inject.Inject;
 
 public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View> implements StoryCommentContract.Presenter {
 
+    private RetrofitHelper mRetrofitHelper;
+
     @Inject
-    public StoryCommentPresenter() {
+    StoryCommentPresenter(RetrofitHelper retrofitHelper) {
+        this.mRetrofitHelper = retrofitHelper;
     }
 
 //    /**
@@ -35,18 +38,20 @@ public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View
 
     @Override
     public void getCommentData(int id, final int commentType) {
-        String url = API.STORY_COMMENT_PREFIX + id + CommentTypesPagerAdapter.CommentType.getType(commentType).urlSuffix;
-        LoaderFactory.getContentLoader().loadContent(url, new OnContentLoadListener() {
-            @Override
-            public void onSuccess(String content, String url) {
-                CommentListBean bean = GsonDecoder.getDecoder().decoding(content, CommentListBean.class);
-                mView.showContent(bean);
-            }
+        mRetrofitHelper.fetchNewsComment(id, commentType == 0 ? "long-comments" : "short-comments")
+                .enqueue(new Callback<CommentListBean>() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        if (response.isSuccessful()) {
+                            CommentListBean bean = (CommentListBean) response.body();
+                            mView.showContent(bean);
+                        }
+                    }
 
-            @Override
-            public void onFailure(String errMsg) {
-                mView.showError(errMsg);
-            }
-        });
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        mView.showError(t.getMessage());
+                    }
+                });
     }
 }

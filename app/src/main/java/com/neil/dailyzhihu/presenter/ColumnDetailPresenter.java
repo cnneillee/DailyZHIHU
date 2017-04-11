@@ -1,14 +1,15 @@
 package com.neil.dailyzhihu.presenter;
 
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnStoryListBean;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.ColumnDetailContract;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 作者：Neil on 2017/4/6 22:37.
@@ -16,22 +17,26 @@ import javax.inject.Inject;
  */
 
 public class ColumnDetailPresenter extends RxPresenter<ColumnDetailContract.View> implements ColumnDetailContract.Presenter {
+    private RetrofitHelper mRetrofitHelper;
 
     @Inject
-    public ColumnDetailPresenter() {
+    ColumnDetailPresenter(RetrofitHelper retrofitHelper) {
+        this.mRetrofitHelper = retrofitHelper;
     }
 
     @Override
     public void getColumnDetailData(int columnId) {
-        LoaderFactory.getContentLoader().loadContent(API.SECTION_PREFIX + columnId, new OnContentLoadListener() {
+        mRetrofitHelper.fetchColumnNewsList(columnId).enqueue(new Callback<ColumnStoryListBean>() {
             @Override
-            public void onSuccess(String content, String url) {
-                mView.showContent(GsonDecoder.getDecoder().decoding(content, ColumnStoryListBean.class));
+            public void onResponse(Call<ColumnStoryListBean> call, Response<ColumnStoryListBean> response) {
+                if (response.isSuccessful()) {
+                    mView.showContent(response.body());
+                }
             }
 
             @Override
-            public void onFailure(String errMsg) {
-                mView.showError(errMsg);
+            public void onFailure(Call<ColumnStoryListBean> call, Throwable t) {
+                mView.showError(t.getMessage());
             }
         });
     }

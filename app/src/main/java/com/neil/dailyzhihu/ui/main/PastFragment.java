@@ -23,19 +23,17 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.PastStoryListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
 import com.neil.dailyzhihu.model.bean.orignal.PastStoryListBean;
-import com.neil.dailyzhihu.model.http.api.API;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.MainFragmentPresenter;
 import com.neil.dailyzhihu.presenter.constract.MainFragmentContract;
+import com.neil.dailyzhihu.ui.adapter.PastStoryListBaseAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
-import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.date.DateInNumbers;
 import com.neil.dailyzhihu.utils.date.DateUtil;
-import com.orhanobut.logger.Logger;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -110,7 +108,7 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
                     widget.invalidateDecorators();
                 } else {//已下载
                     pickedDate = DateUtil.calendar2yyyyMMDD(date.getCalendar());
-                    mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
+                    mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
                 }
             }
         });
@@ -121,16 +119,14 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
 
         // 初始化今天
         pickedDate = DateUtil.calendar2yyyyMMDD(Calendar.getInstance());
-        mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
+        mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
         mSrlRefresh.setRefreshing(true);
     }
 
     @Override
-    public void showContent(String content) {
+    public void showContent(OriginalStory bean) {
         mSrlRefresh.setRefreshing(false);
-        Logger.json(content);
-        PastStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, PastStoryListBean.class);
-        List<PastStoryListBean.PastStory> beforeStoryList = beforeStory.getStories();
+        List<PastStoryListBean.PastStory> beforeStoryList = ((PastStoryListBean) bean).getStories();
 
         mBeforeStoryList.clear();
         for (int i = 0; i < beforeStoryList.size(); i++) {
@@ -147,13 +143,13 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
     }
 
     @Override
-    public void refresh(String content) {
+    public void refresh(OriginalStory content) {
         showContent(content);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
+        mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
     }
 
     @Override
@@ -211,7 +207,7 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 pickedDate = DateUtil.dateInNumbers2yyyyMMDD(year, monthOfYear + 1, dayOfMonth);
                 Toast.makeText(mContext, pickedDate, Toast.LENGTH_SHORT).show();
-                mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
+                mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
             }
         }, dateInNumbers.getYear(), dateInNumbers.getMonthOfYear() - 1, dateInNumbers.getDayOfMonth());
         dialog.show();
@@ -290,7 +286,7 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
             return;
         }
         //getData();//数据请求
-        mPresenter.getNewsListData(API.BEFORE_NEWS_PREFIX + pickedDate);
+        mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
     }
 
     protected void onInvisible() {

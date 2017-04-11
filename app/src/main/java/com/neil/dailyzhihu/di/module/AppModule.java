@@ -1,6 +1,8 @@
 package com.neil.dailyzhihu.di.module;
 
 import com.neil.dailyzhihu.app.DailyApp;
+import com.neil.dailyzhihu.model.http.RetrofitHelper;
+import com.neil.dailyzhihu.model.http.api.DailyService;
 
 import javax.inject.Singleton;
 
@@ -25,9 +27,9 @@ public class AppModule {
         return mApp;
     }
 
-//    @Provides
-//    @Singleton
-//    RetrofitHelper provideRetrofitHelper(DailyApi dailyApiService) {
-//        return new RetrofitHelper(dailyApiService);
-//    }
+    @Provides
+    @Singleton
+    RetrofitHelper provideRetrofitHelper(DailyService dailyServiceService) {
+        return new RetrofitHelper(dailyServiceService);
+    }
 }

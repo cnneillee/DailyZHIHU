@@ -9,13 +9,11 @@ import android.widget.TextView;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnListBean;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.adapter.BlockBaseAdapter;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +44,14 @@ public class NavColumnsActivity extends BaseActivity<BlockGridPresenter>
     protected void initEventAndData() {
         setToolbar(mToolbar, getResources().getString(R.string.activity_columns));
 
-//        View header = LayoutInflater.from(mContext).inflate(R.layout.header_gap8dp, null, false);
-//        mGridSections.addHeaderView(header);
         mGridSections.setLayoutManager(new GridLayoutManager(mContext, 2));
 
         mColumnBeanList = new ArrayList<>();
         mColumnGridBaseAdapter = new BlockBaseAdapter<>(this, mColumnBeanList);
         mColumnGridBaseAdapter.setOnItemClickListener(this);
         mGridSections.setAdapter(mColumnGridBaseAdapter);
-        
-        mPresenter.getBlockData(API.SECTIONS);
+
+        mPresenter.getBlockData(BlockGridContract.COLUMN);
     }
 
     @Override
@@ -69,10 +65,8 @@ public class NavColumnsActivity extends BaseActivity<BlockGridPresenter>
     }
 
     @Override
-    public void showContent(String content) {
-        Logger.json(content);
-        ColumnListBean columnListBean = GsonDecoder.getDecoder().decoding(content, ColumnListBean.class);
-        List<ColumnListBean.ColumnBean> columnList = columnListBean.getData();
+    public void showContent(OriginalStory bean) {
+        List<ColumnListBean.ColumnBean> columnList = ((ColumnListBean) bean).getData();
 
         mColumnBeanList.clear();
         for (int i = 0; i < columnList.size(); i++) {

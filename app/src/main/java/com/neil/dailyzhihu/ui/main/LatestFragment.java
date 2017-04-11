@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,20 +15,18 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.LatestStoryListBaseAdapter;
-import com.neil.dailyzhihu.ui.adapter.LatestTopStoryPagerAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
 import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean;
 import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean.LatestStory;
 import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean.TopStoriesBean;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.MainFragmentPresenter;
 import com.neil.dailyzhihu.presenter.constract.MainFragmentContract;
+import com.neil.dailyzhihu.ui.adapter.LatestStoryListBaseAdapter;
+import com.neil.dailyzhihu.ui.adapter.LatestTopStoryPagerAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.utils.DisplayUtil;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,16 +90,11 @@ public class LatestFragment extends BaseFragment<MainFragmentPresenter> implemen
     }
 
     @Override
-    public void showContent(String content) {
-        Logger.json(content);
+    public void showContent(OriginalStory bean) {
         mSrlRefresh.setRefreshing(false);
 
-        LatestStoryListBean latestStoryListBean = GsonDecoder.getDecoder().decoding(content, LatestStoryListBean.class);
-        if (latestStoryListBean == null) return;
-
-        Log.i(LOG_TAG, "LatestStoryListBean loaded:" + latestStoryListBean.getStories().size());
-        List<LatestStory> latestStoryList = latestStoryListBean.getStories();
-        List<TopStoriesBean> topStoriesBeanList = latestStoryListBean.getTopStories();
+        List<LatestStory> latestStoryList = ((LatestStoryListBean) bean).getStories();
+        List<TopStoriesBean> topStoriesBeanList = ((LatestStoryListBean) bean).getTopStories();
 
         mLatestStoryList.clear();
         mTopStoriesBeanList.clear();
@@ -122,13 +114,13 @@ public class LatestFragment extends BaseFragment<MainFragmentPresenter> implemen
     }
 
     @Override
-    public void refresh(String content) {
+    public void refresh(OriginalStory content) {
         showContent(content);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.getNewsListData(API.LATEST_NEWS);
+        mPresenter.getNewsListData(MainFragmentContract.LATEST, "");
     }
 
     @Override
@@ -202,7 +194,7 @@ public class LatestFragment extends BaseFragment<MainFragmentPresenter> implemen
             return;
         }
         //getData();//数据请求
-        mPresenter.getNewsListData(API.LATEST_NEWS);
+        mPresenter.getNewsListData(MainFragmentContract.LATEST, "");
     }
 
     protected void onInvisible() {

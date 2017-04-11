@@ -1,12 +1,15 @@
 package com.neil.dailyzhihu.presenter;
 
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.listener.OnContentLoadListener;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.TopicDetailContract;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 作者：Neil on 2017/4/6 22:11.
@@ -14,21 +17,26 @@ import javax.inject.Inject;
  */
 
 public class TopicDetailPresenter extends RxPresenter<TopicDetailContract.View> implements TopicDetailContract.Presenter {
+    private RetrofitHelper mRetrofitHelper;
+
     @Inject
-    public TopicDetailPresenter() {
+    TopicDetailPresenter(RetrofitHelper retrofitHelper) {
+        this.mRetrofitHelper = retrofitHelper;
     }
 
     @Override
     public void getTopicDetailData(int topicId) {
-        LoaderFactory.getContentLoader().loadContent(API.THEME_PREFIX + topicId, new OnContentLoadListener() {
+        mRetrofitHelper.fetchTopicNewsList(topicId).enqueue(new Callback<TopicStoryListBean>() {
             @Override
-            public void onSuccess(String content, String url) {
-                mView.showContent(content);
+            public void onResponse(Call<TopicStoryListBean> call, Response<TopicStoryListBean> response) {
+                if (response.isSuccessful()) {
+                    mView.showContent(response.body());
+                }
             }
 
             @Override
-            public void onFailure(String errMsg) {
-                mView.showError(errMsg);
+            public void onFailure(Call<TopicStoryListBean> call, Throwable t) {
+                mView.showError(t.getMessage());
             }
         });
     }

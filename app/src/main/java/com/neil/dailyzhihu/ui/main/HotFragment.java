@@ -12,16 +12,14 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.base.BaseFragment;
 import com.neil.dailyzhihu.model.bean.orignal.HotStoryListBean;
-import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.MainFragmentPresenter;
 import com.neil.dailyzhihu.presenter.constract.MainFragmentContract;
+import com.neil.dailyzhihu.ui.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +61,7 @@ public class HotFragment extends BaseFragment<MainFragmentPresenter> implements 
         mHotAdapter = new HotStoryListBaseAdapter(mContext, mHotList);
         mLVHot.setAdapter(mHotAdapter);
 
-        mPresenter.getNewsListData(API.HOT_NEWS);
+        mPresenter.getNewsListData(MainFragmentContract.HOT, "");
         mSrlRefresh.setRefreshing(true);
     }
 
@@ -77,12 +75,10 @@ public class HotFragment extends BaseFragment<MainFragmentPresenter> implements 
     }
 
     @Override
-    public void showContent(String content) {
-        Logger.json(content);
+    public void showContent(OriginalStory content) {
         mSrlRefresh.setRefreshing(false);
 
-        HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
-        List<HotStoryListBean.HotStory> hotStoryList = hotStories.getStories();
+        List<HotStoryListBean.HotStory> hotStoryList = ((HotStoryListBean) content).getStories();
         mHotList.clear();
         for (int i = 0; i < hotStoryList.size(); i++) {
             mHotList.add(hotStoryList.get(i));
@@ -98,13 +94,13 @@ public class HotFragment extends BaseFragment<MainFragmentPresenter> implements 
     }
 
     @Override
-    public void refresh(String content) {
+    public void refresh(OriginalStory content) {
         showContent(content);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.getNewsListData(API.HOT_NEWS);
+        mPresenter.getNewsListData(MainFragmentContract.HOT, "");
     }
 
     @Override

@@ -7,14 +7,12 @@ import android.support.v7.widget.Toolbar;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseActivity;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
 import com.neil.dailyzhihu.model.bean.orignal.TopicListBean;
-import com.neil.dailyzhihu.model.http.api.API;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.adapter.BlockBaseAdapter;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +47,7 @@ public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implemen
         mGidThemes.setAdapter(mTopicAdapter);
         mTopicAdapter.setOnItemClickListener(this);
 
-        mPresenter.getBlockData(API.THEMES);
+        mPresenter.getBlockData(BlockGridContract.TOPIC);
     }
 
     @Override
@@ -63,10 +61,8 @@ public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implemen
     }
 
     @Override
-    public void showContent(String content) {
-        Logger.json(content);
-        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
-        List<TopicListBean.TopicBean> topicBeanList = themes.getOthers();
+    public void showContent(OriginalStory bean) {
+        List<TopicListBean.TopicBean> topicBeanList = ((TopicListBean) bean).getOthers();
         mTopicBeanList.clear();
         for (int i = 0; i < topicBeanList.size(); i++) {
             mTopicBeanList.add(topicBeanList.get(i));

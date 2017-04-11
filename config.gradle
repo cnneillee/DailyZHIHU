@@ -41,6 +41,7 @@ ext {
             "volley"                    : "com.mcxiaoke.volley:library:1.0.19",
             "okhttp"                    : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp}",
 			"retrofit"                  : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit}",
+			"retrofit-converter-gson"   : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit}",
             "universal-image-loader"    : "com.nostra13.universalimageloader:universal-image-loader:1.9.5",
 
             //di

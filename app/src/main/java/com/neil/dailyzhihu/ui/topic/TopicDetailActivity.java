@@ -24,10 +24,8 @@ import com.neil.dailyzhihu.presenter.constract.TopicDetailContract;
 import com.neil.dailyzhihu.ui.adapter.TopicStoryListAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.utils.DisplayUtil;
-import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nineoldandroids.view.ViewHelper;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,9 +116,7 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
     }
 
     @Override
-    public void showContent(String content) {
-        Logger.json(content);
-        TopicStoryListBean topicStoryListBean = GsonDecoder.getDecoder().decoding(content, TopicStoryListBean.class);
+    public void showContent(TopicStoryListBean topicStoryListBean) {
         List<TopicStoryListBean.TopicStory> topicStoryList = topicStoryListBean.getStories();
 
         mThemeStoryList.clear();
