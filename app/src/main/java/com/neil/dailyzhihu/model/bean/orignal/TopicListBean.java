@@ -42,7 +42,7 @@ public class TopicListBean extends OriginalStory {
          */
 
         private int color;
-        private String image;
+        private String thumbnail;
         private String description;
         private int id;
         private String name;
@@ -55,7 +55,7 @@ public class TopicListBean extends OriginalStory {
         @Override
         public List<String> getImages() {
             List<String> images = new ArrayList<>();
-            images.add(image);
+            images.add(thumbnail);
             return images;
         }
 
@@ -74,7 +74,7 @@ public class TopicListBean extends OriginalStory {
         }
 
         public String getImage() {
-            return image;
+            return thumbnail;
         }
     }
 }
