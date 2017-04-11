@@ -34,7 +34,7 @@ public class CommentListBaseAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDatas != null ? mDatas.size():0;
+        return mDatas != null ? mDatas.size() : 0;
     }
 
     @Override
@@ -66,19 +66,19 @@ public class CommentListBaseAdapter extends BaseAdapter {
         viewHolder.tvTime.setText(result);
         // replay to
         CommentListBean.CommentsBean.ReplyToBean replyToBean = mDatas.get(position).getReplyTo();
-        if(replyToBean!=null){
+        if (replyToBean != null) {
             viewHolder.llReplyTo.setVisibility(View.VISIBLE);
             viewHolder.tvAuthorReplyTo.setText(replyToBean.getAuthor());
             int status = replyToBean.getStatus();
-            if (status==0){// 正常
+            if (status == 0) {// 正常
                 viewHolder.tvContentReplyTo.setText(replyToBean.getContent());
                 viewHolder.tvStatusReplyTo.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolder.tvStatusReplyTo.setVisibility(View.VISIBLE);
                 viewHolder.tvStatusReplyTo.setText(R.string.state_deleted);
                 viewHolder.tvContentReplyTo.setText(replyToBean.getErrMsg());
             }
-        }else {
+        } else {
             viewHolder.llReplyTo.setVisibility(View.GONE);
         }
         return convertView;

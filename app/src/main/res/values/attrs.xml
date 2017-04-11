@@ -42,4 +42,5 @@
     <attr name="commentContentTextColor" format="color"/>
     <attr name="commentExtraTextColor" format="color"/>
     <attr name="commentReplyToIcon" format="reference"/>
+    <attr name="commentAvatar" format="reference"/>
 </resources>

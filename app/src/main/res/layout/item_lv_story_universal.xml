@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:minHeight="80dp"
             android:orientation="horizontal">
-            
+
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"

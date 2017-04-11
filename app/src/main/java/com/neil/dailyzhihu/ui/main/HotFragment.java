@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -52,6 +53,8 @@ public class HotFragment extends BaseFragment<MainFragmentPresenter> implements 
 
     @Override
     protected void initEventAndData() {
+        View header = LayoutInflater.from(mContext).inflate(R.layout.header_gap8dp, null, false);
+        mLVHot.addHeaderView(header);
         mLVHot.setOnItemClickListener(this);
         mSrlRefresh.setOnRefreshListener(this);
         mSrlRefresh.setRefreshing(true);
