@@ -60,15 +60,11 @@ public class ImageSplashActivity extends BaseActivity<ImageSplashPresenter>
                     break;
                 case TIME_UP:
                     if (!mIsImgLoaded) {
-                        Intent intent = new Intent(ImageSplashActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        ImageSplashActivity.this.finish();
+                        onNext();
                     }
                     break;
                 case DISPLAY_END:
-                    Intent intent = new Intent(ImageSplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    ImageSplashActivity.this.finish();
+                    onNext();
                     break;
             }
         }
@@ -126,5 +122,16 @@ public class ImageSplashActivity extends BaseActivity<ImageSplashPresenter>
     @Override
     public void onBackPressed() {
 
+    }
+
+    private boolean canNext = true;
+
+    public void onNext() {
+        if (canNext) {
+            canNext = false;
+            Intent intent = new Intent(ImageSplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            ImageSplashActivity.this.finish();
+        }
     }
 }
