@@ -30,4 +30,7 @@ public class Constant {
     public static final String PATH_CACHE = PATH_DATA + "/NetCache";
 
     public static final String PATH_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "codeest" + File.separator + "GeekNews";
+
+    // buglyID
+    public static final String BUGLY_ID = "92d0f7598c";
 }

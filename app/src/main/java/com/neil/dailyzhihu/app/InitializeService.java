@@ -4,7 +4,12 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
+import com.neil.dailyzhihu.Constant;
+import com.neil.dailyzhihu.utils.AppUtil;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import static com.neil.dailyzhihu.utils.LogUtil.isDebug;
 
 public class InitializeService extends IntentService {
 
@@ -60,9 +65,9 @@ public class InitializeService extends IntentService {
     private void initBugly() {
         Context context = getApplicationContext();
         String packageName = context.getPackageName();
-//        String processName = SystemUtil.getProcessName(android.os.Process.myPid());
-//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
-//        strategy.setUploadProcess(processName == null || processName.equals(packageName));
-//        CrashReport.initCrashReport(context, Constants.BUGLY_ID, isDebug, strategy);
+        String processName = AppUtil.getProcessName(android.os.Process.myPid());
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        CrashReport.initCrashReport(context, Constant.BUGLY_ID, isDebug, strategy);
     }
 }

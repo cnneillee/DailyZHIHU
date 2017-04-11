@@ -60,6 +60,7 @@ android {
 
         // log
         compile rootProject.ext.dependencies["logger"]
+        compile rootProject.ext.dependencies["crashreport"]
 
         // di
         compile rootProject.ext.dependencies["dagger"]
