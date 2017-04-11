@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -17,13 +16,14 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.TopicStoryListAdapter;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.TopicDetailPresenter;
 import com.neil.dailyzhihu.presenter.constract.TopicDetailContract;
+import com.neil.dailyzhihu.ui.adapter.TopicStoryListAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
+import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nineoldandroids.view.ViewHelper;
@@ -140,8 +140,7 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
         for (int i = 0; i < mEditors.size(); i++) {
             TopicStoryListBean.EditorsBean bean = mEditors.get(i);
             CircleImageView imageView = new CircleImageView(TopicDetailActivity.this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(mContext, 30), DisplayUtil.dip2px(mContext, 30));
             mLLEditors.addView(imageView, params);
             LoaderFactory.getImageLoader().displayImage(imageView, bean.getAvatar(), null);
         }

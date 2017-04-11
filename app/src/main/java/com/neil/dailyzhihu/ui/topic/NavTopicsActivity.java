@@ -1,22 +1,18 @@
 package com.neil.dailyzhihu.ui.topic;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.TopicGridBaseAdapter;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.model.http.api.API;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
+import com.neil.dailyzhihu.ui.adapter.BlockBaseAdapter;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.orhanobut.logger.Logger;
 
@@ -31,25 +27,27 @@ import butterknife.BindView;
  * 主题日报窗口
  */
 public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implements
-        AdapterView.OnItemClickListener, ObservableScrollViewCallbacks, BlockGridContract.View {
-    @BindView(R.id.gv_themes)
-    ObservableGridView gvThemes;
+        BlockGridContract.View, BlockBaseAdapter.OnItemClickListener {
+    @BindView(R.id.rv_themes)
+    RecyclerView mGidThemes;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private List<TopicListBean.TopicBean> mTopicBeanList;
-    private TopicGridBaseAdapter mTopicAdapter;
+    private BlockBaseAdapter<TopicListBean.TopicBean> mTopicAdapter;
 
     @Override
     protected void initEventAndData() {
         setToolbar(mToolbar, getResources().getString(R.string.activity_topics));
 
-        gvThemes.setOnItemClickListener(this);
-        gvThemes.setScrollViewCallbacks(this);
+//        View header = LayoutInflater.from(mContext).inflate(R.layout.header_gap8dp, null, false);
+//        mGidThemes.addHeaderView(header);
 
         mTopicBeanList = new ArrayList<>();
-        mTopicAdapter = new TopicGridBaseAdapter(mContext, mTopicBeanList);
-        gvThemes.setAdapter(mTopicAdapter);
+        mTopicAdapter = new BlockBaseAdapter<>(mContext, mTopicBeanList);
+        mGidThemes.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mGidThemes.setAdapter(mTopicAdapter);
+        mTopicAdapter.setOnItemClickListener(this);
 
         mPresenter.getBlockData(API.THEMES);
     }
@@ -82,7 +80,7 @@ public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implemen
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void OnItemClick(int position, BlockBaseAdapter.ViewHolder shareView) {
         TopicListBean.TopicBean bean = mTopicBeanList.get(position);
         int sectionId = bean.getStoryId();
         String topicImg = bean.getImage();
@@ -90,37 +88,5 @@ public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implemen
         intent.putExtra(AtyExtraKeyConstant.THEME_ID, sectionId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, topicImg);
         startActivity(intent);
-    }
-
-    /**
-     * 列表项滑动后对Actionbar施加影响
-     *
-     * @param scrollState 滑动状态
-     */
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        ActionBar ab = this.getSupportActionBar();
-        if (ab == null) {
-            return;
-        }
-        if (scrollState == ScrollState.UP) {
-            if (ab.isShowing()) {
-                ab.hide();
-            }
-        } else if (scrollState == ScrollState.DOWN) {
-            if (!ab.isShowing()) {
-                ab.show();
-            }
-        }
-    }
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-
     }
 }

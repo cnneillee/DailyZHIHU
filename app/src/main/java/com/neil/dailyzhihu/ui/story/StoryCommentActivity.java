@@ -55,7 +55,7 @@ public class StoryCommentActivity extends NightModeBaseActivity {
         String storyExtra = bundle.getString(STORY_EXTRAS);
 
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_cancel);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
         mToolbar.setNavigationOnClickListener(upBtnListener);
 
         mFragmentList = new ArrayList<>();
