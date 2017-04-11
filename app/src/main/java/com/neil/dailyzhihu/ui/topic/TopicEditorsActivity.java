@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,10 +11,10 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.TopicEditorListAdapter;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.ui.adapter.TopicEditorListAdapter;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 
 import java.util.List;
@@ -76,8 +75,7 @@ public class TopicEditorsActivity extends NightModeBaseActivity implements Adapt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TopicStoryListBean.EditorsBean bean = (TopicStoryListBean.EditorsBean) parent.getAdapter().getItem(position);
-        String url = bean.getUrl();
-        if (TextUtils.isEmpty(url)) return;
+        String url = "http://news-at.zhihu.com/api/4/editor/" + bean.getId() + "/profile-page/android";
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra(AtyExtraKeyConstant.WEB_URL, url);
         startActivity(intent);
