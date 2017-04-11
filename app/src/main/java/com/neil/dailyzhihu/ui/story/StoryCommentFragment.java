@@ -45,7 +45,7 @@ public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter> im
 
     @Override
     protected int getLayoutId() {
-        return R.layout.vp_item_comment;
+        return R.layout.item_vp_comment;
     }
 
     @Override

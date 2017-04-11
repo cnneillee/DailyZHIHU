@@ -83,7 +83,7 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
         mListView.addHeaderView(paddingView);
 
         // 设置HeaderView
-        View introHeaderView = getLayoutInflater().inflate(R.layout.lv_header_theme_acty, null);
+        View introHeaderView = getLayoutInflater().inflate(R.layout.header_lv_theme_acty, null);
         mLLEditors = (LinearLayout) introHeaderView.findViewById(R.id.ll_editors);
         mListView.addHeaderView(introHeaderView, null, false);
 

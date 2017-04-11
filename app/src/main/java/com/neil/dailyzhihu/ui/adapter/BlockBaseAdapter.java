@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.model.bean.IBlockBean;
-import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -51,10 +50,10 @@ public class BlockBaseAdapter<T extends IBlockBean> extends RecyclerView.Adapter
                 mOnItemClickListener.OnItemClick(position, holder);
             }
         });
-        if (position == getItemCount() - 1) {
-            holder.itemView.setPadding(holder.itemView.getLeft(), holder.itemView.getTop(),
-                    holder.itemView.getRight(), holder.itemView.getBottom() + DisplayUtil.dip2px(mContext, 8));
-        }
+//        if (position == getItemCount() - 1) {
+//            holder.itemView.setPadding(holder.itemView.getLeft(), holder.itemView.getTop(),
+//                    holder.itemView.getRight(), holder.itemView.getBottom() + DisplayUtil.dip2px(mContext, 8));
+//        }
     }
 
     @Override

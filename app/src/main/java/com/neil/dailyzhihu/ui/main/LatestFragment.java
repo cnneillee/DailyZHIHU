@@ -62,7 +62,7 @@ public class LatestFragment extends BaseFragment<MainFragmentPresenter> implemen
     @Override
     protected void initEventAndData() {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        FrameLayout mainHeader = (FrameLayout) inflater.inflate(R.layout.viewpager_top_story, null, false);
+        FrameLayout mainHeader = (FrameLayout) inflater.inflate(R.layout.header_top_story, null, false);
         mLvLatest.addHeaderView(mainHeader);
         AutoScrollViewPager topStoryViewPager = (AutoScrollViewPager) mainHeader.findViewById(R.id.view_pager);
         topStoryViewPager.startAutoScroll(10000);

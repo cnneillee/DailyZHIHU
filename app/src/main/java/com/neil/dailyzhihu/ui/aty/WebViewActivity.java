@@ -9,8 +9,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class WebViewActivity extends NightModeBaseActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_cancel);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
         mToolbar.setNavigationOnClickListener(upBtnListener);
 
         getExtras();

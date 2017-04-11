@@ -75,7 +75,7 @@ public class LatestTopStoryPagerAdapter extends PagerAdapter {
      * @return 单页页卡
      */
     private View getPagerView(LatestStoryListBean.TopStoriesBean topStory) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_viewpager_top_story, null, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_vp_top_story, null, false);
         ImageView iv = (ImageView) v.findViewById(R.id.iv_img);
         TextView tv = (TextView) v.findViewById(R.id.tv_title);
         tv.setText(topStory.getTitle());
