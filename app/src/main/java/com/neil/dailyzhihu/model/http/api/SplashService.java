@@ -22,7 +22,7 @@ public interface SplashService {
     String HUABAN_HOST = "https://api.huaban.com/";
     String ZHIHU_HOST = "https://api.zhihu.com/";
 
-    @GET(GANK_HOST + "data/{category}/{count}/{no]")
+    @GET(GANK_HOST + "data/{category}/{count}/{no}")
     Call<GankSplashBean> getGankSplash(@Path("category") String category, @Path("count") int count, @Path("no") int no);
 
     @GET(HUABAN_HOST + "/boards/{boardsId}/pins")
