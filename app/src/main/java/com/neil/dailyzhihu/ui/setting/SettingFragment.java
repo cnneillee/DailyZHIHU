@@ -24,10 +24,12 @@ import java.io.File;
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     private SettingActivity mContext;
     private String[] mSplashEntries;
+    private String[] mLanguageEntries;
 
     private File mCacheFile;
 
     private ListPreference mSetSplash;
+    private ListPreference mSetLanguage;
     private Preference mSwitchTheme;
     private CheckBoxPreference mDayNightMode;
     private CheckBoxPreference mExitWithEnsuring;
@@ -35,6 +37,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     private Preference mClearCache;
 
     private String SET_SPLASH = "key_set_splash";
+    private String SET_LANGUAE = "key_language";
     private String SWITCH_THEME = "key_switch_theme";
     private String DAY_NIGHT_MODE = "key_day_night_mode";
     private String EXIT_WITH_ENSURING = "key_exit_with_ensuring";
@@ -48,11 +51,13 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
 
         mContext = (SettingActivity) getActivity();
         mSplashEntries = getResources().getStringArray(R.array.splash_entries);
+        mLanguageEntries = getResources().getStringArray(R.array.language_entries);
         initAllPreferences();
     }
 
     private void initAllPreferences() {
         mSetSplash = (ListPreference) findPreference(SET_SPLASH);
+        mSetLanguage = (ListPreference) findPreference(SET_LANGUAE);
         mSwitchTheme = findPreference(SWITCH_THEME);
         mDayNightMode = (CheckBoxPreference) findPreference(DAY_NIGHT_MODE);
         mExitWithEnsuring = (CheckBoxPreference) findPreference(EXIT_WITH_ENSURING);
@@ -60,6 +65,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mClearCache = findPreference(CLEAR_CACHE);
 
         mSetSplash.setOnPreferenceChangeListener(this);
+        mSetLanguage.setOnPreferenceChangeListener(this);
         mSwitchTheme.setOnPreferenceClickListener(this);
         mDayNightMode.setOnPreferenceClickListener(this);
         mExitWithEnsuring.setOnPreferenceClickListener(this);
@@ -74,6 +80,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mSetSplash.setSummary(mSplashEntries[splashSetting]);
         mCacheFile = new File(Constant.PATH_CACHE);
         mClearCache.setSummary(ACache.getCacheSize(mCacheFile));
+        int languageSetting = mContext.mSettings.getInt(Settings.LANGUAGE, 1);
+        mSetLanguage.setSummary(mLanguageEntries[languageSetting]);
     }
 
     @Override
@@ -100,6 +108,10 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         if (preference == mSetSplash) {
             mContext.mSettings.putInt(Settings.SPLASH_SETTING, Integer.valueOf((String) newValue));
             preference.setSummary(mSplashEntries[Integer.valueOf((String) newValue)]);
+        } else if (preference == mSetLanguage) {
+            mContext.mSettings.putInt(Settings.LANGUAGE, Integer.valueOf((String) newValue));
+            preference.setSummary(mLanguageEntries[Integer.valueOf((String) newValue)]);
+            mContext.callChangeLanguage();
         }
         return true;
     }

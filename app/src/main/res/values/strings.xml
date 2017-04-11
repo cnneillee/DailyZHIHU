@@ -115,9 +115,13 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
 
     <!--setting-->
     <string name="setting_group_preferences">偏好</string>
+    <string name="setting_group_theme">主题</string>
     <string name="set_splash_src_dialog">Splash 源设置</string>
+    <string name="set_language_dialog">语言</string>
     <string name="set_splash_src_summary">不显示（默认）</string>
     <string name="set_splash_src_title">Splash 设置</string>
+    <string name="set_language_summary">中文</string>
+    <string name="set_language_title">语言设置</string>
     <string name="switch_theme_summary">目前提供3种主题</string>
     <string name="switch_theme_title">主题切换</string>
     <string name="day_night_mode_summary">适于夜间阅读</string>

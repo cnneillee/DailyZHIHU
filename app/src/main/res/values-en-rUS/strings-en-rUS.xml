@@ -116,7 +116,11 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
 
     <!--setting-->
     <string name="setting_group_preferences">Preferences</string>
+    <string name="setting_group_theme">Themes</string>
     <string name="set_splash_src_dialog">Set Splash src</string>
+    <string name="set_language_dialog">Language</string>
+    <string name="set_language_summary">中文</string>
+    <string name="set_language_title">Language Setting</string>
     <string name="set_splash_src_summary">No splash(Default)</string>
     <string name="set_splash_src_title">Set Splash</string>
     <string name="switch_theme_summary">3 available themes to choose</string>

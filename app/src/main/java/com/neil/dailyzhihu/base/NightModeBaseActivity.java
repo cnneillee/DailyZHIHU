@@ -17,6 +17,7 @@ import com.neil.dailyzhihu.utils.Settings;
 public abstract class NightModeBaseActivity extends AppCompatActivity {
 
     public Settings mSettings = Settings.getInstance();
+    private int mLang = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +40,12 @@ public abstract class NightModeBaseActivity extends AppCompatActivity {
         } else {
             this.setTheme(R.style.AppDayTheme);
         }
+
+        // Language
+        mLang = AppUtil.getCurrentLanguage();
+        if (mLang > -1) {
+            AppUtil.changeLanguage(this, mLang);
+        }
         initViews();
     }
 
@@ -59,6 +66,10 @@ public abstract class NightModeBaseActivity extends AppCompatActivity {
         this.recreate();
     }
 
+    protected void changeLanguage() {
+        this.recreate();
+    }
+
     protected void changeExitConfirm() {
         Settings.isExitConfirm = !Settings.isExitConfirm;
         this.mSettings.putBoolean(Settings.EXIT_CONFIRM, Settings.isExitConfirm);
@@ -72,5 +83,4 @@ public abstract class NightModeBaseActivity extends AppCompatActivity {
     protected void changeNeedRecreated() {
         Settings.needRecreate = true;
     }
-
 }

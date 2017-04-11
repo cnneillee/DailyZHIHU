@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * 作者：Neil on 2017/3/5 17:34.
@@ -222,5 +224,47 @@ public class AppUtil {
             }
         }
         return null;
+    }
+
+    // Must be called before setContentView()
+    public static void changeLanguage(Context context, int lang) {
+        String language = null;
+        String country = null;
+
+        switch (lang) {
+            case 1:
+                language = "zh";
+                country = "CN";
+                break;
+            default:
+                language = "en";
+                country = "US";
+                break;
+        }
+
+        Locale locale = new Locale(language, country);
+        Configuration conf = context.getResources().getConfiguration();
+        conf.locale = locale;
+        context.getApplicationContext().getResources().updateConfiguration(conf, context.getResources().getDisplayMetrics());
+    }
+
+    public static int getCurrentLanguage() {
+        int lang = Settings.getInstance().getInt(Settings.LANGUAGE, -1);
+        if (lang == -1) {
+            String language = Locale.getDefault().getLanguage();
+            String country = Locale.getDefault().getCountry();
+
+            if (language.equalsIgnoreCase("zh")) {
+                if (country.equalsIgnoreCase("CN")) {
+                    lang = 1;
+                } else {
+                    lang = 2;
+                }
+                lang = 1;
+            } else {
+                lang = 0;
+            }
+        }
+        return lang;
     }
 }

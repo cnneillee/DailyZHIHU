@@ -33,6 +33,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private Unbinder mUnBinder;
 
     public Settings mSettings = Settings.getInstance();
+    private int mLang = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +55,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             this.setTheme(R.style.AppNightTheme);
         } else {
             this.setTheme(R.style.AppDayTheme);
+        }
+
+        // Language
+        mLang = AppUtil.getCurrentLanguage();
+        if (mLang > -1) {
+            AppUtil.changeLanguage(this, mLang);
         }
 
         setContentView(getLayout());

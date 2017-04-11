@@ -48,6 +48,11 @@ public class SettingActivity extends NightModeBaseActivity {
         this.changeNeedRecreated();
     }
 
+    public void callChangeLanguage() {
+        this.changeLanguage();
+        this.changeNeedRecreated();
+    }
+
     public void callChangeExitConfirm() {
         this.changeExitConfirm();
     }
