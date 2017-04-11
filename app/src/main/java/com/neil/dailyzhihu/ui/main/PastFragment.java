@@ -140,7 +140,7 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
 
     @Override
     public void showError(String errorMsg) {
-        mSrlRefresh.setRefreshing(false);
+        if (mSrlRefresh != null) mSrlRefresh.setRefreshing(false);
     }
 
     @Override
