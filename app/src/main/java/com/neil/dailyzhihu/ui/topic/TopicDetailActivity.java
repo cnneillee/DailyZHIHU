@@ -137,6 +137,7 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
             TopicStoryListBean.EditorsBean bean = mEditors.get(i);
             CircleImageView imageView = new CircleImageView(TopicDetailActivity.this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(mContext, 30), DisplayUtil.dip2px(mContext, 30));
+            imageView.setImageResource(R.drawable.ic_editor_profile_avatar);
             mLLEditors.addView(imageView, params);
             LoaderFactory.getImageLoader().displayImage(imageView, bean.getAvatar(), null);
         }
