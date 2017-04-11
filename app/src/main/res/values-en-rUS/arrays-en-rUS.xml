@@ -6,28 +6,6 @@
         <item>@color/indicator_3</item>
         <item>@color/indicator_4</item>
     </array>
-    <string-array name="share_menu_name">
-        <item>Pic share</item>
-        <item>Wechat Friends</item>
-        <item>Wechat Moment</item>
-        <item>QZone</item>
-        <item>QQ</item>
-        <item>Sina</item>
-        <item>CopyLink</item>
-        <item>More</item>
-    </string-array>
-    <integer-array name="share_menu_img">
-        <item>@drawable/menu_share_pic_item</item>
-        <item>@drawable/menu_share_wechat_item</item>
-        <item>@drawable/menu_share_friendcircle_item</item>
-        <item>@drawable/menu_share_qzone_item</item>
-        <item>@drawable/menu_share_qq_item</item>
-        <item>@drawable/menu_share_copylink_item</item>
-        <item>@drawable/menu_share_more_item</item>
-    </integer-array>
-    <declare-styleable name="FlipViewPager">
-        <!-- TODO -->
-    </declare-styleable>
     <string-array name="splash_entries">
         <item>No Splash</item>
         <item>Random Splash</item>
