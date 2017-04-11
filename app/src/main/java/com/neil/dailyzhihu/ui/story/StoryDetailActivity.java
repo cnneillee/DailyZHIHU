@@ -3,6 +3,8 @@ package com.neil.dailyzhihu.ui.story;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
@@ -125,6 +128,18 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
 
     @Override
     protected int getLayout() {
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
         return R.layout.activity_story_detail;
     }
 
@@ -135,9 +150,10 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
         loader.displayImage(mImageView, imgUrl, null, null);
 
-        setActionBarText(mStoryTitle);
         mTitleView.setText(mStoryTitle);
-
+        if (!mFabIsShown) {
+            mToolBar.setTitle(mStoryTitle);
+        }
 //        String cssContent = "";
 //        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
 ////                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
@@ -203,11 +219,6 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 onScrollChanged(0, false, false);
             }
         });
-    }
-
-    private void setActionBarText(String storyTitle) {
-        ActionBar ab = getSupportActionBar();
-        if (ab != null) ab.setTitle(storyTitle);
     }
 
     @Override
@@ -327,7 +338,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
             ViewPropertyAnimator.animate(mFab).cancel();
             ViewPropertyAnimator.animate(mFab).scaleX(1).scaleY(1).setDuration(200).start();
             mFabIsShown = true;
-            setTitle("");
+            mFab.setVisibility(View.VISIBLE);
+            mToolBar.setTitle("");
         }
     }
 
@@ -336,7 +348,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
             ViewPropertyAnimator.animate(mFab).cancel();
             ViewPropertyAnimator.animate(mFab).scaleX(0).scaleY(0).setDuration(200).start();
             mFabIsShown = false;
-            setTitle(mStoryTitle);
+            mFab.setVisibility(View.GONE);
+            mToolBar.setTitle(mStoryTitle);
         }
     }
 
