@@ -68,7 +68,7 @@ public class ImageSplashPresenter extends RxPresenter<ImageSplashContract.View>
                 break;
             //"http://gank.io/api/data/%E7%A6%8F%E5%88%A9/1/1"
             case GANK_SPLASH:
-                fetchGankImageSplash("%E7%A6%8F%E5%88%A9", 1, 1);
+                fetchGankImageSplash("福利", 1, 1);
                 break;
             //"https://api.huaban.com/boards/35593400/pins?limit=1"
             case PUSH_SPLASH:
@@ -110,7 +110,7 @@ public class ImageSplashPresenter extends RxPresenter<ImageSplashContract.View>
                     ZhihuSplashBean splashBean = response.body();
                     String imgUrl = splashBean.getLaunch_ads() == null || splashBean.getLaunch_ads().size() == 0 ?
                             "" : splashBean.getLaunch_ads().get(0).getImage();
-                    String imgSign = "";
+                    String imgSign = "知乎开屏";
                     mView.showImage(imgUrl, imgSign);
                 } else {
                     mView.showError(response.code() + ":" + response.errorBody().toString());
@@ -125,7 +125,7 @@ public class ImageSplashPresenter extends RxPresenter<ImageSplashContract.View>
     }
 
     private void fetchHuaBanImageSplash(int i, ArrayMap<String, String> params) {
-        mRetrofitHelper.fetchHuaBanImageSplash(35593275, params).enqueue(new Callback<HuaBanSplashBean>() {
+        mRetrofitHelper.fetchHuaBanImageSplash(i, params).enqueue(new Callback<HuaBanSplashBean>() {
             @Override
             public void onResponse(Call<HuaBanSplashBean> call, Response<HuaBanSplashBean> response) {
                 if (response.isSuccessful()) {
