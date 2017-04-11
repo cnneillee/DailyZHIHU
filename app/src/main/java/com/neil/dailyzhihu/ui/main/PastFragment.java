@@ -87,6 +87,7 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
         mLvBefore.addHeaderView(header);
 
         mLvBefore.setOnItemClickListener(this);
+        mLvBefore.setScrollViewCallbacks(this);
         btnPickDate.setOnClickListener(this);
         mTvDateDisplay.setOnClickListener(this);
         mBtnLoadSetting.setOnClickListener(this);

@@ -71,6 +71,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="notify_columns_subscribing_clicked">Columns subscribing clicked!</string>
     <string name="notify_refreshing_data">Refreshing data</string>
     <string name="notify_saved">Saved</string>
+    <string name="notify_clear_successfully">Cleared</string>
 
 
     <!--about preference-->

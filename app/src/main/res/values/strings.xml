@@ -71,6 +71,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="notify_columns_subscribing_clicked">栏目订阅被点击！</string>
     <string name="notify_refreshing_data">正在更新数据</string>
     <string name="notify_saved">保存成功</string>
+    <string name="notify_clear_successfully">清理成功</string>
 
     <!--about preference-->
     <string name="intro_title">应用简介</string>

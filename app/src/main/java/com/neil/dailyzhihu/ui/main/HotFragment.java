@@ -54,6 +54,7 @@ public class HotFragment extends BaseFragment<MainFragmentPresenter> implements 
         View header = LayoutInflater.from(mContext).inflate(R.layout.header_gap8dp, null, false);
         mLVHot.addHeaderView(header);
         mLVHot.setOnItemClickListener(this);
+        mLVHot.setScrollViewCallbacks(this);
         mSrlRefresh.setOnRefreshListener(this);
         mSrlRefresh.setRefreshing(true);
 

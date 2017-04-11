@@ -8,9 +8,13 @@ import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
+import com.neil.dailyzhihu.utils.ACache;
 import com.neil.dailyzhihu.utils.Settings;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
+
+import java.io.File;
 
 /**
  * 作者：Neil on 2017/3/5 20:48.
@@ -20,6 +24,8 @@ import com.neil.dailyzhihu.utils.SnackbarUtil;
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     private SettingActivity mContext;
     private String[] mSplashEntries;
+
+    private File mCacheFile;
 
     private ListPreference mSetSplash;
     private Preference mSwitchTheme;
@@ -34,7 +40,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     private String EXIT_WITH_ENSURING = "key_exit_with_ensuring";
     private String NO_IMAGE_MODE = "key_no_image_mode";
     private String CLEAR_CACHE = "key_clear_cache";
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mNoImageMode.setChecked(Settings.noPicMode);
         int splashSetting = mContext.mSettings.getInt(Settings.SPLASH_SETTING, 0);
         mSetSplash.setSummary(mSplashEntries[splashSetting]);
+        mCacheFile = new File(Constant.PATH_CACHE);
+        mClearCache.setSummary(ACache.getCacheSize(mCacheFile));
     }
 
     @Override
@@ -81,7 +88,9 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         } else if (mNoImageMode == preference) {
             mContext.callChangeNoPicMode();
         } else if (mClearCache == preference) {
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+            ACache.deleteDir(mCacheFile);
+            mClearCache.setSummary(ACache.getCacheSize(mCacheFile));
+            SnackbarUtil.ShortSnackbar(view, getString(R.string.notify_clear_successfully), SnackbarUtil.Info).show();
         }
         return true;
     }
