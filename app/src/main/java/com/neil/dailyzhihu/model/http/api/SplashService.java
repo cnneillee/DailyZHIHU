@@ -23,7 +23,7 @@ public interface SplashService {
     String ZHIHU_HOST = "https://api.zhihu.com/";
 
     @GET(GANK_HOST + "data/{category}/{count}/{no]")
-    Call<GankSplashBean> getGankSplash(@Path("category") String id, @Path("count") int count, @Path("no") int no);
+    Call<GankSplashBean> getGankSplash(@Path("category") String category, @Path("count") int count, @Path("no") int no);
 
     @GET(HUABAN_HOST + "/boards/{boardsId}/pins")
     Call<HuaBanSplashBean> getHuabanSplash(@Path("boardsId") int boardId, @QueryMap ArrayMap<String, String> queryMap);

@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.neil.dailyzhihu.di.module.ActivityModule;
 import com.neil.dailyzhihu.di.scope.ActivityScope;
+import com.neil.dailyzhihu.ui.aty.ImageSplashActivity;
 import com.neil.dailyzhihu.ui.column.CertainColumnActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
@@ -20,6 +21,8 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
     Activity getActivity();
+
+    void inject(ImageSplashActivity imageSplashActivity);
 
     void inject(CertainColumnActivity certainColumnActivity);
 

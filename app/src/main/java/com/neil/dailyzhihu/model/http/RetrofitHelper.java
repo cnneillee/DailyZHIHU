@@ -1,16 +1,22 @@
 package com.neil.dailyzhihu.model.http;
 
+import android.util.ArrayMap;
+
 import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;
+import com.neil.dailyzhihu.model.bean.orignal.GankSplashBean;
 import com.neil.dailyzhihu.model.bean.orignal.HotStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.HuaBanSplashBean;
 import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean;
 import com.neil.dailyzhihu.model.bean.orignal.PastStoryListBean;
 import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
 import com.neil.dailyzhihu.model.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.ZhihuSplashBean;
 import com.neil.dailyzhihu.model.http.api.DailyService;
+import com.neil.dailyzhihu.model.http.api.SplashService;
 
 import retrofit2.Call;
 
@@ -22,9 +28,11 @@ import retrofit2.Call;
 
 public class RetrofitHelper {
     private DailyService mDailyService;
+    private SplashService mSplashService;
 
-    public RetrofitHelper(DailyService dailyService) {
+    public RetrofitHelper(DailyService dailyService, SplashService splashService) {
         this.mDailyService = dailyService;
+        this.mSplashService = splashService;
     }
 
     public Call<LatestStoryListBean> fetchLatestNewsList() {
@@ -67,7 +75,19 @@ public class RetrofitHelper {
         return mDailyService.getStoryExtraInfo(storyId);
     }
 
-    public Call<String> fetEditorProfileInfo(int editorId) {
+    public Call<String> fetchEditorProfileInfo(int editorId) {
         return mDailyService.getEditorProfileInfo(editorId);
+    }
+
+    public Call<GankSplashBean> fetchGankImageSplash(String category, int count, int no) {
+        return mSplashService.getGankSplash(category, count, no);
+    }
+
+    public Call<HuaBanSplashBean> fetchHuaBanImageSplash(int boardId, ArrayMap<String, String> queryMap) {
+        return mSplashService.getHuabanSplash(boardId, queryMap);
+    }
+
+    public Call<ZhihuSplashBean> fetchZhihuImageSplash(ArrayMap<String, String> headersMap, ArrayMap<String, String> paramsMap) {
+        return mSplashService.getZhihuSplash(headersMap, paramsMap);
     }
 }

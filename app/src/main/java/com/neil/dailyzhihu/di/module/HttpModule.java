@@ -1,7 +1,10 @@
 package com.neil.dailyzhihu.di.module;
 
 import com.neil.dailyzhihu.Constant;
+import com.neil.dailyzhihu.di.qualifier.DailyUrl;
+import com.neil.dailyzhihu.di.qualifier.SplashUrl;
 import com.neil.dailyzhihu.model.http.api.DailyService;
+import com.neil.dailyzhihu.model.http.api.SplashService;
 import com.neil.dailyzhihu.utils.AppUtil;
 
 import java.io.File;
@@ -41,8 +44,16 @@ public class HttpModule {
 
     @Singleton
     @Provides
+    @DailyUrl
     Retrofit provideZhihuRetrofit(Retrofit.Builder builder, OkHttpClient client) {
         return createRetrofit(builder, client, DailyService.NEWS_HOST);
+    }
+
+    @Singleton
+    @Provides
+    @SplashUrl
+    Retrofit provideSplashRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return createRetrofit(builder, client);
     }
 
     @Singleton
@@ -110,13 +121,26 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    DailyService provideDailyService(Retrofit retrofit) {
+    DailyService provideDailyService(@DailyUrl Retrofit retrofit) {
         return retrofit.create(DailyService.class);
+    }
+
+    @Singleton
+    @Provides
+    SplashService provideSplashService(@SplashUrl Retrofit retrofit) {
+        return retrofit.create(SplashService.class);
     }
 
     private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {
         return builder
                 .baseUrl(url)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return builder
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
