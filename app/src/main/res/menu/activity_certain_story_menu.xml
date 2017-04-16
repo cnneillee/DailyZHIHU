@@ -15,8 +15,13 @@
     <item
         android:id="@+id/menu_item_action_comment"
         android:icon="@drawable/ic_action_comment"
-        android:title="@string/action_text_comment"
-        app:showAsAction="ifRoom"/>
+        android:title=".."
+        app:showAsAction="withText|always"/>
+    <item
+        android:id="@+id/menu_item_action_praise"
+        android:icon="@drawable/ic_action_praise"
+        android:title=".."
+        app:showAsAction="withText|ifRoom"/>
     <item
         android:id="@+id/menu_item_action_qrcode"
         android:icon="@drawable/ic_menu_qr_code"

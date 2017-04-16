@@ -8,10 +8,16 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableListView
-        android:id="@+id/lv_before"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"
-        android:isScrollContainer="true"/>
+        android:layout_height="wrap_content">
+
+        <com.github.ksoichiro.android.observablescrollview.ObservableListView
+            android:id="@+id/lv_before"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:isScrollContainer="true"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

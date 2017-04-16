@@ -2,20 +2,17 @@ package com.neil.dailyzhihu.ui.story;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
@@ -27,43 +24,47 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.google.gson.Gson;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignal.CertainStoryBean;
-import com.neil.dailyzhihu.ui.widget.BaseActivity;
+import com.neil.dailyzhihu.base.BaseActivity;
+import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
+import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.presenter.StoryDetailPresenter;
+import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
-import com.neil.dailyzhihu.utils.share.QRCodeUtil;
-import com.neil.dailyzhihu.utils.storage.ImageExternalDirectoryUtil;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
-import com.neil.dailyzhihu.utils.storage.StorageOperatingHelper;
+import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-public class StoryDetailActivity extends BaseActivity implements ObservableScrollViewCallbacks {
-    @Bind(R.id.image)
+import butterknife.BindView;
+
+public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
+        implements ObservableScrollViewCallbacks, StoryDetailContract.View {
+    @BindView(R.id.image)
     ImageView mImageView;
-    @Bind(R.id.overlay)
+    @BindView(R.id.overlay)
     View mOverlayView;
-    @Bind(R.id.scroll)
+    @BindView(R.id.scroll)
     ObservableScrollView mScrollView;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mFab;
-    @Bind(R.id.main)
+    @BindView(R.id.main)
     FrameLayout mRootView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolBar;
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView mTitleView;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     ObservableWebView mWebView;
+
+    private MenuItem mCommentMenuItem;
+    private MenuItem mPraiseMenuItem;
 
     private int mActionBarSize;
     private int mFlexibleSpaceShowFabOffset;
@@ -74,51 +75,13 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
     private Activity mContext = StoryDetailActivity.this;
 
     private int mStoryId;
+    private String mStoryExtra;
     private String mStoryTitle;
     private String mDefaultImg;
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
     private static final String LOG_TAG = StoryDetailActivity.class.getSimpleName();
-
-    private OnContentLoadedListener mWebLoadListener = new OnContentLoadedListener() {
-        @Override
-        public void onSuccess(String content, String url) {
-            // TODO 在较为特殊的情况下，知乎日报可能将某个主题日报的站外文章推送至知乎日报首页。type=0正常，type特殊情况
-            CertainStoryBean certainStoryBean = GsonDecoder.getDecoder().decoding(content, CertainStoryBean.class);
-            mStoryTitle = certainStoryBean.getTitle();
-            Bitmap bm = ImageExternalDirectoryUtil.getBitmap(mContext, mStoryId);
-            if (bm == null) {
-                ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-                String imgUrl = certainStoryBean.getImage() == null ? mDefaultImg : certainStoryBean.getImage();
-                loader.displayImage(mImageView, imgUrl, null, null);
-            } else {
-                mImageView.setImageBitmap(bm);
-                Log.e(LOG_TAG, "BITMAP LOADED FROM SD CARD");
-            }
-
-            String storyTitle = certainStoryBean.getTitle();
-            setActionBarText(storyTitle);
-            mTitleView.setText(storyTitle);
-
-//            List<String> jsArr = mStoryContent.getJs();
-            String cssContent = "";
-            if (certainStoryBean.getCss() != null && certainStoryBean.getCss().size() > 0) {// 构建CSS
-//                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
-                cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
-                        "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
-                        "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + certainStoryBean.getCss().get(0) + "\">\n"
-                        + "<style>.headline{display:none;}</style>";
-            }
-            String html = "<html><head>" + cssContent + "</head><body>" + certainStoryBean.getBody() + " </body></html>";
-            mWebView.setHorizontalScrollBarEnabled(false);
-            // style="width:100%;height:auto"
-            WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
-            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
-            mWebView.loadData(html, "text/html; charset=UTF-8", null);
-            Log.e("HTML", html);
-        }
-    };
 
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
         @Override
@@ -128,7 +91,43 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
     };
 
     @Override
-    protected void initViews() {
+    protected void initEventAndData() {
+//        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = getWindow();
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//            window.setNavigationBarColor(Color.TRANSPARENT);
+//        }
+//
+//        setContentView(R.layout.activity_story_detail);
+//        ButterKnife.bind(this);
+//
+//        setSupportActionBar(mToolBar);
+//        mToolBar.setNavigationIcon(R.drawable.ic_action_back);
+//        mToolBar.setNavigationOnClickListener(upBtnListener);
+        setToolbar(mToolBar, "");
+        initObservableViewUIParams();
+
+        if (getIntent().getExtras() == null) return;
+        mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
+        mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
+        mPresenter.getStoryData(mStoryId);
+        mPresenter.getStoryExtras(mStoryId);
+    }
+
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected int getLayout() {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -141,15 +140,52 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
+        return R.layout.activity_story_detail;
+    }
 
-        setContentView(R.layout.activity_story_detail);
-        ButterKnife.bind(this);
+    @Override
+    public void showContent(CertainStoryBean storyBean) {
+        mStoryTitle = storyBean.getTitle();
+        ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
+        String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
+        loader.displayImage(mImageView, imgUrl, null, null);
 
-        setSupportActionBar(mToolBar);
-        mToolBar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolBar.setNavigationOnClickListener(upBtnListener);
-        initObservableViewUIParams();
-        fillingLoadingValues();
+        mTitleView.setText(mStoryTitle);
+        if (!mFabIsShown) {
+            mToolBar.setTitle(mStoryTitle);
+        }
+//        String cssContent = "";
+//        if (storyBean.getCss() != null && storyBean.getCss().size() > 0) {// 构建CSS
+////                    cssContent = "<style type=\"text/css\">.content-image{width:100%;height:auto}" + mStoryContent.getCss().get(0) + "</style>";
+//            cssContent = "<link type=\"text/css\" rel=\"stylesheet\" href=\"http://shared.ydstatic.com/gouwuex/ext/css/extension_3_1.css?version=0.3.5&amp;buildday=22_02_2017_04_25\">" +
+//                    "\n<link type=\"text/css\" rel=\"stylesheet\" href=\"http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3\">\n" +
+//                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + storyBean.getCss().get(0) + "\">\n"
+//                    + "<style>.headline{display:none;}</style>";
+//        }
+//        String html = "<html><head>" + cssContent + "</head><body>" + storyBean.getBody() + " </body></html>";
+        String html = getFromAssets(storyBean.getBody());
+        mWebView.setHorizontalScrollBarEnabled(false);
+        // style="width:100%;height:auto"
+        WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
+        mWebView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
+        Log.e("HTML", html);
+    }
+
+    @Override
+    public void showError(String errMsg) {
+
+    }
+
+    @Override
+    public void showExtras(StoryExtraInfoBean infoBean) {
+        mStoryExtra = new Gson().toJson(infoBean);
+        if (mCommentMenuItem != null) {
+            mCommentMenuItem.setTitle(infoBean.getComments() + "");
+        }
+        if (mPraiseMenuItem != null) {
+            mPraiseMenuItem.setTitle(infoBean.getPopularity() + "");
+        }
     }
 
     // 初始化ObservableView相关参数
@@ -185,28 +221,11 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
         });
     }
 
-    private void fillingLoadingValues() {
-        if (getIntent().getExtras() == null) return;
-        mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
-        mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
-        if (mStoryId <= 0) return;
-        fillingContent();
-    }
-
-    private void fillingContent() {
-        String contentUrl = API.STORY_PREFIX + mStoryId;
-        Log.e("HTML", "URL:" + contentUrl);
-        LoaderFactory.getContentLoader().loadContent(contentUrl, mWebLoadListener);
-    }
-
-    private void setActionBarText(String storyTitle) {
-        ActionBar ab = getSupportActionBar();
-        if (ab != null) ab.setTitle(storyTitle);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_certain_story_menu, menu);
+        mCommentMenuItem = menu.findItem(R.id.menu_item_action_comment);
+        mPraiseMenuItem = menu.findItem(R.id.menu_item_action_praise);
         return true;
     }
 
@@ -218,8 +237,10 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                 SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.menu_item_action_comment:
-                Intent intent = new Intent(mContext, CertainStoryCommentActivity.class);
+                // TODO 替换
+                Intent intent = new Intent(mContext, StoryCommentActivity.class);
                 intent.putExtra(AtyExtraKeyConstant.STORY_ID, mStoryId);
+                intent.putExtra(AtyExtraKeyConstant.STORY_EXTRAS, mStoryExtra);
                 startActivity(intent);
                 break;
             case R.id.menu_item_action_star:
@@ -228,28 +249,28 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
                 break;
             case R.id.menu_item_action_qrcode:
                 // 生成二维码
-                final String shareUrl = API.WEB_STORY_PREFIX + mStoryId;
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_qr_display, null, false);
-                ImageView ivQR = (ImageView) view.findViewById(R.id.iv_qrDisplay);
-                AlertDialog dialog = builder.setView(view).setTitle(getResources().getString(R.string.share_qr_code)).create();
-                dialog.show();
-
-                ViewGroup.LayoutParams pm = ivQR.getLayoutParams();
-                final Bitmap bm = QRCodeUtil.getQRBitmap(shareUrl, pm.width, pm.height, null);
-                ivQR.setImageBitmap(bm);
-
-                ivQR.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        String path = StorageOperatingHelper.savingBitmap2SD(mContext, bm, shareUrl);
-                        if (!TextUtils.isEmpty(path))
-                            SnackbarUtil.ShortSnackbar(mRootView, getResources().getString(R.string.notify_saved) + path, SnackbarUtil.Info).show();
-                        return true;
-                    }
-                });
-                break;
+//                final String shareUrl = API.WEB_STORY_PREFIX + mStoryId;
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//                View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_qr_display, null, false);
+//                ImageView ivQR = (ImageView) view.findViewById(R.id.iv_qrDisplay);
+//                AlertDialog dialog = builder.setView(view).setTitle(getResources().getString(R.string.share_qr_code)).create();
+//                dialog.show();
+//
+//                ViewGroup.LayoutParams pm = ivQR.getLayoutParams();
+//                final Bitmap bm = QRCodeUtil.getQRBitmap(shareUrl, pm.width, pm.height, null);
+//                ivQR.setImageBitmap(bm);
+//
+//                ivQR.setOnLongClickListener(new View.OnLongClickListener() {
+//                    @Override
+//                    public boolean onLongClick(View v) {
+//                        String path = StorageOperatingHelper.savingBitmap2SD(mContext, bm, shareUrl);
+//                        if (!TextUtils.isEmpty(path))
+//                            SnackbarUtil.ShortSnackbar(mRootView, getResources().getString(R.string.notify_saved) + path, SnackbarUtil.Info).show();
+//                        return true;
+//                    }
+//                });
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -317,6 +338,8 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
             ViewPropertyAnimator.animate(mFab).cancel();
             ViewPropertyAnimator.animate(mFab).scaleX(1).scaleY(1).setDuration(200).start();
             mFabIsShown = true;
+            mFab.setVisibility(View.VISIBLE);
+            mToolBar.setTitle("");
         }
     }
 
@@ -325,6 +348,8 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
             ViewPropertyAnimator.animate(mFab).cancel();
             ViewPropertyAnimator.animate(mFab).scaleX(0).scaleY(0).setDuration(200).start();
             mFabIsShown = false;
+            mFab.setVisibility(View.GONE);
+            mToolBar.setTitle(mStoryTitle);
         }
     }
 
@@ -339,5 +364,39 @@ public class StoryDetailActivity extends BaseActivity implements ObservableScrol
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 0.3f;
         getWindow().setAttributes(lp);
+    }
+
+    protected int getActionBarSize() {
+        TypedValue typedValue = new TypedValue();
+        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
+        int indexOfAttrTextSize = 0;
+        TypedArray a = obtainStyledAttributes(typedValue.data, textSizeAttr);
+        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
+        a.recycle();
+        return actionBarSize;
+    }
+
+    /*
+    * 获取html文件
+    */
+    public String getFromAssets(String content) {
+        String htmlPath = "webview/html/certain_story.html";
+        try {
+            InputStreamReader inputReader = new InputStreamReader(getResources().getAssets().open(htmlPath));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line;
+            String Result = "";
+            while ((line = bufReader.readLine()) != null) {
+                Result += line;
+                if (line.contains("<!-- 此处加载内容 -->")) {
+                    Result += content;
+                    Log.e(LOG_TAG, line);
+                }
+            }
+            return Result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

@@ -20,10 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.github.ksoichiro.android.observablescrollview.ObservableGridView
-        android:id="@+id/gv_themes"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_themes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:numColumns="2"/>
 </LinearLayout>

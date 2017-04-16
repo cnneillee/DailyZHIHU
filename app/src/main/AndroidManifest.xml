@@ -24,9 +24,9 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name=".MyApplication"
+        android:name=".app.DailyApp"
         android:allowBackup="true"
-        android:icon="@drawable/icon_dailyzhihu"
+        android:icon="@mipmap/icon_dailyzhihu"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppDayTheme">
@@ -116,9 +116,9 @@
             android:name=".ui.story.StoryDetailActivity"
             android:theme="@style/AppNightTheme.NoActionBar"/>
 
-        <!--Story窗口注册-->
+        <!--Story 评论展示窗口注册-->
         <activity
-            android:name=".ui.story.CertainStoryCommentActivity"
+            android:name=".ui.story.StoryCommentActivity"
             android:label="@string/activity_comment"
             android:theme="@style/AppNightTheme"/>
 

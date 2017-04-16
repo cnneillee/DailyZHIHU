@@ -1,19 +1,17 @@
 package com.neil.dailyzhihu.ui.main;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,37 +22,41 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.neil.dailyzhihu.Constant;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
-import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.PastStoryListBaseAdapter;
-import com.neil.dailyzhihu.bean.orignal.PastStoryListBean;
+import com.neil.dailyzhihu.base.BaseFragment;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
+import com.neil.dailyzhihu.model.bean.orignal.PastStoryListBean;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.presenter.MainFragmentPresenter;
+import com.neil.dailyzhihu.presenter.constract.MainFragmentContract;
+import com.neil.dailyzhihu.ui.adapter.PastStoryListBaseAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.ui.widget.DownloadedHighLightDecorator;
 import com.neil.dailyzhihu.utils.date.DateInNumbers;
 import com.neil.dailyzhihu.utils.date.DateUtil;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
-public class PastFragment extends Fragment implements AdapterView.OnItemClickListener,
-        ObservableScrollViewCallbacks, View.OnClickListener {
+public class PastFragment extends BaseFragment<MainFragmentPresenter> implements AdapterView.OnItemClickListener,
+        ObservableScrollViewCallbacks, View.OnClickListener, MainFragmentContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String LOG_TAG = PastFragment.class.getSimpleName();
 
-    @Bind(R.id.lv_before)
+    @BindView(R.id.lv_before)
     ObservableListView mLvBefore;
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout mSrlRefresh;
 
-    private Context mContext;
+    private PastStoryListBaseAdapter mBeforeAdapter;
+    List<PastStoryListBean.PastStory> mBeforeStoryList;
+
     /*选中的日期，格式为：yyyyMMDD，如20161002*/
     private String pickedDate;
     private DownloadedHighLightDecorator downloadedHighLightDecorator;
@@ -66,30 +68,17 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
     private boolean shouldShownMCV = false;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 初始化今天
-        pickedDate = DateUtil.calendar2yyyyMMDD(Calendar.getInstance());
-        loadPickedDateStory();
+    protected void initInject() {
+        getFragmentComponent().inject(this);
     }
 
     @Override
-
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_past, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_past;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mContext = getActivity();
-        initViews();
-    }
-
-    private void initViews() {
+    protected void initEventAndData() {
         View header = LayoutInflater.from(mContext).inflate(R.layout.fragment_past_header, null);
         Button btnPickDate = (Button) header.findViewById(R.id.btn_pickDate);
         mBtnLoadSetting = (Button) header.findViewById(R.id.btn_loadsetting);
@@ -98,9 +87,11 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         mLvBefore.addHeaderView(header);
 
         mLvBefore.setOnItemClickListener(this);
+        mLvBefore.setScrollViewCallbacks(this);
         btnPickDate.setOnClickListener(this);
         mTvDateDisplay.setOnClickListener(this);
         mBtnLoadSetting.setOnClickListener(this);
+        mSrlRefresh.setOnRefreshListener(this);
 
         // 初始化MaterialCalendarView
         // init Decorator
@@ -118,25 +109,48 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
                     widget.invalidateDecorators();
                 } else {//已下载
                     pickedDate = DateUtil.calendar2yyyyMMDD(date.getCalendar());
-                    loadPickedDateStory();
+                    mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
                 }
             }
         });
+
+        mBeforeStoryList = new ArrayList<>();
+        mBeforeAdapter = new PastStoryListBaseAdapter(mContext, mBeforeStoryList);
+        mLvBefore.setAdapter(mBeforeAdapter);
+
+        // 初始化今天
+        pickedDate = DateUtil.calendar2yyyyMMDD(Calendar.getInstance());
+        mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
+        mSrlRefresh.setRefreshing(true);
     }
 
-    private void loadPickedDateStory() {
-        LoaderFactory.getContentLoader().loadContent(API.BEFORE_NEWS_PREFIX + pickedDate,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        PastStoryListBean beforeStory = GsonDecoder.getDecoder().decoding(content, PastStoryListBean.class);
-                        PastStoryListBaseAdapter adapter = new PastStoryListBaseAdapter(mContext, beforeStory);
-                        mLvBefore.setAdapter(adapter);
-                        updateDateDisplay();
-                    }
-                }
-        );
+    @Override
+    public void showContent(OriginalStory bean) {
+        mSrlRefresh.setRefreshing(false);
+        List<PastStoryListBean.PastStory> beforeStoryList = ((PastStoryListBean) bean).getStories();
+
+        mBeforeStoryList.clear();
+        for (int i = 0; i < beforeStoryList.size(); i++) {
+            mBeforeStoryList.add(beforeStoryList.get(i));
+        }
+        mBeforeAdapter.notifyDataSetChanged();
+
+        updateDateDisplay();
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        if (mSrlRefresh != null) mSrlRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void refresh(OriginalStory content) {
+        showContent(content);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
     }
 
     @Override
@@ -146,40 +160,6 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         intent.putExtra(AtyExtraKeyConstant.STORY_ID, pastStory.getStoryId());
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, pastStory.getImage());
         mContext.startActivity(intent);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        AppCompatActivity activity = (AppCompatActivity) mContext;
-        ActionBar ab = activity.getSupportActionBar();
-        if (ab == null) {
-            return;
-        }
-        if (scrollState == ScrollState.UP) {
-            if (ab.isShowing()) {
-                ab.hide();
-            }
-        } else if (scrollState == ScrollState.DOWN) {
-            if (!ab.isShowing()) {
-                ab.show();
-            }
-        }
     }
 
     @Override
@@ -228,7 +208,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 pickedDate = DateUtil.dateInNumbers2yyyyMMDD(year, monthOfYear + 1, dayOfMonth);
                 Toast.makeText(mContext, pickedDate, Toast.LENGTH_SHORT).show();
-                loadPickedDateStory();
+                mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
             }
         }, dateInNumbers.getYear(), dateInNumbers.getMonthOfYear() - 1, dateInNumbers.getDayOfMonth());
         dialog.show();
@@ -239,6 +219,34 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
         datePicker.setMaxDate(today.getTimeInMillis());
         today.set(Constant.MIN_YEAR_OF_PAST_STORY, Constant.MIN_MONTH_OF_YEAR_OF_PAST_STORY - 1, Constant.MIN_DAY_OF_MONTH_OF_PAST_STORY);
         datePicker.setMinDate(today.getTimeInMillis());
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        AppCompatActivity activity = (AppCompatActivity) mContext;
+        ActionBar ab = activity.getSupportActionBar();
+        if (ab == null) {
+            return;
+        }
+        if (scrollState == ScrollState.UP) {
+            if (ab.isShowing()) {
+                ab.hide();
+            }
+        } else if (scrollState == ScrollState.DOWN) {
+            if (!ab.isShowing()) {
+                ab.show();
+            }
+        }
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
     }
 
     /* 懒加载相关 */
@@ -279,7 +287,7 @@ public class PastFragment extends Fragment implements AdapterView.OnItemClickLis
             return;
         }
         //getData();//数据请求
-        loadPickedDateStory();
+        mPresenter.getNewsListData(MainFragmentContract.PAST, pickedDate);
     }
 
     protected void onInvisible() {

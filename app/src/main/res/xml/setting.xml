@@ -10,6 +10,22 @@
             android:layout="@layout/preference_custom"
             android:summary="@string/set_splash_src_summary"
             android:title="@string/set_splash_src_title"/>
+        <ListPreference
+            android:dialogTitle="@string/set_language_dialog"
+            android:enabled="true"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_entry_values"
+            android:key="key_language"
+            android:layout="@layout/preference_custom"
+            android:summary="@string/set_language_summary"
+            android:title="@string/set_language_title"/>
+        <CheckBoxPreference
+            android:key="key_exit_with_ensuring"
+            android:layout="@layout/preference_custom"
+            android:summary="@string/exit_with_ensuring_summary"
+            android:title="@string/exit_with_ensuring_title"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_group_theme">
         <Preference
             android:key="key_switch_theme"
             android:layout="@layout/preference_custom"
@@ -20,11 +36,6 @@
             android:layout="@layout/preference_custom"
             android:summary="@string/day_night_mode_summary"
             android:title="@string/day_night_mode_title"/>
-        <CheckBoxPreference
-            android:key="key_exit_with_ensuring"
-            android:layout="@layout/preference_custom"
-            android:summary="@string/exit_with_ensuring_summary"
-            android:title="@string/exit_with_ensuring_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_group_network">
         <CheckBoxPreference

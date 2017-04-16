@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,20 +19,20 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.MainPageFragmentPagerAdapter;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.ui.adapter.MainPageFragmentPagerAdapter;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.base.NightModeBaseActivity;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
-import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.ui.setting.SettingActivity;
+import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.utils.Settings;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -44,17 +43,17 @@ public class MainActivity extends NightModeBaseActivity
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTabs;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.vp_news_tab)
+    @BindView(R.id.vp_news_tab)
     ViewPager mvpNewsTab;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @Bind(R.id.app_bar_main)
+    @BindView(R.id.app_bar_main)
     LinearLayout mContentMain;
 
     private Settings mSettings = Settings.getInstance();
@@ -76,7 +75,9 @@ public class MainActivity extends NightModeBaseActivity
         // Tabs与FragmentPager关联
         mvpNewsTab.setAdapter(fAdapter);
         mTabs.setupWithViewPager(mvpNewsTab);
-
+        mTabs.getTabAt(0).setIcon(R.drawable.ic_tab_latest_selector);
+        mTabs.getTabAt(1).setIcon(R.drawable.ic_tab_hot_selector);
+        mTabs.getTabAt(2).setIcon(R.drawable.ic_tab_past_selector);
         // 初始化抽屉的header界面
         initDrawerLayout(mNavView);
     }
@@ -89,6 +90,7 @@ public class MainActivity extends NightModeBaseActivity
         toggle.syncState();
         mNavView.setNavigationItemSelectedListener(this);
         mNavView.setCheckedItem(R.id.nav_mainpage);
+        mNavView.setItemIconTintList(null);
 
         LinearLayout header = (LinearLayout) navigationView.getHeaderView(0);
         ImageView avatar = (ImageView) header.findViewById(R.id.iv_avatar);
@@ -187,7 +189,7 @@ public class MainActivity extends NightModeBaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == AtyExtraKeyConstant.EXIT_NORMALLY){
+        if (requestCode == AtyExtraKeyConstant.EXIT_NORMALLY) {
             mNavView.setCheckedItem(R.id.nav_mainpage);
         }
     }

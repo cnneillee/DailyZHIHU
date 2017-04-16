@@ -1,100 +1,107 @@
 package com.neil.dailyzhihu.ui.main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.neil.dailyzhihu.adapter.HotStoryListBaseAdapter;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignal.HotStoryListBean;
+import com.neil.dailyzhihu.base.BaseFragment;
+import com.neil.dailyzhihu.model.bean.orignal.HotStoryListBean;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.presenter.MainFragmentPresenter;
+import com.neil.dailyzhihu.presenter.constract.MainFragmentContract;
+import com.neil.dailyzhihu.ui.adapter.HotStoryListBaseAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HotFragment extends Fragment implements ObservableScrollViewCallbacks,
-        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+import butterknife.BindView;
+
+public class HotFragment extends BaseFragment<MainFragmentPresenter> implements ObservableScrollViewCallbacks,
+        AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, MainFragmentContract.View {
 
     private static final String LOG_TAG = HotFragment.class.getSimpleName();
 
-    @Bind(R.id.lv_hot)
-    ObservableListView lvHot;
-    @Bind(R.id.srl_refresh)
+    @BindView(R.id.lv_hot)
+    ObservableListView mLVHot;
+    @BindView(R.id.srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
 
-    private Context mContext;
+    private HotStoryListBaseAdapter mHotAdapter;
+    private List<HotStoryListBean.HotStory> mHotList;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 加载
-        loadDataFromInternet();
+    protected void initInject() {
+        getFragmentComponent().inject(this);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_hot, container, false);
-        ButterKnife.bind(this, view);
-//            lvHot.setScrollViewCallbacks(this);
-        lvHot.setOnItemClickListener(this);
+    protected int getLayoutId() {
+        return R.layout.fragment_hot;
+    }
+
+    @Override
+    protected void initEventAndData() {
+        View header = LayoutInflater.from(mContext).inflate(R.layout.header_gap8dp, null, false);
+        mLVHot.addHeaderView(header);
+        mLVHot.setOnItemClickListener(this);
+        mLVHot.setScrollViewCallbacks(this);
         mSrlRefresh.setOnRefreshListener(this);
         mSrlRefresh.setRefreshing(true);
-        return view;
+
+        mHotList = new ArrayList<>();
+        mHotAdapter = new HotStoryListBaseAdapter(mContext, mHotList);
+        mLVHot.setAdapter(mHotAdapter);
+
+        mPresenter.getNewsListData(MainFragmentContract.HOT, "");
+        mSrlRefresh.setRefreshing(true);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mContext = getContext();
-    }
-
-    private void loadDataFromInternet() {
-        LoaderFactory.getContentLoader().loadContent(API.HOT_NEWS,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        mSrlRefresh.setRefreshing(false);
-                        HotStoryListBean hotStories = GsonDecoder.getDecoder().decoding(content, HotStoryListBean.class);
-                        HotStoryListBaseAdapter adapter = new HotStoryListBaseAdapter(mContext, hotStories);
-                        lvHot.setAdapter(adapter);
-                    }
-                });
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        HotStoryListBean.HotStory bean = (HotStoryListBean.HotStory) parent.getAdapter().getItem(position);
+        Intent intent = new Intent(mContext, StoryDetailActivity.class);
+        intent.putExtra(AtyExtraKeyConstant.STORY_ID, bean.getStoryId());
+        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, bean.getThumbnail());
+        startActivity(intent);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public void showContent(OriginalStory content) {
+        mSrlRefresh.setRefreshing(false);
+
+        List<HotStoryListBean.HotStory> hotStoryList = ((HotStoryListBean) content).getStories();
+        mHotList.clear();
+        for (int i = 0; i < hotStoryList.size(); i++) {
+            mHotList.add(hotStoryList.get(i));
+        }
+
+        mHotAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+    public void showError(String errorMsg) {
+        // ERROR处理
+        mSrlRefresh.setRefreshing(false);
     }
 
     @Override
-    public void onDownMotionEvent() {
+    public void refresh(OriginalStory content) {
+        showContent(content);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getNewsListData(MainFragmentContract.HOT, "");
     }
 
     @Override
@@ -116,17 +123,10 @@ public class HotFragment extends Fragment implements ObservableScrollViewCallbac
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        HotStoryListBean.HotStory bean = (HotStoryListBean.HotStory) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(mContext, StoryDetailActivity.class);
-        intent.putExtra(AtyExtraKeyConstant.STORY_ID, bean.getStoryId());
-        intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, bean.getThumbnail());
-        startActivity(intent);
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
     }
 
     @Override
-    public void onRefresh() {
-        Toast.makeText(mContext, getResources().getString(R.string.notify_refreshing_data), Toast.LENGTH_SHORT).show();
-        loadDataFromInternet();
+    public void onDownMotionEvent() {
     }
 }

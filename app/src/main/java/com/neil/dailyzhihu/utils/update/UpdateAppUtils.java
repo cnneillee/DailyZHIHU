@@ -6,9 +6,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.bean.orignal.UpdateInfoBean;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
+import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.bean.orignal.UpdateInfoBean;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.orhanobut.logger.Logger;
@@ -29,11 +29,16 @@ public class UpdateAppUtils {
      */
     @SuppressWarnings("unused")
     public static void checkUpdate(final UpdateCallback updateCallback) {
-        LoaderFactory.getContentLoader().loadContent(API.CHECK_FOR_UPDATES, new OnContentLoadedListener() {
+        LoaderFactory.getContentLoader().loadContent(API.CHECK_FOR_UPDATES, new OnContentLoadListener() {
             @Override
             public void onSuccess(String content, String url) {
                 UpdateInfoBean updateInfoBean = GsonDecoder.getDecoder().decoding(content, UpdateInfoBean.class);
                 onNext(updateInfoBean, updateCallback);
+            }
+
+            @Override
+            public void onFailure(String errMsg) {
+
             }
         });
     }
