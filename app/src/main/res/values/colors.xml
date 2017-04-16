@@ -12,6 +12,8 @@
     <color name="text_light">#ADADAD</color>
     <color name="text_color">#000000</color>
 
+    <color name="toast_bg">#dddfe0</color>
+
     <!--黑白色系-->
     <color name="white">#fff</color>
     <color name="ivoryWhite">#FFFFF0</color><!--象牙色 -->

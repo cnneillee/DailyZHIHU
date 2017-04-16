@@ -4,7 +4,7 @@
               android:id="@+id/view_container"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:fitsSystemWindows="true"
+              android:fitsSystemWindows="false"
               android:inAnimation="@anim/abc_fade_in"
               android:outAnimation="@anim/abc_fade_out">
 
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/splash"/>
+            android:src="@drawable/splash_img_example"/>
 
         <ImageView
             android:layout_width="match_parent"

@@ -32,4 +32,5 @@
     <dimen name="sliding_slop">32dp</dimen>
     <dimen name="sliding_overlay_blur_size">4dp</dimen>
 
+    <dimen name="content_padding">8dp</dimen>
 </resources>

@@ -26,7 +26,8 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:divider="@android:color/transparent"/>
+        tools:listheader="@layout/header_gap8dp"/>
 </LinearLayout>

@@ -3,7 +3,7 @@ package com.neil.dailyzhihu.utils;
 import android.content.Context;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignal.StoryExtraInfoBean;
+import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

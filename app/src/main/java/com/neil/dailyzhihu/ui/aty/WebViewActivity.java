@@ -2,8 +2,6 @@ package com.neil.dailyzhihu.ui.aty;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -11,10 +9,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,9 +21,9 @@ import butterknife.ButterKnife;
  */
 
 public class WebViewActivity extends NightModeBaseActivity {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView mWebView;
 
     private String mUrl;
@@ -43,7 +41,7 @@ public class WebViewActivity extends NightModeBaseActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_cancel);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
         mToolbar.setNavigationOnClickListener(upBtnListener);
 
         getExtras();

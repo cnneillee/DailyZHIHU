@@ -1,6 +1,6 @@
 package com.neil.dailyzhihu.utils.cnt;
 
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
+import com.neil.dailyzhihu.listener.OnContentLoadListener;
 import com.neil.dailyzhihu.utils.load.LoaderWrapper;
 
 /**
@@ -20,7 +20,7 @@ public interface ContentLoaderWrapper extends LoaderWrapper {
      * @param contentUrl 文本内容的Url
      * @param listener   监听事件
      */
-    void loadContent(String contentUrl, OnContentLoadedListener listener);
+    void loadContent(String contentUrl, OnContentLoadListener listener);
 
 //    /**
 //     * 显示文本内容
@@ -28,6 +28,6 @@ public interface ContentLoaderWrapper extends LoaderWrapper {
 //     * @param contentUrl 文本内容的Url
 //     * @param listener   监听事件
 //     */
-//    <T>void loadContent(String contentUrl, OnContentLoadedListener listener, OnParseListener<T> listener1);
+//    <T>void loadContent(String contentUrl, OnContentLoadListener listener, OnParseListener<T> listener1);
 
 }

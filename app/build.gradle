@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.neil.dailyzhihu"
-        minSdkVersion 21
-        targetSdkVersion 23
-        versionCode 5
-        versionName "1.1.0"
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
     }
     buildTypes {
         debug {
@@ -27,36 +28,50 @@ android {
     lintOptions{
         checkReleaseBuilds false
         abortOnError false
+        warning 'InvalidPackage'
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
-}
+    dependencies {
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile files('libs/gson-2.2.jar')
-    compile files('libs/okhttp-2.7.5.jar')
-    compile files('libs/okio-1.6.0.jar')
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
-    compile files('libs/picasso-2.5.2.jar')
-    compile 'com.getbase:floatingactionbutton:1.10.1'
-    compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile files('libs/universal-image-loader-1.9.5-javadoc.jar')
-    compile files('libs/universal-image-loader-1.9.5-sources.jar')
-    compile files('libs/universal-image-loader-1.9.5.jar')
-    compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile project(':onekeyshare')
-    compile files('libs/zxing.jar')
-    compile 'in.srain.cube:ultra-ptr:1.0.11'
-    compile 'com.prolificinteractive:material-calendarview:1.2.0'
-    compile 'com.squareup:android-times-square:1.6.5@aar'
-    compile 'com.orhanobut:logger:1.15'
-    compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
-        exclude module: 'support-v4'
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+        testCompile 'junit:junit:4.12'
+
+        // base
+        compile rootProject.ext.dependencies["appcompat-v7"]
+        compile rootProject.ext.dependencies["design"]
+        compile rootProject.ext.dependencies["cardview-v7"]
+
+        // network
+        compile rootProject.ext.dependencies["gson"]
+        compile rootProject.ext.dependencies["volley"]
+        compile rootProject.ext.dependencies["okhttp"]
+        compile rootProject.ext.dependencies["retrofit"]
+        compile rootProject.ext.dependencies["retrofit-converter-gson"]
+        compile rootProject.ext.dependencies["universal-image-loader"]
+
+        // ui
+        compile rootProject.ext.dependencies["android-observablescrollview"]
+        compile rootProject.ext.dependencies["nineoldandroids"]
+        compile rootProject.ext.dependencies["circleimageview"]
+        compile rootProject.ext.dependencies["material-calendarview"]
+        compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+            exclude module: 'support-v4'
+        }
+
+        // log
+        compile rootProject.ext.dependencies["logger"]
+        compile rootProject.ext.dependencies["crashreport"]
+
+        // di
+        compile rootProject.ext.dependencies["dagger"]
+        provided rootProject.ext.dependencies["dagger-compiler"]
+        provided rootProject.ext.dependencies["annotation"]
+        compile rootProject.ext.dependencies["butterknife"]
+        apt rootProject.ext.dependencies["butterknife-compiler"]
+
+        // rx
+        compile rootProject.ext.dependencies["rxjava"]
+        compile rootProject.ext.dependencies["rxandroid"]
     }
 }
+

@@ -11,15 +11,15 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.adapter.TopicEditorListAdapter;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.bean.orignal.TopicStoryListBean;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.ui.adapter.TopicEditorListAdapter;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
  */
 
 public class TopicEditorsActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.lv_editors)
+    @BindView(R.id.lv_editors)
     ListView mLvEditors;
 
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
@@ -46,7 +46,8 @@ public class TopicEditorsActivity extends NightModeBaseActivity implements Adapt
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationOnClickListener(upBtnListener);
         getExtras();
     }
@@ -74,7 +75,7 @@ public class TopicEditorsActivity extends NightModeBaseActivity implements Adapt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TopicStoryListBean.EditorsBean bean = (TopicStoryListBean.EditorsBean) parent.getAdapter().getItem(position);
-        String url = bean.getUrl();
+        String url = "http://news-at.zhihu.com/api/4/editor/" + bean.getId() + "/profile-page/android";
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra(AtyExtraKeyConstant.WEB_URL, url);
         startActivity(intent);

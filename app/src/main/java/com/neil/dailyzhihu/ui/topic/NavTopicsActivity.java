@@ -1,125 +1,88 @@
 package com.neil.dailyzhihu.ui.topic;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableGridView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.neil.dailyzhihu.adapter.TopicGridBaseAdapter;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.listener.OnContentLoadedListener;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.bean.orignal.TopicListBean;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.ui.NightModeBaseActivity;
-import com.neil.dailyzhihu.utils.GsonDecoder;
-import com.neil.dailyzhihu.utils.load.LoaderFactory;
-import com.orhanobut.logger.Logger;
+import com.neil.dailyzhihu.base.BaseActivity;
+import com.neil.dailyzhihu.model.bean.orignal.OriginalStory;
+import com.neil.dailyzhihu.model.bean.orignal.TopicListBean;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
+import com.neil.dailyzhihu.presenter.BlockGridPresenter;
+import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
+import com.neil.dailyzhihu.ui.adapter.BlockBaseAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
 /**
  * 作者：Neil on 2017/1/19 17:53.
  * 邮箱：cn.neillee@gmail.com
- */
-
-/**
  * 主题日报窗口
  */
-public class NavTopicsActivity extends NightModeBaseActivity implements
-        AdapterView.OnItemClickListener, ObservableScrollViewCallbacks {
-    @Bind(R.id.gv_themes)
-    ObservableGridView gvThemes;
-    @Bind(R.id.toolbar)
+public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implements
+        BlockGridContract.View, BlockBaseAdapter.OnItemClickListener {
+    @BindView(R.id.rv_themes)
+    RecyclerView mGidThemes;
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private List<TopicListBean.TopicBean> mDatas;
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            NavTopicsActivity.this.finish();
+    private List<TopicListBean.TopicBean> mTopicBeanList;
+    private BlockBaseAdapter<TopicListBean.TopicBean> mTopicAdapter;
+
+    @Override
+    protected void initEventAndData() {
+        setToolbar(mToolbar, getResources().getString(R.string.activity_topics));
+
+//        View header = LayoutInflater.from(mContext).inflate(R.layout.header_gap8dp, null, false);
+//        mGidThemes.addHeaderView(header);
+
+        mTopicBeanList = new ArrayList<>();
+        mTopicAdapter = new BlockBaseAdapter<>(mContext, mTopicBeanList);
+        mGidThemes.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mGidThemes.setAdapter(mTopicAdapter);
+        mTopicAdapter.setOnItemClickListener(this);
+
+        mPresenter.getBlockData(BlockGridContract.TOPIC);
+    }
+
+    @Override
+    protected void initInject() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_topics;
+    }
+
+    @Override
+    public void showContent(OriginalStory bean) {
+        List<TopicListBean.TopicBean> topicBeanList = ((TopicListBean) bean).getOthers();
+        mTopicBeanList.clear();
+        for (int i = 0; i < topicBeanList.size(); i++) {
+            mTopicBeanList.add(topicBeanList.get(i));
         }
-    };
-
-    @Override
-    protected void initViews() {
-        setContentView(R.layout.activity_topics);
-        ButterKnife.bind(this);
-
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_back);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
-
-        gvThemes.setOnItemClickListener(this);
-        gvThemes.setScrollViewCallbacks(this);
-        LoaderFactory.getContentLoader().loadContent(API.THEMES,
-                new OnContentLoadedListener() {
-                    @Override
-                    public void onSuccess(String content, String url) {
-                        Logger.json(content);
-                        TopicListBean themes = GsonDecoder.getDecoder().decoding(content, TopicListBean.class);
-                        TopicGridBaseAdapter adapter = new TopicGridBaseAdapter(NavTopicsActivity.this, themes);
-                        mDatas = themes.getOthers();
-                        gvThemes.setAdapter(adapter);
-                    }
-                });
+        mTopicAdapter.notifyDataSetChanged();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
+    public void showError(String errMsg) {
+
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TopicListBean.TopicBean bean = mDatas.get(position);
+    public void OnItemClick(int position, BlockBaseAdapter.ViewHolder shareView) {
+        TopicListBean.TopicBean bean = mTopicBeanList.get(position);
         int sectionId = bean.getStoryId();
         String topicImg = bean.getImage();
         Intent intent = new Intent(this, TopicDetailActivity.class);
         intent.putExtra(AtyExtraKeyConstant.THEME_ID, sectionId);
         intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, topicImg);
         startActivity(intent);
-    }
-
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-
-    }
-
-    /**
-     * 列表项滑动后对Actionbar施加影响
-     *
-     * @param scrollState 滑动状态
-     */
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        ActionBar ab = this.getSupportActionBar();
-        if (ab == null) {
-            return;
-        }
-        if (scrollState == ScrollState.UP) {
-            if (ab.isShowing()) {
-                ab.hide();
-            }
-        } else if (scrollState == ScrollState.DOWN) {
-            if (!ab.isShowing()) {
-                ab.show();
-            }
-        }
     }
 }

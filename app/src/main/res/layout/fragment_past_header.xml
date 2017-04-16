@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="360dp"
+              android:id="@+id/ll_header_root"
               android:background="?attr/mainPageRootViewBgColor"
               android:orientation="vertical"
               android:paddingTop="8dp">

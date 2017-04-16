@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -13,10 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.neil.dailyzhihu.BuildConfig;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.api.API;
-import com.neil.dailyzhihu.api.AtyExtraKeyConstant;
-import com.neil.dailyzhihu.bean.orignal.UpdateInfoBean;
+import com.neil.dailyzhihu.model.bean.orignal.UpdateInfoBean;
+import com.neil.dailyzhihu.model.http.api.API;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.aty.WebViewActivity;
 import com.neil.dailyzhihu.utils.AppUtil;
 import com.neil.dailyzhihu.utils.Formater;
@@ -37,6 +39,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
     private Preference mCheckUpdate;
     private Preference mVersionIntro;
     private Preference mShareApp;
+    private Preference mFeedback;
     private Preference mBlog;
     private Preference mGithub;
     private Preference mEmail;
@@ -48,6 +51,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
     private static final String CHECK_UPDATE = "key_checkupdate";
     private static final String VERSION_INFO = "key_versioninfo";
     private static final String SHARE_APP = "key_shareapp";
+    private static final String FEEDBACK = "key_feedback";
     private static final String BLOG = "key_blog";
     private static final String GITHUB = "key_github";
     private static final String EMAIL = "key_email";
@@ -68,6 +72,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         mCheckUpdate = findPreference(CHECK_UPDATE);
         mVersionIntro = findPreference(VERSION_INFO);
         mShareApp = findPreference(SHARE_APP);
+        mFeedback = findPreference(FEEDBACK);
         mBlog = findPreference(BLOG);
         mGithub = findPreference(GITHUB);
         mEmail = findPreference(EMAIL);
@@ -78,6 +83,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         mAppIntro.setOnPreferenceClickListener(this);
         mCheckUpdate.setOnPreferenceClickListener(this);
         mVersionIntro.setOnPreferenceClickListener(this);
+        mFeedback.setOnPreferenceClickListener(this);
         mShareApp.setOnPreferenceClickListener(this);
         mBlog.setOnPreferenceClickListener(this);
         mGithub.setOnPreferenceClickListener(this);
@@ -104,6 +110,13 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         } else if (mShareApp == preference) {
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.shareapp_content));
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
+        } else if (mFeedback == preference) {
+            Intent mail = new Intent(Intent.ACTION_SENDTO);
+            mail.setData(Uri.parse("mailto:cn.neillee@gmail.com"));
+            mail.putExtra(Intent.EXTRA_SUBJECT, "DailyZHIHU Feedback");
+            String content = getEmailContent();
+            mail.putExtra(Intent.EXTRA_TEXT, content);
+            startActivity(mail);
         } else if (mBlog == preference) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
@@ -181,5 +194,14 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
                             }
                         }).setView(contentView).create().show();
         canUpdate = true;
+    }
+
+    private String getEmailContent() {
+        String content = "\n\n" + "------------------------" + "\n";
+        content += "Package Name: " + getActivity().getPackageName() + "\n";
+        content += "App Version: " + BuildConfig.VERSION_NAME + "\n";
+        content += "App Version Code: " + BuildConfig.VERSION_CODE + "\n";
+        content += "Device Model: " + Build.MODEL + "\n" + "Device Brand: " + Build.BRAND + "\n" + "SDK Version: " + Build.VERSION.SDK_INT + "\n" + "------------------------";
+        return content;
     }
 }
