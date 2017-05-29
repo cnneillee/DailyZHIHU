@@ -6,12 +6,12 @@ ext {
             applicationId     : "com.neil.dailyzhihu",
             minSdkVersion     : 21,
             targetSdkVersion  : 23,
-            versionCode       : 5,
-            versionName       : "1.1.0"
+            versionCode       : 6,
+            versionName       : "1.2.0"
     ]
 
     def dependVersion = [
-            support     : "23.2.1",
+            support     : "25.0.0",
             retrofit    : "2.2.0",
             okhttp      : "3.6.0",
             dagger2     : "2.10",
