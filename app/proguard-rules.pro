@@ -81,6 +81,7 @@
 
 # Retrofit
 -dontwarn retrofit.**
+-dontwarn retrofit2.**
 -keep class retrofit.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
@@ -97,13 +98,13 @@
 -keep class com.neil.dailyzhihu.model.bean.**{ *; }
 -keep class com.neil.dailyzhihu.model.bean.original.**{ *; }
 
-# ShareSDK 混淆
--dontwarn cn.sharesdk.**
--keep class cn.sharesdk.** { *; }
+## ShareSDK 混淆
+#-dontwarn cn.sharesdk.**
+#-keep class cn.sharesdk.** { *; }
 
-#zxing
--keep class com.google.zxing.** { *; }
--keep class com.google.zxing.**
+##zxing
+#-keep class com.google.zxing.** { *; }
+#-keep class com.google.zxing.**
 
 #okhttp
 -dontwarn com.squareup.okhttp3.**
@@ -137,6 +138,27 @@
 -keep class com.handmark.pulltorefresh.library.** { *; }
 -dontwarn com.handmark.pulltorefresh.library.**
 
+##https://github.com/krschultz/android-proguard-snippets/blob/master/libraries/proguard-square-dagger.pro
+# Dagger ProGuard rules.
+# https://github.com/square/dagger
+
+-dontwarn dagger.internal.codegen.**
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.* *;
+    @dagger.* *;
+    <init>();
+}
+
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keep class * extends dagger.internal.Binding
+-keep class * extends dagger.internal.ModuleAdapter
+-keep class * extends dagger.internal.StaticInjection
+
+##http://stackoverflow.com/questions/33047806/proguard-duplicate-definition-of-library-class
+-dontnote android.net.http.*
+-dontnote org.apache.commons.codec.**
+-dontnote org.apache.http.**
 #参考：
 #  http://blog.csdn.net/zuiwuyuan/article/details/48552701
 #  http://blog.csdn.net/fengyuzhengfan/article/details/43876197
