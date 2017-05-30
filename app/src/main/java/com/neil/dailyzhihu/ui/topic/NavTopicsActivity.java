@@ -13,6 +13,7 @@ import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.adapter.BlockBaseAdapter;
+import com.neil.dailyzhihu.ui.widget.DividerGridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class NavTopicsActivity extends BaseActivity<BlockGridPresenter> implemen
         mTopicBeanList = new ArrayList<>();
         mTopicAdapter = new BlockBaseAdapter<>(mContext, mTopicBeanList);
         mGidThemes.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mGidThemes.addItemDecoration(new DividerGridItemDecoration(mContext));
         mGidThemes.setAdapter(mTopicAdapter);
         mTopicAdapter.setOnItemClickListener(this);
 

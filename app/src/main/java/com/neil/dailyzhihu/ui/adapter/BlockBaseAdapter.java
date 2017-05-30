@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.model.bean.IBlockBean;
+import com.neil.dailyzhihu.utils.DisplayUtil;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -36,6 +38,13 @@ public class BlockBaseAdapter<T extends IBlockBean> extends RecyclerView.Adapter
     @Override
     public BlockBaseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gv_block, parent, false);
+        GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) convertView.getLayoutParams();
+//        lp.width = (DailyApp.SCREEN_WIDTH - DisplayUtil.dip2px(mContext, 16))/ 2 ;
+//        lp.width = convertView.getMeasuredWidth();
+        lp.width = (parent.getWidth() - DisplayUtil.dip2px(mContext, 16)
+                - parent.getPaddingRight() - parent.getPaddingLeft()) / 2;
+        lp.height = (int) (1.2 * lp.width);
+//        convertView.setLayoutParams(lp);
         return new ViewHolder(convertView);
     }
 

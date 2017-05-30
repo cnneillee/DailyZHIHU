@@ -14,6 +14,7 @@ import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.BlockGridPresenter;
 import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
 import com.neil.dailyzhihu.ui.adapter.BlockBaseAdapter;
+import com.neil.dailyzhihu.ui.widget.DividerGridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class NavColumnsActivity extends BaseActivity<BlockGridPresenter>
         setToolbar(mToolbar, getResources().getString(R.string.activity_columns));
 
         mGridSections.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mGridSections.addItemDecoration(new DividerGridItemDecoration(this));
 
         mColumnBeanList = new ArrayList<>();
         mColumnGridBaseAdapter = new BlockBaseAdapter<>(this, mColumnBeanList);
