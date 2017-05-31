@@ -29,6 +29,7 @@ import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
+import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.StoryDetailPresenter;
 import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
@@ -63,8 +64,9 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     @BindView(R.id.webview)
     ObservableWebView mWebView;
 
-    private MenuItem mCommentMenuItem;
+    private MenuItem mStarMenuItem;
     private MenuItem mPraiseMenuItem;
+    private MenuItem mCommentMenuItem;
 
     private int mActionBarSize;
     private int mFlexibleSpaceShowFabOffset;
@@ -119,6 +121,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         mPresenter.getStoryData(mStoryId);
         mPresenter.getStoryExtras(mStoryId);
+        mPresenter.queryStarRecord(mStoryId);
     }
 
     @Override
@@ -188,6 +191,11 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         }
     }
 
+    @Override
+    public void showStarRecord(StarRecord record, boolean show) {
+        if (mStarMenuItem != null) mStarMenuItem.setTitle(show ? "已收藏" : "收藏");
+    }
+
     // 初始化ObservableView相关参数
     private void initObservableViewUIParams() {
         mFlexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
@@ -224,8 +232,10 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_certain_story_menu, menu);
-        mCommentMenuItem = menu.findItem(R.id.menu_item_action_comment);
+        mStarMenuItem = menu.findItem(R.id.menu_item_action_star);
         mPraiseMenuItem = menu.findItem(R.id.menu_item_action_praise);
+        mCommentMenuItem = menu.findItem(R.id.menu_item_action_comment);
+        mPresenter.queryStarRecord(mStoryId);
         return true;
     }
 
@@ -245,7 +255,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 break;
             case R.id.menu_item_action_star:
                 //TODO 收藏
-                SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+                //SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+                mPresenter.starStory(mStoryId);
                 break;
             case R.id.menu_item_action_qrcode:
                 // 生成二维码

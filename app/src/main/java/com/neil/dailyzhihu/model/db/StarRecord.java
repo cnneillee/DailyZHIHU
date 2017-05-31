@@ -1,23 +1,45 @@
 package com.neil.dailyzhihu.model.db;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * 作者：Neil on 2016/4/27 15:11.
  * 邮箱：cn.neillee@gmail.com
  */
+@Entity(nameInDb = "star_record", generateGettersSetters = false)
 public class StarRecord {
+    @Id(autoincrement = true)
+    private long _id;
+    @Property(nameInDb = "story_id")
     private int storyId;
-    private String date;
-    private long timeStamp;
-    private String catalog;
+    @Property(nameInDb = "timestamp")
+    private long timestamp;
 
+    public StarRecord(int storyId, long timestamp) {
+        this.storyId = storyId;
+        this.timestamp = timestamp;
+    }
+
+    @Generated(hash = 1150266931)
+    public StarRecord(long _id, int storyId, long timestamp) {
+        this._id = _id;
+        this.storyId = storyId;
+        this.timestamp = timestamp;
+    }
+
+    @Generated(hash = 1872581448)
     public StarRecord() {
     }
 
-    public StarRecord(int storyId, String date, long timeStamp, String catalog) {
-        this.storyId = storyId;
-        this.date = date;
-        this.timeStamp = timeStamp;
-        this.catalog = catalog;
+    public long get_id() {
+        return _id;
+    }
+
+    public void set_id(long _id) {
+        this._id = _id;
     }
 
     public int getStoryId() {
@@ -28,27 +50,11 @@ public class StarRecord {
         this.storyId = storyId;
     }
 
-    public String getDate() {
-        return date;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public String getCatalog() {
-        return catalog;
-    }
-
-    public void setCatalog(String catalog) {
-        this.catalog = catalog;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -1,6 +1,7 @@
 package com.neil.dailyzhihu.di.module;
 
 import com.neil.dailyzhihu.app.DailyApp;
+import com.neil.dailyzhihu.model.db.GreenDaoHelper;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.model.http.api.DailyService;
 import com.neil.dailyzhihu.model.http.api.SplashService;
@@ -32,5 +33,11 @@ public class AppModule {
     @Singleton
     RetrofitHelper provideRetrofitHelper(DailyService dailyServiceService, SplashService splashService) {
         return new RetrofitHelper(dailyServiceService, splashService);
+    }
+
+    @Provides
+    @Singleton
+    GreenDaoHelper provideGreenDaoHelper() {
+        return new GreenDaoHelper(mApp);
     }
 }

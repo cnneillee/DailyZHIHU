@@ -3,6 +3,8 @@ package com.neil.dailyzhihu.presenter;
 import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
+import com.neil.dailyzhihu.model.db.GreenDaoHelper;
+import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
 
@@ -19,10 +21,12 @@ import retrofit2.Response;
 
 public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> implements StoryDetailContract.Presenter {
     private RetrofitHelper mRetrofitHelper;
+    private GreenDaoHelper mGreenDaoHelper;
 
     @Inject
-    StoryDetailPresenter(RetrofitHelper retrofitHelper) {
+    StoryDetailPresenter(RetrofitHelper retrofitHelper, GreenDaoHelper greenDaoHelper) {
         this.mRetrofitHelper = retrofitHelper;
+        this.mGreenDaoHelper = greenDaoHelper;
     }
 
     @Override
@@ -55,5 +59,25 @@ public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> 
                 mView.showError(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void queryStarRecord(int storyId) {
+        StarRecord queryRecord = mGreenDaoHelper.queryStarRecord(storyId);
+        mView.showStarRecord(queryRecord, queryRecord != null);
+    }
+
+    @Override
+    public void starStory(int storyId) {
+        StarRecord queryRecord = mGreenDaoHelper.queryStarRecord(storyId);
+        if (queryRecord == null) {
+            long timeStamp = System.currentTimeMillis();
+            StarRecord record = new StarRecord(storyId, timeStamp);
+            mGreenDaoHelper.insertStarRecord(record);
+            mView.showStarRecord(record, true);
+        } else {
+            mGreenDaoHelper.deleteStarRecord(queryRecord);
+            mView.showStarRecord(queryRecord, false);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.neil.dailyzhihu.di.component;
 import com.neil.dailyzhihu.app.DailyApp;
 import com.neil.dailyzhihu.di.module.AppModule;
 import com.neil.dailyzhihu.di.module.HttpModule;
+import com.neil.dailyzhihu.model.db.GreenDaoHelper;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 
 import javax.inject.Singleton;
@@ -19,4 +20,6 @@ public interface AppComponent {
     DailyApp getContext();
 
     RetrofitHelper retrofitHelper();
+
+    GreenDaoHelper greenDaoHelper();
 }
