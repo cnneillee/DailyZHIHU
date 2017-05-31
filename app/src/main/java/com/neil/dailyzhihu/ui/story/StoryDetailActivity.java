@@ -2,6 +2,7 @@ package com.neil.dailyzhihu.ui.story;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
@@ -194,6 +195,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     @Override
     public void showStarRecord(StarRecord record, boolean show) {
         if (mStarMenuItem != null) mStarMenuItem.setTitle(show ? "已收藏" : "收藏");
+        mFab.setBackgroundTintList(ColorStateList.valueOf(getResources()
+                .getColor(show ? R.color.colorAccent : R.color.ZHIHUBlue)));
     }
 
     // 初始化ObservableView相关参数
@@ -206,6 +209,12 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mFabIsShown) mPresenter.starStory(mStoryId);
+            }
+        });
+        mFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 if (mFabIsShown) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("image/*");
@@ -215,6 +224,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_to)));
                 }
+                return true;
             }
         });
         mFabMargin = getResources().getDimensionPixelSize(R.dimen.margin_standard);
@@ -247,15 +257,12 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.menu_item_action_comment:
-                // TODO 替换
                 Intent intent = new Intent(mContext, StoryCommentActivity.class);
                 intent.putExtra(AtyExtraKeyConstant.STORY_ID, mStoryId);
                 intent.putExtra(AtyExtraKeyConstant.STORY_EXTRAS, mStoryExtra);
                 startActivity(intent);
                 break;
             case R.id.menu_item_action_star:
-                //TODO 收藏
-                //SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 mPresenter.starStory(mStoryId);
                 break;
             case R.id.menu_item_action_qrcode:

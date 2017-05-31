@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left|top"
-        android:src="@drawable/ic_action_plus"
+        android:src="@drawable/ic_action_star"
         app:backgroundTint="@color/ZHIHUBlue"
         app:borderWidth="0dp"
         app:elevation="6dp"
