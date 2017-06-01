@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -201,7 +202,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFabIsShown) mPresenter.starStory(mStoryId, mStoryTitle, mDefaultImg);
+                if (mFabIsShown && !TextUtils.isEmpty(mStoryTitle))
+                    mPresenter.starStory(mStoryId, mStoryTitle, mDefaultImg);
             }
         });
         mFab.setOnLongClickListener(new View.OnLongClickListener() {

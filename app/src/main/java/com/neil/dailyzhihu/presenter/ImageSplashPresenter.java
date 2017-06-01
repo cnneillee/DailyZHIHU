@@ -10,6 +10,7 @@ import com.neil.dailyzhihu.model.bean.orignal.ZhihuSplashBean;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.model.http.api.API;
 import com.neil.dailyzhihu.presenter.constract.ImageSplashContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -90,9 +91,7 @@ public class ImageSplashPresenter extends RxPresenter<ImageSplashContract.View>
                     String imgSign = splashBean.isError() || splashBean.getResults().size() == 0 ?
                             "" : splashBean.getResults().get(0).getSource();
                     mView.showImage(imgUrl, imgSign);
-                } else {
-                    mView.showError(response.code() + ":" + response.errorBody().toString());
-                }
+                } else Logger.e("Error[%d] in request TOPIC BlockData", response.code());
             }
 
             @Override
@@ -112,9 +111,7 @@ public class ImageSplashPresenter extends RxPresenter<ImageSplashContract.View>
                             "" : splashBean.getLaunch_ads().get(0).getImage();
                     String imgSign = "知乎开屏";
                     mView.showImage(imgUrl, imgSign);
-                } else {
-                    mView.showError(response.code() + ":" + response.errorBody().toString());
-                }
+                } else Logger.e("Error[%d] in request ZhihuImageSplash", response.code());
             }
 
             @Override
@@ -134,9 +131,7 @@ public class ImageSplashPresenter extends RxPresenter<ImageSplashContract.View>
                         String imgUrl = API.HUABAN_IMG_HEADER + splashBean.getPins().get(0).getFile().getKey();
                         String imgSign = splashBean.getPins().get(0).getRaw_text();
                         mView.showImage(imgUrl, imgSign);
-                    }else{
-                        mView.showError("content error");
-                    }
+                    } else Logger.e("Error[%d] in request HuaBanImageSplash", response.code());
                 } else {
                     mView.showError(response.code() + ":" + response.errorBody().toString());
                 }

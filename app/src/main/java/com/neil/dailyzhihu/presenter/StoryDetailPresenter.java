@@ -8,6 +8,7 @@ import com.neil.dailyzhihu.model.db.GreenDaoHelper;
 import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -35,9 +36,8 @@ public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> 
         mRetrofitHelper.fetchNewsDetail(storyId).enqueue(new Callback<CertainStoryBean>() {
             @Override
             public void onResponse(Call<CertainStoryBean> call, Response<CertainStoryBean> response) {
-                if (response.isSuccessful()) {
-                    mView.showContent(response.body());
-                }
+                if (response.isSuccessful()) mView.showContent(response.body());
+                else Logger.e("Error[%d] in request StoryData", response.code());
             }
 
             @Override
@@ -52,7 +52,8 @@ public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> 
         mRetrofitHelper.fetchNewsExtraInfo(storyId).enqueue(new Callback<StoryExtraInfoBean>() {
             @Override
             public void onResponse(Call<StoryExtraInfoBean> call, Response<StoryExtraInfoBean> response) {
-                mView.showExtras(response.body());
+                if (response.isSuccessful()) mView.showExtras(response.body());
+                else Logger.e("Error[%d] in request StoryExtras", response.code());
             }
 
             @Override

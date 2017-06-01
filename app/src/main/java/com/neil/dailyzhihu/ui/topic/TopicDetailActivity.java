@@ -151,6 +151,7 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
     private View.OnClickListener editorsListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (mEditors == null) return;
             Gson gson = new Gson();
             String editorsInfo = gson.toJson(mEditors);
             Intent intent = new Intent(TopicDetailActivity.this, TopicEditorsActivity.class);

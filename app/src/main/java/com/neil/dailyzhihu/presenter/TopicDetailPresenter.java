@@ -4,6 +4,7 @@ import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.TopicDetailContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -29,9 +30,8 @@ public class TopicDetailPresenter extends RxPresenter<TopicDetailContract.View> 
         mRetrofitHelper.fetchTopicNewsList(topicId).enqueue(new Callback<TopicStoryListBean>() {
             @Override
             public void onResponse(Call<TopicStoryListBean> call, Response<TopicStoryListBean> response) {
-                if (response.isSuccessful()) {
-                    mView.showContent(response.body());
-                }
+                if (response.isSuccessful()) mView.showContent(response.body());
+                else Logger.e("Error[%d] in request TopicDetailData", response.code());
             }
 
             @Override

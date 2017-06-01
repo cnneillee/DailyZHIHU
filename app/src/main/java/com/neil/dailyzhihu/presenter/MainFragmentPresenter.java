@@ -6,6 +6,7 @@ import com.neil.dailyzhihu.model.bean.orignal.LatestStoryListBean;
 import com.neil.dailyzhihu.model.bean.orignal.PastStoryListBean;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.MainFragmentContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -33,7 +34,8 @@ public class MainFragmentPresenter extends RxPresenter<MainFragmentContract.View
                 mRetrofitHelper.fetchHotNewsList().enqueue(new Callback<HotStoryListBean>() {
                     @Override
                     public void onResponse(Call<HotStoryListBean> call, Response<HotStoryListBean> response) {
-                        mView.showContent(response.body());
+                        if (response.isSuccessful()) mView.showContent(response.body());
+                        else Logger.e("Error[%d] in request NewsListData", response.code());
                     }
 
                     @Override
@@ -46,7 +48,8 @@ public class MainFragmentPresenter extends RxPresenter<MainFragmentContract.View
                 mRetrofitHelper.fetchLatestNewsList().enqueue(new Callback<LatestStoryListBean>() {
                     @Override
                     public void onResponse(Call<LatestStoryListBean> call, Response<LatestStoryListBean> response) {
-                        mView.showContent(response.body());
+                        if (response.isSuccessful()) mView.showContent(response.body());
+                        else Logger.e("Error[%d] in request LatestNewsList", response.code());
                     }
 
                     @Override
@@ -59,7 +62,8 @@ public class MainFragmentPresenter extends RxPresenter<MainFragmentContract.View
                 mRetrofitHelper.fetchPastNewsList(params).enqueue(new Callback<PastStoryListBean>() {
                     @Override
                     public void onResponse(Call<PastStoryListBean> call, Response<PastStoryListBean> response) {
-                        mView.showContent(response.body());
+                        if (response.isSuccessful()) mView.showContent(response.body());
+                        else Logger.e("Error[%d] in request PastNewsList", response.code());
                     }
 
                     @Override

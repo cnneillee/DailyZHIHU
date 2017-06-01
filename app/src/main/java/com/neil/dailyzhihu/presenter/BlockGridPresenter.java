@@ -5,6 +5,7 @@ import com.neil.dailyzhihu.model.bean.orignal.ColumnListBean;
 import com.neil.dailyzhihu.model.bean.orignal.TopicListBean;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.BlockGridContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -32,7 +33,8 @@ public class BlockGridPresenter extends RxPresenter<BlockGridContract.View> impl
                 mRetrofitHelper.fetchColumnList().enqueue(new Callback<ColumnListBean>() {
                     @Override
                     public void onResponse(Call<ColumnListBean> call, Response<ColumnListBean> response) {
-                        mView.showContent(response.body());
+                        if (response.isSuccessful()) mView.showContent(response.body());
+                        else Logger.e("Error[%d] in request COLUMN BlockData", response.code());
                     }
 
                     @Override
@@ -45,9 +47,8 @@ public class BlockGridPresenter extends RxPresenter<BlockGridContract.View> impl
                 mRetrofitHelper.fetchTopicList().enqueue(new Callback<TopicListBean>() {
                     @Override
                     public void onResponse(Call<TopicListBean> call, Response<TopicListBean> response) {
-                        if (response.isSuccessful()) {
-                            mView.showContent(response.body());
-                        }
+                        if (response.isSuccessful()) mView.showContent(response.body());
+                        else Logger.e("Error[%d] in request TOPIC BlockData", response.code());
                     }
 
                     @Override

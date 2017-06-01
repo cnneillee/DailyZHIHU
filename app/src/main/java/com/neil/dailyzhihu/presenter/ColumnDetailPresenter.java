@@ -4,6 +4,7 @@ import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.model.bean.orignal.ColumnStoryListBean;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.ColumnDetailContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -29,9 +30,8 @@ public class ColumnDetailPresenter extends RxPresenter<ColumnDetailContract.View
         mRetrofitHelper.fetchColumnNewsList(columnId).enqueue(new Callback<ColumnStoryListBean>() {
             @Override
             public void onResponse(Call<ColumnStoryListBean> call, Response<ColumnStoryListBean> response) {
-                if (response.isSuccessful()) {
-                    mView.showContent(response.body());
-                }
+                if (response.isSuccessful()) mView.showContent(response.body());
+                else Logger.e("Error[%d] in request ColumnDetailData", response.code());
             }
 
             @Override

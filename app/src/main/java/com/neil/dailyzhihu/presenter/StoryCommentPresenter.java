@@ -4,6 +4,7 @@ import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.model.bean.orignal.CommentListBean;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.StoryCommentContract;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -45,7 +46,7 @@ public class StoryCommentPresenter extends RxPresenter<StoryCommentContract.View
                         if (response.isSuccessful()) {
                             CommentListBean bean = (CommentListBean) response.body();
                             mView.showContent(bean);
-                        }
+                        } else Logger.e("Error[%d] in request NewsComment", response.code());
                     }
 
                     @Override
