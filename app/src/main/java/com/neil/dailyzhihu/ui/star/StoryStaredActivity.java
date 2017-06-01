@@ -22,6 +22,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.STORY_ID;
+import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.UNSTARED;
+
 /**
  * 作者：Neil on 2017/6/1 14:32.
  * 邮箱：cn.neillee@gmail.com
@@ -38,6 +41,8 @@ public class StoryStaredActivity extends BaseActivity<StoryStaredPresenter>
     private List<StarRecord> mStarRecords;
     private StarRecordRecyclerAdapter mAdapter;
 
+    public static final int REQUEST_CODE = 1;
+
     @Override
     protected void initEventAndData() {
         setToolbar(mToolbar, getResources().getString(R.string.activity_star));
@@ -49,9 +54,9 @@ public class StoryStaredActivity extends BaseActivity<StoryStaredPresenter>
             public void onItemClick(StarRecordRecyclerAdapter.ViewHolder holder, int position, long id) {
                 Intent intent = new Intent(StoryStaredActivity.this, StoryDetailActivity.class);
                 StarRecord record = mStarRecords.get(position);
-                intent.putExtra(AtyExtraKeyConstant.STORY_ID, record.getStoryId());
+                intent.putExtra(STORY_ID, record.getStoryId());
                 intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, record.getImage());
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent, REQUEST_CODE);
             }
         });
         mRVStaredStory.setLayoutManager(new LinearLayoutManager(this));
@@ -67,6 +72,24 @@ public class StoryStaredActivity extends BaseActivity<StoryStaredPresenter>
     @Override
     protected int getLayout() {
         return R.layout.activity_story_stared;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            boolean unstared = data.getBooleanExtra(UNSTARED, false);
+            int storyId = data.getIntExtra(STORY_ID, 0);
+            if (unstared && storyId != 0) {
+                StarRecord toDelete = null;
+                for (StarRecord record : mStarRecords)
+                    if (record.getStoryId() == storyId) toDelete = record;
+                if (toDelete != null) {
+                    mStarRecords.remove(toDelete);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 
     @Override

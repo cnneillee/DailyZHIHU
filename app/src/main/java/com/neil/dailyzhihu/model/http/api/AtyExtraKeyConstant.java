@@ -44,4 +44,7 @@ public class AtyExtraKeyConstant {
     /*comment type*/
     public static final String COMMENT_TYPE = "COMMENT_TYPE";
     public static final String STORY_EXTRAS = "STORY_EXTRAS";
+
+    /*star or unstar*/
+    public static final String UNSTARED = "UNSTARED";
 }

@@ -79,12 +79,12 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     private Activity mContext = StoryDetailActivity.this;
 
     private int mStoryId;
+    private boolean mStared;
     private String mStoryExtra;
     private String mStoryTitle;
     private String mDefaultImg;
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
-
     private static final String LOG_TAG = StoryDetailActivity.class.getSimpleName();
 
     @Override
@@ -185,6 +185,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
 
     @Override
     public void showStarRecord(StarRecord record, boolean show) {
+        mStared = show;
         if (mStarMenuItem != null) mStarMenuItem.setTitle(show ? "已收藏" : "收藏");
         mFab.setBackgroundTintList(ColorStateList.valueOf(getResources()
                 .getColor(show ? R.color.colorAccent : R.color.ZHIHUBlue)));
@@ -295,6 +296,15 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
 //                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(AtyExtraKeyConstant.STORY_ID, mStoryId);
+        intent.putExtra(AtyExtraKeyConstant.UNSTARED, !mStared);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
