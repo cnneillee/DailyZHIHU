@@ -15,18 +15,27 @@ public class StarRecord {
     private Long _id;
     @Property(nameInDb = "story_id")
     private int storyId;
+    @Property(nameInDb = "title")
+    private String title;
+    @Property(nameInDb = "image")
+    private String image;
     @Property(nameInDb = "timestamp")
     private long timestamp;
 
-    public StarRecord(int storyId, long timestamp) {
+    public StarRecord(int storyId, long timestamp, String image, String title) {
+        this.image = image;
+        this.title = title;
         this.storyId = storyId;
         this.timestamp = timestamp;
     }
 
-    @Generated(hash = 1746535335)
-    public StarRecord(Long _id, int storyId, long timestamp) {
+    @Generated(hash = 2041012289)
+    public StarRecord(Long _id, int storyId, String title, String image,
+            long timestamp) {
         this._id = _id;
         this.storyId = storyId;
+        this.title = title;
+        this.image = image;
         this.timestamp = timestamp;
     }
 
@@ -48,6 +57,22 @@ public class StarRecord {
 
     public void setStoryId(int storyId) {
         this.storyId = storyId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public long getTimestamp() {

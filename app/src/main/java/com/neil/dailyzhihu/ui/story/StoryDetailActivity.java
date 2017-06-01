@@ -144,8 +144,8 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mPresenter.cacheCachedStory(storyBean);
         mStoryTitle = storyBean.getTitle();
         ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
-        String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
-        loader.displayImage(mImageView, imgUrl, null, null);
+        mDefaultImg = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
+        loader.displayImage(mImageView, mDefaultImg, null, null);
 
         mTitleView.setText(mStoryTitle);
         if (!mFabIsShown) {
@@ -200,7 +200,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFabIsShown) mPresenter.starStory(mStoryId);
+                if (mFabIsShown) mPresenter.starStory(mStoryId, mStoryTitle, mDefaultImg);
             }
         });
         mFab.setOnLongClickListener(new View.OnLongClickListener() {
@@ -267,7 +267,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 startActivity(intent);
                 break;
             case R.id.menu_item_action_star:
-                mPresenter.starStory(mStoryId);
+                mPresenter.starStory(mStoryId, mStoryTitle, mDefaultImg);
                 break;
             case R.id.menu_item_action_qrcode:
                 // 生成二维码

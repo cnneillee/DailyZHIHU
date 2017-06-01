@@ -1,8 +1,8 @@
 package com.neil.dailyzhihu.presenter;
 
 import com.neil.dailyzhihu.base.RxPresenter;
-import com.neil.dailyzhihu.model.db.CachedStory;
 import com.neil.dailyzhihu.model.db.GreenDaoHelper;
+import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
 import com.neil.dailyzhihu.presenter.constract.StoryStaredContract;
 
@@ -28,8 +28,8 @@ public class StoryStaredPresenter extends RxPresenter<StoryStaredContract.View>
 
     @Override
     public void getStaredStory() {
-        List<CachedStory> cachedStories = mGreenDaoHelper.queryAllStarStory();
-        if (cachedStories == null || cachedStories.size() == 0) mView.showEmptyStared();
-        else mView.showStaredStory(cachedStories);
+        List<StarRecord> starRecords = mGreenDaoHelper.queryAllStarRecord();
+        if (starRecords == null || starRecords.size() == 0) mView.showEmptyStared();
+        else mView.showStaredRecord(starRecords);
     }
 }

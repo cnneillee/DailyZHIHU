@@ -2,7 +2,7 @@ package com.neil.dailyzhihu.presenter.constract;
 
 import com.neil.dailyzhihu.base.BasePresenter;
 import com.neil.dailyzhihu.base.BaseView;
-import com.neil.dailyzhihu.model.db.CachedStory;
+import com.neil.dailyzhihu.model.db.StarRecord;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface StoryStaredContract {
     interface View extends BaseView {
         void showEmptyStared();
 
-        void showStaredStory(List<CachedStory> storyList);
+        void showStaredRecord(List<StarRecord> recordList);
     }
 
     interface Presenter extends BasePresenter<View> {

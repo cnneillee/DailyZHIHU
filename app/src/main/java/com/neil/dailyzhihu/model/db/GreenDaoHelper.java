@@ -7,7 +7,6 @@ import com.orhanobut.logger.Logger;
 
 import org.greenrobot.greendao.database.Database;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,13 +44,8 @@ public class GreenDaoHelper {
         mDaoSession.getStarRecordDao().delete(record);
     }
 
-    public List<CachedStory> queryAllStarStory() {
-        List<StarRecord> records = mDaoSession.getStarRecordDao().loadAll();
-        if (records == null || records.size() == 0) return null;
-        List<CachedStory> cachedStories = new ArrayList<>();
-        for (StarRecord record : records)
-            cachedStories.add(queryCachedStory(record.getStoryId()));
-        return cachedStories;
+    public List<StarRecord> queryAllStarRecord() {
+        return mDaoSession.getStarRecordDao().loadAll();
     }
 
     public void deleteCachedStory(int storyId) {

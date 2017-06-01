@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseReecyclerViewAdapter;
-import com.neil.dailyzhihu.model.db.CachedStory;
+import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 
 import java.util.List;
@@ -20,12 +20,12 @@ import java.util.List;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class CachedStoryRecyclerAdapter extends BaseReecyclerViewAdapter<CachedStoryRecyclerAdapter.ViewHolder> {
+public class StarRecordRecyclerAdapter extends BaseReecyclerViewAdapter<StarRecordRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<CachedStory> mData;
+    private List<StarRecord> mData;
 
-    public CachedStoryRecyclerAdapter(Context context, List<CachedStory> data) {
+    public StarRecordRecyclerAdapter(Context context, List<StarRecord> data) {
         mContext = context;
         mData = data;
     }
@@ -38,9 +38,9 @@ public class CachedStoryRecyclerAdapter extends BaseReecyclerViewAdapter<CachedS
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position, boolean bindItemListener) {
-        CachedStory story = mData.get(position);
-        holder.mTvTitle.setText(story.getTitle());
-        LoaderFactory.getImageLoader().displayImage(holder.mIvImg, story.getImage(), null);
+        StarRecord record = mData.get(position);
+        holder.mTvTitle.setText(record.getTitle());
+        LoaderFactory.getImageLoader().displayImage(holder.mIvImg, record.getImage(), null);
     }
 
     @Override

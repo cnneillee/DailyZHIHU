@@ -23,8 +23,6 @@ public interface StoryDetailContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void starStory(int storyId);
-
         void getStoryData(int storyId);
 
         void getStoryExtras(int storyId);
@@ -34,5 +32,7 @@ public interface StoryDetailContract {
         void queryCachedStory(int storyId);
 
         void cacheCachedStory(CertainStoryBean story);
+
+        void starStory(int storyId, String title, String image);
     }
 }

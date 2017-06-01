@@ -10,11 +10,11 @@ import android.widget.LinearLayout;
 import com.neil.dailyzhihu.R;
 import com.neil.dailyzhihu.base.BaseActivity;
 import com.neil.dailyzhihu.base.BaseReecyclerViewAdapter;
-import com.neil.dailyzhihu.model.db.CachedStory;
+import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.StoryStaredPresenter;
 import com.neil.dailyzhihu.presenter.constract.StoryStaredContract;
-import com.neil.dailyzhihu.ui.adapter.CachedStoryRecyclerAdapter;
+import com.neil.dailyzhihu.ui.adapter.StarRecordRecyclerAdapter;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 
 import java.util.ArrayList;
@@ -35,22 +35,22 @@ public class StoryStaredActivity extends BaseActivity<StoryStaredPresenter>
     LinearLayout mEmptyLayout;
     @BindView(R.id.rv_stared_story)
     RecyclerView mRVStaredStory;
-    private List<CachedStory> mDatas;
-    private CachedStoryRecyclerAdapter mAdapter;
+    private List<StarRecord> mStarRecords;
+    private StarRecordRecyclerAdapter mAdapter;
 
     @Override
     protected void initEventAndData() {
         setToolbar(mToolbar, getResources().getString(R.string.activity_star));
-        mDatas = new ArrayList<>();
-        mAdapter = new CachedStoryRecyclerAdapter(this, mDatas);
+        mStarRecords = new ArrayList<>();
+        mAdapter = new StarRecordRecyclerAdapter(this, mStarRecords);
         mAdapter.setOnItemClickListener(new BaseReecyclerViewAdapter
-                .OnItemClickListener<CachedStoryRecyclerAdapter.ViewHolder>() {
+                .OnItemClickListener<StarRecordRecyclerAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(CachedStoryRecyclerAdapter.ViewHolder holder, int position, long id) {
+            public void onItemClick(StarRecordRecyclerAdapter.ViewHolder holder, int position, long id) {
                 Intent intent = new Intent(StoryStaredActivity.this, StoryDetailActivity.class);
-                CachedStory story = mDatas.get(position);
-                intent.putExtra(AtyExtraKeyConstant.STORY_ID, story.getStoryId());
-                intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, story.getImage());
+                StarRecord record = mStarRecords.get(position);
+                intent.putExtra(AtyExtraKeyConstant.STORY_ID, record.getStoryId());
+                intent.putExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL, record.getImage());
                 mContext.startActivity(intent);
             }
         });
@@ -75,9 +75,9 @@ public class StoryStaredActivity extends BaseActivity<StoryStaredPresenter>
     }
 
     @Override
-    public void showStaredStory(List<CachedStory> storyList) {
-        mDatas.clear();
-        mDatas.addAll(storyList);
+    public void showStaredRecord(List<StarRecord> recordList) {
+        mStarRecords.clear();
+        mStarRecords.addAll(recordList);
         mAdapter.notifyDataSetChanged();
         mEmptyLayout.setVisibility(View.GONE);
     }

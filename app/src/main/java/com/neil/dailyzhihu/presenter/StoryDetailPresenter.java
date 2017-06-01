@@ -89,11 +89,11 @@ public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> 
     }
 
     @Override
-    public void starStory(int storyId) {
+    public void starStory(int storyId, String title, String image) {
         StarRecord queryRecord = mGreenDaoHelper.queryStarRecord(storyId);
         if (queryRecord == null) {
-            long timeStamp = System.currentTimeMillis();
-            StarRecord record = new StarRecord(storyId, timeStamp);
+            long timestamp = System.currentTimeMillis();
+            StarRecord record = new StarRecord(storyId, timestamp, image, title);
             mGreenDaoHelper.insertStarRecord(record);
             mView.showStarRecord(record, true);
         } else {
