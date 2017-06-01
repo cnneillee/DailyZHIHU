@@ -36,6 +36,7 @@ public class StoryCommentActivity extends NightModeBaseActivity {
     @BindView(R.id.vp_comment)
     ViewPager mViewPager;
 
+    private String[] mPagerTitle;
     private List<Fragment> mFragmentList;
 
     private View.OnClickListener upBtnListener = new View.OnClickListener() {
@@ -58,6 +59,10 @@ public class StoryCommentActivity extends NightModeBaseActivity {
         mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
         mToolbar.setNavigationOnClickListener(upBtnListener);
 
+        if (storyExtra != null) initFragmentPager(storyId, storyExtra);
+    }
+
+    private void initFragmentPager(int storyId, String storyExtra) {
         mFragmentList = new ArrayList<>();
         StoryCommentFragment longFragment = StoryCommentFragment.newInstance();
         Bundle longBundle = new Bundle();
