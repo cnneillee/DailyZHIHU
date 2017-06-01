@@ -58,6 +58,7 @@ android {
         compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
             exclude module: 'support-v4'
         }
+//        compile 'com.mikepenz:actionitembadge:3.3.1@aar'
 
         // log
         compile rootProject.ext.dependencies["logger"]

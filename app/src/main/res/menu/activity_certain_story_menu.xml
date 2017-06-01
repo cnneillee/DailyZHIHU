@@ -4,23 +4,27 @@
     <item
         android:id="@+id/menu_item_action_text_size"
         android:title="@string/action_text_size"
+        android:visible="false"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/menu_item_action_star"
         android:icon="@drawable/ic_action_collect"
         android:title="@string/action_text_star"
+        android:visible="false"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/menu_item_action_comment"
         android:icon="@drawable/ic_action_comment"
         android:title=".."
+        app:actionLayout="@layout/menu_action_item_badge"
         app:showAsAction="withText|always"/>
     <item
         android:id="@+id/menu_item_action_praise"
         android:icon="@drawable/ic_action_praise"
         android:title=".."
+        app:actionLayout="@layout/menu_action_item_badge"
         app:showAsAction="withText|ifRoom"/>
     <item
         android:id="@+id/menu_item_action_qrcode"

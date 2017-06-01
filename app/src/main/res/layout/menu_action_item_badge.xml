@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="?android:attr/actionButtonStyle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:clickable="false"
+              android:focusable="false"
+              android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/menu_badge_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/menu_badge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+</LinearLayout>

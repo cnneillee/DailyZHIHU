@@ -34,6 +34,7 @@ import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.presenter.StoryDetailPresenter;
 import com.neil.dailyzhihu.presenter.constract.StoryDetailContract;
+import com.neil.dailyzhihu.ui.widget.MenuItemBadge;
 import com.neil.dailyzhihu.ui.widget.ObservableWebView;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
 import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
@@ -121,8 +122,6 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
         mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
         mPresenter.getStoryData(mStoryId);
-        mPresenter.getStoryExtras(mStoryId);
-        mPresenter.queryStarRecord(mStoryId);
     }
 
     @Override
@@ -184,12 +183,10 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     @Override
     public void showExtras(StoryExtraInfoBean infoBean) {
         mStoryExtra = new Gson().toJson(infoBean);
-        if (mCommentMenuItem != null) {
-            mCommentMenuItem.setTitle(infoBean.getComments() + "");
-        }
-        if (mPraiseMenuItem != null) {
-            mPraiseMenuItem.setTitle(infoBean.getPopularity() + "");
-        }
+        if (mCommentMenuItem != null)
+            MenuItemBadge.update(mCommentMenuItem, infoBean.getComments() + "");
+        if (mPraiseMenuItem != null)
+            MenuItemBadge.update(mPraiseMenuItem, infoBean.getPopularity() + "");
     }
 
     @Override
@@ -240,11 +237,24 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_certain_story_menu, menu);
         mStarMenuItem = menu.findItem(R.id.menu_item_action_star);
         mPraiseMenuItem = menu.findItem(R.id.menu_item_action_praise);
         mCommentMenuItem = menu.findItem(R.id.menu_item_action_comment);
+        mCommentMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.performIdentifierAction(mCommentMenuItem.getItemId(), 0);
+            }
+        });
+        mPraiseMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.performIdentifierAction(mPraiseMenuItem.getItemId(), 0);
+            }
+        });
+        mPresenter.getStoryExtras(mStoryId);
         mPresenter.queryStarRecord(mStoryId);
         return true;
     }
