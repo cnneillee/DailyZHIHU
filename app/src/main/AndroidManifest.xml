@@ -114,7 +114,7 @@
         <!--Story窗口注册-->
         <activity
             android:name=".ui.story.StoryDetailActivity"
-            android:theme="@style/AppNightTheme.NoActionBar"/>
+            android:theme="@style/AppNightTheme"/>
 
         <!--Story 评论展示窗口注册-->
         <activity
@@ -124,24 +124,24 @@
 
         <!--&lt;!&ndash;Mob分享窗口注册&ndash;&gt;-->
         <!--<activity-->
-            <!--android:name="com.mob.tools.MobUIShell"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
-            <!--<intent-filter>-->
-                <!--<data android:scheme="tencent1105271711"/>-->
-                <!--<action android:name="android.intent.action.VIEW"/>-->
+        <!--android:name="com.mob.tools.MobUIShell"-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
+        <!--<intent-filter>-->
+        <!--<data android:scheme="tencent1105271711"/>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
 
-                <!--<category android:name="android.intent.category.BROWSABLE"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-            <!--</intent-filter>-->
+        <!--<category android:name="android.intent.category.BROWSABLE"/>-->
+        <!--<category android:name="android.intent.category.DEFAULT"/>-->
+        <!--</intent-filter>-->
         <!--</activity>-->
 
         <!--&lt;!&ndash;二维码扫描窗口注册&ndash;&gt;-->
         <!--<activity-->
-            <!--android:name="com.xys.libzxing.zxing.activity.CaptureActivity"-->
-            <!--android:theme="@style/AppNightTheme">-->
+        <!--android:name="com.xys.libzxing.zxing.activity.CaptureActivity"-->
+        <!--android:theme="@style/AppNightTheme">-->
         <!--</activity>-->
 
         <activity

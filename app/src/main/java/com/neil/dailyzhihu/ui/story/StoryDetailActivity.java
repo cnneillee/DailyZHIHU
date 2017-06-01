@@ -90,25 +90,6 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
 
     @Override
     protected void initEventAndData() {
-//        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//            window.setNavigationBarColor(Color.TRANSPARENT);
-//        }
-//
-//        setContentView(R.layout.activity_story_detail);
-//        ButterKnife.bind(this);
-//
-//        setSupportActionBar(mToolBar);
-//        mToolBar.setNavigationIcon(R.drawable.ic_action_back);
-//        mToolBar.setNavigationOnClickListener(upBtnListener);
         setToolbar(mToolBar, "");
         initObservableViewUIParams();
 
@@ -344,7 +325,9 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         // Show/hide FAB
         if (fabTranslationY < mFlexibleSpaceShowFabOffset) {
             hideFab();
-            mToolBar.setBackgroundColor(getResources().getColor(R.color.ZHIHUBlue));
+            TypedValue typedValue = new TypedValue();
+            mContext.getTheme().resolveAttribute(R.attr.barBgColor, typedValue, true);
+            mToolBar.setBackgroundColor(typedValue.data);
         } else {
             showFab();
             mToolBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
