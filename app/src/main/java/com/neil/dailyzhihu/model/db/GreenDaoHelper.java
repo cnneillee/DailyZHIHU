@@ -36,6 +36,7 @@ public class GreenDaoHelper {
         if (queryStarRecord(record.getStoryId()) != null) {
             Logger.e("Error in insertStarRecord due to EXIST storyId:{}", record.getStoryId());
         } else {
+            record.set_id(null);
             mDaoSession.getStarRecordDao().insert(record);
         }
     }

@@ -12,7 +12,7 @@ import org.greenrobot.greendao.annotation.Property;
 @Entity(nameInDb = "star_record", generateGettersSetters = false)
 public class StarRecord {
     @Id(autoincrement = true)
-    private long _id;
+    private Long _id;
     @Property(nameInDb = "story_id")
     private int storyId;
     @Property(nameInDb = "timestamp")
@@ -23,8 +23,8 @@ public class StarRecord {
         this.timestamp = timestamp;
     }
 
-    @Generated(hash = 1150266931)
-    public StarRecord(long _id, int storyId, long timestamp) {
+    @Generated(hash = 1746535335)
+    public StarRecord(Long _id, int storyId, long timestamp) {
         this._id = _id;
         this.storyId = storyId;
         this.timestamp = timestamp;
@@ -34,11 +34,11 @@ public class StarRecord {
     public StarRecord() {
     }
 
-    public long get_id() {
+    public Long get_id() {
         return _id;
     }
 
-    public void set_id(long _id) {
+    public void set_id(Long _id) {
         this._id = _id;
     }
 
