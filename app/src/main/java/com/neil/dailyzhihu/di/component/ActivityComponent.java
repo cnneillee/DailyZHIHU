@@ -7,6 +7,7 @@ import com.neil.dailyzhihu.di.scope.ActivityScope;
 import com.neil.dailyzhihu.ui.aty.ImageSplashActivity;
 import com.neil.dailyzhihu.ui.column.CertainColumnActivity;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
+import com.neil.dailyzhihu.ui.star.StoryStaredActivity;
 import com.neil.dailyzhihu.ui.story.StoryDetailActivity;
 import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.ui.topic.TopicDetailActivity;
@@ -33,4 +34,6 @@ public interface ActivityComponent {
     void inject(NavTopicsActivity navTopicsActivity);
 
     void inject(StoryDetailActivity storyDetailActivity);
+
+    void inject(StoryStaredActivity storyStaredActivity);
 }

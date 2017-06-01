@@ -1,17 +1,22 @@
 package com.neil.dailyzhihu.model.db;
 
+import com.neil.dailyzhihu.model.bean.IBlockBean;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 作者：Neil on 2017/6/1 13:06.
  * 邮箱：cn.neillee@gmail.com
  */
 @Entity(generateGettersSetters = false, nameInDb = "cached_story")
-public class CachedStory {
+public class CachedStory implements IBlockBean {
     @Id(autoincrement = true)
     private Long _id;
     @Unique
@@ -36,7 +41,7 @@ public class CachedStory {
 
     @Generated(hash = 2001526795)
     public CachedStory(Long _id, int storyId, String title, String body, String image,
-            String imageSource) {
+                       String imageSource) {
         this._id = _id;
         this.storyId = storyId;
         this.title = title;
@@ -67,6 +72,18 @@ public class CachedStory {
 
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public String getDescription() {
+        return title;
+    }
+
+    @Override
+    public List<String> getImages() {
+        List<String> images = new ArrayList<>();
+        images.add(image);
+        return images;
     }
 
     public void setTitle(String title) {

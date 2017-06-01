@@ -9,10 +9,10 @@ import java.util.List;
 public interface IBlockBean {
     public int getStoryId();
 
-    public List<String> getImages();
-
     public String getTitle();
 
     public String getDescription();
+
+    public List<String> getImages();
 
 }

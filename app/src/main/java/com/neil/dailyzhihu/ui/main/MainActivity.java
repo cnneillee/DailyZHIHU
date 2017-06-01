@@ -19,12 +19,13 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.ui.adapter.MainPageFragmentPagerAdapter;
-import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
+import com.neil.dailyzhihu.ui.adapter.MainPageFragmentPagerAdapter;
 import com.neil.dailyzhihu.ui.column.NavColumnsActivity;
 import com.neil.dailyzhihu.ui.setting.SettingActivity;
+import com.neil.dailyzhihu.ui.star.StoryStaredActivity;
 import com.neil.dailyzhihu.ui.topic.NavTopicsActivity;
 import com.neil.dailyzhihu.utils.Settings;
 import com.neil.dailyzhihu.utils.SnackbarUtil;
@@ -128,7 +129,8 @@ public class MainActivity extends NightModeBaseActivity
                 intent = new Intent(this, NavColumnsActivity.class);
                 break;
             case R.id.nav_collection:
-                SnackbarUtil.ShortSnackbar(mContentMain, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+                intent = new Intent(this, StoryStaredActivity.class);
+//                SnackbarUtil.ShortSnackbar(mContentMain, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.nav_setting:
                 intent = new Intent(this, SettingActivity.class);
