@@ -30,5 +30,9 @@ public interface StoryDetailContract {
         void getStoryExtras(int storyId);
 
         void queryStarRecord(int storyId);
+
+        void queryCachedStory(int storyId);
+
+        void cacheCachedStory(CertainStoryBean story);
     }
 }

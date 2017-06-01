@@ -3,6 +3,7 @@ package com.neil.dailyzhihu.presenter;
 import com.neil.dailyzhihu.base.RxPresenter;
 import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
 import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
+import com.neil.dailyzhihu.model.db.CachedStory;
 import com.neil.dailyzhihu.model.db.GreenDaoHelper;
 import com.neil.dailyzhihu.model.db.StarRecord;
 import com.neil.dailyzhihu.model.http.RetrofitHelper;
@@ -65,6 +66,26 @@ public class StoryDetailPresenter extends RxPresenter<StoryDetailContract.View> 
     public void queryStarRecord(int storyId) {
         StarRecord queryRecord = mGreenDaoHelper.queryStarRecord(storyId);
         mView.showStarRecord(queryRecord, queryRecord != null);
+    }
+
+    @Override
+    public void queryCachedStory(int storyId) {
+        CachedStory story = mGreenDaoHelper.queryCachedStory(storyId);
+        if (story == null) getStoryData(storyId);
+        else {
+            CertainStoryBean storyBean = new CertainStoryBean();
+            storyBean.setId(storyId);
+            storyBean.setTitle(story.getTitle());
+            storyBean.setBody(story.getBody());
+            storyBean.setImage(story.getImage());
+            storyBean.setImageSource(story.getImageSource());
+            mView.showContent(storyBean);
+        }
+    }
+
+    @Override
+    public void cacheCachedStory(CertainStoryBean story) {
+        mGreenDaoHelper.cacheCachedStory(story);
     }
 
     @Override

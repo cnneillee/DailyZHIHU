@@ -2,6 +2,7 @@ package com.neil.dailyzhihu.model.db;
 
 import android.content.Context;
 
+import com.neil.dailyzhihu.model.bean.orignal.CertainStoryBean;
 import com.orhanobut.logger.Logger;
 
 import org.greenrobot.greendao.database.Database;
@@ -38,5 +39,30 @@ public class GreenDaoHelper {
 
     public void deleteStarRecord(StarRecord record) {
         mDaoSession.getStarRecordDao().delete(record);
+    }
+
+    public void deleteCachedStory(int storyId) {
+        CachedStory cachedStory = queryCachedStory(storyId);
+        if (cachedStory != null) {
+            mDaoSession.getCachedStoryDao().deleteInTx(cachedStory);
+        }
+    }
+
+    public CachedStory queryCachedStory(int storyId) {
+        return mDaoSession.getCachedStoryDao().queryBuilder()
+                .where(CachedStoryDao.Properties.StoryId.eq(storyId))
+                .build().unique();
+    }
+
+    public void cacheCachedStory(CertainStoryBean story) {
+        CachedStory cachedStory = queryCachedStory(story.getId());
+        if (cachedStory == null || cachedStory.getStoryId() == 0) {
+            mDaoSession.getCachedStoryDao().insert(
+                    new CachedStory(story.getId(),
+                            story.getTitle(), story.getBody(),
+                            story.getImage(), story.getImageSource()));
+        } else {// todo update
+            return;
+        }
     }
 }

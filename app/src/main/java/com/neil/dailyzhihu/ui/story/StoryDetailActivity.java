@@ -87,13 +87,6 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
 
     private static final String LOG_TAG = StoryDetailActivity.class.getSimpleName();
 
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mContext.finish();
-        }
-    };
-
     @Override
     protected void initEventAndData() {
 //        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -121,7 +114,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         if (getIntent().getExtras() == null) return;
         mStoryId = getIntent().getIntExtra(AtyExtraKeyConstant.STORY_ID, 0);
         mDefaultImg = getIntent().getStringExtra(AtyExtraKeyConstant.DEFAULT_IMG_URL);
-        mPresenter.getStoryData(mStoryId);
+        mPresenter.queryCachedStory(mStoryId);
     }
 
     @Override
@@ -148,6 +141,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
 
     @Override
     public void showContent(CertainStoryBean storyBean) {
+        mPresenter.cacheCachedStory(storyBean);
         mStoryTitle = storyBean.getTitle();
         ImageLoaderWrapper loader = LoaderFactory.getImageLoader();
         String imgUrl = storyBean.getImage() == null ? mDefaultImg : storyBean.getImage();
