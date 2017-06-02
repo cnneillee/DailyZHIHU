@@ -16,7 +16,16 @@
 #   public *;
 #}
 
-###-----------基本配置-不能被混淆的------------
+# 系统混淆配置
+-dontusemixedcaseclassnames          #混淆时不使用大小写混合类名
+-dontskipnonpubliclibraryclasses     #不跳过library中的非public的类
+-verbose                             #打印混淆的详细信息
+-dontoptimize                        #不进行优化，建议使用此选项，
+-dontpreverify                       #不进行预校验,Android不需要,可加快混淆速度。
+-ignorewarnings                      #忽略警告
+#-optimizationpasses 5               #指定代码的压缩级别
+
+###------------------------基本配置------------------------
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Application
@@ -26,7 +35,7 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 
-#support.v4/v7包不混淆
+# support.v4/v7包不混淆
 -keep class android.support.** { *; }
 -keep class android.support.v4.** { *; }
 -keep public class * extends android.support.v4.**
@@ -36,11 +45,11 @@
 -keep interface android.support.v7.app.** { *; }
 -dontwarn android.support.**    # 忽略警告
 
-#保持注解继承类不混淆
+# 保持注解继承类不混淆
 -keep class * extends java.lang.annotation.Annotation {*;}
-#保持Serializable实现类不被混淆
+# 保持Serializable实现类不被混淆
 -keepnames class * implements java.io.Serializable
-#保持Serializable不被混淆并且enum 类也不被混淆
+# 保持Serializable不被混淆并且enum 类也不被混淆
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
@@ -49,12 +58,12 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
-#保持枚举enum类不被混淆
+# 保持枚举enum类不被混淆
 -keepclassmembers enum * {
   public static **[] values();
  public static ** valueOf(java.lang.String);
 }
-#自定义组件不被混淆
+# 自定义组件不被混淆
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
@@ -62,13 +71,13 @@
     public void set*(...);
 }
 
-#不混淆资源类
+# 不混淆资源类
 -keepclassmembers class **.R$* {
     public static <fields>;
 }
 
-###-----------第三方jar包library混淆配置------------
-#butterknife
+###------------------------第三方jar包library混淆配置------------------------
+# Butterknife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
@@ -86,15 +95,16 @@
 -keepattributes Signature
 -keepattributes Exceptions
 
-#universalimageloader图片加载框架不混淆
+# universalimageloader图片加载框架不混淆
 -keep class com.nostra13.universalimageloader.** { *; }
 -dontwarn com.nostra13.universalimageloader.**
 
-#Gson相关的不混淆配置
+# Gson相关的不混淆配置
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class com.google.gson.** { *; }
 -dontwarn com.google.gson.**
+-keep class sun.misc.Unsafe { *; }
 -keep class com.neil.dailyzhihu.model.bean.**{ *; }
 -keep class com.neil.dailyzhihu.model.bean.original.**{ *; }
 
@@ -106,56 +116,48 @@
 #-keep class com.google.zxing.** { *; }
 #-keep class com.google.zxing.**
 
-#okhttp
+# Okhttp
 -dontwarn com.squareup.okhttp3.**
 -keep class com.squareup.okhttp3.** { *;}
 -dontwarn okhttp3.logging.**
 -keep class okhttp3.internal.**{*;}
 -dontwarn okio.**
 
-#ormlite混淆配置
-#-libraryjars libs/ormlite-android-5.0.jar
-#-libraryjars libs/ormlite-core-5.0.jar
--dontwarn com.j256.ormlite.**
--keep class com.j256.ormlite.** { *;}
--keep class com.envy15.cherry.base.orm.** { *;}
-
-#json-lib混淆配置
-#-libraryjars libs/json-lib-2.4-jdk15.jar
--dontwarn net.sf.json.**
--keep class net.sf.json.** { *;}
-
-#json-lib关联包
-#-libraryjars libs/commons-beanutils-1.8.3.jar
--dontwarn org.apache.commons.**
--keep class org.apache.commons.** { *;}
-
-#prt-lib下拉刷新框架不混淆
+# prt-lib下拉刷新框架不混淆
 -keep class in.srain.cube.views.ptr.** { *; }
 -dontwarn in.srain.cube.views.ptr.**
 
-#PullToRefreshLibrary下拉刷新框架不混淆
+# PullToRefreshLibrary下拉刷新框架不混淆
 -keep class com.handmark.pulltorefresh.library.** { *; }
 -dontwarn com.handmark.pulltorefresh.library.**
 
-##https://github.com/krschultz/android-proguard-snippets/blob/master/libraries/proguard-square-dagger.pro
+# GreenDAO 3
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+# If you do not use RxJava:
+-dontwarn rx.**
+
+## https://github.com/krschultz/android-proguard-snippets/blob/master/libraries/proguard-square-dagger.pro
 # Dagger ProGuard rules.
 # https://github.com/square/dagger
-
 -dontwarn dagger.internal.codegen.**
 -keepclassmembers,allowobfuscation class * {
     @javax.inject.* *;
     @dagger.* *;
     <init>();
 }
-
 -keep class dagger.* { *; }
 -keep class javax.inject.* { *; }
 -keep class * extends dagger.internal.Binding
 -keep class * extends dagger.internal.ModuleAdapter
 -keep class * extends dagger.internal.StaticInjection
 
-##http://stackoverflow.com/questions/33047806/proguard-duplicate-definition-of-library-class
+# http://stackoverflow.com/questions/33047806/proguard-duplicate-definition-of-library-class
 -dontnote android.net.http.*
 -dontnote org.apache.commons.codec.**
 -dontnote org.apache.http.**
