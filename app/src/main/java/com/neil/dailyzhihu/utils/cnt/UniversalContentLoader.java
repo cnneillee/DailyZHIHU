@@ -3,9 +3,9 @@ package com.neil.dailyzhihu.utils.cnt;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.neil.dailyzhihu.listener.OnContentLoadListener;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                     String networkData = msg.getData().getString(KEY_NETWORK_DATA);
                     String url = msg.getData().getString(KEY_URL);
                     listener.onSuccess(networkData, url);
-                    Log.e(LOG_TAG, "REQUEST_SUCCESS: " + url + "\n" + networkData);
+                    Logger.t(LOG_TAG).i("REQUEST_SUCCESS: " + url + "\n" + networkData);
                     break;
                 case REQUEST_FAIL:
                     break;
@@ -69,7 +69,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                         msg.what = REQUEST_FAIL;
                         msg.setData(deliverBundle);
                         msg.sendToTarget();
-                        Log.e(LOG_TAG, "onFailure: " + contentUrl + "\n" + failureInfo);
+                        Logger.t(LOG_TAG).e("onFailure: " + contentUrl + "\n" + failureInfo);
                     }
 
                     @Override
@@ -78,7 +78,7 @@ public class UniversalContentLoader implements ContentLoaderWrapper {
                             String networkData = response.body().string();
                             msg.what = REQUEST_SUCCESS;
                             deliverBundle.putString(KEY_NETWORK_DATA, networkData);
-                            Log.e(LOG_TAG, response.code() + "SUCCESS —— onResponse: " + contentUrl + "\n" + networkData);
+                            Logger.t(LOG_TAG).i(response.code() + "SUCCESS —— onResponse: " + contentUrl + "\n" + networkData);
                         } else {
                             throw new IOException("Unexpected code " + response);
                         }

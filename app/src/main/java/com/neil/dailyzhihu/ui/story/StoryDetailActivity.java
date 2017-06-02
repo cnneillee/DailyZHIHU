@@ -10,7 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +41,7 @@ import com.neil.dailyzhihu.utils.img.ImageLoaderWrapper;
 import com.neil.dailyzhihu.utils.load.LoaderFactory;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.orhanobut.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -148,7 +148,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         WebSettings webSettings = mWebView.getSettings(); // webView: 类WebView的实例
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);  //就是这句
         mWebView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
-        Log.e("HTML", html);
+        Logger.t(LOG_TAG).d(html);
     }
 
     @Override
@@ -407,7 +407,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
                 Result += line;
                 if (line.contains("<!-- 此处加载内容 -->")) {
                     Result += content;
-                    Log.e(LOG_TAG, line);
+                    Logger.t(LOG_TAG).d(line);
                 }
             }
             return Result;
