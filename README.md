@@ -105,6 +105,6 @@
 [4]: ./screenshot/v1.2.0/group-main.png
 [5]: ./screenshot/v1.2.0/group-topic.png
 [6]: ./screenshot/v1.2.0/group-column.png
-[7]: ./screenshot/v0.2.x/11.png
+[7]: ./screenshot/v1.2.0/1.png
 [8]: ./screenshot/v1.2.0/group-comment.png
-[9]: ./screenshot/v0.2.x/14.png
+[9]: ./screenshot/v1.2.0/2.png
