@@ -3,6 +3,7 @@ package com.neil.dailyzhihu.ui.topic;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -182,7 +183,9 @@ public class TopicDetailActivity extends BaseActivity<TopicDetailPresenter> impl
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.ZHIHUBlue);
+        TypedValue typedValue = new TypedValue();
+        mContext.getTheme().resolveAttribute(R.attr.barBgColor, typedValue, true);
+        int baseColor = typedValue.data;
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
         ViewHelper.setTranslationY(mImageView, -scrollY / 2);
