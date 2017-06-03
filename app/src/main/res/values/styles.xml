@@ -7,6 +7,7 @@
         <!--Android原生属性-->
         <!-- Actionbar Toolbar 三点menu 颜色 -->
         <item name="colorControlNormal">@color/white</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/daytheme_btn_radio_holo_light</item>
         <!-- 浮动菜单背景色 -->
         <item name="android:colorBackground">@color/white</item>
         <!-- 浮动菜单文字颜色 -->
@@ -55,6 +56,7 @@
     <style name="AppNightTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Actionbar Toolbar 三点menu 颜色 -->
         <item name="colorControlNormal">@color/white</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/nighttheme_btn_radio_holo_dark</item>
         <!-- 浮动菜单背景色 -->
         <item name="android:colorBackground">#303030</item>
         <!-- 浮动菜单文字颜色 -->
