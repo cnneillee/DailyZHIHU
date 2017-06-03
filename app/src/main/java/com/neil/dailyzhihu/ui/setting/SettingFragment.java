@@ -1,11 +1,12 @@
 package com.neil.dailyzhihu.ui.setting;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.neil.dailyzhihu.Constant;
@@ -31,9 +32,9 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     private ListPreference mSetSplash;
     private ListPreference mSetLanguage;
     private Preference mSwitchTheme;
-    private CheckBoxPreference mDayNightMode;
-    private CheckBoxPreference mExitWithEnsuring;
-    private CheckBoxPreference mNoImageMode;
+    private SwitchPreference mDayNightMode;
+    private SwitchPreference mExitWithEnsuring;
+    private SwitchPreference mNoImageMode;
     private Preference mClearCache;
 
     private String SET_SPLASH = "key_set_splash";
@@ -59,12 +60,13 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mSetSplash = (ListPreference) findPreference(SET_SPLASH);
         mSetLanguage = (ListPreference) findPreference(SET_LANGUAE);
         mSwitchTheme = findPreference(SWITCH_THEME);
-        mDayNightMode = (CheckBoxPreference) findPreference(DAY_NIGHT_MODE);
-        mExitWithEnsuring = (CheckBoxPreference) findPreference(EXIT_WITH_ENSURING);
-        mNoImageMode = (CheckBoxPreference) findPreference(NO_IMAGE_MODE);
+        mDayNightMode = (SwitchPreference) findPreference(DAY_NIGHT_MODE);
+        mExitWithEnsuring = (SwitchPreference) findPreference(EXIT_WITH_ENSURING);
+        mNoImageMode = (SwitchPreference) findPreference(NO_IMAGE_MODE);
         mClearCache = findPreference(CLEAR_CACHE);
 
         mSetSplash.setDialogTitle(getString(R.string.setting_splash_dialog_title));
+        AlertDialog dialog = (AlertDialog) mSetSplash.getDialog();
         mSetSplash.setOnPreferenceChangeListener(this);
         mSetLanguage.setOnPreferenceChangeListener(this);
         mSwitchTheme.setOnPreferenceClickListener(this);

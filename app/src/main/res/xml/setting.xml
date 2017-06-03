@@ -19,7 +19,7 @@
             android:layout="@layout/preference_custom"
             android:summary="@string/set_language_summary"
             android:title="@string/set_language_title"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="key_exit_with_ensuring"
             android:layout="@layout/preference_custom"
             android:summary="@string/exit_with_ensuring_summary"
@@ -31,14 +31,14 @@
             android:layout="@layout/preference_custom"
             android:summary="@string/switch_theme_summary"
             android:title="@string/switch_theme_title"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="key_day_night_mode"
             android:layout="@layout/preference_custom"
             android:summary="@string/day_night_mode_summary"
             android:title="@string/day_night_mode_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_group_network">
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="key_no_image_mode"
             android:layout="@layout/preference_custom"
             android:summary="@string/no_image_mode_summary"
