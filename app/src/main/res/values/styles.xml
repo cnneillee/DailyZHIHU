@@ -52,7 +52,7 @@
         <item name="commentAvatar">@drawable/ic_comment_avatar</item>
     </style>
 
-    <style name="AppNightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppNightTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Actionbar Toolbar 三点menu 颜色 -->
         <item name="colorControlNormal">@color/white</item>
         <!-- 浮动菜单背景色 -->
