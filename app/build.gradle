@@ -1,6 +1,27 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.greenrobot.greendao'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+def static getApiKey() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('fabric.properties')))
+    return props['apiKey']
+}
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -17,6 +38,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [fabric_api_key: getApiKey()]
         }
         release {
             minifyEnabled true
@@ -24,6 +46,7 @@ android {
 
             // 移除无用的resource文件
             shrinkResources true
+            manifestPlaceholders = [fabric_api_key: getApiKey()]
         }
     }
     lintOptions{
@@ -77,6 +100,10 @@ android {
 
         // db
         compile 'org.greenrobot:greendao:3.2.2'
+
+        compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
+            transitive = true;
+        }
     }
 }
 

@@ -30,6 +30,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppDayTheme">
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="${fabric_api_key}"/>
 
         <!--Splash界面-->
         <activity

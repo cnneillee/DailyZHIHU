@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.neil.dailyzhihu.di.component.AppComponent;
 import com.neil.dailyzhihu.di.component.DaggerAppComponent;
 import com.neil.dailyzhihu.di.module.AppModule;
@@ -15,6 +16,8 @@ import com.neil.dailyzhihu.utils.img.UniversalAndroidImageLoader;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * 作者：Neil on 2016/4/15 23:52.
@@ -45,6 +48,7 @@ public class DailyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mInstance = this;
 
         //初始化屏幕宽高
