@@ -121,6 +121,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="set_language_dialog">语言</string>
     <string name="set_splash_src_summary">不显示（默认）</string>
     <string name="set_splash_src_title">Splash 设置</string>
+    <string name="setting_splash_dialog_title">开屏图源选择</string>
     <string name="set_language_summary">中文</string>
     <string name="set_language_title">语言设置</string>
     <string name="switch_theme_summary">目前提供3种主题</string>

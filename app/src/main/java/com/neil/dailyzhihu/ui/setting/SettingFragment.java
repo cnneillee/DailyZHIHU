@@ -64,6 +64,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mNoImageMode = (CheckBoxPreference) findPreference(NO_IMAGE_MODE);
         mClearCache = findPreference(CLEAR_CACHE);
 
+        mSetSplash.setDialogTitle(getString(R.string.setting_splash_dialog_title));
         mSetSplash.setOnPreferenceChangeListener(this);
         mSetLanguage.setOnPreferenceChangeListener(this);
         mSwitchTheme.setOnPreferenceClickListener(this);
