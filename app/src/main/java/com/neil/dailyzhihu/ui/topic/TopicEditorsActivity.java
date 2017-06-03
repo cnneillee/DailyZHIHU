@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.BaseSimpleActivity;
 import com.neil.dailyzhihu.model.bean.orignal.TopicStoryListBean;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.adapter.TopicEditorListAdapter;
@@ -27,28 +27,21 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class TopicEditorsActivity extends NightModeBaseActivity implements AdapterView.OnItemClickListener {
+public class TopicEditorsActivity extends BaseSimpleActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.lv_editors)
     ListView mLvEditors;
 
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
-        }
-    };
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_topic_editors;
+    }
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_topic_editors);
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
+        setupToolbar(mToolbar);
         getExtras();
     }
 

@@ -2,7 +2,10 @@ package com.neil.dailyzhihu.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
@@ -14,10 +17,9 @@ import com.neil.dailyzhihu.utils.Settings;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public abstract class NightModeBaseActivity extends AppCompatActivity {
+public abstract class BaseSimpleActivity extends AppCompatActivity {
 
     public Settings mSettings = Settings.getInstance();
-    private int mLang = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,38 +37,48 @@ public abstract class NightModeBaseActivity extends AppCompatActivity {
             AppUtil.setSysScreenBrightness(Constant.DAY_BRIGHTNESS);
         }
 
-        if (Settings.isNightMode) {
-            this.setTheme(R.style.AppNightTheme);
-        } else {
-            this.setTheme(R.style.AppDayTheme);
-        }
+        // theme
+        this.setTheme(Settings.isNightMode ? R.style.AppNightTheme : R.style.AppDayTheme);
 
         // Language
-        mLang = AppUtil.getCurrentLanguage();
-        if (mLang > -1) {
-            AppUtil.changeLanguage(this, mLang);
-        }
+        int lang = AppUtil.getCurrentLanguage();
+        if (lang > -1) AppUtil.changeLanguage(this, lang);
+
+        setContentView(getLayoutID());
         initViews();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (Settings.needRecreate) {
-            Settings.needRecreate = false;
-            this.recreate();
-        }
-    }
+    protected abstract int getLayoutID();
 
     protected abstract void initViews();
+
+    protected void setupToolbar(Toolbar toolbar) {
+        setupToolbar(toolbar, "");
+    }
+
+    protected void setupToolbar(Toolbar toolbar, String title) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(title != null);
+        if (title != null) actionBar.setTitle(title.equals("") ? getTitle() : title);
+    }
+
+    protected void setupToolbar(Toolbar toolbar, int titleId) {
+        setupToolbar(toolbar, getString(titleId));
+    }
 
     protected void changeNightMode() {
         Settings.isNightMode = !Settings.isNightMode;
         mSettings.putBoolean(Settings.NIGHT_MODE, Settings.isNightMode);
-        this.recreate();
-    }
-
-    protected void changeLanguage() {
         this.recreate();
     }
 

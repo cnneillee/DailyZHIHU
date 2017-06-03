@@ -3,13 +3,12 @@ package com.neil.dailyzhihu.ui.aty;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.BaseSimpleActivity;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 
 import butterknife.BindView;
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class WebViewActivity extends NightModeBaseActivity {
+public class WebViewActivity extends BaseSimpleActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.webview)
@@ -28,21 +27,18 @@ public class WebViewActivity extends NightModeBaseActivity {
 
     private String mUrl;
 
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
-        }
-    };
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_webview;
+    }
 
     @Override
     protected void initViews() {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
+        setupToolbar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
 
         getExtras();
         setContent();
@@ -67,6 +63,5 @@ public class WebViewActivity extends NightModeBaseActivity {
     @Override
     public void onBackPressed() {
         this.finish();
-        super.onBackPressed();
     }
 }

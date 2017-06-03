@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhihu.Constant;
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.BaseSimpleActivity;
 import com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant;
 import com.neil.dailyzhihu.ui.about.AboutActivity;
 import com.neil.dailyzhihu.ui.adapter.MainPageFragmentPagerAdapter;
@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 /**
  * MainActivity
  */
-public class MainActivity extends NightModeBaseActivity
+public class MainActivity extends BaseSimpleActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -60,10 +60,14 @@ public class MainActivity extends NightModeBaseActivity
     private Settings mSettings = Settings.getInstance();
     private long lastPressTime = 0;
 
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_main;
+    }
+
     protected void initViews() {
-        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
+        setupToolbar(mToolbar);
 
         String tabsTitleArray[] = {getResources().getString(R.string.tab_latest), getResources()
                 .getString(R.string.tab_hot), getResources().getString(R.string.tab_past)};
@@ -100,6 +104,15 @@ public class MainActivity extends NightModeBaseActivity
         name.setOnClickListener(this);
         TextView email = (TextView) header.findViewById(R.id.tv_email);
         email.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Settings.needRecreate) {
+            Settings.needRecreate = false;
+            this.recreate();
+        }
     }
 
     @Override

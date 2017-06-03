@@ -6,7 +6,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.neil.dailyzhihu.Constant;
@@ -66,7 +65,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mClearCache = findPreference(CLEAR_CACHE);
 
         mSetSplash.setDialogTitle(getString(R.string.setting_splash_dialog_title));
-        AlertDialog dialog = (AlertDialog) mSetSplash.getDialog();
         mSetSplash.setOnPreferenceChangeListener(this);
         mSetLanguage.setOnPreferenceChangeListener(this);
         mSwitchTheme.setOnPreferenceClickListener(this);

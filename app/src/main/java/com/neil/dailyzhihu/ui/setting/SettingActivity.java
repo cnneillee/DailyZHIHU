@@ -1,10 +1,9 @@
 package com.neil.dailyzhihu.ui.setting;
 
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.BaseSimpleActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,26 +13,20 @@ import butterknife.ButterKnife;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class SettingActivity extends NightModeBaseActivity {
+public class SettingActivity extends BaseSimpleActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
-        }
-    };
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_setting;
+    }
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
+        setupToolbar(mToolbar, R.string.activity_setting);
 
         getFragmentManager().beginTransaction().replace(R.id.fl_setting_fragment, new SettingFragment()).commit();
     }
@@ -49,7 +42,7 @@ public class SettingActivity extends NightModeBaseActivity {
     }
 
     public void callChangeLanguage() {
-        this.changeLanguage();
+        this.recreate();
         this.changeNeedRecreated();
     }
 

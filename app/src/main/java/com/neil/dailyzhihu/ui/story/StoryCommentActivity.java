@@ -6,10 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.neil.dailyzhihu.R;
-import com.neil.dailyzhihu.base.NightModeBaseActivity;
+import com.neil.dailyzhihu.base.BaseSimpleActivity;
 import com.neil.dailyzhihu.model.bean.orignal.StoryExtraInfoBean;
 import com.neil.dailyzhihu.utils.GsonDecoder;
 
@@ -28,7 +27,7 @@ import static com.neil.dailyzhihu.model.http.api.AtyExtraKeyConstant.STORY_ID;
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class StoryCommentActivity extends NightModeBaseActivity {
+public class StoryCommentActivity extends BaseSimpleActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tabs)
@@ -36,30 +35,30 @@ public class StoryCommentActivity extends NightModeBaseActivity {
     @BindView(R.id.vp_comment)
     ViewPager mViewPager;
 
-    private String[] mPagerTitle;
     private List<Fragment> mFragmentList;
 
-    private View.OnClickListener upBtnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            StoryCommentActivity.this.finish();
-        }
-    };
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_story_comment;
+    }
 
     @Override
     protected void initViews() {
-        setContentView(R.layout.activity_story_comment);
         ButterKnife.bind(this);
 
         Bundle bundle = getIntent().getExtras();
         int storyId = bundle.getInt(STORY_ID, -1);
         String storyExtra = bundle.getString(STORY_EXTRAS);
 
-        setSupportActionBar(mToolbar);
+        setupToolbar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
-        mToolbar.setNavigationOnClickListener(upBtnListener);
 
         if (storyExtra != null) initFragmentPager(storyId, storyExtra);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
     }
 
     private void initFragmentPager(int storyId, String storyExtra) {
