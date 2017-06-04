@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DailyZHIHU</string>
+    <string name="app_name">吱啾</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,7 +14,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="action_settings">设置</string>
     <string name="action_text_qrcode">二维码</string>
     <!--关于界面-->
-    <string name="copyright_info">Copyright © 2015–2016 Neil Lee\nAll Rights Reserved</string>
+    <string name="copyright_info">Copyright © 2015–2017 Neil Lee\nAll Rights Reserved</string>
 
     <!--主界面-->
     <string name="tab_latest">最新</string>
@@ -26,7 +26,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="nav_topics">主题日报</string>
     <string name="nav_columns">栏目纵览</string>
     <string name="nav_collection">收藏</string>
-    <string name="daily_zhihu">Daily Zhihu</string>
+    <string name="daily_zhijiu">吱吱啾啾</string>
     <string name="nav_night">夜间模式</string>
     <string name="nav_setting">设置</string>
     <string name="nav_about">关于</string>
@@ -82,7 +82,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="versioninfo_title">版本信息</string>
     <string name="shareapp_title">分享应用</string>
     <string name="shareapp_sumary">好的东西值得被分享</string>
-    <string name="shareapp_content">DailyZHIHU，一款基于知乎日报内容的第三方应用\n下载地址：https://github.com/neilleecn/DailyZHIHU</string>
+    <string name="shareapp_content">吱啾，一款基于知乎日报内容的第三方应用\n下载地址：https://github.com/neilleecn/DailyZHIHU</string>
     <string name="author">作者</string>
     <string name="blog_title">博客</string>
     <string name="blog_summary">http://cnneillee.github.io/</string>
@@ -131,9 +131,9 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="exit_with_ensuring_summary">按两次返回键退出应用</string>
     <string name="exit_with_ensuring_title">退出确认</string>
     <string name="setting_group_network">网络</string>
-    <string name="no_image_mode_summary">仅在WiFi下加载图片</string>
+    <string name="no_image_mode_summary">仅在 WiFi 下加载图片</string>
     <string name="no_image_mode_title">无图模式</string>
-    <string name="clear_cache_summary">清除DailyZHIHU的缓存</string>
+    <string name="clear_cache_summary">清除『吱啾』的缓存</string>
     <string name="clear_cache_title">清除缓存</string>
 
     <string name="jump_now">立即体验</string>

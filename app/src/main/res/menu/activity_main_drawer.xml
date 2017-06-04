@@ -18,7 +18,7 @@
             android:icon="@drawable/ic_nav_collection"
             android:title="@string/nav_collection"/>
     </group>
-    <item android:title="@string/daily_zhihu">
+    <item android:title="@string/daily_zhijiu">
         <menu>
             <item
                 android:id="@+id/nav_night"

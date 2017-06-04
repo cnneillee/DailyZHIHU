@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DailyZHIHU</string>
+    <string name="app_name">DailyZHIJIU</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -26,7 +26,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="nav_topics">Topics</string>
     <string name="nav_columns">Columns</string>
     <string name="nav_collection">Collections</string>
-    <string name="daily_zhihu">Daily Zhihu</string>
+    <string name="daily_zhijiu">ZhiZhi JiuJiu</string>
     <string name="nav_night">Night Mode</string>
     <string name="nav_setting">Settings</string>
     <string name="nav_about">About</string>
@@ -83,7 +83,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="versioninfo_title">Version Info</string>
     <string name="shareapp_title">Share App</string>
     <string name="shareapp_sumary">Good app worth to spreading.</string>
-    <string name="shareapp_content">DailyZHIHU, A third party app based on the content of ZhihuDaily.\nDownload URL: https://github.com/neilleecn/DailyZHIHU</string>
+    <string name="shareapp_content">DailyZHIJIU, A third party app based on the content of ZhihuDaily.\nDownload URL: https://github.com/neilleecn/DailyZHIHU</string>
     <string name="author">Author</string>
     <string name="blog_title">Blog</string>
     <string name="blog_summary">http://cnneillee.github.io/</string>
@@ -134,7 +134,7 @@ Quam libero nulla netus eu porta curae, ut nulla bibendum facilisis et urna sed,
     <string name="setting_group_network">Network</string>
     <string name="no_image_mode_summary">Loading pic only on WiFi condition</string>
     <string name="no_image_mode_title">No pic mode</string>
-    <string name="clear_cache_summary">Clear DailyZHIHU cache</string>
+    <string name="clear_cache_summary">Clear DailyZHIJIU cache</string>
     <string name="clear_cache_title">Clear Cache</string>
 
     <string name="jump_now">Experience Now!</string>
