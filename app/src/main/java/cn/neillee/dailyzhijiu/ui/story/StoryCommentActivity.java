@@ -79,8 +79,8 @@ public class StoryCommentActivity extends BaseSimpleActivity {
         mFragmentList.add(shortFragment);
 
         StoryExtraInfoBean bean = GsonDecoder.getDecoder().decoding(storyExtra, StoryExtraInfoBean.class);
-        final String longCommentTitle = getResources().getString(R.string.long_comment) + "(" + bean.getLongComments() + ")";
-        final String shortCommentTitle = getResources().getString(R.string.short_comment) + "(" + bean.getShortComments() + ")";
+        final String longCommentTitle = getResources().getString(R.string.comment_long_comment) + "(" + bean.getLongComments() + ")";
+        final String shortCommentTitle = getResources().getString(R.string.comment_short_comment) + "(" + bean.getShortComments() + ")";
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

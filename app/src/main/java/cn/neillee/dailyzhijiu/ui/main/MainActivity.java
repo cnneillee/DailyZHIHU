@@ -122,7 +122,7 @@ public class MainActivity extends BaseSimpleActivity
             case R.id.iv_avatar:
             case R.id.tv_name:
             case R.id.tv_email:
-                SnackbarUtil.ShortSnackbar(mDrawerLayout, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+                SnackbarUtil.ShortSnackbar(mDrawerLayout, getResources().getString(R.string.notify_to_do), SnackbarUtil.Confirm).show();
                 break;
         }
     }

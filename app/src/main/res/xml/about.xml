@@ -4,62 +4,62 @@
         <Preference
             android:key="key_app_intro"
             android:layout="@layout/preference_custom"
-            android:summary="@string/intro_summary"
-            android:title="@string/intro_title"/>
+            android:summary="@string/about_intro_summary"
+            android:title="@string/about_intro_title"/>
         <Preference
             android:key="key_checkupdate"
             android:layout="@layout/preference_custom"
-            android:summary="@string/checkupdate_summary"
-            android:title="@string/checkupdate_title"/>
+            android:summary="@string/about_checkupdate_summary"
+            android:title="@string/about_checkupdate_title"/>
         <Preference
             android:key="key_versioninfo"
             android:layout="@layout/preference_custom"
-            android:title="@string/versioninfo_title"/>
+            android:title="@string/about_versioninfo_title"/>
         <Preference
             android:key="key_feedback"
             android:layout="@layout/preference_custom"
-            android:summary="@string/feedback_summary"
-            android:title="@string/feedback_title"/>
+            android:summary="@string/about_feedback_summary"
+            android:title="@string/about_feedback_title"/>
         <Preference
             android:key="key_shareapp"
             android:layout="@layout/preference_custom"
-            android:summary="@string/shareapp_sumary"
-            android:title="@string/shareapp_title"/>
+            android:summary="@string/about_shareapp_summary"
+            android:title="@string/about_shareapp_title"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/author">
+    <PreferenceCategory android:title="@string/about_group_author">
         <Preference
             android:key="key_blog"
             android:layout="@layout/preference_custom"
-            android:summary="@string/blog_summary"
-            android:title="@string/blog_title"/>
+            android:summary="@string/about_blog_summary"
+            android:title="@string/about_blog_title"/>
         <Preference
             android:key="key_github"
             android:layout="@layout/preference_custom"
-            android:summary="@string/github_address"
-            android:title="@string/github_address_title"/>
+            android:summary="@string/about_github_address"
+            android:title="@string/about_github_address_title"/>
         <Preference
             android:key="key_email"
             android:layout="@layout/preference_custom"
-            android:summary="@string/email_address"
-            android:title="@string/email"/>
+            android:summary="@string/about_email_address"
+            android:title="@string/about_email"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Copyright">
+    <PreferenceCategory android:title="@string/about_group_copyright">
         <Preference
             android:layout="@layout/preference_custom"
-            android:summary="@string/data_summary"
-            android:title="@string/data_title"/>
+            android:summary="@string/about_data_summary"
+            android:title="@string/about_data_title"/>
         <Preference
             android:layout="@layout/preference_custom"
-            android:summary="@string/attention_content"
-            android:title="@string/attention_title"/>
+            android:summary="@string/about_attention_summary"
+            android:title="@string/about_attention_title"/>
         <Preference
             android:key="key_opensource_license"
             android:layout="@layout/preference_custom"
-            android:title="@string/opensource_title"/>
+            android:title="@string/about_opensource_title"/>
         <Preference
             android:layout="@layout/preference_custom"
-            android:summary="@string/MIT_license"
-            android:title="@string/license_title"/>
+            android:summary="@string/about_MIT_license"
+            android:title="@string/about_license_title"/>
         <PreferenceScreen
             android:layout="@layout/bar_copyright">
         </PreferenceScreen>

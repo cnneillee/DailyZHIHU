@@ -89,7 +89,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     public boolean onPreferenceClick(Preference preference) {
         View view = getView();
         if (mSwitchTheme == preference) {
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_to_do), SnackbarUtil.Confirm).show();
         } else if (mDayNightMode == preference) {
             mContext.callChangeNightMode();
         } else if (mExitWithEnsuring == preference) {

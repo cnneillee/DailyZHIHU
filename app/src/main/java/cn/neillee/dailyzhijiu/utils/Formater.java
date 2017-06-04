@@ -43,14 +43,14 @@ public class Formater {
     }
 
     public static String fromatUpdateVersionInfo(Context context, String versionName, int versionCode) {
-        return context.getResources().getString(R.string.version) +": "+ versionName + "(" + versionCode + ")";
+        return context.getResources().getString(R.string.updating_version) +": "+ versionName + "(" + versionCode + ")";
     }
 
     public static String fromatUpdatePgSize(Context context, String size) {
-        return context.getResources().getString(R.string.update_pkg_size) + ": " + size;
+        return context.getResources().getString(R.string.updating_update_pkg_size) + ": " + size;
     }
 
     public static String fromatOneDayOnPicInfo(Context context, String name) {
-        return context.getResources().getString(R.string.one_pic_per_day) + " · " + name;
+        return context.getResources().getString(R.string.splash_one_pic_per_day) + " · " + name;
     }
 }

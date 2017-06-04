@@ -177,13 +177,13 @@ public class PastFragment extends BaseFragment<MainFragmentPresenter> implements
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(getResources().getString(R.string.prompt))
                             .setMessage(getResources().getString(R.string.cache_past_news_msg))
-                            .setPositiveButton(getResources().getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getResources().getString(R.string.prompt_confirm), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     mMCV.setVisibility(View.VISIBLE);
                                     mBtnLoadSetting.setText(getResources().getString(R.string.hide_cache_setting));
                                 }
-                            }).setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            }).setNegativeButton(getResources().getString(R.string.prompt_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

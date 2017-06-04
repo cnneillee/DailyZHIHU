@@ -52,7 +52,7 @@ public class AppUtil {
             PackageInfo pkginfo = context.getPackageManager().getPackageInfo(((Activity) context).getApplication().getPackageName(), 0);
             versionCode = Formater.fromatUpdateVersionInfo(context, pkginfo.versionName, pkginfo.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
-            versionCode = context.getResources().getString(R.string.error_in_getting_version_info);
+            versionCode = context.getResources().getString(R.string.updating_error_in_getting_version_info);
             e.printStackTrace();
         }
         return versionCode;

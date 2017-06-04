@@ -108,7 +108,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.VERSION_INFO);
             startActivity(intent);
         } else if (mShareApp == preference) {
-            AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.shareapp_content));
+            AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.about_shareapp_content));
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
         } else if (mFeedback == preference) {
             Intent mail = new Intent(Intent.ACTION_SENDTO);
@@ -120,17 +120,17 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         } else if (mBlog == preference) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
-            Uri content_url = Uri.parse(getString(R.string.blog_summary));
+            Uri content_url = Uri.parse(getString(R.string.about_blog_summary));
             intent.setData(content_url);
             startActivity(intent);
         } else if (mGithub == preference) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
-            Uri content_url = Uri.parse(getString(R.string.github_address));
+            Uri content_url = Uri.parse(getString(R.string.about_github_address));
             intent.setData(content_url);
             startActivity(intent);
         } else if (mEmail == preference) {
-            AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.email_address));
+            AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.about_email_address));
             SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
         } else if (mOpensourceLicense == preference) {
             Intent intent = new Intent(mContext, WebViewActivity.class);
@@ -148,7 +148,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
                 if (versionCode > AppUtil.getVersionCode(mContext)) {
                     showUpdateDialog(updateInfo);
                 } else {
-                    SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.is_updated), SnackbarUtil.Info).show();
+                    SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.updating_is_updated), SnackbarUtil.Info).show();
                     canUpdate = true;
                 }
             }
@@ -175,8 +175,8 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         TextView tvDesc = (TextView) contentView.findViewById(R.id.tv_update_info);
         tvDesc.setText(desc);
 
-        new AlertDialog.Builder(mContext).setTitle(getResources().getString(R.string.get_updates))
-                .setPositiveButton(getResources().getString(R.string.update_now),
+        new AlertDialog.Builder(mContext).setTitle(getResources().getString(R.string.updating_get_updates))
+                .setPositiveButton(getResources().getString(R.string.updating_update_now),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -186,7 +186,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
                                 startActivity(intent);
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.update_later),
+                .setNegativeButton(getResources().getString(R.string.updating_update_later),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

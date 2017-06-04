@@ -242,7 +242,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         switch (item.getItemId()) {
             case R.id.menu_item_action_text_size:
                 //TODO 设置字体大小
-                SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.to_do), SnackbarUtil.Confirm).show();
+                SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.notify_to_do), SnackbarUtil.Confirm).show();
                 break;
             case R.id.menu_item_action_comment:
                 Intent intent = new Intent(mContext, StoryCommentActivity.class);

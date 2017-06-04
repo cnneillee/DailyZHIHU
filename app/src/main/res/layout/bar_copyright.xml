@@ -15,5 +15,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="?attr/supportDescColor"
-        android:text="@string/copyright_info"/>
+        android:text="@string/about_copyright_info"/>
 </LinearLayout>
