@@ -84,10 +84,12 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mNoImageMode.setChecked(Settings.noPicMode);
         int splashSetting = mContext.mSettings.getInt(Settings.SPLASH_SETTING, 0);
         mSetSplash.setSummary(mSplashEntries[splashSetting]);
+        mSetSplash.setValueIndex(splashSetting);
         mCacheFile = new File(Constant.PATH_CACHE);
         mClearCache.setSummary(ACache.getCacheSize(mCacheFile));
         int languageSetting = mContext.mSettings.getInt(Settings.LANGUAGE, 1);
         mSetLanguage.setSummary(mLanguageEntries[languageSetting]);
+        mSetLanguage.setValueIndex(languageSetting);
     }
 
     @Override
