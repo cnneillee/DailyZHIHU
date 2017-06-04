@@ -17,8 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cn.neillee.dailyzhijiu.Constant;
 import com.neil.dailyzhijiu.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.neillee.dailyzhijiu.Constant;
 import cn.neillee.dailyzhijiu.base.BaseSimpleActivity;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;
 import cn.neillee.dailyzhijiu.ui.about.AboutActivity;
@@ -29,12 +35,6 @@ import cn.neillee.dailyzhijiu.ui.star.StoryStaredActivity;
 import cn.neillee.dailyzhijiu.ui.topic.NavTopicsActivity;
 import cn.neillee.dailyzhijiu.utils.Settings;
 import cn.neillee.dailyzhijiu.utils.SnackbarUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * MainActivity
@@ -67,7 +67,7 @@ public class MainActivity extends BaseSimpleActivity
 
     protected void initViews() {
         ButterKnife.bind(this);
-        setupToolbar(mToolbar);
+        setupToolbar(mToolbar, R.string.activity_main);
 
         String tabsTitleArray[] = {getResources().getString(R.string.tab_latest), getResources()
                 .getString(R.string.tab_hot), getResources().getString(R.string.tab_past)};

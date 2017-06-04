@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">吱啾</string>
     <!--activity名-->
+    <string name="activity_main">吱啾</string>
     <string name="activity_topics">主题日报</string>
     <string name="activity_columns">栏目纵览</string>
     <string name="activity_about">关于</string>
@@ -23,7 +24,7 @@
     <string name="cache_setting">缓存设置</string>
     <string name="cache_past_news_msg">即将出现新闻日历表，点击日历项，即可缓存当天新闻列表及新闻内容。</string>
     <string name="share_qr_code">二维码分享</string>
-    <string name="share_to">分享到...</string>
+    <string name="share_to">分享到…</string>
     <string name="jump_now">立即体验</string>
     <string name="stared_empty">收藏为空</string>
 

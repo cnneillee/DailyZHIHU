@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">DailyZHIJIU</string>
     <!--activity名-->
+    <string name="activity_main">DailyZHIJIU</string>
     <string name="activity_topics">Topics</string>
     <string name="activity_columns">Columns</string>
     <string name="activity_about">About</string>
@@ -23,7 +24,7 @@
     <string name="cache_setting">Cache setting</string>
     <string name="cache_past_news_msg">News calendar is showing! Click the calendar to cache news list and contents of selected day.</string>
     <string name="share_qr_code">Share qr Code</string>
-    <string name="share_to">Share to...</string>
+    <string name="share_to">Share to…</string>
     <string name="jump_now">Experience Now!</string>
     <string name="stared_empty">empty_stared</string>
 
