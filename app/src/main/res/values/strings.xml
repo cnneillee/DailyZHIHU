@@ -71,6 +71,7 @@
     <string name="nav_collection">收藏</string>
     <string name="daily_zhijiu">吱吱啾啾</string>
     <string name="nav_night">夜间模式</string>
+    <string name="nav_day">日间模式</string>
     <string name="nav_setting">设置</string>
     <string name="nav_about">关于</string>
 
@@ -128,8 +129,10 @@
     <string name="setting_group_theme">主题</string>
     <string name="setting_switch_theme_title">主题切换</string>
     <string name="setting_switch_theme_summary">目前提供3种主题</string>
-    <string name="setting_day_night_mode_title">夜间模式</string>
-    <string name="setting_day_night_mode_summary">适于夜间阅读</string>
+    <string name="setting_night_mode_title">夜间模式</string>
+    <string name="setting_night_mode_summary">适于夜间阅读</string>
+    <string name="setting_day_mode_title">日间模式</string>
+    <string name="setting_day_mode_summary">适于日间阅读</string>
 
     <string name="setting_group_network">网络</string>
     <string name="setting_no_image_mode_title">无图模式</string>

@@ -97,6 +97,11 @@ public class MainActivity extends BaseSimpleActivity
         mNavView.setCheckedItem(R.id.nav_mainpage);
         mNavView.setItemIconTintList(null);
 
+        // day night mode setting
+        mNavView.getMenu().findItem(R.id.nav_night)
+                .setIcon(Settings.isNightMode ? R.drawable.ic_nav_day : R.drawable.ic_nav_night)
+                .setTitle(Settings.isNightMode ? R.string.nav_day : R.string.nav_night);
+
         LinearLayout header = (LinearLayout) navigationView.getHeaderView(0);
         ImageView avatar = (ImageView) header.findViewById(R.id.iv_avatar);
         avatar.setOnClickListener(this);
@@ -149,9 +154,7 @@ public class MainActivity extends BaseSimpleActivity
                 intent = new Intent(this, SettingActivity.class);
                 break;
             case R.id.nav_night:
-                Settings.isNightMode = !Settings.isNightMode;
-                mSettings.putBoolean(Settings.NIGHT_MODE, Settings.isNightMode);
-                MainActivity.this.recreate();
+                changeNightMode();
                 break;
             case R.id.nav_about:
                 intent = new Intent(this, AboutActivity.class);

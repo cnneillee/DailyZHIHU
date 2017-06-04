@@ -71,6 +71,7 @@
     <string name="nav_collection">Collections</string>
     <string name="daily_zhijiu">ZhiZhi JiuJiu</string>
     <string name="nav_night">Night Mode</string>
+    <string name="nav_day">Day Mode</string>
     <string name="nav_setting">Settings</string>
     <string name="nav_about">About</string>
 
@@ -128,8 +129,10 @@
     <string name="setting_group_theme">Themes</string>
     <string name="setting_switch_theme_title">Switch Theme</string>
     <string name="setting_switch_theme_summary">3 available themes to choose</string>
-    <string name="setting_day_night_mode_title">Night Mode</string>
-    <string name="setting_day_night_mode_summary">Fit to read at night</string>
+    <string name="setting_night_mode_title">Night Mode</string>
+    <string name="setting_night_mode_summary">Fit to read at night</string>
+    <string name="setting_day_mode_title">Day Mode</string>
+    <string name="setting_day_mode_summary">Fit to read at day</string>
 
     <string name="setting_group_network">Network</string>
     <string name="setting_no_image_mode_title">No pic mode</string>

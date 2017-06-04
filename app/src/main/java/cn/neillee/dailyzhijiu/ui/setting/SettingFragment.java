@@ -75,6 +75,10 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         mClearCache.setOnPreferenceClickListener(this);
 
         // init preference state
+        mDayNightMode.setTitle(Settings.isNightMode ?
+                R.string.setting_day_mode_title : R.string.setting_night_mode_title);
+        mDayNightMode.setSummary(Settings.isNightMode ?
+                R.string.setting_day_mode_summary : R.string.setting_night_mode_summary);
         mDayNightMode.setChecked(Settings.isNightMode);
         mExitWithEnsuring.setChecked(Settings.isExitConfirm);
         mNoImageMode.setChecked(Settings.noPicMode);
@@ -93,6 +97,10 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
             SnackbarUtil.ShortSnackbarWithTheme(mContext, view, getResources().getString(R.string.notify_to_do)).show();
         } else if (mDayNightMode == preference) {
             mContext.callChangeNightMode();
+            preference.setTitle(Settings.isNightMode ?
+                    R.string.setting_day_mode_title : R.string.setting_night_mode_title);
+            preference.setSummary(Settings.isNightMode ?
+                    R.string.setting_day_mode_summary : R.string.setting_night_mode_summary);
         } else if (mExitWithEnsuring == preference) {
             mContext.callChangeExitConfirm();
         } else if (mNoImageMode == preference) {

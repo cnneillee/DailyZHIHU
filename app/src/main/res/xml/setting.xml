@@ -34,8 +34,8 @@
         <SwitchPreference
             android:key="key_day_night_mode"
             android:layout="@layout/preference_custom"
-            android:summary="@string/setting_day_night_mode_summary"
-            android:title="@string/setting_day_night_mode_title"/>
+            android:summary="@string/setting_night_mode_summary"
+            android:title="@string/setting_night_mode_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_group_network">
         <SwitchPreference
