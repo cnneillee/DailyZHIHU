@@ -18,9 +18,15 @@ repositories {
 }
 
 def static getApiKey() {
-    def Properties props = new Properties()
+    Properties props = new Properties()
     props.load(new FileInputStream(new File('fabric.properties')))
     return props['apiKey']
+}
+
+def static getBuglyAppID(){
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File('bugly.properties')))
+    return props['AppID']
 }
 
 android {
@@ -43,7 +49,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [fabric_api_key: getApiKey()]
+            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getApiKey()]
         }
         release {
             minifyEnabled true
@@ -51,10 +57,10 @@ android {
 
             // 移除无用的resource文件
             shrinkResources true
-            manifestPlaceholders = [fabric_api_key: getApiKey()]
+            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getApiKey()]
         }
     }
-    lintOptions{
+    lintOptions {
         checkReleaseBuilds false
         abortOnError false
         warning 'InvalidPackage'
@@ -113,8 +119,10 @@ android {
         // 注释掉原有bugly的仓库
         // compile rootProject.ext.dependencies["crashreport"]
         // compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
-        compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-        compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+        compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+        compile 'com.tencent.bugly:nativecrashreport:latest.release'
+        //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
         //canary
         debugCompile rootProject.ext.dependencies["blockcanary-android"]
