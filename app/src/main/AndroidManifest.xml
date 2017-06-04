@@ -161,5 +161,7 @@
             android:name="cn.neillee.dailyzhijiu.ui.star.StoryStaredActivity"
             android:label="@string/activity_star"
             android:theme="@style/AppNightTheme"/>
+
+        <service android:name="cn.neillee.dailyzhijiu.app.InitializeService"/>
     </application>
 </manifest>
