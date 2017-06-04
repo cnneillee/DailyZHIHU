@@ -101,8 +101,8 @@ public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter>
             }
         }
         AppUtil.copyText2Clipboard(mContext, text);
-        SnackbarUtil.ShortSnackbar(getView(),
-                getString(R.string.notify_comment_copied), SnackbarUtil.Info).show();
+        SnackbarUtil.ShortSnackbarWithTheme(mContext, getView(), getString(
+                R.string.notify_comment_copied)).show();
         return false;
     }
 }

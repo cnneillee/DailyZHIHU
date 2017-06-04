@@ -122,7 +122,7 @@ public class MainActivity extends BaseSimpleActivity
             case R.id.iv_avatar:
             case R.id.tv_name:
             case R.id.tv_email:
-                SnackbarUtil.ShortSnackbar(mDrawerLayout, getResources().getString(R.string.notify_to_do), SnackbarUtil.Confirm).show();
+                SnackbarUtil.ShortSnackbarWithTheme(this, mDrawerLayout, getResources().getString(R.string.notify_to_do)).show();
                 break;
         }
     }
@@ -174,7 +174,7 @@ public class MainActivity extends BaseSimpleActivity
         if (Settings.isExitConfirm) {
             if (System.currentTimeMillis() - lastPressTime > Constant.EXIT_CONFIRM_TIME) {
                 lastPressTime = System.currentTimeMillis();
-                SnackbarUtil.ShortSnackbar(getCurrentFocus(), getResources().getString(R.string.notify_exit_confirm), SnackbarUtil.Warning).show();
+                SnackbarUtil.ShortSnackbarWithTheme(this, getCurrentFocus(), getResources().getString(R.string.notify_exit_confirm)).show();
                 return false;
             }
         }

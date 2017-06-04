@@ -27,6 +27,14 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
 import com.neil.dailyzhijiu.R;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.orhanobut.logger.Logger;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import butterknife.BindView;
 import cn.neillee.dailyzhijiu.base.BaseActivity;
 import cn.neillee.dailyzhijiu.model.bean.orignal.CertainStoryBean;
 import cn.neillee.dailyzhijiu.model.bean.orignal.StoryExtraInfoBean;
@@ -39,14 +47,6 @@ import cn.neillee.dailyzhijiu.ui.widget.ObservableWebView;
 import cn.neillee.dailyzhijiu.utils.SnackbarUtil;
 import cn.neillee.dailyzhijiu.utils.img.ImageLoaderWrapper;
 import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
-import com.orhanobut.logger.Logger;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import butterknife.BindView;
 
 public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         implements ObservableScrollViewCallbacks, StoryDetailContract.View {
@@ -242,7 +242,7 @@ public class StoryDetailActivity extends BaseActivity<StoryDetailPresenter>
         switch (item.getItemId()) {
             case R.id.menu_item_action_text_size:
                 //TODO 设置字体大小
-                SnackbarUtil.ShortSnackbar(mRootView, mContext.getResources().getString(R.string.notify_to_do), SnackbarUtil.Confirm).show();
+                SnackbarUtil.ShortSnackbarWithTheme(mContext, mRootView, mContext.getResources().getString(R.string.notify_to_do)).show();
                 break;
             case R.id.menu_item_action_comment:
                 Intent intent = new Intent(mContext, StoryCommentActivity.class);

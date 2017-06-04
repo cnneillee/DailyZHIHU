@@ -8,13 +8,14 @@ import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import cn.neillee.dailyzhijiu.Constant;
 import com.neil.dailyzhijiu.R;
+
+import java.io.File;
+
+import cn.neillee.dailyzhijiu.Constant;
 import cn.neillee.dailyzhijiu.utils.ACache;
 import cn.neillee.dailyzhijiu.utils.Settings;
 import cn.neillee.dailyzhijiu.utils.SnackbarUtil;
-
-import java.io.File;
 
 /**
  * 作者：Neil on 2017/3/5 20:48.
@@ -89,7 +90,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     public boolean onPreferenceClick(Preference preference) {
         View view = getView();
         if (mSwitchTheme == preference) {
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_to_do), SnackbarUtil.Confirm).show();
+            SnackbarUtil.ShortSnackbarWithTheme(mContext, view, getResources().getString(R.string.notify_to_do)).show();
         } else if (mDayNightMode == preference) {
             mContext.callChangeNightMode();
         } else if (mExitWithEnsuring == preference) {
@@ -99,7 +100,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         } else if (mClearCache == preference) {
             ACache.deleteDir(mCacheFile);
             mClearCache.setSummary(ACache.getCacheSize(mCacheFile));
-            SnackbarUtil.ShortSnackbar(view, getString(R.string.notify_clear_successfully), SnackbarUtil.Info).show();
+            SnackbarUtil.ShortSnackbarWithTheme(mContext, view, getString(R.string.notify_clear_successfully)).show();
         }
         return true;
     }

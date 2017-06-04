@@ -1,7 +1,9 @@
 package cn.neillee.dailyzhijiu.utils;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,16 @@ public class SnackbarUtil {
     public static int green = 0xff4caf50;
     public static int blue = 0xff2195f3;
     public static int orange = 0xffffc107;
+
+    public static Snackbar ShortSnackbarWithTheme(Context context, View view, String message) {
+        TypedValue barBgTypedValue = new TypedValue();
+        TypedValue barTitleTypedValue = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.barBgColor, barBgTypedValue, true);
+        context.getTheme().resolveAttribute(R.attr.barTitleColor, barTitleTypedValue, true);
+        int barBgColor = barBgTypedValue.data;
+        int barTitleColor = barTitleTypedValue.data;
+        return ShortSnackbar(view, message, barTitleColor, barBgColor);
+    }
 
     /**
      * 短显示Snackbar，自定义颜色

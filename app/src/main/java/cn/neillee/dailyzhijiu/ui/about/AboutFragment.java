@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhijiu.BuildConfig;
 import com.neil.dailyzhijiu.R;
+
 import cn.neillee.dailyzhijiu.model.bean.orignal.UpdateInfoBean;
 import cn.neillee.dailyzhijiu.model.http.api.API;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;
@@ -109,7 +110,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             startActivity(intent);
         } else if (mShareApp == preference) {
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.about_shareapp_content));
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
+            SnackbarUtil.ShortSnackbarWithTheme(mContext, view, getResources().getString(R.string.notify_info_copied)).show();
         } else if (mFeedback == preference) {
             Intent mail = new Intent(Intent.ACTION_SENDTO);
             mail.setData(Uri.parse("mailto:cn.neillee@gmail.com"));
@@ -131,7 +132,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             startActivity(intent);
         } else if (mEmail == preference) {
             AppUtil.copyText2Clipboard(mContext, mContext.getResources().getString(R.string.about_email_address));
-            SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.notify_info_copied), SnackbarUtil.Info).show();
+            SnackbarUtil.ShortSnackbarWithTheme(mContext, view, getResources().getString(R.string.notify_info_copied)).show();
         } else if (mOpensourceLicense == preference) {
             Intent intent = new Intent(mContext, WebViewActivity.class);
             intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.OPENSOURCE_LICENSE);
@@ -148,7 +149,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
                 if (versionCode > AppUtil.getVersionCode(mContext)) {
                     showUpdateDialog(updateInfo);
                 } else {
-                    SnackbarUtil.ShortSnackbar(view, getResources().getString(R.string.updating_is_updated), SnackbarUtil.Info).show();
+                    SnackbarUtil.ShortSnackbarWithTheme(mContext, view, getResources().getString(R.string.updating_is_updated)).show();
                     canUpdate = true;
                 }
             }
