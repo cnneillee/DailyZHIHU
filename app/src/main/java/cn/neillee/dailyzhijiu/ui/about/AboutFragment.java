@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.neil.dailyzhijiu.BuildConfig;
 import com.neil.dailyzhijiu.R;
+import com.tencent.bugly.beta.Beta;
 
 import cn.neillee.dailyzhijiu.model.bean.orignal.UpdateInfoBean;
 import cn.neillee.dailyzhijiu.model.http.api.API;
@@ -100,10 +101,11 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.APP_INTRODUCTION);
             startActivity(intent);
         } else if (mCheckUpdate == preference) {
-            if (canUpdate) {
-                canUpdate = false;
-                update(view);
-            }
+//            if (canUpdate) {
+//                canUpdate = false;
+//                update(view);
+//            }
+            Beta.checkUpgrade(true, false);
         } else if (mVersionIntro == preference) {
             Intent intent = new Intent(mContext, WebViewActivity.class);
             intent.putExtra(AtyExtraKeyConstant.WEB_URL, API.VERSION_INFO);

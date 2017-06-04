@@ -157,6 +157,11 @@ public static java.lang.String TABLENAME;
 -keep class * extends dagger.internal.ModuleAdapter
 -keep class * extends dagger.internal.StaticInjection
 
+# Bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+-keep class android.support.**{*;}
+
 # http://stackoverflow.com/questions/33047806/proguard-duplicate-definition-of-library-class
 -dontnote android.net.http.*
 -dontnote org.apache.commons.codec.**

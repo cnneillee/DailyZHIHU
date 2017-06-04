@@ -33,6 +33,11 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     buildTypes {
         debug {
@@ -85,7 +90,6 @@ android {
 
         // log
         compile rootProject.ext.dependencies["logger"]
-        compile rootProject.ext.dependencies["crashreport"]
 
         // di
         compile rootProject.ext.dependencies["dagger"]
@@ -104,6 +108,13 @@ android {
         compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
             transitive = true;
         }
+
+        // bugly
+        // 注释掉原有bugly的仓库
+        // compile rootProject.ext.dependencies["crashreport"]
+        // compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
+        compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+        compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     }
 }
 

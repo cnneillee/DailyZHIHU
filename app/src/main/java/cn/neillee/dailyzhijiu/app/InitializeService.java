@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.neillee.dailyzhijiu.Constant;
 import cn.neillee.dailyzhijiu.utils.AppUtil;
-import cn.neillee.dailyzhijiu.utils.LogUtil;
 
 public class InitializeService extends IntentService {
 
@@ -68,6 +68,7 @@ public class InitializeService extends IntentService {
         String processName = AppUtil.getProcessName(android.os.Process.myPid());
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
-        CrashReport.initCrashReport(context, Constant.BUGLY_ID, LogUtil.isDebug, strategy);
+//        CrashReport.initCrashReport(context, Constant.BUGLY_ID, LogUtil.isDebug, strategy);
+        Bugly.init(getApplicationContext(), Constant.BUGLY_ID, false);
     }
 }

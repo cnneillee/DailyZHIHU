@@ -22,6 +22,8 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <!--蜂鸣器权限-->
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <!--READ_LOGS-->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <application
         android:name="cn.neillee.dailyzhijiu.app.DailyApp"
@@ -161,6 +163,20 @@
             android:name="cn.neillee.dailyzhijiu.ui.star.StoryStaredActivity"
             android:label="@string/activity_star"
             android:theme="@style/AppNightTheme"/>
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
         <service android:name="cn.neillee.dailyzhijiu.app.InitializeService"/>
     </application>
