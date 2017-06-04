@@ -53,6 +53,12 @@ ext {
 
             //other
             "logger"                    : "com.orhanobut:logger:1.15",
-            "crashreport"               : "com.tencent.bugly:crashreport:latest.release"
+            "crashreport"               : "com.tencent.bugly:crashreport:latest.release",
+
+            //canary
+            "blockcanary-android"       : "com.github.moduth:blockcanary-android:${dependVersion.blockcanary}",
+            "blockcanary-no-op"         : "com.github.moduth:blockcanary-no-op:${dependVersion.blockcanary}",
+            "leakcanary-android"        : "com.squareup.leakcanary:leakcanary-android:${dependVersion.leakcanary}",
+            "leakcanary-android-no-op"  : "com.squareup.leakcanary:leakcanary-android-no-op:${dependVersion.leakcanary}"
     ]
 }

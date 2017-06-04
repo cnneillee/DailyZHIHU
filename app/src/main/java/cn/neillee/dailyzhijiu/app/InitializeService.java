@@ -4,11 +4,14 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
+import com.github.moduth.blockcanary.BlockCanary;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.neillee.dailyzhijiu.Constant;
+import cn.neillee.dailyzhijiu.ui.widget.AppBlockCanaryContext;
 import cn.neillee.dailyzhijiu.utils.AppUtil;
 
 public class InitializeService extends IntentService {
@@ -43,12 +46,12 @@ public class InitializeService extends IntentService {
 //        CrashHandler.init(new CrashHandler(getApplicationContext()));
         initBugly();
 
-//        //初始化内存泄漏检测
-//        LeakCanary.install(App.getInstance());
-//
-//        //初始化过度绘制检测
-//        BlockCanary.install(getApplicationContext(), new AppBlockCanaryContext()).start();
-//
+        //初始化内存泄漏检测
+        LeakCanary.install(DailyApp.getInstance());
+
+        //初始化过度绘制检测
+        BlockCanary.install(getApplicationContext(), new AppBlockCanaryContext()).start();
+
 //        //初始化tbs x5 webview
 //        QbSdk.allowThirdPartyAppDownload(true);
 //        QbSdk.initX5Environment(getApplicationContext(), QbSdk.WebviewInitType.FIRSTUSE_AND_PRELOAD, new QbSdk.PreInitCallback() {
