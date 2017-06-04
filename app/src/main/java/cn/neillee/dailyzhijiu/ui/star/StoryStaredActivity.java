@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseActivity;
 import cn.neillee.dailyzhijiu.base.BaseReecyclerViewAdapter;
 import cn.neillee.dailyzhijiu.model.db.StarRecord;

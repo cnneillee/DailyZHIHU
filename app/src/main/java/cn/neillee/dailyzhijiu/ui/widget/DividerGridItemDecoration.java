@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView.State;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 
 /**
  * @author zhy

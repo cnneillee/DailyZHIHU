@@ -1,6 +1,6 @@
 package cn.neillee.dailyzhijiu.utils.img;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 
 /**
  * 图片加载参数

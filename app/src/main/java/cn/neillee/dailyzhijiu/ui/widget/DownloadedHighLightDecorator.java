@@ -1,7 +1,5 @@
 package cn.neillee.dailyzhijiu.ui.widget;
 
-import com.neil.dailyzhijiu.R;
-import cn.neillee.dailyzhijiu.utils.date.DateUtil;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -10,6 +8,9 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import cn.neillee.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.utils.date.DateUtil;
 
 /**
  * Created by Neil on 2016/5/6.

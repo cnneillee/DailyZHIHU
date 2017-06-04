@@ -8,7 +8,7 @@ import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 
 import java.io.File;
 

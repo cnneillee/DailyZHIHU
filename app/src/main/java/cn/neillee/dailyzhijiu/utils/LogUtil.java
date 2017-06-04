@@ -1,6 +1,6 @@
 package cn.neillee.dailyzhijiu.utils;
 
-import com.neil.dailyzhijiu.BuildConfig;
+import cn.neillee.dailyzhijiu.BuildConfig;
 import com.orhanobut.logger.Logger;
 
 /**

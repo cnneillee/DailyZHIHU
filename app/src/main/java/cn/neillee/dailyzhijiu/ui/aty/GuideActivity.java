@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.ui.main.MainActivity;
 
 import java.util.ArrayList;

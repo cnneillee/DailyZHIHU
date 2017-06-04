@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.model.bean.orignal.LatestStoryListBean;
 import cn.neillee.dailyzhijiu.ui.story.StoryDetailActivity;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;

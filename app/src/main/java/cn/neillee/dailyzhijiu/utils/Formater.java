@@ -2,7 +2,7 @@ package cn.neillee.dailyzhijiu.utils;
 
 import android.content.Context;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.model.bean.orignal.StoryExtraInfoBean;
 
 import java.text.SimpleDateFormat;

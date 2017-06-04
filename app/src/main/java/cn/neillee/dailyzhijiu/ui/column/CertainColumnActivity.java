@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.ui.adapter.ColumnStoryListBaseAdapter;
 import cn.neillee.dailyzhijiu.base.BaseActivity;
 import cn.neillee.dailyzhijiu.model.bean.orignal.ColumnStoryListBean;

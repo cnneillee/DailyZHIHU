@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseSimpleActivity;
 import cn.neillee.dailyzhijiu.model.bean.orignal.TopicStoryListBean;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;

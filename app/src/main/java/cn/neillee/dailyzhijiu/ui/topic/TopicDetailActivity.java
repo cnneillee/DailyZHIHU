@@ -16,7 +16,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.google.gson.Gson;
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseActivity;
 import cn.neillee.dailyzhijiu.model.bean.orignal.TopicStoryListBean;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;

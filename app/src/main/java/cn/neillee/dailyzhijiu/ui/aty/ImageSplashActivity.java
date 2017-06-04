@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseActivity;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;
 import cn.neillee.dailyzhijiu.presenter.ImageSplashPresenter;

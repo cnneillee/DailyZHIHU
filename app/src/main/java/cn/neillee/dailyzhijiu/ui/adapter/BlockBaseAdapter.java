@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.model.bean.IBlockBean;
 import cn.neillee.dailyzhijiu.utils.DisplayUtil;
 import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;

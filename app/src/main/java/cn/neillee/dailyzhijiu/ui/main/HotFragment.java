@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseFragment;
 import cn.neillee.dailyzhijiu.model.bean.orignal.HotStoryListBean;
 import cn.neillee.dailyzhijiu.model.bean.orignal.OriginalStory;

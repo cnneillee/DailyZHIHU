@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.model.bean.orignal.CommentListBean;
 import cn.neillee.dailyzhijiu.utils.Formater;
 import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;

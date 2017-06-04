@@ -2,7 +2,7 @@ package cn.neillee.dailyzhijiu.ui.about;
 
 import android.support.v7.widget.Toolbar;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseSimpleActivity;
 
 import butterknife.BindView;

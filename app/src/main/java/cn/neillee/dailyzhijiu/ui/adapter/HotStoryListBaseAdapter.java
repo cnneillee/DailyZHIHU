@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.model.bean.orignal.HotStoryListBean;
 import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;
 

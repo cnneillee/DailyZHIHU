@@ -9,14 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
-import cn.neillee.dailyzhijiu.model.bean.orignal.TopicStoryListBean;
-import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.neillee.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.model.bean.orignal.TopicStoryListBean;
+import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;
 
 /**
  * 作者：Neil on 2017/2/16 23:00.

@@ -7,19 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.neillee.dailyzhijiu.Constant;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.app.DailyApp;
-import com.neil.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.di.component.ActivityComponent;
 import cn.neillee.dailyzhijiu.di.component.DaggerActivityComponent;
 import cn.neillee.dailyzhijiu.di.module.ActivityModule;
 import cn.neillee.dailyzhijiu.utils.AppUtil;
 import cn.neillee.dailyzhijiu.utils.Settings;
-
-import javax.inject.Inject;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * 作者：Neil on 2017/4/7 15:51.

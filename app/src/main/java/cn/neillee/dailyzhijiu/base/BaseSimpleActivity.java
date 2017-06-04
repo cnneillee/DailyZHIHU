@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.neil.dailyzhijiu.R;
+import cn.neillee.dailyzhijiu.R;
 
 import cn.neillee.dailyzhijiu.Constant;
 import cn.neillee.dailyzhijiu.utils.AppUtil;

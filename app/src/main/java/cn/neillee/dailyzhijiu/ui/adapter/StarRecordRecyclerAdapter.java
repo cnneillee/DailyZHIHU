@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.R;
+import java.util.List;
+
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.base.BaseReecyclerViewAdapter;
 import cn.neillee.dailyzhijiu.model.db.StarRecord;
 import cn.neillee.dailyzhijiu.utils.load.LoaderFactory;
-
-import java.util.List;
 
 /**
  * 作者：Neil on 2017/6/1 15:43.

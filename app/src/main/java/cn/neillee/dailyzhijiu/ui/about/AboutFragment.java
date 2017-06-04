@@ -14,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.neil.dailyzhijiu.BuildConfig;
-import com.neil.dailyzhijiu.R;
 import com.tencent.bugly.beta.Beta;
 
+import cn.neillee.dailyzhijiu.BuildConfig;
+import cn.neillee.dailyzhijiu.R;
 import cn.neillee.dailyzhijiu.model.bean.orignal.UpdateInfoBean;
 import cn.neillee.dailyzhijiu.model.http.api.API;
 import cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant;
