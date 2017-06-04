@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_addon_info"
+    <LinearLayout
+        android:id="@+id/empty_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
-        android:text="没有更多评论了？(..•˘_˘•..)\n那就试试左右划一下吧(ง •̀_•́)ง"/>
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:src="@drawable/ic_empty_result"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/comment_empty_comment_info"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lv_comment"

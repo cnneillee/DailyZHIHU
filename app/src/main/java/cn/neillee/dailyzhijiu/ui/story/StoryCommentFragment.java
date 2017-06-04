@@ -2,20 +2,20 @@ package cn.neillee.dailyzhijiu.ui.story;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.neil.dailyzhijiu.R;
-import cn.neillee.dailyzhijiu.base.BaseFragment;
-import cn.neillee.dailyzhijiu.model.bean.orignal.CommentListBean;
-import cn.neillee.dailyzhijiu.presenter.StoryCommentPresenter;
-import cn.neillee.dailyzhijiu.presenter.constract.StoryCommentContract;
-import cn.neillee.dailyzhijiu.ui.adapter.CommentListBaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.neillee.dailyzhijiu.base.BaseFragment;
+import cn.neillee.dailyzhijiu.model.bean.orignal.CommentListBean;
+import cn.neillee.dailyzhijiu.presenter.StoryCommentPresenter;
+import cn.neillee.dailyzhijiu.presenter.constract.StoryCommentContract;
+import cn.neillee.dailyzhijiu.ui.adapter.CommentListBaseAdapter;
 
 import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
 import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.STORY_ID;
@@ -26,8 +26,8 @@ import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.STORY_ID
  */
 
 public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter> implements StoryCommentContract.View {
-    @BindView(R.id.tv_addon_info)
-    TextView mTvAddonInfo;
+    @BindView(R.id.empty_layout)
+    LinearLayout mEmptyLayout;
     @BindView(R.id.lv_comment)
     ListView mLvComment;
 
@@ -62,15 +62,21 @@ public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter> im
 
     @Override
     public void showContent(CommentListBean commentList) {
-        mCommentsBeanList.clear();
-        for (int i = 0; i < commentList.getComments().size(); i++) {
-            mCommentsBeanList.add(commentList.getComments().get(i));
+        if (commentList.getComments() == null
+                || commentList.getComments().size() <= 0) {
+            mLvComment.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyLayout.setVisibility(View.GONE);
+            mLvComment.setVisibility(View.VISIBLE);
         }
+        mCommentsBeanList.clear();
+        mCommentsBeanList.addAll(commentList.getComments());
         mCommentListBaseAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showError(String msg) {
-        mTvAddonInfo.setVisibility(View.VISIBLE);
+        mEmptyLayout.setVisibility(View.VISIBLE);
     }
 }
