@@ -13,21 +13,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp">
-        <!-- android:paddingTop="@dimen/nav_header_vertical_spacing"-->
 
         <ImageView
             android:id="@+id/iv_avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="5dp"
-            android:src="@mipmap/ic_account_avatar"/>
-
-        <ImageView
-            android:id="@+id/iv_dayMode"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5dp"/>
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_account_avatar"/>
     </RelativeLayout>
 
     <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
