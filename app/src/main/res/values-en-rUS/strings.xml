@@ -77,6 +77,7 @@
     <string name="comment_state_deleted">[Deleted]</string>
     <string name="comment_long_comment">LONG COMMENTS</string>
     <string name="comment_short_comment">SHORT COMMENTS</string>
+    <string name="comment_empty_comment_info">No more comments?(..•˘_˘•..)\nJust swipe left or right(ง •̀_•́)ง</string>
 
     <!--about preference-->
     <string name="about_group_zhijiu">吱啾</string>
