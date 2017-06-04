@@ -20,7 +20,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="5dp"
-            android:src="@drawable/ic_account_avatar"/>
+            android:src="@mipmap/ic_account_avatar"/>
 
         <ImageView
             android:id="@+id/iv_dayMode"
@@ -36,13 +36,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="刘看山"
-        android:textColor="@color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="cn.neillee@gmail.com"/>
+        android:text="cn.neillee@gmail.com"
+        android:textColor="@color/white"/>
 </LinearLayout>
