@@ -44,6 +44,7 @@
 
     <!--通知信息-->
     <string name="notify_info_copied">信息已添加至剪切板,你可以将其粘贴到编辑区域</string>
+    <string name="notify_comment_copied">该评论已添加至剪切板</string>
     <string name="notify_exit_confirm">再按一次退出</string>
     <string name="notify_columns_subscribing_clicked">栏目订阅被点击！</string>
     <string name="notify_refreshing_data">正在更新数据</string>

@@ -2,6 +2,7 @@ package cn.neillee.dailyzhijiu.ui.story;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -16,6 +17,8 @@ import cn.neillee.dailyzhijiu.model.bean.orignal.CommentListBean;
 import cn.neillee.dailyzhijiu.presenter.StoryCommentPresenter;
 import cn.neillee.dailyzhijiu.presenter.constract.StoryCommentContract;
 import cn.neillee.dailyzhijiu.ui.adapter.CommentListBaseAdapter;
+import cn.neillee.dailyzhijiu.utils.AppUtil;
+import cn.neillee.dailyzhijiu.utils.SnackbarUtil;
 
 import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
 import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.STORY_ID;
@@ -25,7 +28,8 @@ import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.STORY_ID
  * 邮箱：cn.neillee@gmail.com
  */
 
-public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter> implements StoryCommentContract.View {
+public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter>
+        implements StoryCommentContract.View, AdapterView.OnItemLongClickListener {
     @BindView(R.id.empty_layout)
     LinearLayout mEmptyLayout;
     @BindView(R.id.lv_comment)
@@ -58,6 +62,7 @@ public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter> im
         mCommentListBaseAdapter = new CommentListBaseAdapter(getActivity(), mCommentsBeanList);
         mLvComment.setAdapter(mCommentListBaseAdapter);
         mPresenter.getCommentData(storyId, commentType);
+        mLvComment.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -78,5 +83,26 @@ public class StoryCommentFragment extends BaseFragment<StoryCommentPresenter> im
     @Override
     public void showError(String msg) {
         mEmptyLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        CommentListBean.CommentsBean commentBean = mCommentsBeanList.get(position);
+        String text = String.format("%s[%d Likes]：{%s}\n", commentBean.getAuthor(),
+                commentBean.getLikes(), commentBean.getContent());
+        if (commentBean.getReplyTo() != null) {
+            CommentListBean.CommentsBean.ReplyToBean replyToBean = commentBean.getReplyTo();
+            if (replyToBean.getStatus() == 0) { // OK
+                text = String.format("%s\nreplyTo：\n%s：{%s}", text,
+                        replyToBean.getAuthor(), replyToBean.getContent());
+            } else {
+                text = String.format("%s\nreplyTo：\n%s：[%s]", text,
+                        replyToBean.getAuthor(), replyToBean.getErrMsg());
+            }
+        }
+        AppUtil.copyText2Clipboard(mContext, text);
+        SnackbarUtil.ShortSnackbar(getView(),
+                getString(R.string.notify_comment_copied), SnackbarUtil.Info).show();
+        return false;
     }
 }

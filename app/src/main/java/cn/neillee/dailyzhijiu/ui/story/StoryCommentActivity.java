@@ -8,15 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.neil.dailyzhijiu.R;
-import cn.neillee.dailyzhijiu.base.BaseSimpleActivity;
-import cn.neillee.dailyzhijiu.model.bean.orignal.StoryExtraInfoBean;
-import cn.neillee.dailyzhijiu.utils.GsonDecoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.neillee.dailyzhijiu.base.BaseSimpleActivity;
+import cn.neillee.dailyzhijiu.model.bean.orignal.StoryExtraInfoBean;
+import cn.neillee.dailyzhijiu.utils.GsonDecoder;
 
 import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.COMMENT_TYPE;
 import static cn.neillee.dailyzhijiu.model.http.api.AtyExtraKeyConstant.STORY_EXTRAS;
@@ -63,13 +63,13 @@ public class StoryCommentActivity extends BaseSimpleActivity {
 
     private void initFragmentPager(int storyId, String storyExtra) {
         mFragmentList = new ArrayList<>();
-        StoryCommentFragment longFragment = StoryCommentFragment.newInstance();
+        final StoryCommentFragment longFragment = StoryCommentFragment.newInstance();
         Bundle longBundle = new Bundle();
         longBundle.putInt(STORY_ID, storyId);
         longBundle.putInt(COMMENT_TYPE, 0);
         longFragment.setArguments(longBundle);
 
-        StoryCommentFragment shortFragment = StoryCommentFragment.newInstance();
+        final StoryCommentFragment shortFragment = StoryCommentFragment.newInstance();
         final Bundle shortBundle = new Bundle();
         shortBundle.putInt(STORY_ID, storyId);
         shortBundle.putInt(COMMENT_TYPE, 1);

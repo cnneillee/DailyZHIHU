@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/comment_empty_comment_info"/>
+            android:text="@string/comment_empty_comment_info"
+            android:textColor="?attr/supportTitleColor"/>
     </LinearLayout>
 
     <ListView
