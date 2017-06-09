@@ -70,7 +70,7 @@ public class ImageExternalDirectoryUtil {
      * 返回com.neil.dailyzhi/image/XXXimg目录File，并且在目录中添加.nomedia文件
      *
      * @param context 上下文环境
-     * @return com.neil.dailyzhi/image/XXXimg目录File
+     * @return cn.neillee.dailyzhi/image/XXXimg目录File
      */
     private static File getCertainImgDirectory(Context context, UtilType utilType) {
         if (utilType == null) {
@@ -109,7 +109,7 @@ public class ImageExternalDirectoryUtil {
     }
 
     /**
-     * 返回CertainImgDirectory【com.neil.dailyzhi/image/XXXimg】目录中特定文件名的文件
+     * 返回CertainImgDirectory【cn.neillee.dailyzhi/image/XXXimg】目录中特定文件名的文件
      *
      * @param context  上下文对象
      * @param fileName 所查找的文件的文件名

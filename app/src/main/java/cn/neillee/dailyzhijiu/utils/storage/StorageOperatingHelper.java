@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by Neil on 2016/4/19.
  */
 public class StorageOperatingHelper {
-    private static final String PACKAGE_DIR = "/com.neil.dailyzhihu";
+    private static final String PACKAGE_DIR = "/cn.neillee.dailyzhihu";
     private static final String IMAGE_DIR = "/image";
     private static final String QR_IMAGE_DIR = "/qrimage";
     private static final String FAVORITE_STORY_DIR = "/image/favorite";

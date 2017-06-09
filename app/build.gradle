@@ -49,7 +49,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getApiKey()]
+            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getBuglyAppID()]
         }
         release {
             minifyEnabled true
@@ -57,7 +57,7 @@ android {
 
             // 移除无用的resource文件
             shrinkResources true
-            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getApiKey()]
+            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getBuglyAppID()]
         }
     }
     lintOptions {

@@ -72,7 +72,8 @@ public class AppUtil {
         try {
             PackageManager packageManager = ctx.getPackageManager();
             if (packageManager != null) {
-                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(
+                        ctx.getPackageName(), PackageManager.GET_META_DATA);
                 if (applicationInfo != null) {
                     if (applicationInfo.metaData != null) {
                         resultData = applicationInfo.metaData.getString(key);

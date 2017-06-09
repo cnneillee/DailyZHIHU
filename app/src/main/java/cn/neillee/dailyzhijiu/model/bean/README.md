@@ -1,6 +1,6 @@
 # Package Info
 ## name
-com.neil.dailyzhihu.model.bean
+cn.neillee.dailyzhihu.model.bean
 
 ## Usage
 存放着用于解析 JSON 字符串的实体类
