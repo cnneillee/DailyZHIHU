@@ -57,14 +57,23 @@
 
 - ~~修复部分bug~~
 
+1.3.0：
+- ~~主题颜色优化~~
+- ~~语言切换功能优化~~
+- ~~自主化（图标、包名、提示性名称等）~~
+- ~~夜间模式图标、文字适应模式变化~~
+
+- ~~应用市场发布~~
+- ~~用户信息打点~~
+- ~~bugly、fabric 集成~~
+- ~~引入 walle 多渠道打包~~
+- ~~引入 leakcanary、blockcanary 监控内存泄漏~~
+
 ### TODO
 
-1.3.0以后：
-- 用户信息打点
-- bugly 集成
+1.4.0以后：
+- 优化整个App
 - 主题切换功能（设置-偏好）
-- DrawerHeader优化
-- 应用市场发布
 
 ## Function and UI
 一款基于知乎日报内容的第三方应用.
@@ -101,8 +110,8 @@
 
 [0]: https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90
 [1]: ./screenshot/v1.2.0/group-guide.png
-[2]: ./screenshot/v1.2.0/group-image-splash.png
-[3]: ./screenshot/v1.2.0/group-overall-intro.png
+[2]: ./screenshot/v1.3.0/group-image-splash.png
+[3]: ./screenshot/v1.3.0/group-overall-intro.png
 [4]: ./screenshot/v1.2.0/group-main.png
 [5]: ./screenshot/v1.2.0/group-topic.png
 [6]: ./screenshot/v1.2.0/group-column.png
