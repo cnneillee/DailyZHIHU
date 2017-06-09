@@ -1,3 +1,34 @@
+def buglyAppID = ''
+def fabricApiKey = ''
+
+def debugKeystorePath = ''
+def debugKeystorePwd = ''
+def debugKeystoreAlias = ''
+def debugKeystoreAliasPwd = ''
+
+def releaseKeystorePath = ''
+def releaseKeystorePwd = ''
+def releaseKeystoreAlias = ''
+def releaseKeystoreAliasPwd = ''
+
+Properties properties = new Properties()
+properties.load(new FileInputStream(new File("private-keys.properties")))
+debugKeystorePath = properties.getProperty("keystore.debug.path")
+releaseKeystorePath = properties.getProperty("keystore.release.path")
+
+if (debugKeystorePath && releaseKeystorePath) {
+    buglyAppID = properties.getProperty("bugly.AppID")
+    fabricApiKey = properties.getProperty("fabric.apiKey")
+
+    debugKeystorePwd = properties.getProperty("keystore.debug.storePassword")
+    debugKeystoreAlias = properties.getProperty("keystore.debug.keyAlias")
+    debugKeystoreAliasPwd = properties.getProperty("keystore.debug.keyPassword")
+
+    releaseKeystorePwd = properties.getProperty("keystore.release.storePassword")
+    releaseKeystoreAlias = properties.getProperty("keystore.release.keyAlias")
+    releaseKeystoreAliasPwd = properties.getProperty("keystore.release.keyPassword")
+}
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -13,21 +44,10 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.greenrobot.greendao'
 apply from: 'tinker-support.gradle'
+apply from: 'multiple-channel.gradle'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
-}
-
-def static getApiKey() {
-    Properties props = new Properties()
-    props.load(new FileInputStream(new File('fabric.properties')))
-    return props['apiKey']
-}
-
-def static getBuglyAppID(){
-    Properties props = new Properties()
-    props.load(new FileInputStream(new File('bugly.properties')))
-    return props['AppID']
 }
 
 android {
@@ -46,19 +66,41 @@ android {
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
+
+    signingConfigs {
+        debug {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeFile file(debugKeystorePath)
+            storePassword debugKeystorePwd
+            keyAlias debugKeystoreAlias
+            keyPassword debugKeystoreAliasPwd
+        }
+        release {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeFile file(releaseKeystorePath)
+            storePassword releaseKeystorePwd
+            keyAlias releaseKeystoreAlias
+            keyPassword releaseKeystoreAliasPwd
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getBuglyAppID()]
+            signingConfig signingConfigs.debug
+            manifestPlaceholders = [fabric_api_key: fabricApiKey, bugly_app_id: buglyAppID]
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
 
             // 移除无用的resource文件
             shrinkResources true
-            manifestPlaceholders = [fabric_api_key: getApiKey(), bugly_app_id: getBuglyAppID()]
+            manifestPlaceholders = [fabric_api_key: fabricApiKey, bugly_app_id: buglyAppID]
         }
     }
     lintOptions {
@@ -117,6 +159,9 @@ android {
         }
 
         compile "com.android.support:multidex:1.0.1" // 多dex配置
+
+        // walle（多渠道使用）
+        compile 'com.meituan.android.walle:library:1.1.3'
 
         // bugly
         // 注释掉原有bugly的仓库

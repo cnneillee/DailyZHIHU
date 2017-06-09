@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.github.moduth.blockcanary.BlockCanary;
+import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
@@ -73,6 +74,8 @@ public class InitializeService extends IntentService {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 //        CrashReport.initCrashReport(context, Constant.BUGLY_ID, LogUtil.isDebug, strategy);
         String buglyID = AppUtil.getAppMetaData(DailyApp.getInstance(), Constant.BUGLY_ID_KEY);
+        String channel = WalleChannelReader.getChannel(getApplication());
+        Bugly.setAppChannel(getApplication(), channel);
         Bugly.init(getApplicationContext(), buglyID, false);
     }
 }
