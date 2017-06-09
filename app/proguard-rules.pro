@@ -105,8 +105,8 @@
 -keep class com.google.gson.** { *; }
 -dontwarn com.google.gson.**
 -keep class sun.misc.Unsafe { *; }
--keep class cn.neillee.dailyzhihu.model.bean.**{ *; }
--keep class cn.neillee.dailyzhihu.model.bean.original.**{ *; }
+-keep class cn.neillee.dailyzhijiu.model.bean.**{ *; }
+-keep class cn.neillee.dailyzhijiu.model.bean.original.**{ *; }
 
 ## ShareSDK 混淆
 #-dontwarn cn.sharesdk.**
