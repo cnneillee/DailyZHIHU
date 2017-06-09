@@ -12,6 +12,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'org.greenrobot.greendao'
+apply from: 'tinker-support.gradle'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -115,12 +116,14 @@ android {
             transitive = true;
         }
 
+        compile "com.android.support:multidex:1.0.1" // 多dex配置
+
         // bugly
         // 注释掉原有bugly的仓库
         // compile rootProject.ext.dependencies["crashreport"]
         // compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
         compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
-//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+        //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
         compile 'com.tencent.bugly:nativecrashreport:latest.release'
         //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 

@@ -3,12 +3,14 @@ package cn.neillee.dailyzhijiu.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.tencent.bugly.beta.Beta;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -59,6 +61,16 @@ public class DailyApp extends Application {
 
         AppContext = getApplicationContext();
         UniversalAndroidImageLoader.init(getApplicationContext());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        // you must install multiDex whatever tinker is installed!
+        MultiDex.install(base);
+
+        // 安装tinker
+        Beta.installTinker();
     }
 
     public void addActivity(Activity activity) {
